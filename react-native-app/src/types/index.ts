@@ -1,0 +1,1 @@
+export { RootStackParamList, NavigationProp } from './navigation';
