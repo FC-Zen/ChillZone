@@ -1,0 +1,313 @@
+{
+    "headers": {
+        "connexion": "Back-office login",
+        "pwdReset": "Forgot password",
+        "pwdChange": "Reset my password",
+        "recapcommands": "Summary of my orders",
+        "recapReservation": "Summary of my reservations",
+        "signinAccount": "Restaurant owner registration request - Account",
+        "signinRestaurant": "Restaurant owner registration request - Restaurant",
+        "askAdmin": "Registration request sent to the administrator",
+        "home": "Home",
+        "accounts": "Accounts",
+        "rooms": "Rooms",
+        "reservation": "Reservations & Reports",
+        "map": "Plans & Establishment Information",
+        "affiliates": "Affiliated dining locations",
+        "products": "Products",
+        "commands": "Orders",
+        "menus": "Menus"
+    },
+
+    "userGreeting": {
+        "hello": "Hello, {{nom}}"
+    },
+
+    "modals": {
+        "edit": {
+            "product": "Edit product",
+            "menu": "Edit menu",
+            "room": "Edit room",
+            "stock": "Edit product stock"
+        },
+        "create": {
+            "account": "Create a student test account",
+            "room": "Create a room",
+            "floor": "Create a floor",
+            "product": "Create a product",
+            "menu": "Create a menu"
+        },
+        "info": {
+            "command": "Order details {{ command }}",
+            "establishment": "Establishment information"
+        },
+        "actions": {
+            "place": "Room placement",
+            "passwordChange": "Change my password",
+            "user": "Edit my information"
+        }
+    },
+
+    "type": {
+        "admin": "Administrator",
+        "restorer": "Restaurateur",
+        "superAdmin": "Super Administrator"
+    },
+
+    "buttons": {
+        "auth": {
+            "connect": "Login",
+            "return": "Return to login page",
+            "confirmInscription": "Confirm registration"
+        },
+        "actions": {
+            "save": "Save",
+            "continue": "Continue",
+            "confirm": "Confirm",
+            "back": "Back",
+            "reset": "Reset",
+            "changeMap": "Change map"
+        },
+        "add": {
+            "generic": "Add {{ entity }}",
+            "user": "Add a user account",
+            "room": "Add a room",
+            "floor": "Add a floor",
+            "menu": "Add a menu",
+            "product": "Add a product"
+        },
+        "commands": {
+            "stateReady": "Order is ready",
+            "stateFinished": "Order has been collected"
+        }
+    },
+
+    "navbar": {
+        "home": "Home",
+        "admin": {
+            "users": "Users",
+            "rooms": "Rooms / Boxes",
+            "reservation": "Reservations",
+            "Establishment": "Establishment",
+            "restaurants": "Dining locations"
+        },
+        "restorer": {
+            "products": "Stock",
+            "menus": "Menus",
+            "commands": "Orders / Boxes"
+        }
+    },
+
+    "fields": {
+        "common": {
+            "mail": "Email address",
+            "commentary": "Commentary",
+            "first_name": "First name",
+            "last_name": "Last name",
+            "phone": "Phone",
+            "date": "Date",
+            "establishment": "Establishment",
+            "libelle": "Label",
+            "description": "Description",
+            "type": "Type",
+            "type_role": "Role",
+            "category": "Category",
+            "capacity": "Capacity",
+            "location": "Location",
+            "price": "Price",
+            "quantity": "Quantity"
+        },
+        "auth": {
+            "password": "Password",
+            "newPassword": "New password",
+            "verifyNewPassword": "Confirm password",
+            "lastPassword": "Enter your old password"
+        },
+        "map_floor": {
+            "display": "Floor {{ floor }}",
+            "number": "Floor number",
+            "name": "Floor name"
+        },
+        "hours": {
+            "opening_time": "Opening time",
+            "closing_time": "Closing time",
+            "schedules": "Schedules"
+        },
+        "address": {
+            "city": "City",
+            "postal_code": "Postal Code",
+            "address": "Address"
+        },
+        "search": "Search in the table"
+    },
+
+    "dashboard": {
+        "graph": {
+            "reservation": "Number of reservations per month",
+            "commands": "Number of orders per month",
+            "cnx": "Number of logins per month"
+        },
+        "info": {
+            "users": "Users",
+            "conflict": "Reports received",
+            "openRooms": "Available rooms / boxes",
+            "occupationTime": "Occupancy rate of boxes/rooms",
+            "mostWantedProduct": "Best-selling product",
+            "mostWantedMenu": "Best-selling menu",
+            "commandsNow": "Orders to process",
+            "commandsToday": "Orders completed",
+            "commandsTodo": "Orders planned",
+            "actives": "active",
+            "onMonth": "this month",
+            "onHour": "this hour",
+            "now": "now",
+            "today": "today"
+        }
+    },
+    
+    "info": {
+        "infoSignIn": "Your request has been sent to the establishment administrator. You will receive an email shortly.",
+        "infoPwd": "If the account exists, you will receive an email shortly.",
+        "recoverPwd": "I forgot my password",
+        "singin": "I want to register as a restaurateur",
+        "rememberMe": "Remember me"
+    },
+
+    "tables": {
+        "titles": {
+            "table_restauration_place": "Table of dining locations affiliated with the establishment",
+            "affiliationRequests": "Table of affiliation requests for dining locations to the establishment",
+            "reservations": "Table of reservations",
+            "conflicts": "Table of reports",
+            "currentcommands": "Latest ongoing orders",
+            "restauration_place": "My dining locations"
+        },
+        "headers": {
+            "user": {
+                "fullName": "Full Name",
+                "mail": "Email address",
+                "type": "Role",
+                "establishment": "Establishment",
+                "reservationCount": "Number of reservations made",
+                "blockReservations": "Block reservations",
+                "deleteAccount": "Delete account"
+            },
+            "room": {
+                "name": "Room name",
+                "description": "Room description",
+                "capacity": "Room capacity",
+                "floor": "Floor",
+                "isRoomFree": "Is the room free now?",
+                "modify": "Edit"
+            },
+            "reservation": {
+                "id": "Reservation ID",
+                "day_reservation": "Date",
+                "start_time": "Start time",
+                "end_time": "End time",
+                "status": "Status",
+                "isCanceled": "Canceled?"
+            },
+            "conflict": {
+                "comment": "Report description",
+                "user": "Responsible student"
+            },
+            "restaurant": {
+                "name": "Dining location name",
+                "type": "Type of dining location",
+                "location": "Dining location address",
+                "email": "Dining location email",
+                "isCurrentlyOpen": "Currently open",
+                "unlinkRestaurant": "Unlink dining location from the establishment",
+                "declineAffiliation": "Decline affiliation",
+                "acceptAffiliation": "Accept affiliation"
+            },
+            "command": {
+                "id": "Order ID",
+                "user": "Student",
+                "total_amount": "Total",
+                "location": "Location name",
+                "collectionStartTime": "Collection start time",
+                "client": "Client name",
+                "creation_date": "Creation date",
+                "actions": {
+                    "viewcommand": "View order",
+                    "actionDetails": "Order details",
+                    "editQuantity": "Edit quantity"
+                }
+            },
+            "product": {
+                "type": "Type",
+                "name": "Product name",
+                "description": "Product description",
+                "price": "Price",
+                "quantity": "Quantity",
+                "category": "Category",
+                "tag": "Tags"
+            },
+            "menu": {
+                "name": "Menu name",
+                "description": "Menu description",
+                "price": "Price",
+                "activeTypes": "Active types",
+                "activeCategories": "Categories included in the menu"
+            },
+            "restorer": {
+                "head": "Head Restaurateur Name",
+                "name": "Restaurant name",
+                "acceptAccount": "Accept account",
+                "declineAccount": "Decline account",
+                "deleteRestaurantAccount": "Delete account"
+            }
+        }
+    },
+
+    "rooms": {
+        "baseFloor": "Ground floor",
+        "floor": "Floor {{x}}",
+        "AR": "Augmented reality"
+    },
+
+    "status": {
+        "open": "Open",
+        "close": "Closed"
+    },
+
+    "categories": {
+        "restaurants": "Restaurants",
+        "fridges": "Fridges"
+    },
+
+    "command": {
+        "status": "Order status:",
+        "user": "Client name:",
+        "creation_date": "Order date",
+        "total_amount": "Order price",
+        "hour": "Planned collection time:"
+    },
+
+    "months": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+    },
+
+    "days": {
+        "sunday": "Sunday",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday"
+    }
+}
