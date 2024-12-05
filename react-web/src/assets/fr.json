@@ -49,9 +49,10 @@
     },
 
     "type" : {
+        "user" : "Utilisateur",
         "admin" : "Administrateur",
-        "restorer" : "Restaurateur",
-        "superAdmin" : "Super Administrateur"
+        "owner" : "Restaurateur",
+        "superuser" : "Super Administrateur"
     },
 
     "buttons": {
@@ -91,7 +92,7 @@
             "Establishment": "Etablissement",
             "restaurants": "Lieux de restauration"
         },
-        "restorer" : {
+        "owner" : {
             "products": "Stock",
             "menus": "Menus",
             "commands": "Commandes / Box"
@@ -107,7 +108,7 @@
             "phone": "Téléphone",
             "date": "Date",
             "establishment": "Etablissement",
-            "libelle" : "Libellé",
+            "label" : "Libellé",
             "description": "Description",
             "type": "Type",
             "type_role": "Rôle",
@@ -252,7 +253,7 @@
                 "activeTypes": "Types actifs",
                 "activeCategories": "Catégories comprises dans le menu"
             },
-            "restorer": {
+            "owner": {
                 "head": "Nom Prénom du restaurateur chef",
                 "name": "Nom du restaurant",
                 "acceptAccount": "Accepter le compte",
@@ -270,12 +271,15 @@
 
     "status": {
         "open": "Ouvert",
-        "close": "Fermé"
+        "close": "Fermé",
+        "in_progress" : "En cours",
+        "ready" : "Prête",
+        "Completed" : "Complétée"
     },
 
     "categories": {
-        "restaurants": "Restaurants",
-        "fridges": "Frigos"
+        "restaurant": "Restaurants",
+        "fridge": "Frigos"
     },
 
     "command" : {
@@ -283,7 +287,7 @@
         "user" : "Nom du client :",
         "creation_date" : "Date de la commande",
         "total_amount" : "Prix de la commande",
-        "hour" : "Heure de la collecte prévu :"
+        "pickup_time" : "Heure de la collecte prévu :"
     },
 
     "months": {
