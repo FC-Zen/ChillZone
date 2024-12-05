@@ -27,8 +27,8 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           icon={<Users className="w-6 h-6" />}
-          title={t('type.admin')}
-          value="410"
+          title={t('type.owner')}
+          value="410" 
           trend={{ value: 8.9, isPositive: true }}
         />
         <StatCard

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from '@components/index';
 import { useTranslation } from 'react-i18next';
-import { translationService } from '@/services/index';
+import { translationService } from '@services/index';
 
 export const LoginScreen: React.FC = () => {
   const { t } = useTranslation();

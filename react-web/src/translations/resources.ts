@@ -1,5 +1,4 @@
-import fr from '@assets/fr.json';
-import en from '@assets/en.json';
+import { fr, en } from '@assets/index';
 
 // Liste l'ensemble des langues disponibles pour i18n
 export const resources = {
