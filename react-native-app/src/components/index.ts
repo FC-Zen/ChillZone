@@ -1,2 +1,2 @@
-export { Button } from "./atoms";
-export { UserCard } from "./molecules";
+export { Button } from './atoms/Button';
+export { UserCard } from './molecules';
