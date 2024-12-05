@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Button } from '../atoms/Button';
 
 type UserCardProps = {
   name: string;
@@ -15,7 +14,6 @@ export const UserCard: React.FC<UserCardProps> = ({ name, email, onEdit }) => {
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.email}>{email}</Text>
       </View>
-      {onEdit && <Button title="Click on" />}
     </View>
   );
 };
