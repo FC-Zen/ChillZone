@@ -1,6 +1,6 @@
-import React from 'react';
 import DashboardLayout from '@templates/DashboardLayout';
 import Dashboard from '@pages/Dashboard';
+import '@translations/i18n';
 
 function App() {
   return (

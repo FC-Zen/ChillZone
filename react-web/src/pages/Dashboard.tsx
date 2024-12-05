@@ -1,9 +1,11 @@
-import React from 'react';
 import { Users, MessageSquare, Package, Percent } from 'lucide-react';
 import StatCard from '@atoms/StatCard';
 import Chart from '@molecules/Chart';
+import { useTranslation } from 'react-i18next';
 
 const Dashboard = () => {
+  const { t } = useTranslation();
+  
   const monthlyData = {
     labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Déc'],
     datasets: [
@@ -25,7 +27,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           icon={<Users className="w-6 h-6" />}
-          title="Utilisateurs"
+          title={t('type.admin')}
           value="410"
           trend={{ value: 8.9, isPositive: true }}
         />

@@ -1,0 +1,313 @@
+{
+    "headers": {
+        "connexion" : "Connexion au back-office",
+        "pwdReset": "Mot de passe oublié",
+        "pwdChange": "Réinitialiser mon mot de passe",
+        "recapcommands": "Récapitulatif de mes commandes",
+        "recapReservation": "Récapitulatif de mes réservations",
+        "signinAccount" : "Demande d’inscription restaurateur - Compte ",
+        "signinRestaurant" : "Demande d’inscription restaurateur - Restaurant",
+        "askAdmin": "Demande d’inscription envoyée à l’administrateur ",
+        "home" : "Accueil",
+        "accounts " : "Comptes",
+        "rooms" : "Salles",
+        "reservation" : "Réservations & Signalements",
+        "map" : "Plans & Informations de l’Etablissement",
+        "affiliates" : "Lieux de restauration affiliés",
+        "products" :"Produits",
+        "commands" :"Commandes",
+        "menus" : "Menus"
+    },
+
+    "userGreeting": {
+        "hello": "Bonjour, {{nom}}"
+    },
+
+    "modals": {
+        "edit": {
+            "product": "Modifier le produit",
+            "menu": "Modifier le menu",
+            "room": "Modifier la salle",
+            "stock": "Modifier le stock du produit"
+        },
+        "create": {
+            "account": "Création d’un compte de test étudiant",
+            "room": "Créer une salle",
+            "floor": "Créer un étage",
+            "product": "Créer un produit",
+            "menu": "Créer un menu"
+        },
+        "info": {
+            "command": "Détails de la commande {{ command }}",
+            "establishment": "Informations de l’établissement"
+        },
+        "actions": {
+            "place": "Placement de la salle",
+            "passwordChange": "Modifier mon mot de passe",
+            "user": "Modifier mes informations"
+        }
+    },
+
+    "type" : {
+        "admin" : "Administrateur",
+        "restorer" : "Restaurateur",
+        "superAdmin" : "Super Administrateur"
+    },
+
+    "buttons": {
+        "auth": {
+            "connect": "Se connecter",
+            "return": "Retourner à la page de connexion",
+            "confirmInscription": "Confirmer l’inscription"
+        },
+        "actions": {
+            "save": "Enregistrer",
+            "continue": "Continuer",
+            "confirm": "Confirmer",
+            "back" : "Retour",
+            "reset": "Réinitialiser",
+            "changeMap": "Changer de plan"
+        },
+        "add": {
+            "generic": "Ajouter {{ entity }}",
+            "user": "Ajouter un compte utilisateur",
+            "room": "Ajouter une salle",
+            "floor": "Ajouter un étage",
+            "menu": "Ajouter un menu",
+            "product": "Ajouter un produit"
+        },
+        "commands": {
+            "stateReady": "La commande est prête",
+            "stateFinished": "La commande a été récupérée"
+        }
+    },
+
+    "navbar": {
+        "home": "Acceuil",
+        "admin" : {
+            "users": "Utilisateurs",
+            "rooms": "Salles / Box",
+            "reservation": "Réservations",
+            "Establishment": "Etablissement",
+            "restaurants": "Lieux de restauration"
+        },
+        "restorer" : {
+            "products": "Stock",
+            "menus": "Menus",
+            "commands": "Commandes / Box"
+        }
+    },
+
+    "fields": {
+        "common": {
+            "mail": "Adresse mail",
+            "commentary": "Commentaire",
+            "first_name": "Prénom",
+            "last_name": "Nom",
+            "phone": "Téléphone",
+            "date": "Date",
+            "establishment": "Etablissement",
+            "libelle" : "Libellé",
+            "description": "Description",
+            "type": "Type",
+            "type_role": "Rôle",
+            "category": "Catégorie",
+            "capacity": "Capacité",
+            "location": "Emplacement",
+            "price": "Prix",
+            "quantity": "Quantité"
+        },
+        "auth": {
+            "password": "Mot de passe",
+            "newPassword": "Nouveau mot de passe",
+            "verifyNewPassword": "Confirmez le mot de passe",
+            "lastPassword": "Entrez votre ancien mot de passe"
+        },
+        "map_floor": {
+            "display": "Etage {{ floor }}",
+            "number": "Nombre de l’étage",
+            "name": "Nom de l’étage"
+        },
+        "hours": {
+            "opening_time": "Heure ouverture",
+            "closing_time": "Heure fermeture",
+            "schedules": "Horaires"
+        },
+        "address": {
+            "city": "Ville",
+            "postal_code": "Code Postal",
+            "address": "Adresse"
+        },
+        "search": "Chercher dans la table"
+    },
+
+    "dashboard": {
+        "graph" : {
+            "reservation" : "Nombre de réservation par mois",
+            "commands" : "Nombre de commandes par mois",
+            "cnx" : "Nombre de connexions par mois"
+        },
+        "info" : {
+            "users" : "Utilisateurs",
+            "conflict" : "Signalements reçus",
+            "openRooms" : "Salles / box disponibles",
+            "occupationTime" : "Taux d’occupation des box/salles",
+            "mostWantedProduct" : "Produit le plus vendu",
+            "mostWantedMenu" : "Menu le plus vendu",
+            "commandsNow" : "Commandes à faire",
+            "commandsToday" : "Commandes réalisées",
+            "commandsTodo" : "Commandes prévues",
+            "actives" : "actifs",
+            "onMonth" : "sur le mois",
+            "onHour" : "sur l’heure actuelle",
+            "now" : "actuellement",
+            "today" : "aujourd'hui"
+        }
+    },
+    
+    "info" : {
+        "infoSignIn" : "Votre demande a été bien envoyée à l’administrateur de l’établissement concerné par votre demande. Vous recevrez un mail d’ici peu",
+        "infoPwd" : "Si le compte existe, vous receverez un mail sous peu",
+        "recoverPwd" : "J’ai oublié mon mot de passe",
+        "singin" : "Je veux m’inscrire en tant que restaurateur",
+        "rememberMe" : "Se souvenir de moi"
+    },
+
+    "tables": {
+        "titles": {
+            "table_restauration_place": "Tableau des lieux de restauration affiliés à l’établissement",
+            "affiliationRequests": "Tableau de demandes d'affiliation des lieux de restauration à l’établissement",
+            "reservations": "Tableau des réservations",
+            "conflicts": "Tableau des signalements",
+            "currentcommands": "Dernières commandes en cours",
+            "restauration_place": "Mes lieux de restauration"
+        },
+        "headers": {
+            "user": {
+                "fullName": "Nom Prénom",
+                "mail": "Adresse mail",
+                "type": "Rôle",
+                "establishment": "Etablissement",
+                "reservationCount": "Nombre de réservations faites",
+                "blockReservations": "Bloquer les réservations",
+                "deleteAccount": "Supprimer le compte"
+            },
+            "room": {
+                "name": "Nom de la salle",
+                "description": "Description de la salle",
+                "capacity": "Capacité de la salle",
+                "floor": "Etage",
+                "isRoomFree": "La salle est libre actuellement ?",
+                "modify": "Modifier"
+            },
+            "reservation": {
+                "id": "ID réservation",
+                "day_reservation": "Date",
+                "start_time": "Heure de début",
+                "end_time": "Heure de fin",
+                "status": "Status",
+                "isCanceled": "Annulé ?"
+            },
+            "conflict": {
+                "comment": "Description du signalement",
+                "user": "Etudiant responsable"
+            },
+            "restaurant": {
+                "name": "Nom du lieu de restauration",
+                "type": "Type de lieu de restauration",
+                "location": "Emplacement du lieu de restauration",
+                "email": "Adresse mail du lieu de restauration",
+                "isCurrentlyOpen": "Ouvert actuellement",
+                "unlinkRestaurant": "Supprimer le lien entre le lieu et l’établissement",
+                "declineAffiliation": "Refuser l’affiliation",
+                "acceptAffiliation": "Accepter l’affiliation"
+            },
+            "command": {
+                "id": "ID commande",
+                "user": "Etudiant",
+                "total_amount": "Total",
+                "location": "Nom du lieu",
+                "collectionStartTime": "Début de l’heure de collecte",
+                "client": "Nom du client",
+                "creation_date": "Date de création",
+                "actions" : {
+                    "viewcommand": "Voir la commande",
+                    "actionDetails": "Détails de la commande",
+                    "editQuantity": "Modifier la quantité"
+                }
+            },
+            "product" : {
+                "type": "Type",
+                "name": "Nom du produit",
+                "description": "Description du produit",
+                "price": "Prix",
+                "quantity": "Quantité",
+                "category": "Catégorie",
+                "tag": "Tags"
+            },
+            "menu": {
+                "name": "Nom du menu",
+                "description": "Description du menu",
+                "price": "Prix",
+                "activeTypes": "Types actifs",
+                "activeCategories": "Catégories comprises dans le menu"
+            },
+            "restorer": {
+                "head": "Nom Prénom du restaurateur chef",
+                "name": "Nom du restaurant",
+                "acceptAccount": "Accepter le compte",
+                "declineAccount": "Refuser le compte",
+                "deleteRestaurantAccount": "Supprimer le compte"
+            }
+        }
+    },
+    
+    "rooms": {
+        "baseFloor": "RDC",
+        "floor": "Etage {{x}}",
+        "AR": "Réalité augmenté"
+    },
+
+    "status": {
+        "open": "Ouvert",
+        "close": "Fermé"
+    },
+
+    "categories": {
+        "restaurants": "Restaurants",
+        "fridges": "Frigos"
+    },
+
+    "command" : {
+        "status" : "Statut de la commande :",
+        "user" : "Nom du client :",
+        "creation_date" : "Date de la commande",
+        "total_amount" : "Prix de la commande",
+        "hour" : "Heure de la collecte prévu :"
+    },
+
+    "months": {
+        "january": "Janvier",
+        "february": "Février",
+        "march": "Mars",
+        "april": "Avril",
+        "may": "Mai",
+        "june": "Juin",
+        "july": "Juillet",
+        "august": "Août",
+        "september": "Septembre",
+        "october": "Octobre",
+        "november": "Novembre",
+        "december": "Décembre"
+    },
+    
+    "days": {
+        "sunday": "Dimanche",
+        "monday": "Lundi",
+        "tuesday": "Mardi",
+        "wednesday": "Mercredi",
+        "thursday": "Jeudi",
+        "friday": "Vendredi",
+        "saturday": "Samedi"
+    }
+}
