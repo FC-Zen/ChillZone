@@ -4,7 +4,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@*": ["src/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
@@ -17,7 +17,7 @@
       "@theme/*": ["src/theme/*"],
       "@translations/*": ["src/translations/*"],
       "@types/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"],
+      "@utils/*": ["src/utils/*"]
     }
   }
 }

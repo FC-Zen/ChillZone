@@ -1,2 +1,2 @@
 export { Button } from './atoms';
-export { UserCard } from './molecules';
+export { Input } from './molecules';
