@@ -11,10 +11,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     width: 16,
     height: 16,
-    padding: 1,
+    padding: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 10,
     borderRadius: 3,
     borderWidth: 1,
     borderColor: colors.darkCyan,
@@ -22,15 +21,18 @@ const styles = StyleSheet.create({
   },
   checked: {
     backgroundColor: colors.darkCyan,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   checkmark: {
+    fontSize: 10,
     color: colors.white,
-    fontSize: 12,
+    textAlign: 'center',
   },
   label: {
     fontSize: typography.h3.fontSize,
     marginLeft: 10,
-    color: '#000',
+    color: colors.black,
   },
 });
 
