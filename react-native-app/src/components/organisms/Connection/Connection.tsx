@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './style';
 import { Button, Checkbox, Input } from '@components';
 import { useTranslation } from 'react-i18next';
 import { logoIUT } from '@assets/Images';
+import { useNavigation } from '@hooks';
+import { ROUTE } from '@enums';
 
 export const Connection = () => {
   const { t } = useTranslation();
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [isChecked, setChecked] = useState(false);
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -43,9 +46,13 @@ export const Connection = () => {
         />
       </View>
 
-      <Text style={styles.underlineText}>
-        Vous avez oublié votre mot de passe ?
-      </Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(ROUTE.FORGOT_PASSWORD)}
+      >
+        <Text style={styles.underlineText}>
+          Vous avez oublié votre mot de passe ?
+        </Text>
+      </TouchableOpacity>
 
       <Button title="Se connecter" onPress={() => {}} />
     </View>

@@ -1,1 +1,1 @@
-export { UserRole, AppTheme, NotificationType } from './enums';
+export { ROUTE } from './route';
