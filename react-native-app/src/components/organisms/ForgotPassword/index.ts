@@ -1,2 +1,1 @@
-export { Connection } from './Connection';
 export { ForgotPassword } from './ForgotPassword';

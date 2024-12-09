@@ -1,10 +1,9 @@
+import { colors, typography } from '@theme';
 import { StyleSheet } from 'react-native';
-import { colors, layout, typography } from '@theme';
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '100%',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -16,15 +15,14 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '100%',
-    marginBottom: 20,
-  },
-  checkboxContainer: {
-    marginBottom: 20,
-  },
-  underlineText: {
-    textDecorationLine: 'underline',
-    color: colors.resolutionBlue,
     marginBottom: 40,
+  },
+  title: {
+    fontSize: typography.h2.fontSize,
+    color: colors.black,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
   },
 });
 

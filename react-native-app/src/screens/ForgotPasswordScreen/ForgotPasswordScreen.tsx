@@ -1,17 +1,11 @@
-import { Input } from '@components';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { ForgotPasswordTemplate } from '@components';
 
 export const ForgotPasswordScreen: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Input
-        icon="User"
-        placeholder="Email"
-        variant="default"
-        onChangeText={() => {}}
-        value=""
-      />
+      <ForgotPasswordTemplate />
     </View>
   );
 };

@@ -42,19 +42,17 @@ export const Connection = () => {
         <Checkbox
           checked={isChecked}
           onChange={() => setChecked(!isChecked)}
-          label="Se souvenir de moi"
+          label={t('categories.rememberMe')}
         />
       </View>
 
       <TouchableOpacity
         onPress={() => navigation.navigate(ROUTE.FORGOT_PASSWORD)}
       >
-        <Text style={styles.underlineText}>
-          Vous avez oublié votre mot de passe ?
-        </Text>
+        <Text style={styles.underlineText}>{t('questions.pwd')}</Text>
       </TouchableOpacity>
 
-      <Button title="Se connecter" onPress={() => {}} />
+      <Button title={t('buttons.auth.connect')} onPress={() => {}} />
     </View>
   );
 };
