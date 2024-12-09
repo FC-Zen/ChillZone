@@ -11,7 +11,6 @@ module.exports = {
       },
     },
   },
-  assets: ['./assets/fonts'],
   plugins: ['@typescript-eslint', 'import'],
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   settings: {

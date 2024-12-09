@@ -2,7 +2,6 @@ module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
-    assets: ['./assets/fonts'],
     plugins: [
       [
         'module-resolver',
