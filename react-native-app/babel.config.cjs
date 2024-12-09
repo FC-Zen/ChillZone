@@ -2,6 +2,7 @@ module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
+    assets: ['./assets/fonts'],
     plugins: [
       [
         'module-resolver',
@@ -24,7 +25,7 @@ module.exports = function (api) {
             '@types': './src/types',
             '@utils': './src/utils',
 
-            "@mocks": "./jest/",
+            '@mocks': './jest/',
           },
         },
       ],

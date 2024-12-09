@@ -3,3 +3,6 @@ export { fr };
 
 import en from './en.json';
 export { en };
+
+export * as Image from './Images';
+export { VectorHeader, VectorBottom } from './Images';
