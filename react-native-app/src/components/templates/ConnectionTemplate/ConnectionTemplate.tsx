@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { VectorHeader, VectorBottom } from '@assets';
+import { VectorHeader, VectorBottom } from '@components';
 import { Connection } from '@components/organisms/Connection';
 import styles from './style';
 
