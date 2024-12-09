@@ -15,7 +15,6 @@ export const Connection = () => {
     <View style={styles.container}>
       <Image source={logoIUT} style={styles.logo} />
 
-      {/* Espacement entre les composants */}
       <View style={styles.inputContainer}>
         <Input
           icon="User"

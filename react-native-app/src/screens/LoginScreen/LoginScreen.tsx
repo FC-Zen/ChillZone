@@ -1,11 +1,11 @@
-import { Connection } from '@components';
+import { ConnectionTemplate } from '@components';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 export const LoginScreen: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Connection />
+      <ConnectionTemplate />
     </View>
   );
 };

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   underlineText: {
     textDecorationLine: 'underline',
     color: colors.darkCyan,
-    marginBottom: 20,
+    marginBottom: 40,
   },
 });
 
