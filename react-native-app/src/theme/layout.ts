@@ -1,7 +1,7 @@
 import { Dimensions, PixelRatio } from 'react-native';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const window = Dimensions.get('window');
+const screen = Dimensions.get('screen');
 const pixelRatio = (): number => PixelRatio.get();
 const pixelRatioFontScale = (): number => PixelRatio.getFontScale();
 const scale = pixelRatio() * pixelRatioFontScale();
@@ -80,17 +80,15 @@ const radius = {
 } as const;
 
 export const layout = {
-  window: {
-    width,
-    height,
-  },
+  window,
+  screen,
   pixelRatio,
   pixelRatioFontScale,
   isHighScale,
   isMediumScale,
   scale,
-  isSmallDevice: width < 375,
-  isLargeDevice: width > 375,
+  isSmallDevice: screen.width < 375,
+  isLargeDevice: screen.width > 375,
   radius,
   space,
   size: size,

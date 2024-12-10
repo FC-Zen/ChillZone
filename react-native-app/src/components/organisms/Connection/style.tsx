@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { colors, typography } from '@theme';
+import { colors, layout, typography } from '@theme';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '100%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
