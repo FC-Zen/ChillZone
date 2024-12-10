@@ -6,7 +6,7 @@ import NotificationItem from '../../molecules/Notification/NotificationItem';
 interface Notification {
   id: number;
   title: string;
-  message: string;
+  description: string;
   time: string;
 }
 
@@ -23,7 +23,7 @@ const NotificationList: React.FC<NotificationListProps> = ({
       renderItem={({ item }) => (
         <NotificationItem
           title={item.title}
-          message={item.message}
+          description={item.description}
           time={item.time}
         />
       )}
