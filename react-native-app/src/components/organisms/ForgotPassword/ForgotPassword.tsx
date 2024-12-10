@@ -1,35 +1,42 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, Image } from 'react-native';
 import styles from './style';
 import { Button, Input } from '@components';
-import { useTranslation } from 'react-i18next';
-import { logoIUT } from '@assets/Images';
-import { useNavigation } from '@hooks';
-import { ROUTE } from '@enums';
 
-export const ForgotPassword = () => {
-  const { t } = useTranslation();
-  const [inputEmail, setInputEmail] = useState('');
-  const navigation = useNavigation();
+type ForgotPasswordProps = {
+  logo: any;
+  headerText: string;
+  placeholderText: string;
+  buttonTitle: string;
+  onSendPress: () => void;
+  inputEmail: string;
+  setInputEmail: (email: string) => void;
+};
 
+export const ForgotPassword: React.FC<ForgotPasswordProps> = ({
+  logo,
+  headerText,
+  placeholderText,
+  buttonTitle,
+  onSendPress,
+  inputEmail,
+  setInputEmail,
+}) => {
   return (
     <View style={styles.container}>
-      <Image source={logoIUT} style={styles.logo} />
-      <Text style={styles.title}>{t('headers.pwdReset')}</Text>
+      <Image source={logo} style={styles.logo} />
+      <Text style={styles.title}>{headerText}</Text>
       <View style={styles.inputContainer}>
         <Input
           icon="Inbox"
           onChangeText={setInputEmail}
-          placeholder={t('fields.common.mail')}
+          placeholder={placeholderText}
           value={inputEmail}
           variant="default"
         />
       </View>
 
-      <Button
-        title={t('buttons.actions.send')}
-        onPress={() => navigation.navigate(ROUTE.FORGOT_MDP)}
-      />
+      <Button title={buttonTitle} onPress={onSendPress} />
     </View>
   );
 };

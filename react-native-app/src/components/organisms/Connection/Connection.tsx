@@ -1,28 +1,50 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './style';
 import { Button, Checkbox, Input } from '@components';
-import { useTranslation } from 'react-i18next';
-import { logoIUT } from '@assets/Images';
-import { useNavigation } from '@hooks';
-import { ROUTE } from '@enums';
 
-export const Connection = () => {
-  const { t } = useTranslation();
-  const [inputEmail, setInputEmail] = useState('');
-  const [inputPassword, setInputPassword] = useState('');
-  const [isChecked, setChecked] = useState(false);
-  const navigation = useNavigation();
+export type ConnectionProps = {
+  inputEmail: string;
+  setInputEmail: (email: string) => void;
+  inputPassword: string;
+  setInputPassword: (password: string) => void;
+  isChecked: boolean;
+  setChecked: (checked: boolean) => void;
+  onLogin: () => void;
+  logo: any;
+  placeholderEmail: string;
+  placeholderPassword: string;
+  rememberMeLabel: string;
+  forgotPasswordText: string;
+  buttonText: string;
+  navigateToForgotPassword: () => void;
+};
 
+export const Connection: React.FC<ConnectionProps> = ({
+  inputEmail,
+  setInputEmail,
+  inputPassword,
+  setInputPassword,
+  isChecked,
+  setChecked,
+  onLogin,
+  logo,
+  placeholderEmail,
+  placeholderPassword,
+  rememberMeLabel,
+  forgotPasswordText,
+  buttonText,
+  navigateToForgotPassword,
+}) => {
   return (
     <View style={styles.container}>
-      <Image source={logoIUT} style={styles.logo} />
+      <Image source={logo} style={styles.logo} />
 
       <View style={styles.inputContainer}>
         <Input
           icon="User"
           onChangeText={setInputEmail}
-          placeholder={t('fields.common.mail')}
+          placeholder={placeholderEmail}
           value={inputEmail}
           variant="default"
         />
@@ -32,7 +54,7 @@ export const Connection = () => {
         <Input
           icon="Lock"
           onChangeText={setInputPassword}
-          placeholder={t('fields.auth.password')}
+          placeholder={placeholderPassword}
           value={inputPassword}
           variant="password"
         />
@@ -42,20 +64,15 @@ export const Connection = () => {
         <Checkbox
           checked={isChecked}
           onChange={() => setChecked(!isChecked)}
-          label={t('categories.rememberMe')}
+          label={rememberMeLabel}
         />
       </View>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate(ROUTE.FORGOT_PASSWORD)}
-      >
-        <Text style={styles.underlineText}>{t('questions.pwd')}</Text>
+      <TouchableOpacity onPress={navigateToForgotPassword}>
+        <Text style={styles.underlineText}>{forgotPasswordText}</Text>
       </TouchableOpacity>
 
-      <Button
-        title={t('buttons.auth.connect')}
-        onPress={() => {}} // on mettra la route pour la page Home
-      />
+      <Button title={buttonText} onPress={onLogin} />
     </View>
   );
 };

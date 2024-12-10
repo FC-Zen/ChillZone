@@ -1,28 +1,30 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, Image } from 'react-native';
 import styles from './style';
-import { Button, Checkbox, Input } from '@components';
-import { useTranslation } from 'react-i18next';
-import { logoIUT } from '@assets/Images';
-import { useNavigation } from '@hooks';
-import { ROUTE } from '@enums';
+import { Button } from '@components';
 
-export const ForgotMdp = () => {
-  const { t } = useTranslation();
-  const [inputEmail, setInputEmail] = useState('');
-  const navigation = useNavigation();
+type ForgotMdpProps = {
+  logo: any;
+  title: string;
+  infoText: string;
+  buttonTitle: string;
+  onButtonPress: () => void;
+};
 
+export const ForgotMdp: React.FC<ForgotMdpProps> = ({
+  logo,
+  title,
+  infoText,
+  buttonTitle,
+  onButtonPress,
+}) => {
   return (
     <View style={styles.container}>
-      <Image source={logoIUT} style={styles.logo} />
-      <Text style={styles.title}>{t('headers.pwdReset')}</Text>
+      <Image source={logo} style={styles.logo} />
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.txt}>{infoText}</Text>
 
-      <Text style={styles.txt}>{t('questions.infoPwd')}</Text>
-
-      <Button
-        title={t('buttons.auth.connect')}
-        onPress={() => navigation.navigate(ROUTE.LOGIN_SCREEN)}
-      />
+      <Button title={buttonTitle} onPress={onButtonPress} />
     </View>
   );
 };

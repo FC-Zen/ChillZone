@@ -1,27 +1,42 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, Image } from 'react-native';
 import styles from './style';
 import { Button, Input } from '@components';
-import { useTranslation } from 'react-i18next';
-import { logoIUT } from '@assets/Images';
-import { useNavigation } from '@hooks';
-import { ROUTE } from '@enums';
 
-export const ResetPassword = () => {
-  const { t } = useTranslation();
-  const [inputPassword, setInputPassword] = useState('');
-  const [inputPassword2, setInputPassword2] = useState('');
-  // const navigation = useNavigation();
+type ResetPasswordProps = {
+  logo: any;
+  title: string;
+  placeholderPassword: string;
+  placeholderVerifyPassword: string;
+  buttonTitle: string;
+  onModifyPress: () => void;
+  inputPassword: string;
+  setInputPassword: (value: string) => void;
+  inputPassword2: string;
+  setInputPassword2: (value: string) => void;
+};
 
+export const ResetPassword: React.FC<ResetPasswordProps> = ({
+  logo,
+  title,
+  placeholderPassword,
+  placeholderVerifyPassword,
+  buttonTitle,
+  onModifyPress,
+  inputPassword,
+  setInputPassword,
+  inputPassword2,
+  setInputPassword2,
+}) => {
   return (
     <View style={styles.container}>
-      <Image source={logoIUT} style={styles.logo} />
-      <Text style={styles.title}>{t('headers.pwdReset')}</Text>
+      <Image source={logo} style={styles.logo} />
+      <Text style={styles.title}>{title}</Text>
       <View style={styles.inputContainer}>
         <Input
           icon="Lock"
           onChangeText={setInputPassword}
-          placeholder={t('fields.auth.newPassword')}
+          placeholder={placeholderPassword}
           value={inputPassword}
           variant="password"
         />
@@ -30,13 +45,13 @@ export const ResetPassword = () => {
         <Input
           icon="Lock"
           onChangeText={setInputPassword2}
-          placeholder={t('fields.auth.verifyNewPassword')}
+          placeholder={placeholderVerifyPassword}
           value={inputPassword2}
           variant="password"
         />
       </View>
 
-      <Button title={t('buttons.actions.modify')} onPress={() => {}} />
+      <Button title={buttonTitle} onPress={onModifyPress} />
     </View>
   );
 };
