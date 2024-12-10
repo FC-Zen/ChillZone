@@ -52,7 +52,10 @@ export const Connection = () => {
         <Text style={styles.underlineText}>{t('questions.pwd')}</Text>
       </TouchableOpacity>
 
-      <Button title={t('buttons.auth.connect')} onPress={() => {}} />
+      <Button
+        title={t('buttons.auth.connect')}
+        onPress={() => {}} // on mettra la route pour la page Home
+      />
     </View>
   );
 };
