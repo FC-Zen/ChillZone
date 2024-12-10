@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ForgotPasswordScreen, LoginScreen } from '@screens';
+import { ForgotMdpScreen, ForgotPasswordScreen, LoginScreen } from '@screens';
 import { ROUTE } from '@enums';
 
 const Stack = createNativeStackNavigator();
@@ -18,6 +18,11 @@ export const RootNavigator = () => {
         <Stack.Screen
           name={ROUTE.FORGOT_PASSWORD}
           component={ForgotPasswordScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={ROUTE.FORGOT_MDP}
+          component={ForgotMdpScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

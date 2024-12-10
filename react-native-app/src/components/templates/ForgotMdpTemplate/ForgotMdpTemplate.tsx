@@ -1,15 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { VectorHeader, VectorBottom } from '@components';
-import { ForgotPassword } from '@components/organisms';
+import { ForgotMdp } from '@components/organisms';
 import styles from './style';
 
-export const ForgotPasswordTemplate = () => {
+export const ForgotMdpTemplate = () => {
   return (
     <View style={styles.container}>
       <VectorHeader />
       <View style={styles.contentContainer}>
-        <ForgotPassword />
+        <ForgotMdp />
       </View>
       <VectorBottom />
     </View>

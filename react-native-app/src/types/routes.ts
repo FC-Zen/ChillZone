@@ -6,6 +6,7 @@ export type RootStackParamList = {
   [ROUTE.HOME]: undefined;
   [ROUTE.LOGIN_SCREEN]: undefined;
   [ROUTE.FORGOT_PASSWORD]: undefined;
+  [ROUTE.FORGOT_MDP]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
@@ -13,6 +14,7 @@ export type RouteParamList = {
   Home: undefined;
   LoginScreen: undefined; // Correspond à ROUTE.LOGIN_SCREEN
   ForgotPasswordScreen: undefined;
+  ForgotMdpScreen: undefined;
 };
 
 // Typage des propriétés des écrans
