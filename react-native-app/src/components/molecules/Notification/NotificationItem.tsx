@@ -13,7 +13,7 @@ export type NotificationProps = {
   icon: {
     name: IconProps['name'];
     color: string;
-  }
+  };
   handlePress?: () => void;
 };
 
