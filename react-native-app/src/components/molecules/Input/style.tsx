@@ -24,7 +24,6 @@ export const InputStyles = StyleSheet.create({
     flexDirection: 'row',
     height: 60,
     minWidth: '80%',
-    paddingVertical: 10,
     paddingHorizontal: 25,
     alignItems: 'center',
     gap: 15,
