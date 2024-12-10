@@ -1,0 +1,40 @@
+{
+    "reservations": [
+    {
+        "reservation_id": 1,
+        "reservation_status": "Confirmed",
+        "start_time": "14:00:00",
+        "end_time": "16:00:00",
+        "day_reservation": "2024-12-12",
+        "location": {
+            "location_id": 101,
+            "location_name": "Salle de conférence A",
+            "position_x": 12,
+            "position_y": 34,
+            "floor_name": "Etage 1"
+        },
+        "establishment": {
+            "establishment_id": 201,
+            "establishment_name": "Université Gustave Eiffel"
+        }
+    },
+    {
+        "reservation_id": 2,
+        "reservation_status": "Pending",
+        "start_time": "09:00:00",
+        "end_time": "11:00:00",
+        "day_reservation": "2024-12-13",
+        "location": {
+            "location_id": 102,
+            "location_name": "Salle de réunion B",
+            "position_x": 15,
+            "position_y": 45,
+            "floor_name": "Etage 1"
+        },
+        "establishment": {
+            "establishment_id": 201,
+            "establishment_name": "Université Gustave Eiffel"
+        }
+    }
+    ]
+}  

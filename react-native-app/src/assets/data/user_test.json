@@ -1,0 +1,13 @@
+{
+    "id": 145,
+    "first_name": "Alexandre",
+    "last_name": "Pitou",
+    "type": "User",
+    "email": "alx.pitou@edu-univ-eiffel.fr",
+    "phone": "0123456789",
+    "role": "Etudiante",
+    "status": "Verified",
+    "photo_link": "https://example.com/photo.jpg",
+    "password": "hashedpassword123",
+    "establishment": 101
+}

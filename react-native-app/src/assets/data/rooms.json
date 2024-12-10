@@ -1,0 +1,39 @@
+{
+    "rooms": [
+    {
+        "id": 1,
+        "name": "Salle A101",
+        "description": "Salle équipée pour les conférences",
+        "capacity": 100,
+        "status": true,
+        "position_x": 10,
+        "position_y": 20,
+        "floor": 1,
+        "photo_link": "http://example.com/salle_a101.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Box B202",
+        "description": "Box de réunion avec écran et tableau blanc",
+        "capacity": 20,
+        "status": true,
+        "position_x": 15,
+        "position_y": 25,
+        "floor": 2,
+        "photo_link": "http://example.com/salle_b202.jpg",
+        "tag_label" : "Salle"
+    },
+    {
+        "id": 3,
+        "name": "Salle C303",
+        "description": "Salle de classe avec ordinateurs",
+        "capacity": 30,
+        "status": false,
+        "position_x": 5,
+        "position_y": 10,
+        "floor": 3,
+        "photo_link": "http://example.com/salle_c303.jpg",
+        "tag_label" : "Salle"
+    }
+    ]
+}
