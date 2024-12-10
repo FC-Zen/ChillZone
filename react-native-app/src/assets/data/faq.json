@@ -1,0 +1,41 @@
+[
+    {
+        "category": "Admissions",
+        "faq_details": [
+            {
+                "question": "Quels sont les documents nécessaires pour une admission ?",
+                "answer": "Un CV, une lettre de motivation, et les relevés de notes."
+            },
+            {
+                "question": "Y a-t-il une limite d'âge pour postuler ?",
+                "answer": "Non, il n'y a pas de limite d'âge."
+            }
+        ]
+    },
+    {
+        "category": "Campus",
+        "faq_details": [
+            {
+                "question": "Quels services sont disponibles sur le campus ?",
+                "answer": "Bibliothèque, cafétéria, espaces de coworking."
+            },
+            {
+                "question": "Le campus est-il accessible aux personnes à mobilité réduite ?",
+                "answer": "Oui, le campus est entièrement accessible."
+            }
+        ]
+    },
+    {
+        "category": "Examens",
+        "faq_details": [
+            {
+                "question": "Puis-je reporter un examen ?",
+                "answer": "Oui, en cas de justification valide (maladie, etc.)."
+            },
+            {
+                "question": "Comment connaître les dates des examens ?",
+                "answer": "Les dates sont disponibles sur le portail étudiant."
+            }
+        ]
+    }
+]

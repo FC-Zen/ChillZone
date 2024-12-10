@@ -1,0 +1,40 @@
+{
+    "notification": 
+    [
+        {
+            "title": "Confirmation de réservation",
+            "description": "Votre réservation pour la salle sélectionnée a été confirmée. Vous pouvez maintenant préparer votre venue.",
+            "date": "2024-12-10T09:00:00"
+        },
+        {
+            "title": "Confirmation de paiement",
+            "description": "Votre paiement pour le repas a été traité avec succès. Vous pouvez récupérer votre commande à l'heure prévue.",
+            "date": "2024-12-10T09:15:00"
+        },
+        {
+            "title": "Rupture de stock",
+            "description": "Un produit est actuellement en rupture de stock. Veuillez vérifier les alternatives disponibles ou réapprovisionner dès que possible.",
+            "date": "2024-12-10T09:30:00"
+        },
+        {
+            "title": "Rappel de réservation",
+            "description": "Ce message vous rappelle que votre réservation de salle commencera dans 30 minutes. Merci de vous préparer.",
+            "date": "2024-12-10T09:45:00"
+        },
+        {
+            "title": "Changement ou annulation de réservation",
+            "description": "Une modification ou annulation a été effectuée sur votre réservation. Veuillez consulter votre agenda pour plus de détails.",
+            "date": "2024-12-10T10:00:00"
+        },
+        {
+            "title": "Rappel de retrait de repas",
+            "description": "Ce message vous rappelle que votre repas est prêt à être récupéré dans 30 minutes. Merci de venir à l'heure.",
+            "date": "2024-12-10T10:30:00"
+        },
+        {
+            "title": "Annonce concernant l'établissement",
+            "description": "Une annonce importante a été faite concernant votre établissement. Veuillez la consulter pour rester informé des nouvelles mises à jour.",
+            "date": "2024-12-10T11:00:00"
+        }
+    ]
+}

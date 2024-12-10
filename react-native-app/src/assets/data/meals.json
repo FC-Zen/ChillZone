@@ -1,0 +1,66 @@
+[
+    {
+        "meal_id": 1,
+        "meal_name": "Salade César",
+        "meal_description": "Une délicieuse salade avec de la laitue, du poulet grillé, du fromage parmesan, et une vinaigrette césar.",
+        "meal_type": "Starter",
+        "meal_photo": "~/assets/data/Images_test/meal.png",
+        "meal_price": 8.5,
+        "meal_stock": 20,
+        "tags": [
+        {
+            "tag_id": 1,
+            "tag_label": "Vegan"
+        },
+        {
+            "tag_id": 2,
+            "tag_label": "Healthy"
+        }
+        ]
+    },
+    {
+        "meal_id": 2,
+        "meal_name": "Pizza Margherita",
+        "meal_description": "Pizza classique avec sauce tomate, mozzarella, et basilic frais.",
+        "meal_type": "Main",
+        "meal_photo": "~/assets/data/Images_test/meal.png",
+        "meal_price": 12.0,
+        "meal_stock": 15,
+        "tags": [
+        {
+            "tag_id": 3,
+            "tag_label": "Vegetarian"
+        }
+        ]
+    },
+    {
+        "meal_id": 3,
+        "meal_name": "Tiramisu chocolat",
+        "meal_description": "Dessert italien à base de mascarpone, café, et cacao.",
+        "meal_type": "Dessert",
+        "meal_photo": "~/assets/data/Images_test/meal.png",
+        "meal_price": 6.0,
+        "meal_stock": 30,
+        "tags": [
+        {
+            "tag_id": 4,
+            "tag_label": "Sweet"
+        }
+        ]
+    },
+    {
+        "meal_id": 3,
+        "meal_name": "Tiramisu fraise",
+        "meal_description": "Dessert italien à base de mascarpone, café, et fraise.",
+        "meal_type": "Dessert",
+        "meal_photo": "~/assets/data/Images_test/meal.png",
+        "meal_price": 6.0,
+        "meal_stock": 30,
+        "tags": [
+        {
+            "tag_id": 4,
+            "tag_label": "Sweet"
+        }
+        ]
+    }
+]  
