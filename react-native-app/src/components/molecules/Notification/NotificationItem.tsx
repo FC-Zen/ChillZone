@@ -5,13 +5,13 @@ import { Icon } from '../../atoms/Icons/Icon';
 
 interface NotificationItemProps {
   title: string;
-  message: string;
+  description: string;
   time: string;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   title,
-  message,
+  description,
   time,
 }) => {
   return (
@@ -19,7 +19,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       <Icon name="Lock" />
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.message}>{message}</Text>
+        <Text style={styles.message}>{description}</Text>
       </View>
       <Text style={styles.time}>{time}</Text>
     </View>
