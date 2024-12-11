@@ -1,0 +1,26 @@
+.button {
+  display: flex;
+  padding: 12px 20px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 24px;
+  border: 1px solid white;
+  z-index: 10;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.button.primary {
+  background-color: '#2E2A85';
+  color: white;
+}
+
+.button.secondary {
+  background-color: white;
+  color: black;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
