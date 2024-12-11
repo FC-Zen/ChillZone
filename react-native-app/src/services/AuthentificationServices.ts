@@ -1,8 +1,6 @@
-import { Data } from "@assets";
-
 // Exemples d'authentification
-const validEmail = Data.user_test.email; // Exemple d'email
-const validPassword = Data.user_test.password; // Exemple de mot de passe
+const validEmail = 'user@example.com';
+const validPassword = 'password123'; // Exemple de mot de passe
 
 // Fonction de connexion
 export const authenticateUser = async (email: string, password: string) => {
