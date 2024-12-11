@@ -1,0 +1,1 @@
+export { ForgotMdpTemplate } from './ForgotMdpTemplate';
