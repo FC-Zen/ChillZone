@@ -1,10 +1,9 @@
-import { colors, layout } from '@theme';
+import { colors } from '@theme';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '100%',
+    flex: 1,
     backgroundColor: colors.white,
   },
   contentContainer: {
