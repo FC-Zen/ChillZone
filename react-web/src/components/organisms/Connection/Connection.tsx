@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Checkbox, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Input } from '@molecules/Input';
+import { Button, Checkbox } from '@components/atoms';
+import { Container, Row, Col } from 'react-bootstrap';
 
 export type ConnectionProps = {
   inputEmail: string;
@@ -36,84 +37,84 @@ export const Connection: React.FC<ConnectionProps> = ({
   navigateToForgotPassword,
 }) => {
   return (
-    <Box
-      sx={{
-        height: '100%',
-        width: '100%',
+    <Container
+      className=""
+      style={{
+        width: '500px',
+        height: '500px',
+        flexShrink: 0,
+        margin: '0 auto',
+        marginTop: 50,
+        padding: '20px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 2,
       }}
     >
-      <img
-        src={logo}
-        alt="Logo"
-        style={{ width: 100, height: 100, marginBottom: 20 }}
-      />
+      {/* Logo Section */}
+      <Row
+        className="d-flex align-items-center justify-content-center mb-4"
+        style={{ width: 100, height: 100 }}
+      >
+        <img src={logo} alt="Logo" style={{ width: 100, height: 100 }} />
+      </Row>
 
-      <Box sx={{ width: '100%', marginBottom: 2 }}>
-        <TextField
-          fullWidth
-          variant="outlined"
+      {/* Input fields */}
+      <Row className="mb-3 d-flex justify-content-center align-items-center w-100">
+        <Input
+          icon="User"
+          onChangeText={setInputEmail}
           placeholder={placeholderEmail}
           value={inputEmail}
-          onChange={(e) => setInputEmail(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <img
-                src="/path/to/user-icon.svg"
-                alt="User"
-                style={{ width: 24, marginRight: 8 }}
-              />
-            ),
-          }}
+          variant="default"
         />
-      </Box>
+      </Row>
 
-      <Box sx={{ width: '100%', marginBottom: 2 }}>
-        <TextField
-          fullWidth
-          variant="outlined"
-          type="password"
+      <Row className="mb-3 d-flex justify-content-center align-items-center">
+        <Input
+          icon="Lock"
+          onChangeText={setInputPassword}
           placeholder={placeholderPassword}
           value={inputPassword}
-          onChange={(e) => setInputPassword(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <img
-                src="/path/to/lock-icon.svg"
-                alt="Lock"
-                style={{ width: 24, marginRight: 8 }}
-              />
-            ),
-          }}
+          variant="password"
         />
-      </Box>
+      </Row>
 
-      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
-        <Checkbox checked={isChecked} onChange={() => setChecked(!isChecked)} />
-        <Typography variant="body2">{rememberMeLabel}</Typography>
-      </Box>
-
-      <Typography
-        variant="body2"
-        onClick={navigateToForgotPassword}
-        sx={{
-          textDecoration: 'underline',
-          color: 'blue',
-          cursor: 'pointer',
-          marginBottom: 4,
+      {/* Remember Me Checkbox */}
+      <Row
+        className="mb-3"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 5,
         }}
       >
-        {forgotPasswordText}
-      </Typography>
+        <Checkbox checked={isChecked} onChange={() => setChecked(!isChecked)} />
+        <label>{rememberMeLabel}</label>
+      </Row>
 
-      <Button variant="contained" color="primary" onClick={onLogin}>
-        {buttonText}
-      </Button>
-    </Box>
+      {/* Forgot Password Link */}
+      <Row className="mb-4">
+        <Col className="d-flex justify-content-end">
+          <a
+            href="#"
+            onClick={navigateToForgotPassword}
+            style={{ textDecoration: 'underline', color: 'blue' }}
+          >
+            {forgotPasswordText}
+          </a>
+        </Col>
+      </Row>
+
+      {/* Login Button */}
+      <Row>
+        <Col className="d-flex justify-content-center align-items-center ">
+          <Button title={buttonText} onclick={onLogin} variant="primary" />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
