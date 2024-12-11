@@ -28,9 +28,8 @@ export const SnackBar: React.FC<SnackBarProps> = ({
       wrapperStyle={{
         zIndex: 999,
         top: '5%',
-        margin: 16,
         borderRadius: 4,
-        elevation: 10,
+        margin: 16,
       }}
     >
       {message}
