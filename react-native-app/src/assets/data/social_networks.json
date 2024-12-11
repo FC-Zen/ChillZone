@@ -1,0 +1,28 @@
+{
+    "social_networks": [
+        {
+            "type": "Facebook",
+            "link_network": "https://www.facebook.com/universite.gustave.eiffel"
+        },
+        {
+            "type": "Instagram",
+            "link_network": "https://www.instagram.com/universite.gustave.eiffel"
+        },
+        {
+            "type": "Youtube",
+            "link_network": "https://www.youtube.com/c/UniversiteGustaveEiffel"
+        },
+        {
+            "type": "LinkedIn",
+            "link_network": "https://www.linkedin.com/company/universite-gustave-eiffel"
+        },
+        {
+            "type": "Workspace",
+            "link_network": "https://workspace.google.com/universite.gustave.eiffel"
+        },
+        {
+            "type": "Website",
+            "link_network": "https://www.univ-eiffel.fr"
+        }
+    ]
+}

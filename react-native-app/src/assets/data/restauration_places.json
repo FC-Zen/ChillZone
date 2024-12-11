@@ -1,0 +1,37 @@
+{
+    "restauration_places": [
+    {
+        "id": 1,
+        "name": "Café Gustave",
+        "description": "Un lieu convivial pour savourer des boissons et des pâtisseries.",
+        "location": "Campus Université Gustave Eiffel, 77500, Chelles",
+        "type": "Restaurant",
+        "opening_time": "08:00:00",
+        "closing_time": "18:00:00",
+        "status": true,
+        "photo_link": "~/assets/data/Images_test/restaurant_image.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Frigo Sud",
+        "description": "Un frigo intelligent pour récupérer vos repas à tout moment.",
+        "location": "Campus Université Gustave Eiffel, Bâtiment Sud",
+        "type": "Fridge",
+        "opening_time": "00:00:00",
+        "closing_time": "23:59:59",
+        "status": true,
+        "photo_link": "~/assets/data/Images_test/restaurant_image.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Restaurant Central",
+        "description": "Un restaurant proposant des menus équilibrés pour les étudiants.",
+        "location": "Campus Université Gustave Eiffel, Bâtiment C",
+        "type": "Restaurant",
+        "opening_time": "11:30:00",
+        "closing_time": "14:30:00",
+        "status": false,
+        "photo_link": "~/assets/data/Images_test/restaurant_image.jpg"
+    }
+    ]
+}

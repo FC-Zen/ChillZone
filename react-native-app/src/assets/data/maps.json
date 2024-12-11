@@ -1,0 +1,17 @@
+[
+    {
+        "floor_number": 1,
+        "floor_name": "Rez-de-chaussée",
+        "floor_plan": "~/assets/data/Images_test/plan.png"
+    },
+    {
+        "floor_number": 2,
+        "floor_name": "Premier étage",
+        "floor_plan": "~/assets/data/Images_test/plan.png"
+    },
+    {
+        "floor_number": 3,
+        "floor_name": "Deuxième étage",
+        "floor_plan": "~/assets/data/Images_test/plan.png"
+    }
+]
