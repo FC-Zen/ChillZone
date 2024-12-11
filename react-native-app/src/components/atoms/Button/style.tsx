@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
     borderRadius: layout.radius.xxxl,
     borderWidth: layout.size['0'],
     borderColor: colors.white,
-    height: 50,
-    width: '100%',
+    zIndex: 10,
   },
   text: {
     color: colors.white,
