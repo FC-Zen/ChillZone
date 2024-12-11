@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { colors, layout, typography } from '@theme/index';
 import { ButtonProps } from './Button';
+import { fonts } from '@theme/typography';
 
 export const ButtonWrapper: FC<ButtonProps> = ({
   variant,
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'center',
     fontSize: typography.h3.fontSize,
+    fontFamily: fonts.semiBold,
   },
 });
 

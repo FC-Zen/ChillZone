@@ -26,12 +26,12 @@ export const typography: {
 } = {
   //**   TITLE   **//
   h1: {
-    fontFamily: fonts.regular,
+    fontFamily: fonts.bold,
     fontSize: 32,
     lineHeight: 38,
   },
   h2: {
-    fontFamily: fonts.bold,
+    fontFamily: fonts.semiBold,
     fontSize: 24,
     lineHeight: 28,
   },
