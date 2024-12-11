@@ -30,7 +30,6 @@ export const SnackBar: React.FC<SnackBarProps> = ({
         top: '5%',
         margin: 16,
         borderRadius: 4,
-        elevation: 10,
       }}
     >
       {message}
