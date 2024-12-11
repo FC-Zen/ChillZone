@@ -1,7 +1,19 @@
+import React from 'react';
+import { Button } from '@components';
+
 export const LoginPage = () => {
+  const pageStyle: React.CSSProperties = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+  };
+
   return (
-    <div>
-      <h1>Login Page</h1>
+    <div style={pageStyle}>
+      <Button title="Login" onclick={() => console.log('Login')} />
     </div>
   );
 };
+
+export default LoginPage;
