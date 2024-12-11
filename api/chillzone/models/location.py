@@ -1,6 +1,6 @@
 from django.db import models
-from .tag import Tag
-from .map_floor import MapFloor
+from chillzone.models import Tag
+from chillzone.models import MapFloor
 
 class Location(models.Model) :
     
@@ -18,9 +18,9 @@ class Location(models.Model) :
 
     position_y = models.IntegerField
 
-    creation_date = models.DateTimeField
+    creation_date = models.DateTimeField(auto_now_add=True)
     
-    modification_date = models.DateTimeField
+    modification_date = models.DateTimeField(auto_now=True) 
 
     id_tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
