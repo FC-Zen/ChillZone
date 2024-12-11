@@ -1,6 +1,5 @@
 import React from 'react';
 import { Snackbar } from 'react-native-paper';
-import { styles } from './style';
 
 export type SnackBarProps = {
   visible: boolean;
@@ -20,14 +19,18 @@ export const SnackBar: React.FC<SnackBarProps> = ({
       visible={visible}
       onDismiss={onDismiss}
       duration={4000}
-      style={[
-        styles.snackbar,
-        { backgroundColor: severity === 'error' ? 'red' : 'green' },
-      ]}
+      style={[{ backgroundColor: severity === 'error' ? 'red' : 'green' }]}
       action={{
         label: '✖',
         onPress: onDismiss,
         color: 'white',
+      }}
+      wrapperStyle={{
+        zIndex: 999,
+        top: '5%',
+        margin: 16,
+        borderRadius: 4,
+        elevation: 10,
       }}
     >
       {message}
