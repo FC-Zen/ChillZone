@@ -1,2 +1,4 @@
-export { default as Avatar } from './Avatar';
-export { default as StatCard } from './StatCard';
+export { Button } from './Button';
+export { Icon } from './Icons';
+export type { IconProps } from './Icons';
+export { Checkbox } from './Checkbox';
