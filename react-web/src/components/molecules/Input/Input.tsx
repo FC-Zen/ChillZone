@@ -1,14 +1,15 @@
 import React, { FC } from 'react';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
+// import IconButton from '@mui/material/IconButton';
 import { colors } from '@theme';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+// import Visibility from '@mui/icons-material/Visibility';
+// import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { IconProps } from '@components/atoms';
 
 export type InputProps = {
   placeholder: string;
-  icon?: React.ReactNode;
+  icon?: IconProps['name'];
   onChangeText: (text: string) => void;
   value: string;
   variant?: 'default' | 'password';
@@ -25,11 +26,11 @@ export const Input: FC<InputProps> = ({
   variant = 'default',
   style,
   isPasswordVisible = false, // Valeur par défaut
-  onTogglePasswordVisibility,
+  // onTogglePasswordVisibility,
 }) => {
   return (
     <TextField
-      style={{ ...style, width: '80%', borderRadius: '10px' }} // Style personnalisé
+      style={{ ...style, width: '100%', borderRadius: '10px' }} // Style personnalisé
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChangeText(e.target.value)}
@@ -38,18 +39,18 @@ export const Input: FC<InputProps> = ({
         startAdornment: icon ? (
           <InputAdornment position="start">{icon}</InputAdornment>
         ) : null,
-        endAdornment:
-          variant === 'password' ? (
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={onTogglePasswordVisibility}
-                edge="end"
-              >
-                {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ) : null,
+        // endAdornment:
+        //   variant === 'password' ? (
+        //     <InputAdornment position="end">
+        //       <IconButton
+        //         aria-label="toggle password visibility"
+        //         onClick={onTogglePasswordVisibility}
+        //         edge="end"
+        //       >
+        //         {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
+        //       </IconButton>
+        //     </InputAdornment>
+        //   ) : null,
         style: {
           borderRadius: '10px',
           border: `2px solid ${colors.silver}`,

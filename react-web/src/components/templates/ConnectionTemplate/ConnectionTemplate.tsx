@@ -1,8 +1,7 @@
 import React from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Container, Row, Col } from 'react-bootstrap';
 import { VectorHeader, VectorBottom } from '@components';
 import { Connection } from '@components/organisms/Connection';
-import { colors, layout } from '@theme';
 
 export type ConnectionTemplateProps = {
   inputEmail: string;
@@ -38,43 +37,44 @@ export const ConnectionTemplate: React.FC<ConnectionTemplateProps> = ({
   navigateToForgotPassword,
 }) => {
   return (
-    <Box
-      sx={{
-        backgroundColor: colors.white,
-        minHeight: layout.screen.height,
+    <div
+      style={{
         display: 'flex',
         flexDirection: 'column',
+        height: '100vh',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      <CssBaseline />
       <VectorHeader />
-      <Container
-        sx={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 2,
-        }}
-      >
-        <Connection
-          inputEmail={inputEmail}
-          setInputEmail={setInputEmail}
-          inputPassword={inputPassword}
-          setInputPassword={setInputPassword}
-          isChecked={isChecked}
-          setChecked={setChecked}
-          onLogin={onLogin}
-          logo={logo}
-          placeholderEmail={placeholderEmail}
-          placeholderPassword={placeholderPassword}
-          rememberMeLabel={rememberMeLabel}
-          forgotPasswordText={forgotPasswordText}
-          buttonText={buttonText}
-          navigateToForgotPassword={navigateToForgotPassword}
-        />
+
+      {/* Contenu central */}
+      <Container>
+        <Row>
+          <Col>
+            <Connection
+              inputEmail={inputEmail}
+              setInputEmail={setInputEmail}
+              inputPassword={inputPassword}
+              setInputPassword={setInputPassword}
+              isChecked={isChecked}
+              setChecked={setChecked}
+              onLogin={onLogin}
+              logo={logo}
+              placeholderEmail={placeholderEmail}
+              placeholderPassword={placeholderPassword}
+              rememberMeLabel={rememberMeLabel}
+              forgotPasswordText={forgotPasswordText}
+              buttonText={buttonText}
+              navigateToForgotPassword={navigateToForgotPassword}
+            />
+          </Col>
+        </Row>
       </Container>
+
+      {/* VectorBottom: en bas de la page */}
       <VectorBottom />
-    </Box>
+    </div>
   );
 };
