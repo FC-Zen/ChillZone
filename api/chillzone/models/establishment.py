@@ -1,5 +1,5 @@
 from django.db import models
-from .restauration_place import RestaurationPlace
+from chillzone.models import RestaurationPlace
 from django.contrib.auth.models import User
 
 class Establishment(models.Model) :

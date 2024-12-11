@@ -1,5 +1,5 @@
 from django.db import models
-from .establishment import Establishment
+from chillzone.models import Establishment
 
 class Network(models.Model) :
 

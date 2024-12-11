@@ -1,5 +1,5 @@
 from django.db import models
-from .tag_category import TagCategory
+from chillzone.models import TagCategory
 
 class Tag(models.Model) :
     
