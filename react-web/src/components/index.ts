@@ -7,3 +7,9 @@ export {
   ForgotPassword,
   ResetPassword,
 } from './organisms';
+export {
+  ConnectionTemplate,
+  ForgotMdpTemplate,
+  ForgotPasswordTemplate,
+  ResetPasswordTemplate,
+} from './templates';

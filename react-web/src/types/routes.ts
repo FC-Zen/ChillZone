@@ -2,11 +2,19 @@ import { RouteProps } from 'react-router-dom';
 import { ROUTE } from '@enums';
 
 export type RootStackParamList = {
+  [ROUTE.HOME]: undefined;
   [ROUTE.LOGIN_SCREEN]: undefined;
+  [ROUTE.FORGOT_PASSWORD]: undefined;
+  [ROUTE.FORGOT_MDP]: undefined;
+  [ROUTE.RESET_PASSWORD]: undefined;
 };
 
 export type RouteParamList = {
+  Home: undefined;
   LoginScreen: undefined;
+  ForgotPasswordScreen: undefined;
+  ForgotMdpScreen: undefined;
+  ResetPasswordScreen: undefined;
 };
 
 // Typage des propriétés des écrans
