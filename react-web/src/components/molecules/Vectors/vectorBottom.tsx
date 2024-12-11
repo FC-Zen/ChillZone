@@ -11,17 +11,28 @@ export type VectorBottomProps = {
 export const VectorBottom = ({
   color1 = colors.resolutionBlue,
   color2 = colors.darkCyan,
-  height = 223,
-  width = 402,
+  height = 344,
+  width = 1428,
 }: VectorBottomProps): ReactElement => {
   return (
-    <svg width={width} height={height} viewBox="0 0 402 223" fill="none">
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 1428 344"
+      fill="none"
+      style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        zIndex: -1,
+      }}
+    >
       <path
-        d="M402 223C402 223 374.49 114.689 295 91C215.51 67.3106 175.5 120.5 85 91C33.8117 74.3143 17.0656 41.3971 0 0V223H402Z"
+        d="M1428 344.336C1428 344.336 1330.28 177.093 1047.91 140.514C765.544 103.935 623.418 186.065 301.94 140.514C120.107 114.749 60.6212 63.9215 0 -6.10352e-05L0 344.336L1428 344.336Z"
         fill={color1}
       />
       <path
-        d="M401 223C401 223 380.5 137.5 288.5 119C196.5 100.5 155 161.5 71 110.5C24.979 82.5587 17.0656 41.3971 0 0V223H401Z"
+        d="M1424.45 344.336C1424.45 344.336 1351.63 212.315 1024.82 183.749C698.015 155.183 550.597 249.373 252.209 170.624C88.7313 127.479 60.6212 63.9215 0 -6.10352e-05L0 344.336L1424.45 344.336Z"
         fill={color2}
       />
     </svg>

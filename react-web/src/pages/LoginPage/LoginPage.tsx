@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Snackbar, Alert, CssBaseline } from '@mui/material';
+import { Snackbar, Alert, CssBaseline } from '@mui/material';
 import { ConnectionTemplate } from '@components';
 import { authenticateUser } from '@services';
 import { logoIUT } from '@assets/Images';
@@ -27,7 +27,6 @@ export const LoginPage: React.FC = () => {
   const handleLogin = async () => {
     try {
       await authenticateUser(inputEmail, inputPassword);
-      console.log('Connexion réussie !');
       setSnackbar({
         open: true,
         severity: 'success',
@@ -49,15 +48,7 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: '#f9fafb',
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <div className="d-flex justify-content-center align-items-center min-vh-100">
       <CssBaseline />
       <Snackbar
         open={snackbar.open}
@@ -92,6 +83,6 @@ export const LoginPage: React.FC = () => {
           navigation.navigate(ROUTE.FORGOT_PASSWORD)
         }
       />
-    </Box>
+    </div>
   );
 };
