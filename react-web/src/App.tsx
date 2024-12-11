@@ -1,13 +1,8 @@
-import DashboardLayout from '@templates/DashboardLayout';
-import Dashboard from '@pages/Dashboard';
+import { LoginPage } from '@pages';
 import '@translations/i18n';
 
 function App() {
-  return (
-    <DashboardLayout>
-      <Dashboard />
-    </DashboardLayout>
-  );
+  return <LoginPage />;
 }
 
 export default App;
