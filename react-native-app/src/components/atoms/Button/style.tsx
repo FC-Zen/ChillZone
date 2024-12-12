@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { colors, layout, typography } from '@theme/index';
 import { ButtonProps } from './Button';
+import { fonts } from '@theme/typography';
 
 export const ButtonWrapper: FC<ButtonProps> = ({
   variant,
@@ -34,13 +35,13 @@ const styles = StyleSheet.create({
     borderRadius: layout.radius.xxxl,
     borderWidth: layout.size['0'],
     borderColor: colors.white,
-    height: 50,
-    width: '100%',
+    zIndex: 10,
   },
   text: {
     color: colors.white,
     textAlign: 'center',
     fontSize: typography.h3.fontSize,
+    fontFamily: fonts.semiBold,
   },
 });
 

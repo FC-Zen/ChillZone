@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors, typography } from '@theme';
+import { colors, layout, typography } from '@theme';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   underlineText: {
     textDecorationLine: 'underline',
-    color: colors.darkCyan,
+    color: colors.resolutionBlue,
     marginBottom: 40,
   },
 });
