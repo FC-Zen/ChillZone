@@ -2,13 +2,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import NotificationList from '../../organisms/Notification/NotificationList';
+import PageHeader from '../../molecules/PageHeader/PageHeader';
 
 const NotificationTemplate = ({ notifications }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Notifications</Text>
-      </View>
+      <PageHeader title="Notifications" />
       <NotificationList notifications={notifications} />
     </View>
   );

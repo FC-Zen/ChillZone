@@ -16,10 +16,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Icon name="Lock" />
+      <View style={styles.iconContainer}>
+        <Icon name="Bell" color="#fff" />
+      </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.message}>{description}</Text>
+        <Text style={styles.message} numberOfLines={2}>
+          {description}
+        </Text>
       </View>
       <Text style={styles.time}>{time}</Text>
     </View>
@@ -30,22 +34,50 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    height: 86,
+    paddingHorizontal: 27,
+    paddingVertical: 21,
+    borderWidth: 1,
+    borderColor: '#BBB',
+    backgroundColor: '#FFF',
+    gap: 10,
+  },
+  iconContainer: {
+    width: 50,
+    height: 50,
+    padding: 13,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
+    backgroundColor: '#2E2A85',
   },
   textContainer: {
     flex: 1,
     marginLeft: 10,
   },
   title: {
-    fontWeight: 'bold',
+    width: 190,
+    color: '#2E2A85',
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 20,
   },
   message: {
-    color: 'gray',
+    width: 272,
+    maxHeight: 40,
+    color: '#000',
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 20,
   },
   time: {
-    color: 'gray',
+    color: '#000',
+    fontFamily: 'Montserrat',
+    fontSize: 12,
+    fontWeight: '400',
+    lineHeight: 18,
   },
 });
 
