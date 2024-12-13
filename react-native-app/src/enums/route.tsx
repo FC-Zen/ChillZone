@@ -3,5 +3,6 @@ export enum ROUTE {
   FORGOT_PASSWORD = 'ForgotPasswordScreen',
   FORGOT_MDP = 'ForgotMdpScreen',
   RESET_PASSWORD = 'ResetPasswordScreen',
+  NOTIFICATION = 'NotificationScreen',
   HOME = 'HOME',
 }
