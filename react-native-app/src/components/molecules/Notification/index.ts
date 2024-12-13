@@ -1,2 +1,1 @@
-import NotificationItem from './NotificationItem';
-export { NotificationItem };
+export { NotificationItem } from './NotificationItem';

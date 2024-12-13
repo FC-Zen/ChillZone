@@ -1,34 +1,37 @@
 // src/components/organisms/NotificationList.tsx
 import React from 'react';
-import { FlatList } from 'react-native';
-import NotificationItem from '../../molecules/Notification/NotificationItem';
+import { FlatList, View } from 'react-native';
+import { NotificationItem } from '@components/molecules/Notification';
+import { styles } from './style';
 
-interface Notification {
+export type NotificationProps = {
   id: number;
   title: string;
   description: string;
   time: string;
 }
 
-interface NotificationListProps {
-  notifications: Notification[];
+export type NotificationListProps = {
+  notifications: NotificationProps[];
 }
 
-const NotificationList: React.FC<NotificationListProps> = ({
+export const NotificationList: React.FC<NotificationListProps> = ({
   notifications,
 }) => {
   return (
-    <FlatList
-      data={notifications}
-      renderItem={({ item }) => (
-        <NotificationItem
-          title={item.title}
-          description={item.description}
-          time={item.time}
-        />
-      )}
-      keyExtractor={(item) => item.id.toString()}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={notifications}
+        renderItem={({ item }) => (
+          <NotificationItem
+            title={item.title}
+            description={item.description}
+            time={item.time}
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </View>
   );
 };
 

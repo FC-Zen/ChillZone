@@ -1,2 +1,1 @@
-import PageHeader from './PageHeader';
-export {PageHeader};
+export { PageHeader } from './PageHeader';

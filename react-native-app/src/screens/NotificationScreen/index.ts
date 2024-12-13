@@ -1,2 +1,1 @@
-import NotificationScreen from './NotificationScreen';
-export { NotificationScreen };
+export { NotificationScreen } from './NotificationScreen';
