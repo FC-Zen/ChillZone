@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from chillzone.models import Faq
+from chillzone.models import FAQ
 
-class FaqSerializer(serializers.ModelSerializer) :
+class FAQSerializer(serializers.ModelSerializer) :
     class Meta:
-        model = Faq
+        model = FAQ
         fields = ['pk', 'category', 'question', 'answer']

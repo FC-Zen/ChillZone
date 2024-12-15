@@ -4,8 +4,8 @@ from chillzone.models import RestaurationPlace
 
 class WorkIn(models.Model):
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE, primary_key=True)
+    restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
 
     role = models.CharField(max_length=100)

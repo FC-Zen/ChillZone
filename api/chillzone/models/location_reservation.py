@@ -3,9 +3,9 @@ from chillzone.models import Reservation, Location
 
 class LocationReservation(models.Model):
 
-    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, primary_key=True)
+    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
 
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, primary_key=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     start_time = models.TimeField
 
