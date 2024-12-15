@@ -4,4 +4,5 @@ from chillzone.models import Conflict
 class ConflictSerializer(serializers.ModelSerializer) :
     class Meta:
         model = Conflict
+        unique_together = ("user", "reservation")
         fields = ['user', 'reservation', 'comment']
