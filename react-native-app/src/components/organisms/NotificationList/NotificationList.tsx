@@ -3,6 +3,7 @@ import React from 'react';
 import { FlatList, View } from 'react-native';
 import { NotificationItem } from '@components/molecules/Notification';
 import { styles } from './style';
+import { NotificationPopup } from '../NotificationPopup/NotificationPopup';
 
 export type NotificationProps = {
   id: number;
