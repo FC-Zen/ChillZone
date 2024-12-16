@@ -24,6 +24,7 @@ export const NotificationItem: React.FC<NotificationProps> = ({
   icon,
   handlePress,
 }) => {
+  const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <View>
       <TouchableOpacity
