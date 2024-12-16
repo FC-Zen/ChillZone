@@ -8,3 +8,10 @@ class LinkTo(models.Model):
     restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
 
     status = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['establishment', 'restaurant'], name='unique_establishment_restaurant'
+            )
+        ]

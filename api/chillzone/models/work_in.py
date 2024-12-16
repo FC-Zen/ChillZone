@@ -9,3 +9,10 @@ class WorkIn(models.Model):
     restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
 
     role = models.CharField(max_length=100)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'restaurant'], name='unique_user_restaurant'
+            )
+        ]
