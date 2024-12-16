@@ -10,7 +10,7 @@ class Reservation(models.Model):
         ('Pending', 'Pending')
     ]
 
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Confirmed')
 
     creation_date = models.DateTimeField(auto_now_add=True)
 
