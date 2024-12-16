@@ -10,3 +10,10 @@ class Navigate(models.Model):
     link_photo = models.TextField
 
     position_x_photo = models.IntegerField
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["location_start", "location_end"], name='unique_locationStart_locationEnd'
+            )
+        ]

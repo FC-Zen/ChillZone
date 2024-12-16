@@ -12,3 +12,10 @@ class LocationReservation(models.Model):
     end_time = models.TimeField
 
     day_reservation = models.DateField
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['reservation', 'location'], name='unique_rervation_location'
+            )
+        ]

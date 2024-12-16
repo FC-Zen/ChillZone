@@ -8,3 +8,10 @@ class Conflict(models.Model):
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
     
     comment = models.TextField(null=True, blank=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'reservation'], name='unique_user_reservation'
+            )
+        ]
