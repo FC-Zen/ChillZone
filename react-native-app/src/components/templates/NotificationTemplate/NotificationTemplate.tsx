@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { NotificationList, NotificationListProps } from '@components/organisms/Notification/NotificationList';
+import { NotificationList, NotificationListProps } from '@components/organisms/NotificationList/NotificationList';
 import { PageHeader } from '@components/molecules/PageHeader';
 import { styles } from './style';
 
