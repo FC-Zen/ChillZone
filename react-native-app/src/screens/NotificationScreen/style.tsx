@@ -6,6 +6,8 @@ export const styles = StyleSheet.create({
     width: layout.screen.width,
     height: layout.screen.height,
     backgroundColor: colors.white,
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },

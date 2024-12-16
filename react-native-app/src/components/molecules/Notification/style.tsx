@@ -5,9 +5,10 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 86,
-    paddingHorizontal: 27,
-    paddingVertical: 21,
+    justifyContent: 'center',
+    height: 'auto',
+    paddingHorizontal: '3%',
+    paddingVertical: '4%',
     borderWidth: 1,
     borderColor: '#BBB',
     backgroundColor: '#FFF',
@@ -35,7 +36,7 @@ export const styles = StyleSheet.create({
     lineHeight: 20,
   },
   message: {
-    width: 272,
+    width: '100%',
     maxHeight: 40,
     color: '#000',
     fontFamily: 'Montserrat',

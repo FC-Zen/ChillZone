@@ -11,7 +11,7 @@ export const NotificationScreen: React.FC = () => {
       id: index,
       title: notification.title,
       description: notification.description,
-      time: new Date(notification.date).toLocaleTimeString(),
+      time: new Date(notification.date).toLocaleTimeString().slice(0, 5),
     })
   );
 
