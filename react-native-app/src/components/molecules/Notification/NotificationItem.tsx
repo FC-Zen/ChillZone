@@ -2,25 +2,27 @@
 import { View, Text, Modal, TouchableOpacity } from 'react-native';
 import { Icon } from '@components/atoms';
 import { styles } from './style';
-import { NotificationFunctions } from '@utils/functions';
-
 
 export type NotificationItemProps = {
   title: string;
   description: string;
   time: string;
   handlePress: () => void;
-}
+};
 
 export const NotificationItem: React.FC<NotificationItemProps> = ({
   title,
   description,
   time,
-  handlePress
+  handlePress,
 }) => {
   return (
     <View>
-      <TouchableOpacity  style={styles.container} onPress={handlePress} activeOpacity={1}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={handlePress}
+        activeOpacity={1}
+      >
         <View style={styles.iconContainer}>
           <Icon name="Bell" color="#fff" />
         </View>
@@ -30,9 +32,8 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
             {description}
           </Text>
         </View>
-        <Text style={styles.time}>{ NotificationFunctions.diff_time(new Date(time), new Date())}</Text>
-      </TouchableOpacity >
-      
+        <Text style={styles.time}>{time}</Text>
+      </TouchableOpacity>
     </View>
   );
 };

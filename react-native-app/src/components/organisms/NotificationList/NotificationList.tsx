@@ -11,63 +11,68 @@ export type NotificationProps = {
   title: string;
   description: string;
   time: string;
-}
+};
 
 export type NotificationListProps = {
   notifications: NotificationProps[];
-}
+};
 
 export const NotificationList: React.FC<NotificationListProps> = ({
   notifications,
 }) => {
-
-  const [selectedNotificationId, setSelectedNotificationId] = useState<number | null>(null);
+  const [selectedNotificationId, setSelectedNotificationId] = useState<
+    number | null
+  >(null);
   const closeModal = () => setSelectedNotificationId(null);
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      {
-        notifications.map((notification) => (
-          <View key={notification.id}>
-            <Modal
-              animationType='slide'
-              transparent={true}
-              presentationStyle='overFullScreen'
-              visible={selectedNotificationId === notification.id}
-              onRequestClose={closeModal}
-              statusBarTranslucent={true}
-            >
-              <View style={styles.modalContainer}>
-                <TouchableOpacity
-                  style={styles.outsideArea}
-                  onPress={closeModal}
-                  activeOpacity={1}
-                >
-                  <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
-                    <NotificationPopup
-                      title={notification.title}
-                      description={notification.description}
-                      date={new Date(notification.time).toLocaleDateString(undefined, {
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
+      {notifications.map((notification) => (
+        <View key={notification.id}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            presentationStyle="overFullScreen"
+            visible={selectedNotificationId === notification.id}
+            onRequestClose={closeModal}
+            statusBarTranslucent={true}
+          >
+            <View style={styles.modalContainer}>
+              <TouchableOpacity
+                style={styles.outsideArea}
+                onPress={closeModal}
+                activeOpacity={1}
+              >
+                <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
+                  <NotificationPopup
+                    title={notification.title}
+                    description={notification.description}
+                    date={new Date(notification.time).toLocaleDateString(
+                      undefined,
+                      {
                         weekday: 'long',
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
-                      })}                      
-                      handlePress={closeModal}
-                    />
-                  </TouchableOpacity>
+                      }
+                    )}
+                    handlePress={closeModal}
+                  />
                 </TouchableOpacity>
-              </View>
-            </Modal>
-            <NotificationItem
-              title={notification.title}
-              description={notification.description}
-              time={notification.time}
-              handlePress={() => setSelectedNotificationId(notification.id)}
-            />
-          </View>
-        ))
-      }
+              </TouchableOpacity>
+            </View>
+          </Modal>
+          <NotificationItem
+            title={notification.title}
+            description={notification.description}
+            time={notification.time}
+            handlePress={() => setSelectedNotificationId(notification.id)}
+          />
+        </View>
+      ))}
     </ScrollView>
   );
 };

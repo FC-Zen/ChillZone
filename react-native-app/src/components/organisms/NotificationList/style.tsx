@@ -1,5 +1,5 @@
-import { layout } from "@theme";
-import { StyleSheet } from "react-native";
+import { layout } from '@theme';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,14 +7,14 @@ export const styles = StyleSheet.create({
     height: '100%',
   },
   contentContainer: {
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   outsideArea: {
     width: '100%',
     height: '100%',
     backgroundColor: 'transparent',
     display: 'flex',
-    flex : 1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
