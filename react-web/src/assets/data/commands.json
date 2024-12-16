@@ -1,0 +1,105 @@
+[
+    {
+        "command_id": 1,
+        "user_name": "Jean Dupont",
+        "command_status": "Livrée",
+        "creation_date": "2023-10-01T12:30:00",
+        "total_amount": 45.75,
+        "pickup_time": "2023-10-01T13:00:00",
+        "final_pickup_time": "2023-10-01T14:00:00",
+        "lines": [
+            {
+                "line_id": 1,
+                "quantity": 2,
+                "meal_name": "Salade César",
+                "menu_name": "Menu Déjeuner"
+            },
+            {
+                "line_id": 2,
+                "quantity": 1,
+                "meal_name": "Tiramisu",
+                "menu_name": "Menu Déjeuner"
+            }
+        ]
+    },
+    {
+        "command_id": 2,
+        "user_name": "Marie Curie",
+        "command_status": "En cours",
+        "creation_date": "2023-10-01T12:45:00",
+        "total_amount": 30.00,
+        "pickup_time": "2023-10-01T13:15:00",
+        "final_pickup_time": "2023-10-01T14:15:00",
+        "lines": [
+            {
+                "line_id": 3,
+                "quantity": 1,
+                "meal_name": "Soupe du jour",
+                "menu_name": "Menu Végétarien"
+            },
+            {
+                "line_id": 4,
+                "quantity": 1,
+                "meal_name": "Pâtes Primavera",
+                "menu_name": "Menu Végétarien"
+            }
+        ]
+    },
+    {
+        "command_id": 3,
+        "user_name": "Pierre Martin",
+        "command_status": "Annulée",
+        "creation_date": "2023-10-02T11:00:00",
+        "total_amount": 50.00,
+        "pickup_time": "2023-10-02T11:30:00",
+        "final_pickup_time": "2023-10-02T12:30:00",
+        "lines": [
+            {
+                "line_id": 5,
+                "quantity": 2,
+                "meal_name": "Burger Classique",
+                "menu_name": ""
+            }
+        ]
+    },
+    {
+        "command_id": 4,
+        "user_name": "Sophie Durand",
+        "command_status": "Livrée",
+        "creation_date": "2023-10-02T12:00:00",
+        "total_amount": 22.75,
+        "pickup_time": "2023-10-02T12:30:00",
+        "final_pickup_time": "2023-10-02T13:30:00",
+        "lines": [
+            {
+                "line_id": 6,
+                "quantity": 1,
+                "meal_name": "Pizza Margherita",
+                "menu_name": "Menu Pizzeria"
+            },
+            {
+                "line_id": 61,
+                "quantity": 1,
+                "meal_name": "Coca gout pizza",
+                "menu_name": "Menu Pizzeria"
+            }
+        ]
+    },
+    {
+        "command_id": 5,
+        "user_name": "Lucie Bernard",
+        "command_status": "En cours",
+        "creation_date": "2023-10-03T13:15:00",
+        "total_amount": 15.50,
+        "pickup_time": "2023-10-03T13:45:00",
+        "final_pickup_time": "2023-10-03T14:45:00",
+        "lines": [
+            {
+                "line_id": 7,
+                "quantity": 1,
+                "meal_name": "Riz Sauté aux Légumes",
+                "menu_name": ""
+            }
+        ]
+    }
+]

@@ -1,0 +1,41 @@
+[
+    {
+        "id": 1445,
+        "first_name": "Palpous",
+        "last_name": "Pitou",
+        "type": "User",
+        "email": "palpou.pitou@edu-univ-eiffel.fr",
+        "phone": "0123456789",
+        "role": "Etudiante",
+        "status": "Verified",
+        "photo_link": "https://example.com/photo.jpg",
+        "password": "hashedpassword123",
+        "establishment": 101
+    },
+    {
+        "id": 1145,
+        "first_name": "Alexandre",
+        "last_name": "Dumas",
+        "type": "Owner",
+        "email": "alx.dumas@owner-univ-eiffel.fr",
+        "phone": "0123456789",
+        "role": "Etudiante",
+        "status": "Verified",
+        "photo_link": "https://example.com/photo.jpg",
+        "password": "hashedpassword123",
+        "establishment": 101
+    },
+    {
+        "id": 1455,
+        "first_name": "Ori",
+        "last_name": "Cis",
+        "type": "Admin",
+        "email": "ori.cis@admin-univ-eiffel.fr",
+        "phone": "0123456789",
+        "role": "Etudiante",
+        "status": "Verified",
+        "photo_link": "https://example.com/photo.jpg",
+        "password": "hashedpassword123",
+        "establishment": 101
+    }
+]

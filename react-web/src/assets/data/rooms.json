@@ -1,0 +1,137 @@
+[
+    {
+        "id": 1,
+        "name": "Salle A",
+        "description": "Salle de conférence spacieuse avec équipement audiovisuel.",
+        "capacity": 50,
+        "floor": "Rez-de-chaussée",
+        "establishment": "Établissement Alpha",
+        "status": "Disponible"
+    },
+    {
+        "id": 2,
+        "name": "Salle B",
+        "description": "Salle de réunion équipée pour des sessions de brainstorming.",
+        "capacity": 20,
+        "floor": "1er étage",
+        "establishment": "Établissement Alpha",
+        "status": "Occupée"
+    },
+    {
+        "id": 3,
+        "name": "Salle C",
+        "description": "Salle de formation avec tableaux blancs et projecteur.",
+        "capacity": 30,
+        "floor": "1er étage",
+        "establishment": "Établissement Alpha",
+        "status": "Disponible"
+    },
+    {
+        "id": 4,
+        "name": "Salle D",
+        "description": "Salle polyvalente pour événements divers.",
+        "capacity": 100,
+        "floor": "Sous-sol",
+        "establishment": "Établissement Alpha",
+        "status": "Disponible"
+    },
+    {
+        "id": 5,
+        "name": "Salle E",
+        "description": "Salle de séminaire avec vue sur le jardin.",
+        "capacity": 40,
+        "floor": "Rez-de-chaussée",
+        "establishment": "Établissement Alpha",
+        "status": "Occupée"
+    },
+    {
+        "id": 6,
+        "name": "Salle F",
+        "description": "Salle de réunion intime pour petites équipes.",
+        "capacity": 10,
+        "floor": "2ème étage",
+        "establishment": "Établissement Alpha",
+        "status": "Disponible"
+    },
+    {
+        "id": 7,
+        "name": "Salle G",
+        "description": "Salle de conférence avec équipement de visioconférence.",
+        "capacity": 60,
+        "floor": "1er étage",
+        "establishment": "Établissement Alpha",
+        "status": "Disponible"
+    },
+    {
+        "id": 8,
+        "name": "Salle H",
+        "description": "Salle de détente avec canapés et jeux.",
+        "capacity": 15,
+        "floor": "Rez-de-chaussée",
+        "establishment": "Établissement Alpha",
+        "status": "Occupée"
+    },
+    {
+        "id": 9,
+        "name": "Salle I",
+        "description": "Salle de formation avec accès à Internet haut débit.",
+        "capacity": 25,
+        "floor": "2ème étage",
+        "establishment": "Établissement Alpha",
+        "status": "Disponible"
+    },
+    {
+        "id": 10,
+        "name": "Salle J",
+        "description": "Salle de réunion avec équipements de présentation.",
+        "capacity": 35,
+        "floor": "1er étage",
+        "establishment": "Établissement Alpha",
+        "status": "Occupée"
+    },
+    {
+        "id": 11,
+        "name": "Salle K",
+        "description": "Salle de conférence avec sièges confortables.",
+        "capacity": 70,
+        "floor": "Sous-sol",
+        "establishment": "Établissement Alpha",
+        "status": "Disponible"
+    },
+    {
+        "id": 12,
+        "name": "Salle L",
+        "description": "Salle de réunion avec lumière naturelle.",
+        "capacity": 20,
+        "floor": "2ème étage",
+        "establishment": "Établissement Alpha",
+        "status": "Occupée"
+    },
+    {
+        "id": 13,
+        "name": "Salle M",
+        "description": "Salle de séminaire avec équipements modernes.",
+        "capacity": 45,
+        "floor": "1er étage",
+        "establishment": "Établissement Alpha",
+        "status": "Disponible"
+    },
+    {
+        "id": 14,
+        "name": "Salle N",
+        "description": "Salle de réunion avec tableau interactif.",
+        "capacity": 30,
+        "floor": "2ème étage",
+        "establishment": "Établissement Alpha",
+        "status": "Occupée"
+    },
+    {
+        "id": 15,
+        "name": "Salle O",
+        "description": "Salle polyvalente pour ateliers créatifs.",
+        "capacity": 50,
+        "floor": "1er étage",
+        "establishment": "Établissement Alpha",
+        "status": "Disponible"
+    }
+]

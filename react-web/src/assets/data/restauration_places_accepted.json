@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Frigo 125",
+        "type": "Fridge",
+        "location": "Rez-de-chaussée, près de l'entrée",
+        "email": "contact@cafeducoin.fr",
+        "status": true
+    },
+    {
+        "id": 2,
+        "name": "Restaurant Le Gourmet",
+        "type": "Restaurant",
+        "location": "1er étage, vue sur le jardin",
+        "email": "info@restaurantlegourmet.fr",
+        "status": true
+    },
+    {
+        "id": 3,
+        "name": "Snack Express",
+        "type": "Restaurant",
+        "location": "Sous-sol, près de la salle de pause",
+        "email": "contact@snackexpress.fr",
+        "status": false
+    },
+    {
+        "id": 4,
+        "name": "Pizzeria Bella Italia",
+        "type": "Restaurant",
+        "location": "2ème étage, à côté de la salle de réunion",
+        "email": "info@bellaitalia.fr",
+        "status": true
+    },
+    {
+        "id": 5,
+        "name": "Frigo 125",
+        "type": "Fridge",
+        "location": "Rez-de-chaussée, près de l'ascenseur",
+        "email": "contact@barasalades.fr",
+        "status": false
+    }
+]

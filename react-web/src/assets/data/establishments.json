@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Établissement Alpha",
+        "address": "123 Rue de la Paix",
+        "city": "Paris",
+        "postal_code": "75001",
+        "phone": "+33 1 23 45 67 89",
+        "email": "contact@alpha.fr"
+    }
+]

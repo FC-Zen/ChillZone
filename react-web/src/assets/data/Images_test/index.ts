@@ -1,0 +1,1 @@
+import bigplan from './bigplan.png';
