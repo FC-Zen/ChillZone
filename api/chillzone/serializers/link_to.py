@@ -10,4 +10,4 @@ class LinkToSerializer(serializers.ModelSerializer):
                 fields=['establishment', 'restaurant'], name='unique_establishment_restaurant'
             )
         ]
-        fields = ['establishment', 'restaurant']
+        fields = ['establishment', 'restaurant', 'status']

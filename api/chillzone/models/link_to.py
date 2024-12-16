@@ -6,3 +6,5 @@ class LinkTo(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
 
     restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
+
+    status = models.BooleanField(default=False)
