@@ -21,7 +21,10 @@ export const NotificationScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <NotificationTemplate notifications={notifications} onBackPress={() => navigation.navigate(ROUTE.HOME)}/>
+      <NotificationTemplate
+        notifications={notifications}
+        onBackPress={() => navigation.navigate(ROUTE.HOME)}
+      />
     </View>
   );
 };
