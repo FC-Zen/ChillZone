@@ -31,3 +31,5 @@ class Meal(models.Model):
     restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    tag = models.ManyToManyField('Tag',through='Tagging', related_name='tag')

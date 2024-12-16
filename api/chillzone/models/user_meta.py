@@ -26,3 +26,5 @@ class UserMeta(models.Model):
     photo_link = models.ImageField(blank=True)
 
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, blank=True, null=True)
+
+    notification = models.ManyToManyField('Notification',through='NotificationCenter', related_name='notifications')

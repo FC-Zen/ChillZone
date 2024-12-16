@@ -16,3 +16,7 @@ class Menu(models.Model):
     modification_date = models.DateTimeField(auto_now=True)
 
     restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
+
+    category = models.ManyToManyField('Category',through='Associate', related_name='category')
+
+    meal = models.ManyToManyField('Meal',through='LineContent', related_name='meal')
