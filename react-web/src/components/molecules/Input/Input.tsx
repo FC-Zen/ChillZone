@@ -1,64 +1,148 @@
-import React, { FC } from 'react';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-// import IconButton from '@mui/material/IconButton';
-import { colors } from '@theme';
-// import Visibility from '@mui/icons-material/Visibility';
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { IconProps } from '@components/atoms';
+import TextField from "@mui/material/TextField/TextField";
+import React, { useState } from "react";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Box from "@mui/material/Box";
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import LockIcon from '@mui/icons-material/Lock';
+import { colors } from "@theme";
 
 export type InputProps = {
-  placeholder: string;
-  icon?: IconProps['name'];
-  onChangeText: (text: string) => void;
-  value: string;
-  variant?: 'default' | 'password';
-  style?: React.CSSProperties;
-  isPasswordVisible?: boolean; // Prop pour la visibilité du mot de passe
-  onTogglePasswordVisibility?: () => void; // Prop pour gérer la visibilité
-};
+  name: string;
+  value?: string;
+  label: string;
+  required?: boolean;
+  type?:string;
+  min?: number;
+  max?: number;
+  defaultvalue? :string;
+  onInputChange?: (name: string, value: any) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+}
 
-export const Input: FC<InputProps> = ({
-  icon,
-  onChangeText,
-  placeholder,
-  value,
-  variant = 'default',
-  style,
-  isPasswordVisible = false, // Valeur par défaut
-  // onTogglePasswordVisibility,
-}) => {
-  return (
-    <TextField
-      style={{ ...style, width: '100%', borderRadius: '10px' }} // Style personnalisé
-      placeholder={placeholder}
-      value={value}
-      onChange={(e) => onChangeText(e.target.value)}
-      type={variant === 'password' && isPasswordVisible ? 'text' : 'password'}
-      InputProps={{
-        startAdornment: icon ? (
-          <InputAdornment position="start">{icon}</InputAdornment>
-        ) : null,
-        // endAdornment:
-        //   variant === 'password' ? (
-        //     <InputAdornment position="end">
-        //       <IconButton
-        //         aria-label="toggle password visibility"
-        //         onClick={onTogglePasswordVisibility}
-        //         edge="end"
-        //       >
-        //         {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
-        //       </IconButton>
-        //     </InputAdornment>
-        //   ) : null,
-        style: {
-          borderRadius: '10px',
-          border: `2px solid ${colors.silver}`,
-          backgroundColor: colors.white,
-        },
-      }}
-    />
-  );
-};
+export const Input = ({name, value, label, required, type, min, max, defaultvalue, onInputChange, onKeyDown }: InputProps) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [typefield, setTypeField] = useState(type);
 
-export default Input;
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+        if (typefield === "password") {
+            setTypeField("text");
+        } else {
+            setTypeField("password");
+        }
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (onInputChange) {
+            onInputChange(event.target.name, event.target.value);
+        }
+    };
+
+    return (
+        <Box
+        style={{
+          width: '100%',
+        }}> 
+            {type==="password" ? (
+                <TextField
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockIcon />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+                label={required ? `${label}*` : label}
+                className="input-form" 
+                type={typefield}
+                variant="outlined"
+                value={value}
+                name={name}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    padding: '10px 25px',
+                      '& fieldset': {
+                          borderRadius : '10px',
+                          borderColor: colors.silver, // retire le bord en état normal
+                      },
+                      '&:hover fieldset': {
+                          borderColor: colors.silver, // bord visible au survol
+                      },
+                      '&.Mui-focused fieldset': {
+                          borderColor: colors.silver, // bord plus visible quand l'input est focus
+                      },
+                  },
+                  '& .MuiInputBase-input': {
+                    padding: "1%", // Retirer le padding de l'input
+                  },
+                  width : "100%",
+              }}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                                onClick={handleTogglePasswordVisibility}
+                                onMouseDown={(e) => e.preventDefault()}
+                                edge="end"
+                            >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    ),
+                }}
+                onChange={handleChange}
+            />
+            ) : (
+                <>
+                    <TextField 
+                        slotProps={{
+                          input: {
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <AccountCircle />
+                              </InputAdornment>
+                            ),
+                          },
+                        }}
+                        className="input-form" 
+                        label={required ? `${label}*` : label} 
+                        type={type}
+                        variant="outlined" 
+                        inputProps={{ min, max }} // Ajout de min et max ici
+                        onChange={handleChange}
+                        onKeyDown={onKeyDown}
+                        value={value}
+                        name={name}
+                        defaultValue={defaultvalue}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            padding: '10px 25px',
+                              '& fieldset': {
+                                  borderRadius : '10px',
+                                  borderColor: colors.silver, // retire le bord en état normal
+                              },
+                              '&:hover fieldset': {
+                                  borderColor: colors.silver, // bord visible au survol
+                              },
+                              '&.Mui-focused fieldset': {
+                                  borderColor: colors.silver, // bord plus visible quand l'input est focus
+                              },
+                          },
+                          '& .MuiInputBase-input': {
+                                padding: "1%", // Retirer le padding de l'input
+                          },
+                          width : "100%",
+                      }}
+                        // onChange={setSearch ? ((e) => setSearch(e.target.value)) : ()}
+                    />
+
+                </>
+            )}
+        </Box>
+    );
+};

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Container, Typography } from '@mui/material';
+import { Logo, Button } from '@components/atoms';
 
 type ForgotMdpProps = {
-  logo: string;
   title: string;
   infoText: string;
   buttonTitle: string;
@@ -11,28 +10,28 @@ type ForgotMdpProps = {
 };
 
 export const ForgotMdp: React.FC<ForgotMdpProps> = ({
-  logo,
   title,
   infoText,
   buttonTitle,
   onButtonClick,
 }) => {
   return (
-    <Box
-      sx={{
-        flex: 1,
+    <Container
+      className=""
+      style={{
+        width: '18%',
+        flexShrink: 0,
+        margin: '0 auto',
+        marginTop: 50,
+        padding: '20px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 2,
+        gap : "15px"
       }}
     >
-      <img
-        src={logo}
-        alt="Logo"
-        style={{ width: 100, height: 100, marginBottom: 20 }}
-      />
+      <Logo/>
       <Typography
         variant="h5"
         sx={{ fontWeight: 'bold', textAlign: 'center', marginBottom: 2 }}
@@ -42,10 +41,8 @@ export const ForgotMdp: React.FC<ForgotMdpProps> = ({
       <Typography variant="body1" sx={{ textAlign: 'center', marginBottom: 2 }}>
         {infoText}
       </Typography>
-      <Button variant="contained" color="primary" onClick={onButtonClick}>
-        {buttonTitle}
-      </Button>
-    </Box>
+      <Button variant="primary" onclick={onButtonClick} title={buttonTitle}/>
+    </Container>
   );
 };
 

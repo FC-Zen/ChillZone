@@ -54,12 +54,11 @@ export const typography: {
   h1: {
     fontFamily: fonts.regular,
     fontSize: 32,
-    lineHeight: 38,
+    lineHeight: 3,
   },
   h2: {
     fontFamily: fonts.bold,
-    fontSize: 24,
-    lineHeight: 28,
+    fontSize: 24
   },
   h3: {
     fontFamily: fonts.regular,

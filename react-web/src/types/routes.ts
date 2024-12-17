@@ -2,8 +2,7 @@ import { RouteProps } from 'react-router-dom';
 import { ROUTE } from '@enums';
 
 export type RootStackParamList = {
-  [ROUTE.HOME]: undefined;
-  [ROUTE.LOGIN_SCREEN]: undefined;
+  [ROUTE.LOGIN]: undefined;
   [ROUTE.FORGOT_PASSWORD]: undefined;
   [ROUTE.FORGOT_MDP]: undefined;
   [ROUTE.RESET_PASSWORD]: undefined;
@@ -11,7 +10,7 @@ export type RootStackParamList = {
 
 export type RouteParamList = {
   Home: undefined;
-  LoginScreen: undefined;
+  Login: undefined;
   ForgotPasswordScreen: undefined;
   ForgotMdpScreen: undefined;
   ResetPasswordScreen: undefined;

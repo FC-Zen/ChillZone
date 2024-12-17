@@ -1,7 +1,6 @@
 import React from 'react';
-import { Box, CssBaseline } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { ForgotMdpTemplate } from '@components';
-import { logoIUT } from '@assets/Images';
 import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
 import { useTranslation } from 'react-i18next';
@@ -11,27 +10,18 @@ export const ForgotMdpPage: React.FC = () => {
   const { t } = useTranslation();
 
   const handleButtonClick = () => {
-    navigation.navigate(ROUTE.LOGIN_SCREEN);
+    navigation.navigate(ROUTE.RESET_PASSWORD);
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: '#f9fafb',
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <div className="d-flex justify-content-center align-items-center min-vh-100">
       <CssBaseline />
       <ForgotMdpTemplate
-        logo={logoIUT}
         title={t('headers.pwdReset')}
-        infoText={t('questions.infoPwd')}
+        infoText={t('info.infoPwd')}
         buttonTitle={t('buttons.auth.connect')}
         onButtonClick={handleButtonClick}
       />
-    </Box>
+    </div>
   );
 };

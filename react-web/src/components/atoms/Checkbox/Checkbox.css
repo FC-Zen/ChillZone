@@ -35,3 +35,7 @@
   margin-left: 10px;
   color: black;
 }
+
+.label:hover {
+  color : #004d40;
+}
