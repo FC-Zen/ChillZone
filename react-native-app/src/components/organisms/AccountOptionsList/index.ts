@@ -1,1 +1,1 @@
-export { AccountOptionsList, AccountOptionsListProps } from './AccountOptionsList';
+export { AccountOptionsList } from './AccountOptionsList';
