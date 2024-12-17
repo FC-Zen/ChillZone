@@ -6,7 +6,7 @@ import { ToggleSwitch } from '@components/atoms/ToggleSwitch';
 
 export type AccountTemplateProps = {};
 
-export const AccountTemplate: React.FC<AccountTemplateProps> = () => (
+export const AccountTemplate: React.FC = () => (
   <ScrollView contentContainerStyle={styles.container}>
     <ProfileHeader name="Kellian BREDEAU" />
     <AccountOptionsList />
@@ -17,5 +17,3 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = () => (
 const styles = StyleSheet.create({
   container: { padding: 20, backgroundColor: '#fff' },
 });
-
-export default AccountTemplate;
