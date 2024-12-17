@@ -23,26 +23,19 @@ export const ForgotPasswordTemplate: React.FC<ForgotPasswordTemplateProps> = ({
   setInputEmail,
 }) => {
   return (
-    <Box
-      sx={{
-        backgroundColor: colors.white,
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <CssBaseline />
-      <VectorHeader />
-      <Container
-        sx={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 2,
-        }}
-      >
-        <ForgotPassword
+    <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100vh',
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <VectorHeader />
+    
+          <ForgotPassword
           logo={logoIUT}
           headerText={headerText}
           placeholderText={placeholderText}
@@ -50,9 +43,9 @@ export const ForgotPasswordTemplate: React.FC<ForgotPasswordTemplateProps> = ({
           onSendClick={onSendClick}
           inputEmail={inputEmail}
           setInputEmail={setInputEmail}
-        />
-      </Container>
-      <VectorBottom />
-    </Box>
+          />
+    
+          <VectorBottom />
+        </div>
   );
 };

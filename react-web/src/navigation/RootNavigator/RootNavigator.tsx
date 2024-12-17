@@ -11,7 +11,7 @@ export const RootNavigator = () => {
   return (
     <Router>
       <Routes>
-        <Route path={ROUTE.LOGIN_SCREEN} element={<LoginPage />} />
+        <Route path={ROUTE.LOGIN} element={<LoginPage />} />
         <Route path={ROUTE.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
         <Route path={ROUTE.FORGOT_MDP} element={<ForgotMdpPage />} />
         <Route path={ROUTE.RESET_PASSWORD} element={<ResetPasswordPage />} />

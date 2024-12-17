@@ -1,1 +1,2 @@
-export const logoIUT = './logo-IUT.png';
+import logoIUT from './logo-IUT.png';
+export { logoIUT };

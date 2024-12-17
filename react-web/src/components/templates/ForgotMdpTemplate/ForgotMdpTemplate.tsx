@@ -5,7 +5,6 @@ import { ForgotMdp } from '@components/organisms';
 import { colors } from '@theme';
 
 export type ForgotMdpTemplateProps = {
-  logo: string;
   title: string;
   infoText: string;
   buttonTitle: string;
@@ -13,41 +12,34 @@ export type ForgotMdpTemplateProps = {
 };
 
 export const ForgotMdpTemplate: React.FC<ForgotMdpTemplateProps> = ({
-  logo,
   title,
   infoText,
   buttonTitle,
   onButtonClick,
 }) => {
-  return (
-    <Box
-      sx={{
-        backgroundColor: colors.white,
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <CssBaseline />
-      <VectorHeader />
-      <Container
-        sx={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 2,
-        }}
-      >
-        <ForgotMdp
-          logo={logo}
-          title={title}
-          infoText={infoText}
-          buttonTitle={buttonTitle}
-          onButtonClick={onButtonClick}
-        />
-      </Container>
-      <VectorBottom />
-    </Box>
+  return(
+  <>
+      <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100vh',
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <VectorHeader />
+    
+          <ForgotMdp
+            title={title}
+            infoText={infoText}
+            buttonTitle={buttonTitle}
+            onButtonClick={onButtonClick}
+          />
+    
+          <VectorBottom />
+        </div>
+  </>
   );
 };

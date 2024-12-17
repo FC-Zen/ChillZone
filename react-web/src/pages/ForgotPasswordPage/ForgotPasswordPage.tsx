@@ -11,29 +11,20 @@ export const ForgotPasswordPage: React.FC = () => {
   const [inputEmail, setInputEmail] = useState('');
 
   const handleSendClick = () => {
-    // Logique à exécuter lors de l'envoi
     navigation.navigate(ROUTE.FORGOT_MDP);
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: '#f9fafb',
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+  <div className="d-flex justify-content-center align-items-center min-vh-100">
       <CssBaseline />
       <ForgotPasswordTemplate
         onSendClick={handleSendClick}
         headerText={t('headers.pwdReset')}
         placeholderText={t('fields.common.mail')}
-        buttonTitle={t('buttons.actions.send')}
+        buttonTitle={t('buttons.actions.confirm')}
         inputEmail={inputEmail}
         setInputEmail={setInputEmail}
       />
-    </Box>
+    </div>
   );
 };

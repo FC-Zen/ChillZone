@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Snackbar, Alert, CssBaseline } from '@mui/material';
 import { ConnectionTemplate } from '@components';
 import { authenticateUser } from '@services';
-import { logoIUT } from '@assets/Images';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
@@ -10,8 +9,16 @@ import { ROUTE } from '@enums';
 export const LoginPage: React.FC = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const [inputEmail, setInputEmail] = useState('');
-  const [inputPassword, setInputPassword] = useState('');
+
+  const [formData, setFormData] = useState({
+    login : "",
+    password : ""
+  });
+
+  const handleInputChange = (name: string, value: string) => {
+    setFormData({ ...formData, [name]: value });
+  };
+
   const [isChecked, setChecked] = useState(false);
 
   const [snackbar, setSnackbar] = useState<{
@@ -26,7 +33,7 @@ export const LoginPage: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      await authenticateUser(inputEmail, inputPassword);
+      await authenticateUser(formData);
       setSnackbar({
         open: true,
         severity: 'success',
@@ -66,23 +73,19 @@ export const LoginPage: React.FC = () => {
       </Snackbar>
 
       <ConnectionTemplate
-        inputEmail={inputEmail}
-        setInputEmail={setInputEmail}
-        inputPassword={inputPassword}
-        setInputPassword={setInputPassword}
+        onInputChange={handleInputChange}
         isChecked={isChecked}
         setChecked={setChecked}
         onLogin={handleLogin}
-        logo={logoIUT}
+        headerTitle={t('headers.connexion')}
         placeholderEmail={t('fields.common.mail')}
         placeholderPassword={t('fields.auth.password')}
-        rememberMeLabel={t('categories.rememberMe')}
-        forgotPasswordText={t('questions.pwd')}
+        rememberMeLabel={t('info.rememberMe')}
+        forgotPasswordText={t('info.recoverPwd')}
+        signinText={t('info.singin')}
         buttonText={t('buttons.auth.connect')}
-        navigateToForgotPassword={() =>
-          navigation.navigate(ROUTE.FORGOT_PASSWORD)
-        }
-      />
+        navigateToForgotPassword={() => navigation.navigate(ROUTE.FORGOT_PASSWORD)}
+        />
     </div>
   );
 };

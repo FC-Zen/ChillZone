@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Container } from '@mui/material';
+import { Box, Container, CssBaseline } from '@mui/material';
 import { ResetPasswordTemplate } from '@components';
 import { ROUTE } from '@enums';
 import { logoIUT } from '@assets/Images';
@@ -20,31 +20,19 @@ export const ResetPasswordPage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '100vh',
-          bgcolor: '#f9fafb',
-          padding: 3,
-        }}
-      >
+    <div className="d-flex justify-content-center align-items-center min-vh-100">
+      <CssBaseline />
         <ResetPasswordTemplate
-          logo={logoIUT}
-          title={t('headers.pwdReset')}
+          title={t('headers.pwdChange')}
           placeholderPassword={t('fields.auth.newPassword')}
           placeholderVerifyPassword={t('fields.auth.verifyNewPassword')}
-          buttonTitle={t('buttons.actions.modify')}
+          buttonTitle={t('buttons.actions.reset')}
           onModifyPress={handleModifyPress}
           inputPassword={inputPassword}
           setInputPassword={setInputPassword}
           inputPassword2={inputPassword2}
           setInputPassword2={setInputPassword2}
         />
-      </Box>
-    </Container>
+    </div>
   );
 };

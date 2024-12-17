@@ -1,8 +1,6 @@
 export enum ROUTE {
-  LOGIN_SCREEN = 'LoginScreen',
-  FORGOT_PASSWORD = 'ForgotPasswordScreen',
-  FORGOT_MDP = 'ForgotMdpScreen',
-  RESET_PASSWORD = 'ResetPasswordScreen',
-  HOME = 'HOME',
-  LOGIN = 'LOGIN',
+  LOGIN = '/login',
+  FORGOT_PASSWORD = '/forgot-password',
+  FORGOT_MDP = '/forgot-mdp',
+  RESET_PASSWORD = '/reset-password',
 }

@@ -1,11 +1,8 @@
 import React from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
 import { VectorHeader, VectorBottom } from '@components';
 import { ResetPassword } from '@components/organisms/ResetPassword';
-import { colors } from '@theme';
 
 type ResetPasswordTemplateProps = {
-  logo: string;
   title: string;
   placeholderPassword: string;
   placeholderVerifyPassword: string;
@@ -18,7 +15,6 @@ type ResetPasswordTemplateProps = {
 };
 
 export const ResetPasswordTemplate: React.FC<ResetPasswordTemplateProps> = ({
-  logo,
   title,
   placeholderPassword,
   placeholderVerifyPassword,
@@ -30,27 +26,19 @@ export const ResetPasswordTemplate: React.FC<ResetPasswordTemplateProps> = ({
   setInputPassword2,
 }) => {
   return (
-    <Box
-      sx={{
-        backgroundColor: colors.white,
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <CssBaseline />
-      <VectorHeader />
-      <Container
-        sx={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 2,
-        }}
-      >
-        <ResetPassword
-          logo={logo}
+    <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <VectorHeader />
+
+    <ResetPassword
           title={title}
           placeholderPassword={placeholderPassword}
           placeholderVerifyPassword={placeholderVerifyPassword}
@@ -60,9 +48,9 @@ export const ResetPasswordTemplate: React.FC<ResetPasswordTemplateProps> = ({
           setInputPassword={setInputPassword}
           inputPassword2={inputPassword2}
           setInputPassword2={setInputPassword2}
-        />
-      </Container>
-      <VectorBottom />
-    </Box>
+    />
+
+    <VectorBottom />
+  </div>
   );
 };
