@@ -1,16 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
-import { Divider } from '@components/atoms/Divider';
 import { ToggleSwitch } from '@components/atoms/ToggleSwitch';
-import {
-  Bell,
-  BookMark,
-  Hamburger,
-  Following,
-  Lock,
-  Refresh,
-  Setting,
-} from '@components/atoms/Icons';
 import { LinksModal } from '@components/organisms/LinksModal';
 import { PasswordModal } from '@components/organisms/PasswordModal';
 import { ResetPasswordModal } from '@components/organisms/ResetPasswordModal';
