@@ -1,13 +1,16 @@
+import { colors, layout, typography } from '@theme';
 import { StyleSheet } from 'react-native';
+import { fonts } from '@theme/typography';
 
 export const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
+        display: 'flex',
         alignItems: 'center',
-        height: 52,
-        paddingHorizontal: 30,
-        backgroundColor: '#fff',
-        marginTop: '5%',
+        justifyContent: 'center',
+        height: 'auto',
+        textAlign: 'center',
+        paddingVertical: '3%',
+        paddingHorizontal: 20,  
     },
     backButton: {
         flexDirection: 'row',
@@ -23,11 +26,10 @@ export const styles = StyleSheet.create({
     },
     title: {
         width: 326,
-        color: '#000', 
+        color: colors.black, 
         textAlign: 'center',
-        fontFamily: 'Montserrat',
-        fontSize: 24,
+        fontFamily: fonts.semiBold,
+        fontSize: typography.h2.fontSize,
         fontWeight: '600',
-        lineHeight: 28,
     },
 });
