@@ -17,18 +17,23 @@ export const ForgotMdp: React.FC<ForgotMdpProps> = ({
 }) => {
   return (
     <Container
-      className=""
-      style={{
-        width: '18%',
-        flexShrink: 0,
-        margin: '0 auto',
-        marginTop: 50,
-        padding: '20px',
+      sx={{
+        width: '22%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: '0 16px',
+        mt: 3,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap : "15px"
+        gap: 4,
+        '@media (max-width: 600px)': {
+          width: '80%!important',
+        },
+        '@media (max-width: 1404px)': {
+          width: '50%',
+        },
       }}
     >
       <Logo/>
