@@ -10,7 +10,6 @@ export const AccountTemplate: React.FC = () => (
   <ScrollView contentContainerStyle={styles.container}>
     <ProfileHeader name="Kellian BREDEAU" />
     <AccountOptionsList />
-    <ToggleSwitch value={false} onChange={() => {}} />
   </ScrollView>
 );
 
