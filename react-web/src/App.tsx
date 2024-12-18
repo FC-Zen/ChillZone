@@ -4,8 +4,9 @@ import {
   ForgotMdpPage,
   ForgotPasswordPage,
   ResetPasswordPage,
-  SignUpOwnerPage
+  SignUpOwnerPage,
 } from '@pages';
+import AdminAccountPage from '@pages/AdminAccount';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/forgot-mdp" element={<ForgotMdpPage />} />
         <Route path="/sign-up" element={<SignUpOwnerPage />} />
+        <Route path="/AdminAccountPage" element={<AdminAccountPage />} />
       </Routes>
     </Router>
   );
