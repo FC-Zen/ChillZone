@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Snackbar, Alert, CssBaseline } from '@mui/material';
-import { ConnectionTemplate } from '@components';
+import { CssBaseline } from '@mui/material';
+import { ConnectionTemplate, SnackBar } from '@components';
 import { authenticateUser } from '@services';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
@@ -57,20 +57,13 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100">
       <CssBaseline />
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={closeSnackbar}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={closeSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: '100%' }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      
+      <SnackBar
+        visible={snackbar.open}
+        message={snackbar.message} 
+        severity={snackbar.severity}
+        onDismiss={closeSnackbar}      
+      />
 
       <ConnectionTemplate
         onInputChange={handleInputChange}

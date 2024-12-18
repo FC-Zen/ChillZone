@@ -9,9 +9,8 @@ type ResetPasswordTemplateProps = {
   buttonTitle: string;
   onModifyPress: () => void;
   inputPassword: string;
-  setInputPassword: (value: string) => void;
+  handleInputChange: (name: string, value: string) => void;
   inputPassword2: string;
-  setInputPassword2: (value: string) => void;
 };
 
 export const ResetPasswordTemplate: React.FC<ResetPasswordTemplateProps> = ({
@@ -21,9 +20,8 @@ export const ResetPasswordTemplate: React.FC<ResetPasswordTemplateProps> = ({
   buttonTitle,
   onModifyPress,
   inputPassword,
-  setInputPassword,
+  handleInputChange,
   inputPassword2,
-  setInputPassword2,
 }) => {
   return (
     <div
@@ -45,9 +43,8 @@ export const ResetPasswordTemplate: React.FC<ResetPasswordTemplateProps> = ({
           buttonTitle={buttonTitle}
           onModifyPress={onModifyPress}
           inputPassword={inputPassword}
-          setInputPassword={setInputPassword}
+          handleInputChange={handleInputChange}
           inputPassword2={inputPassword2}
-          setInputPassword2={setInputPassword2}
     />
 
     <VectorBottom />

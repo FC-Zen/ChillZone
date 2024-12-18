@@ -5,11 +5,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Box from "@mui/material/Box";
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import LockIcon from '@mui/icons-material/Lock';
 import { colors } from "@theme";
+import { Icon } from "@components/atoms";
+import * as IconList from '@atoms/Icons/list';
 
 export type InputProps = {
+  icon? : keyof typeof IconList;
   name: string;
   value?: string;
   label: string;
@@ -22,7 +23,7 @@ export type InputProps = {
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
-export const Input = ({name, value, label, required, type, min, max, defaultvalue, onInputChange, onKeyDown }: InputProps) => {
+export const Input = ({icon = 'User', name, value, label, required, type, min, max, defaultvalue, onInputChange, onKeyDown }: InputProps) => {
     const [showPassword, setShowPassword] = useState(false);
     const [typefield, setTypeField] = useState(type);
 
@@ -52,7 +53,7 @@ export const Input = ({name, value, label, required, type, min, max, defaultvalu
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <LockIcon />
+                        <Icon name="Lock" />
                       </InputAdornment>
                     ),
                   },
@@ -104,7 +105,7 @@ export const Input = ({name, value, label, required, type, min, max, defaultvalu
                           input: {
                             startAdornment: (
                               <InputAdornment position="start">
-                                <AccountCircle />
+                                <Icon name={icon} />
                               </InputAdornment>
                             ),
                           },

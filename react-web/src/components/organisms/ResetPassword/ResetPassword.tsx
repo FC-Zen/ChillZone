@@ -10,9 +10,8 @@ type ResetPasswordProps = {
   buttonTitle: string;
   onModifyPress: () => void;
   inputPassword: string;
-  setInputPassword: (value: string) => void;
+  handleInputChange: (name: string, value: string) => void;
   inputPassword2: string;
-  setInputPassword2: (value: string) => void;
 };
 
 export const ResetPassword: React.FC<ResetPasswordProps> = ({
@@ -21,31 +20,34 @@ export const ResetPassword: React.FC<ResetPasswordProps> = ({
   placeholderVerifyPassword,
   buttonTitle,
   onModifyPress,
-  inputPassword,
-  setInputPassword,
-  inputPassword2,
-  setInputPassword2,
+  handleInputChange
 }) => {
   return (
-  <Container
-        className=""
-        style={{
-          width: '18%',
-          flexShrink: 0,
-          margin: '0 auto',
-          marginTop: 50,
-          padding: '20px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap : "15px"
-        }}
-      >
+    <Container
+      sx={{
+        width: '22%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: '0 16px',
+        mt: 3,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 4,
+        '@media (max-width: 600px)': {
+          width: '80%!important',
+        },
+        '@media (max-width: 1404px)': {
+          width: '50%',
+        },
+      }}
+    >
+
         <Logo/>
         <Header title={title} />
-        <Input name={inputPassword} label={placeholderPassword} onInputChange={setInputPassword}/>
-        <Input name={inputPassword2} label={placeholderVerifyPassword} onInputChange={setInputPassword2}/>
+        <Input icon='Lock' name={'inputPassword'} label={placeholderPassword} onInputChange={handleInputChange}/>
+        <Input icon='Lock' name={'inputVerifyPassword'} label={placeholderVerifyPassword} onInputChange={handleInputChange}/>
         <Button variant="primary" onclick={onModifyPress} title={buttonTitle}/>
       </Container>
   );

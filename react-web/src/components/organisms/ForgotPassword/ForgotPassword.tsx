@@ -23,22 +23,29 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = ({
 }) => {
   return (
     <Container
-      style={{
+      sx={{
         width: '22%',
-        flexShrink: 0,
-        margin: '0 auto',
-        marginTop: 50,
-        padding: '20px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: '0 16px',
+        mt: 3,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap : "15px"
+        gap: 4,
+        '@media (max-width: 600px)': {
+          width: '80%!important',
+        },
+        '@media (max-width: 1404px)': {
+          width: '50%',
+        },
       }}
     >
+
       <Logo />
       <Header title={headerText} />
-      <Input name={inputEmail} label={placeholderText} required={true} onInputChange={setInputEmail} />
+      <Input icon="Inbox" name={inputEmail} label={placeholderText} required={true} onInputChange={(_, value) => setInputEmail(value)} />
       <Button title={buttonTitle} onclick={onSendClick} variant="primary" />
     </Container>
   );

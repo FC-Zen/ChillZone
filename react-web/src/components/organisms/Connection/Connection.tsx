@@ -1,7 +1,6 @@
 import React from 'react';
 import { Input } from '@molecules/Input';
 import { Button, Checkbox, Header, Link, Logo } from '@components/atoms';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
 export type ConnectionProps = {
@@ -35,24 +34,29 @@ export const Connection: React.FC<ConnectionProps> = ({
 }) => {
   return (
     <Container
-      className=""
-      style={{
+      sx={{
         width: '22%',
-        flexShrink: 0,
-        margin: '0 auto',
-        marginTop: 50,
-        padding: '20px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: '0 16px',
+        mt: 3,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap : "15px"
+        gap: 4,
+        '@media (max-width: 600px)': {
+          width: '80%!important',
+        },
+        '@media (max-width: 1404px)': {
+          width: '50%',
+        },
       }}
     >
       <Logo />
       <Header title={headerTitle} />
       <Link url={'#'} onClick={navigateToForgotPassword} text={signinText} color="secondary"/>
-      <Input name={'login'} label={placeholderEmail} required={true} onInputChange={onInputChange} />
+      <Input icon="User" name={'login'} label={placeholderEmail} required={true} onInputChange={onInputChange} />
       <Input name={'password'} label={placeholderPassword} type="password" onInputChange={onInputChange} />
       <Checkbox checked={isChecked} onChange={() => setChecked(!isChecked)} label={rememberMeLabel} />
       <Link url={'#'} onClick={navigateToForgotPassword} text={forgotPasswordText} />
