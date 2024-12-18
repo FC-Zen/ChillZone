@@ -1,22 +1,26 @@
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
 import { Button } from '@components/atoms/Button';
+import { View } from 'react-native';
+import { styles } from './style';
 
 export type ActionButtonProps = {
   label: string;
-  iconName: keyof typeof Ionicons.glyphMap;
+  icon: React.ReactNode;
   onPress: () => void;
 };
 
 export const ActionButton: React.FC<ActionButtonProps> = ({
   label,
-  iconName,
+  icon,
   onPress,
 }) => (
-  <Button
-    title={label}
-    onPress={onPress}
-    // Forcer l'ajout d'une prop non déclarée
-    {...({ icon: <Ionicons name={iconName} size={20} color="#fff" /> } as any)}
-  />
+  <View style={styles.buttonContainer}>
+    <Button
+      title={label}
+      onPress={onPress}
+      {...({
+        icon: icon,
+      } as any)}
+    />
+  </View>
 );
