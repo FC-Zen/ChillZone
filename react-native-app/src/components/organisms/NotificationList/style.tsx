@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: layout.screen.width,
+    height: '70%',
     overflow: 'scroll',
   },
 });
