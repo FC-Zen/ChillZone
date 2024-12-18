@@ -1,93 +1,114 @@
 import React from 'react';
-import Avatar from '../atoms/Avatar'; // Importation de ton composant Avatar
+import Avatar from '@atoms/Avatar';
 import { LogOut } from 'lucide-react';
 
-const Header = () => {
+type HeaderProps = {
+  userName: string;
+  userEmail: string;
+  organization: string;
+  part: string;
+};
+
+const Header = ({ userName, userEmail, organization, part }: HeaderProps) => {
   return (
-    <div style={styles.container}>
-      <div style={styles.titleContainer}>
-        {/* Titre et sous-titre */}
+    <div style={styles.headerContainer}>
+      {/* Section Gauche */}
+      <div style={styles.leftSection}>
         <h1 style={styles.title}>
-          Bonjour, <span style={styles.bold}>Kellian BREDEAU</span>
+          Bonjour, <span style={styles.bold}>{userName}</span>
         </h1>
-        <p style={styles.subtitle}>Comptes</p>
+        <p style={styles.part}>{part}</p>
+        <p style={styles.organization}>{organization}</p>
       </div>
 
-      {/* Profil utilisateur */}
-      <div style={styles.profileContainer}>
-        <div style={styles.avatarWrapper}>
-          <Avatar size="lg" alt="Kellian Bredeau" />
-        </div>
-        <div>
-          <p style={styles.profileText}>kellianbre@outlook.fr</p>
-          <p style={styles.profileText}>Université Gustave Eiffel</p>
-        </div>
-        <div style={styles.iconWrapper}>
-          <LogOut size={20} color="#FFF" />
+      {/* Section Droite */}
+      <div style={styles.rightSection}>
+        <div style={styles.profileCard}>
+          <Avatar alt={userName} size="lg" />
+          <div style={styles.profileInfo}>
+            <p style={styles.userName}>
+              {userName} <span style={styles.role}>(Admin)</span>
+            </p>
+            <p style={styles.email}>{userEmail}</p>
+            <p style={styles.organizationRight}>{organization}</p>
+          </div>
+          <LogOut size={20} color="#FFF" style={styles.logoutIcon} />
         </div>
       </div>
     </div>
   );
 };
 
-const styles = {
-  container: {
+const styles: { [key: string]: React.CSSProperties } = {
+  headerContainer: {
     display: 'flex',
-    flexDirection: 'column',
     justifyContent: 'space-between',
-    minWidth: '500px',
-    maxWidth: '1115px',
-    padding: '15px 20px 5px 20px',
-    gap: '10px',
+    alignItems: 'center',
+    backgroundColor: '#F4F5F7',
+    padding: '20px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
-  titleContainer: {
+  leftSection: {
     display: 'flex',
     flexDirection: 'column',
     gap: '5px',
   },
   title: {
+    fontSize: '24px',
     color: '#000',
-    fontFamily: 'Montserrat',
-    fontSize: '32px',
-    fontWeight: '400',
-    lineHeight: '100%',
+    margin: 0,
   },
   bold: {
     fontWeight: '600',
   },
-  subtitle: {
-    color: '#000',
-    fontFamily: 'Montserrat',
-    fontSize: '24px',
-    fontWeight: '600',
-    lineHeight: '100%',
-  },
-  profileContainer: {
-    display: 'flex',
-    padding: '25px',
-    alignItems: 'center',
-    gap: '30px',
-    borderRadius: '15px',
-    background: '#2E2A85',
-    marginLeft: 'auto',
-  },
-  avatarWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  profileText: {
-    color: '#FFF',
-    fontFamily: 'Montserrat',
+  part: {
     fontSize: '16px',
-    fontWeight: '400',
-    lineHeight: '100%',
+    color: '#333',
+    margin: 0,
+    fontWeight: '600',
   },
-  iconWrapper: {
+  organization: {
+    fontSize: '14px',
+    color: '#666',
+    margin: 0,
+  },
+  rightSection: {
     display: 'flex',
-    width: '38px',
-    justifyContent: 'center',
     alignItems: 'center',
+  },
+  profileCard: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#2E2A85',
+    borderRadius: '10px',
+    padding: '15px 20px',
+    gap: '15px',
+    color: '#FFF',
+  },
+  profileInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '3px',
+  },
+  userName: {
+    fontSize: '14px',
+    fontWeight: '600',
+    margin: 0,
+  },
+  role: {
+    fontWeight: '400',
+  },
+  email: {
+    fontSize: '12px',
+    color: '#E0E0E0',
+    margin: 0,
+  },
+  organizationRight: {
+    fontSize: '12px',
+    margin: 0,
+  },
+  logoutIcon: {
     cursor: 'pointer',
   },
 };

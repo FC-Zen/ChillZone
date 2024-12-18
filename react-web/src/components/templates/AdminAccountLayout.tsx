@@ -19,6 +19,7 @@ const AdminAccountLayout = ({ children }: AdminAccountLayoutProps) => {
           userName="Kellian BREDEAU"
           userEmail="kellian.bre@outlook.fr"
           organization="Université Gustave Eiffel"
+          part="Comptes"
         />
 
         {/* Contenu de la page */}

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Home,
-  Users,
-  Layers,
-  Calendar,
-  Database,
-  UsersRound,
-} from 'lucide-react';
+import { Home, User, Box, Calendar, Building, Utensils } from 'lucide-react';
 
 const Sidebar = () => (
   <div
@@ -16,19 +9,18 @@ const Sidebar = () => (
       width: '4rem',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
-      paddingTop: '1rem',
-      paddingBottom: '1rem',
-      gap: '1.5rem',
+      alignItems: 'center', // Centre horizontalement
+      justifyContent: 'center', // Centre verticalement
+      gap: '4rem', // Espacement entre les icônes
       color: '#FFF',
     }}
   >
     <Home size={24} />
-    <Users size={24} />
-    <Layers size={24} />
+    <User size={24} />
+    <Box size={24} />
     <Calendar size={24} />
-    <Database size={24} />
-    <UsersRound size={24} />
+    <Building size={24} />
+    <Utensils size={24} />
   </div>
 );
 
