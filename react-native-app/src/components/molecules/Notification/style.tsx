@@ -1,3 +1,4 @@
+import { colors } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -19,7 +20,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
-    backgroundColor: '#2E2A85',
+    backgroundColor: colors.resolutionBlue,
   },
   textContainer: {
     flex: 1,
@@ -27,7 +28,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     width: 190,
-    color: '#2E2A85',
+    color: colors.resolutionBlue,
     fontFamily: 'Montserrat',
     fontSize: 14,
     fontWeight: '600',

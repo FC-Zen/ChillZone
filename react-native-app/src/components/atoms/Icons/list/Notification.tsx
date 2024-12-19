@@ -4,7 +4,7 @@ import { colors } from '@theme';
 
 const Notification = ({
   width = 24,
-  height = 25,
+  height = 24,
   color = colors.resolutionBlue,
 }) => {
   return (

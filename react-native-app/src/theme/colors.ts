@@ -1,3 +1,5 @@
+export type Colors = typeof colors;
+
 export const colors = {
   darkCyan: '#19887E',
   aquaDeep: '#005745',

@@ -1,16 +1,17 @@
 import { FC } from 'react';
 import { ViewStyle } from 'react-native';
 import * as IconList from './list';
+// import { Colors } from '@theme';
 
 export type IconProps = {
-  color?: string;
-  name: keyof typeof IconList; // Limite les noms aux clés de IconList
-  height?: string | number;
-  width?: string | number;
+  color?: any; // Colors[keyof Colors]; de base mais on corrigera plus tard
+  name: keyof typeof IconList;
+  height?: number | undefined;
+  width?: number | undefined;
   style?: ViewStyle;
 };
 
-export const Icon: FC<IconProps> = ({ name, ...props }) => {
+export const Icon: FC<IconProps> = ({ name, height, width, ...props }) => {
   const SelectedIcon = IconList[name];
 
   if (!SelectedIcon) {
@@ -18,5 +19,5 @@ export const Icon: FC<IconProps> = ({ name, ...props }) => {
     return null;
   }
 
-  return <SelectedIcon {...props} />;
+  return <SelectedIcon {...props} height={height} width={width} />;
 };

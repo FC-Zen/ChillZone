@@ -1,5 +1,6 @@
 export { Button, Checkbox } from './atoms';
 export {
+  BottomNavbar,
   Input,
   SnackBar,
   TopBar,
