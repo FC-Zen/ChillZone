@@ -1,0 +1,20 @@
+[
+    {   
+        "floor_id" : 1,
+        "floor_number": 1,
+        "floor_name": "Rez-de-chaussée",
+        "floor_plan": "~/react-web/src/assets/data/Images_test/bigplan.png"
+    },
+    {
+        "floor_id" : 2,
+        "floor_number": 2,
+        "floor_name": "Premier étage",
+        "floor_plan": "~/react-web/src/assets/data/Images_test/bigplan.png"
+    },
+    {
+        "floor_id" : 3,
+        "floor_number": 3,
+        "floor_name": "Deuxième étage",
+        "floor_plan": "~/react-web/src/assets/data/Images_test/bigplan.png"
+    }
+]

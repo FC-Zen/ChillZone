@@ -1,9 +1,6 @@
 import commands from './commands.json';
 export { commands };
 
-import faq from './faq.json';
-export { faq };
-
 import maps from './maps.json';
 export { maps };
 
@@ -13,20 +10,17 @@ export { meals };
 import menus from './menus.json';
 export { menus };
 
-import notifications from './notifications.json';
-export { notifications };
-
 import reservations from './reservations.json';
 export { reservations };
 
-import restauration_places from './restauration_places.json';
-export { restauration_places };
+import restauration_places_accepted from './restauration_places_accepted.json';
+export { restauration_places_accepted };
+
+import restauration_places_pending from './restauration_places_pending.json';
+export { restauration_places_pending };
 
 import rooms from './rooms.json';
 export { rooms };
-
-import social_networks from './social_networks.json';
-export { social_networks };
 
 import user_test from './user_test.json';
 export { user_test };

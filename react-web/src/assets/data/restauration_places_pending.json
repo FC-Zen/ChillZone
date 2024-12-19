@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "Frigo 125",
+        "type": "Fridge",
+        "location": "Rez-de-chaussée, près de l'entrée",
+        "email": "contact@cafeducoin.fr"
+    },
+    {
+        "id": 2,
+        "name": "Restaurant Le Gourmet",
+        "type": "Restaurant",
+        "location": "1er étage, vue sur le jardin",
+        "email": "info@restaurantlegourmet.fr"
+    }
+]
