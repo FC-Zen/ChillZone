@@ -1,0 +1,1 @@
+export { ForgotMdpPage } from './ForgotMdpPage';

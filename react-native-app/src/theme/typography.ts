@@ -19,7 +19,7 @@ export const fonts = {
   medium: 'Montserrat-Medium',
 };
 
-type TypographyKey = 'h1' | 'h2' | 'h3';
+type TypographyKey = 'h1' | 'h2' | 'h3' | 'h4';
 
 export const typography: {
   [key in TypographyKey]: TextStyle;
@@ -39,5 +39,10 @@ export const typography: {
     fontFamily: fonts.regular,
     fontSize: 16,
     lineHeight: 24,
+  },
+  h4: {
+    fontFamily: fonts.regular,
+    fontSize: 14,
+    lineHeight: 20,
   },
 };

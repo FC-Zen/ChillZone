@@ -42,8 +42,8 @@ export const InputStyles = StyleSheet.create({
   input: {
     flex: 1,
     height: '100%',
-    fontSize: typography.h3.fontSize,
+    fontSize: typography.h4.fontSize,
     fontWeight: '400',
-    fontFamily: typography.h3.fontFamily,
+    fontFamily: typography.h4.fontFamily,
   },
 });

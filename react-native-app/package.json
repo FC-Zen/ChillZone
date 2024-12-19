@@ -27,6 +27,7 @@
     "@react-navigation/stack": "^7.0.18",
     "@types/i18next": "^13.0.0",
     "@types/react-i18next": "^8.1.0",
+    "axios": "^1.7.9",
     "eslint-config-prettier": "^9.1.0",
     "expo": "^52.0.17",
     "expo-font": "^13.0.1",
