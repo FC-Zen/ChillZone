@@ -4,6 +4,7 @@ import {
   ForgotMdpPage,
   ForgotPasswordPage,
   ResetPasswordPage,
+  SignUpOwnerPage
 } from '@pages';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/forgot-mdp" element={<ForgotMdpPage />} />
+        <Route path="/sign-up" element={<SignUpOwnerPage />} />
       </Routes>
     </Router>
   );

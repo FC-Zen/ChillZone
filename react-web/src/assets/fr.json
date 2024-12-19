@@ -130,8 +130,8 @@
             "name": "Nom de l’étage"
         },
         "hours": {
-            "opening_time": "Heure ouverture",
-            "closing_time": "Heure fermeture",
+            "opening_time": "Heure d'ouverture",
+            "closing_time": "Heure de fermeture",
             "schedules": "Horaires"
         },
         "address": {
@@ -313,5 +313,14 @@
         "thursday": "Jeudi",
         "friday": "Vendredi",
         "saturday": "Samedi"
+    },
+
+    "zod" : {
+        "minLength": "Le mot de passe doit contenir au moins 12 caractères.",
+        "uppercase": "Le mot de passe doit contenir au moins une lettre majuscule.",
+        "lowercase": "Le mot de passe doit contenir au moins une lettre minuscule.",
+        "number": "Le mot de passe doit contenir au moins un chiffre.",
+        "specialChar": "Le mot de passe doit contenir au moins un caractère spécial.",
+        "passwordMismatch" : "Les deux mots de passes doivent être identiques"
     }
 }

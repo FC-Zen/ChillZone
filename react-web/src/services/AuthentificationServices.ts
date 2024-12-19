@@ -53,7 +53,6 @@ export const sendPasswordRecoveryEmail = async (formData: { email: string }) => 
     */
     // Vérifie si l'email est valide - SIMULATION
     if (validEmails.includes(formData.email)) {
-      console.log(`Email de récupération envoyé à : ${formData.email}`);
       return { success: true, message: 'Email de récupération envoyé avec succès !' };
     } else {
       throw new Error("L'email n'existe pas");
@@ -64,33 +63,37 @@ export const sendPasswordRecoveryEmail = async (formData: { email: string }) => 
   }
 };
 
-
 // Schéma CNIL
-const passwordSchema = z
-  .string()
-  .min(12, 'Le mot de passe doit contenir au moins 12 caractères.')
-  .regex(/[A-Z]/, 'Le mot de passe doit contenir au moins une lettre majuscule.')
-  .regex(/[a-z]/, 'Le mot de passe doit contenir au moins une lettre minuscule.')
-  .regex(/[0-9]/, 'Le mot de passe doit contenir au moins un chiffre.')
-  .regex(/[!@#$%^&*(),.?":{}|<>]/, 'Le mot de passe doit contenir au moins un caractère spécial.');
+const passwordSchema = (t: Function) =>
+  z
+    .string()
+    .min(12, t('zod.minLength'))
+    .regex(/[A-Z]/, t('zod.uppercase'))
+    .regex(/[a-z]/, t('zod.lowercase'))
+    .regex(/[0-9]/, t('zod.number'))
+    .regex(/[!@#$%^&*(),.?":{}|<>]/, t('zod.specialChar'));
 
 /**
  * Réinitialise le mdp du compte
  *
  * @param {string} formData: { email: string } - L'adresse email de l'utilisateur.
+ * @param {Function} t - Fonction de traduction de react-i18next
  * @throws {Error} Si l'email n'existe pas dans la base de données.
  *
  * @returns {Promise<Object>} Résultat de l'envoi de l'email.
  */
-export const changePassword = async (formData: { email: string; inputPassword: string; inputVerifyPassword: string; }) => {
+export const changePassword = async (
+  formData: { email: string; inputPassword: string; inputVerifyPassword: string },
+  t: Function
+) => {
   try {
     // Vérification de la correspondance des mots de passe
     if (formData.inputPassword !== formData.inputVerifyPassword) {
-      throw new Error('Le nouveau mot de passe et la confirmation ne correspondent pas.');
+      throw new Error(t('zod.passwordMismatch'));
     }
 
     // Validation des mots de passe via Zod
-    passwordSchema.parse(formData.inputPassword);
+    passwordSchema(t).parse(formData.inputPassword);
 
     // Simule l'envoi de la demande de changement de mot de passe - ATTENTION A VOIR AVEC LE BACK LA DEMARCHE
     /*
@@ -102,7 +105,7 @@ export const changePassword = async (formData: { email: string; inputPassword: s
     console.log('Mot de passe changé avec succès pour l’utilisateur.');
 
     // Simule une réponse réussie
-    return { success: true, message: 'Mot de passe changé avec succès !' };
+    return { success: true, message: t('passwordChange.success') };
   } catch (error: any) {
     if (error instanceof z.ZodError) {
       console.error('Erreur de validation :', error.errors);

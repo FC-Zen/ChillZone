@@ -1,0 +1,1 @@
+export { SignUpOwnerRestaurantTemplate } from './SignUpOwnerRestaurantTemplate';
