@@ -1,6 +1,10 @@
 import React from 'react';
 
-const TableHeader = () => (
+type TableHeaderProps = {
+  onAddUser: () => void; // Fonction pour ouvrir la modale
+};
+
+const TableHeader = ({ onAddUser }: TableHeaderProps) => (
   <div className="flex items-center justify-between mb-4">
     <input
       type="text"
@@ -12,7 +16,10 @@ const TableHeader = () => (
       <button className="bg-gray-200 p-2 rounded">Filters</button>
       <button className="bg-gray-200 p-2 rounded">Density</button>
       <button className="bg-gray-200 p-2 rounded">Export</button>
-      <button className="bg-green-500 text-white p-2 rounded">
+      <button
+        className="bg-green-500 text-white p-2 rounded"
+        onClick={onAddUser} // Ouvre la modale
+      >
         Ajouter un compte utilisateur
       </button>
     </div>
