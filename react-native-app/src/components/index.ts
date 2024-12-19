@@ -1,5 +1,11 @@
 export { Button, Checkbox } from './atoms';
-export { Input, SnackBar, VectorHeader, VectorBottom } from './molecules';
+export {
+  Input,
+  SnackBar,
+  TopBar,
+  VectorHeader,
+  VectorBottom,
+} from './molecules';
 export {
   Connection,
   ForgotMdp,

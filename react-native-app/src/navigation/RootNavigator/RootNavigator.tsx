@@ -7,6 +7,7 @@ import {
   LoginScreen,
   ResetPasswordScreen,
   NotificationScreen,
+  HomeScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 
@@ -37,11 +38,15 @@ export const RootNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name={ROUTE.HOME}
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name={ROUTE.NOTIFICATION}
           component={NotificationScreen}
           options={{ headerShown: false }}
         />
-
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -32,12 +32,21 @@ export const LoginScreen: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      await authenticateUser(inputEmail, inputPassword);
-      console.log('Connexion réussie !');
-      setAuthResult({ severity: 'success', message: 'Connexion réussie !' });
+      const result = await authenticateUser({
+        login: inputEmail,
+        password: inputPassword,
+      });
+
+      console.log(result.message);
+      setAuthResult({ severity: 'success', message: result.message });
+
+      // Navigation vers la page d'accueil
+      navigation.navigate(ROUTE.HOME);
     } catch (error) {
+      // Gérer l'erreur et définir le message d'erreur
       const errorMessage =
         error instanceof Error ? error.message : 'Une erreur est survenue.';
+      console.error('Erreur de connexion:', errorMessage);
       setAuthResult({ severity: 'error', message: errorMessage });
     }
   };
