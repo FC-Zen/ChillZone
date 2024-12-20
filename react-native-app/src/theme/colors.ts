@@ -7,4 +7,5 @@ export const colors = {
   silver: '#BBBBBB',
   white: '#FFFFFF',
   black: '#000000',
+  warn: '#EC221F',
 } as const;

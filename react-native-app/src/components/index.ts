@@ -3,6 +3,7 @@ export {
   BookingInfo,
   BottomNavbar,
   Input,
+  ReservationButton,
   SnackBar,
   TopBar,
   VectorHeader,
