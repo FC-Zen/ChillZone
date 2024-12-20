@@ -10,3 +10,6 @@ export { default as Bag } from './Bag';
 export { default as Home } from './Home';
 export { default as Map } from './Map';
 export { default as Cube } from './Cube';
+export { default as Marker } from './Marker';
+export { default as HomeLocation } from './HomeLocation';
+export { default as Clock } from './Clock';
