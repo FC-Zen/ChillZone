@@ -22,6 +22,6 @@ class Establishment(models.Model) :
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
-    restaurants = models.ManyToManyField(RestaurationPlace, related_name='restaurant') 
+    restaurants = models.ManyToManyField(RestaurationPlace,through='LinkTo',related_name='restaurant') 
 
     locations = models.ManyToManyField('Location',through='IsLocated', related_name='establishments')

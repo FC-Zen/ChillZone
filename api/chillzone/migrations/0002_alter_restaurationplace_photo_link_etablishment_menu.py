@@ -29,7 +29,6 @@ class Migration(migrations.Migration):
                 ('mail', models.EmailField(max_length=254)),
                 ('creation_date', models.DateTimeField(auto_now_add=True)),
                 ('modification_date', models.DateTimeField(auto_now=True)),
-                ('restaurants', models.ManyToManyField(to='chillzone.restaurationplace')),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
             ],
         ),
