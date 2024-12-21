@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 export type TextStyle = {
   fontFamily?: string;
   fontSize?: number;
@@ -11,11 +13,11 @@ export const fonts = {
   medium: 'Montserrat-Medium',
 };
 
-// Créez un fichier CSS séparé (fonts.css)
+// Fichier CSS pour définir les polices
 export const fontStyles = `
   @font-face {
     font-family: 'Montserrat-Regular';
-    src: url('assets/fonts/Montserrat-Regular.ttf') format('truetype');
+    src: url('/assets/fonts/Montserrat-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -23,7 +25,7 @@ export const fontStyles = `
 
   @font-face {
     font-family: 'Montserrat-Bold';
-    src: url('assets/fonts/Montserrat-Bold.ttf') format('truetype');
+    src: url('/assets/fonts/Montserrat-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -31,7 +33,7 @@ export const fontStyles = `
 
   @font-face {
     font-family: 'Montserrat-SemiBold';
-    src: url('assets/fonts/Montserrat-SemiBold.ttf') format('truetype');
+    src: url('/assets/fonts/Montserrat-SemiBold.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -39,7 +41,7 @@ export const fontStyles = `
 
   @font-face {
     font-family: 'Montserrat-Medium';
-    src: url('assets/fonts/Montserrat-Medium.ttf') format('truetype');
+    src: url('/assets/fonts/Montserrat-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -58,7 +60,7 @@ export const typography: {
   },
   h2: {
     fontFamily: fonts.bold,
-    fontSize: 24
+    fontSize: 24,
   },
   h3: {
     fontFamily: fonts.regular,
@@ -68,8 +70,6 @@ export const typography: {
 };
 
 // Composant pour charger les polices
-import { useEffect } from 'react';
-
 export const FontLoader = () => {
   useEffect(() => {
     const style = document.createElement('style');

@@ -15,6 +15,7 @@ export type ConnectionTemplateProps = {
   buttonText: string;
   signinText: string;
   navigateToForgotPassword: () => void;
+  navigateToSignUp : () => void;
 };
 
 export const ConnectionTemplate: React.FC<ConnectionTemplateProps> = ({
@@ -30,6 +31,7 @@ export const ConnectionTemplate: React.FC<ConnectionTemplateProps> = ({
   headerTitle,
   signinText,
   navigateToForgotPassword,
+  navigateToSignUp
 }) => {
   return (
     <div
@@ -57,6 +59,7 @@ export const ConnectionTemplate: React.FC<ConnectionTemplateProps> = ({
           buttonText={buttonText}
           signinText={signinText}
           navigateToForgotPassword={navigateToForgotPassword}
+          navigateToSignUp={navigateToSignUp}
         />
 
       <VectorBottom />

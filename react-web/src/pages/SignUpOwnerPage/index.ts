@@ -1,0 +1,1 @@
+export { SignUpOwnerPage } from './SignUpOwnerPage';

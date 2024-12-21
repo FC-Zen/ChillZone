@@ -56,45 +56,63 @@ export const Input = ({icon = 'User', name, value, label, required, type, min, m
                         <Icon name="Lock" />
                       </InputAdornment>
                     ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                          <IconButton
+                              onClick={handleTogglePasswordVisibility}
+                              onMouseDown={(e) => e.preventDefault()}
+                              edge="end"
+                          >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                      </InputAdornment>
+                    ),
                   },
                 }}
                 label={required ? `${label}*` : label}
                 className="input-form" 
                 type={typefield}
-                variant="outlined"
+                variant="filled"
                 value={value}
                 name={name}
                 sx={{
-                  '& .MuiOutlinedInput-root': {
-                    padding: '10px 25px',
-                      '& fieldset': {
-                          borderRadius : '10px',
-                          borderColor: colors.silver, // retire le bord en état normal
-                      },
-                      '&:hover fieldset': {
-                          borderColor: colors.silver, // bord visible au survol
-                      },
-                      '&.Mui-focused fieldset': {
-                          borderColor: colors.silver, // bord plus visible quand l'input est focus
-                      },
+                  '& .MuiFilledInput-root': {
+                    padding: '0px 25px',
+                    backgroundColor: colors.white,
+                    border : "2px solid ",
+                    borderRadius: '10px',
+                    borderColor: colors.silver,
                   },
-                  '& .MuiInputBase-input': {
-                    padding: "1%", // Retirer le padding de l'input
+                  '& .Mui-focused': {
+                    color : 'initial',
+                    backgroundColor: "white!important",
                   },
-                  width : "100%",
-              }}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <IconButton
-                                onClick={handleTogglePasswordVisibility}
-                                onMouseDown={(e) => e.preventDefault()}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    ),
+                  '& .MuiFilledInput-root::after': {
+                    borderBottom : "none"
+                  },
+                  '& .MuiFilledInput-root::before': {
+                    borderBottom : "none"
+                  },
+                  '& .MuiFilledInput-root:hover': {
+                    border : "2px solid ",
+                    borderRadius: '10px',
+                    borderColor: colors.silver,
+                    backgroundColor : colors.white,
+                  },
+                  '& .MuiFilledInput-root:hover::before': {
+                    borderBottom : "none!important"
+                  },
+                  '& .MuiFilledInput-root:hover::after': {
+                    borderBottom : "none"
+                  },
+                  '& .MuiInputAdornment-root': {
+                    padding: "1px",
+                  },
+                  '& input:-webkit-autofill': {
+                    backgroundColor: colors.white, // Pour s'assurer que l'arrière-plan est blanc pendant l'autofill
+                    boxShadow: '0 0 0 30px white inset', // Pour effacer l'ombre d'autofill
+                  },
+                  width: "100%",
                 }}
                 onChange={handleChange}
             />
@@ -113,33 +131,52 @@ export const Input = ({icon = 'User', name, value, label, required, type, min, m
                         className="input-form" 
                         label={required ? `${label}*` : label} 
                         type={type}
-                        variant="outlined" 
                         inputProps={{ min, max }} // Ajout de min et max ici
                         onChange={handleChange}
                         onKeyDown={onKeyDown}
                         value={value}
                         name={name}
                         defaultValue={defaultvalue}
+                        variant="filled"
                         sx={{
-                          '& .MuiOutlinedInput-root': {
-                            padding: '10px 25px',
-                              '& fieldset': {
-                                  borderRadius : '10px',
-                                  borderColor: colors.silver, // retire le bord en état normal
-                              },
-                              '&:hover fieldset': {
-                                  borderColor: colors.silver, // bord visible au survol
-                              },
-                              '&.Mui-focused fieldset': {
-                                  borderColor: colors.silver, // bord plus visible quand l'input est focus
-                              },
+                          '& .MuiFilledInput-root': {
+                            padding: '0px 25px',
+                            backgroundColor: colors.white,
+                            border : "2px solid ",
+                            borderRadius: '10px',
+                            borderColor: colors.silver,
                           },
-                          '& .MuiInputBase-input': {
-                                padding: "1%", // Retirer le padding de l'input
+                          '& .Mui-focused': {
+                            color : 'initial',
+                            backgroundColor: "white!important",
                           },
-                          width : "100%",
-                      }}
-                        // onChange={setSearch ? ((e) => setSearch(e.target.value)) : ()}
+                          '& .MuiFilledInput-root::after': {
+                            borderBottom : "none"
+                          },
+                          '& .MuiFilledInput-root::before': {
+                            borderBottom : "none"
+                          },
+                          '& .MuiFilledInput-root:hover': {
+                            border : "2px solid ",
+                            borderRadius: '10px',
+                            borderColor: colors.silver,
+                            backgroundColor : colors.white,
+                          },
+                          '& .MuiFilledInput-root:hover::before': {
+                            borderBottom : "none!important"
+                          },
+                          '& .MuiFilledInput-root:hover::after': {
+                            borderBottom : "none"
+                          },
+                          '& .MuiInputAdornment-root': {
+                            padding: "1px",
+                          },
+                          '& input:-webkit-autofill': {
+                            backgroundColor: colors.white, // Pour s'assurer que l'arrière-plan est blanc pendant l'autofill
+                            boxShadow: '0 0 0 30px white inset', // Pour effacer l'ombre d'autofill
+                          },
+                          width: "100%",
+                        }}
                     />
 
                 </>

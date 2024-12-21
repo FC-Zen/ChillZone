@@ -1,0 +1,1 @@
+export { SignUpOwnerFinishTemplate } from './SignUpOwnerFinishTemplate';

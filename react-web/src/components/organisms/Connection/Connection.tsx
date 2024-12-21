@@ -16,6 +16,7 @@ export type ConnectionProps = {
   buttonText: string;
   signinText : string;
   navigateToForgotPassword: () => void;
+  navigateToSignUp: () => void;
 };
 
 export const Connection: React.FC<ConnectionProps> = ({
@@ -31,6 +32,7 @@ export const Connection: React.FC<ConnectionProps> = ({
   signinText,
   headerTitle,
   navigateToForgotPassword,
+  navigateToSignUp
 }) => {
   return (
     <Container
@@ -44,7 +46,7 @@ export const Connection: React.FC<ConnectionProps> = ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 4,
+        gap: '15px',
         '@media (max-width: 600px)': {
           width: '80%!important',
         },
@@ -55,7 +57,7 @@ export const Connection: React.FC<ConnectionProps> = ({
     >
       <Logo />
       <Header title={headerTitle} />
-      <Link url={'#'} onClick={navigateToForgotPassword} text={signinText} color="secondary"/>
+      <Link url={'#'} onClick={navigateToSignUp} text={signinText} color="secondary"/>
       <Input icon="User" name={'login'} label={placeholderEmail} required={true} onInputChange={onInputChange} />
       <Input name={'password'} label={placeholderPassword} type="password" onInputChange={onInputChange} />
       <Checkbox checked={isChecked} onChange={() => setChecked(!isChecked)} label={rememberMeLabel} />

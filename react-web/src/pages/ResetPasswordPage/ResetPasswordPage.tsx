@@ -36,7 +36,7 @@ export const ResetPasswordPage: React.FC = () => {
   
   const handleModifyPress = async () => {
     try {
-      let res = await changePassword(formData);
+      let res = await changePassword(formData,t);
       setSnackbar({
         open: true,
         severity: 'success',

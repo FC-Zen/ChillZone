@@ -1,0 +1,1 @@
+export { SignUpOwnerAccountTemplate } from './SignUpOwnerAccountTemplate';

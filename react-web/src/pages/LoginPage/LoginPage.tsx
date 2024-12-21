@@ -78,6 +78,7 @@ export const LoginPage: React.FC = () => {
         signinText={t('info.singin')}
         buttonText={t('buttons.auth.connect')}
         navigateToForgotPassword={() => navigation.navigate(ROUTE.FORGOT_PASSWORD)}
+        navigateToSignUp={() => navigation.navigate(ROUTE.SIGNUP_OWNER)}
         />
     </div>
   );

@@ -12,4 +12,7 @@ export {
   ForgotMdpTemplate,
   ForgotPasswordTemplate,
   ResetPasswordTemplate,
+  SignUpOwnerAccountTemplate,
+  SignUpOwnerFinishTemplate,
+  SignUpOwnerRestaurantTemplate
 } from './templates';
