@@ -13,6 +13,7 @@ export {
   Connection,
   ForgotMdp,
   ForgotPassword,
+  Map,
   ResetPassword,
 } from './organisms';
 export {

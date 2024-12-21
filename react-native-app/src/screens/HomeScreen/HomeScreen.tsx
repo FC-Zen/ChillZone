@@ -1,18 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TopBar } from '@components/molecules/TopBar';
-import { BookingInfo, BottomNavbar, ReservationButton } from '@components';
+import { BottomNavbar, Map } from '@components';
 
 export const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <TopBar />
-      <BookingInfo />
-      <ReservationButton
-        title={'Annuler la réservation'}
-        onPress={() => {}}
-        iconName="Cross"
-      />
+      <Map />
       <BottomNavbar />
     </View>
   );

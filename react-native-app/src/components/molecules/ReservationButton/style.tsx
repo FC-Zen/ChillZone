@@ -1,9 +1,9 @@
-import { colors, typography } from '@theme';
+import { colors, layout, typography } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   button: {
-    width: '90%',
+    width: layout.window.width,
     height: 44,
     paddingVertical: 5,
     borderRadius: 10,
