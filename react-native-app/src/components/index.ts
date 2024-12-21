@@ -4,6 +4,7 @@ export {
   BottomNavbar,
   Input,
   ReservationButton,
+  RestaurantCard,
   SnackBar,
   TopBar,
   VectorHeader,
@@ -15,6 +16,7 @@ export {
   ForgotPassword,
   Map,
   ResetPassword,
+  RestaurantSlider,
 } from './organisms';
 export {
   ConnectionTemplate,

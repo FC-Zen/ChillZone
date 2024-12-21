@@ -1,22 +1,28 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { TopBar } from '@components/molecules/TopBar';
-import { BottomNavbar, Map } from '@components';
+import { BottomNavbar, Map, RestaurantSlider } from '@components';
+import { useUser } from '@contexts/AppContrext';
+import { styles } from './style';
 
 export const HomeScreen = () => {
+  const username = useUser();
   return (
     <View style={styles.container}>
       <TopBar />
-      <Map />
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        style={styles.scrollView}
+      >
+        <Text style={styles.headerText}>
+          Bonjour, <Text style={styles.boldText}>{username.userName}</Text>
+        </Text>
+        <Map />
+        <RestaurantSlider />
+      </ScrollView>
       <BottomNavbar />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default HomeScreen;

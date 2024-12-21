@@ -1,0 +1,76 @@
+import { colors, typography } from '@theme';
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  card: {
+    display: 'flex',
+    width: 272,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexShrink: 0,
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: colors.aquaDeep,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+    marginRight: 15,
+  },
+  image: {
+    width: '100%',
+    height: 150,
+  },
+  statusContainer: {
+    backgroundColor: colors.white,
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    paddingVertical: 3,
+    paddingHorizontal: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    gap: 5,
+  },
+  statusDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 5,
+  },
+  statusText: {
+    fontWeight: 'bold',
+  },
+  ratingContainer: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  ratingCircle: {
+    width: 37,
+    height: 37,
+    borderRadius: 18.5,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  ratingText: {
+    fontWeight: 'bold',
+    color: colors.aquaDeep,
+  },
+  restaurantName: {
+    fontWeight: 'bold',
+    fontSize: typography.h3.fontSize,
+    marginTop: 10,
+    color: colors.white,
+  },
+  distance: {
+    color: colors.silver,
+    marginTop: 6,
+    marginBottom: 10,
+  },
+});
