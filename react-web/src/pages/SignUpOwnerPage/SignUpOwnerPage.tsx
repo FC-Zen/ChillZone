@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { SignUpOwnerAccountTemplate, SignUpOwnerFinishTemplate, SignUpOwnerRestaurantTemplate } from '@components/templates';
 import { ROUTE } from '@enums';
-import { Logo } from '@components/atoms';
 
 type PageState = 'restaurant' | 'final' | 'account';
 
@@ -27,8 +26,8 @@ export const SignUpOwnerPage: React.FC = () => {
         restauration_place_opening_time : "",
         restauration_place_closing_time : "",
         restauration_place_location : "",
-        restauration_place_photo_type : "",
-        restauration_place_photo_phone : "",
+        restauration_place_type : "",
+        restauration_place_phone : "",
         link_to_establishment : "",
     });
 
@@ -44,14 +43,20 @@ export const SignUpOwnerPage: React.FC = () => {
         restauration_place_description: { name: 'restauration_place_description', label: t('fields.common.description') },
         restauration_place_opening_time: { name: 'restauration_place_opening_time', label: t('fields.hours.opening_time') },
         restauration_place_closing_time: { name: 'restauration_place_closing_time', label: t('fields.hours.closing_time') },
-        restauration_place_location: { name: 'restauration_place_photo_link', label: t('fields.common.location') },
-        restauration_place_photo_type: { name: 'restauration_place_photo_type', label: t('fields.common.category') },
-        restauration_place_photo_phone: { name: 'restauration_place_photo_phone', label: t('fields.common.phone') },
+        restauration_place_location: { name: 'restauration_place_location', label: t('fields.common.location') },
+        restauration_place_type: { name: 'restauration_place_type', label: t('fields.common.category') },
+        restauration_place_phone: { name: 'restauration_place_phone', label: t('fields.common.phone') },
         link_to_establishment: { name: 'link_to_establishment', label: t('fields.common.establishment') },
     };      
 
+    const options = [
+        { value: 'Fridge', label: t('categories.fridge') },
+        { value: 'Restaurant', label: t('categories.restaurant') },
+    ];
+
     const handleInputChange = (name: string, value: string) => {
         setFormData({ ...formData, [name]: value });
+        //console.log(formData);
     };
 
     const [snackbar, setSnackbar] = useState<{
@@ -74,13 +79,14 @@ export const SignUpOwnerPage: React.FC = () => {
                 });
             } else {
                 console.log(formData);
-                setStatePage("restaurant")
+                setStatePage("restaurant");
             }
         }        
         else if (statePage == "restaurant") {
-            setStatePage("final")
+            console.log(formData);
+            setStatePage("final");
         } else if (statePage == "final") {
-            setStatePage("restaurant")
+            setStatePage("restaurant");
             //navigation.navigate(ROUTE.LOGIN)
         }
     };
@@ -129,6 +135,7 @@ export const SignUpOwnerPage: React.FC = () => {
                         handleInputChange={handleInputChange}
                         fields={fieldsFormData}
                         formData={formData}
+                        options={options}
                     />
                     );
                 case 'final':

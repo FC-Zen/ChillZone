@@ -66,8 +66,8 @@ export const SignUpOwnerAccountTemplate: React.FC<SignUpOwnerAccountTemplateProp
 
       <Input icon="User" name={fields.first_name.name} label={fields.first_name.label} required={true} onInputChange={handleInputChange} value={formData.first_name}/>
       <Input icon="User" name={fields.last_name.name} label={fields.last_name.label} required={true} onInputChange={handleInputChange} value={formData.last_name}/>
-      <Input icon="User" name={fields.email.name} label={fields.email.label} required={true} onInputChange={handleInputChange} value={formData.email}/>
-      <Input icon="User" name={fields.phone.name} label={fields.phone.label} required={true} onInputChange={handleInputChange} value={formData.phone}/>
+      <Input icon="Envelope" name={fields.email.name} label={fields.email.label} required={true} onInputChange={handleInputChange} value={formData.email}/>
+      <Input icon="Phone" name={fields.phone.name} label={fields.phone.label} required={true} onInputChange={handleInputChange} value={formData.phone}/>
       <Input icon="User" type="password" name={fields.password.name} label={fields.password.label} required={true} onInputChange={handleInputChange} value={formData.password}/>
       <Input icon="User" type="password" name={fields.verify_password.name} label={fields.verify_password.label} required={true} onInputChange={handleInputChange} value={formData.verify_password}/>
 

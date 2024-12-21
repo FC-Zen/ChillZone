@@ -2,6 +2,8 @@ import React from 'react';
 import { VectorHeader, VectorBottom, Button, Input } from '@components';
 import { Logo, Header } from '@components/atoms';
 import { Box, Container } from '@mui/material';
+import { RadioButtons } from '@components/organisms/RadioButtons';
+import { FileInput } from '@components/molecules/FileInput';
 
 type SignUpOwnerRestaurantTemplateProps = {
   title: string; 
@@ -12,6 +14,7 @@ type SignUpOwnerRestaurantTemplateProps = {
   handleInputChange: (name: string, value: string) => void;
   fields: any;
   formData : any;
+  options : { value: string; label: string }[]; 
 };
 
 export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTemplateProps> = ({
@@ -22,7 +25,8 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
   onBackButton,
   handleInputChange,
   fields,
-  formData
+  formData,
+  options
 }) => {
   return (
     <div
@@ -52,7 +56,7 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
         marginLeft: 'auto',
         marginRight: 'auto',
         padding: '0 16px',
-        gap: '10px',
+        gap: '7px',
         mt: 3,
         display: 'flex',
         flexDirection: 'column',
@@ -79,7 +83,8 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
       />
 
       <Input
-        icon="User"
+        icon="Browser"
+        type="textarea"
         name={fields.restauration_place_description.name}
         label={fields.restauration_place_description.label}
         required={true}
@@ -89,7 +94,8 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
 
       <Box sx={{ display: 'flex', gap: 2, width : '100%' }}>
         <Input
-          icon="User"
+          icon="Phone"
+          type="time"
           name={fields.restauration_place_opening_time.name}
           label={fields.restauration_place_opening_time.label}
           required={true}
@@ -98,7 +104,8 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
         />
 
         <Input
-          icon="User"
+          icon="Phone"
+          type="time"
           name={fields.restauration_place_closing_time.name}
           label={fields.restauration_place_closing_time.label}
           required={true}
@@ -108,7 +115,7 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
       </Box>
 
       <Input
-        icon="User"
+        icon="Location"
         name={fields.restauration_place_location.name}
         label={fields.restauration_place_location.label}
         required={true}
@@ -116,41 +123,37 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
         value={formData.restauration_place_location}
       />
 
-      <Button 
-        title={"IMAGE"} 
-        onclick={function (): void | false {
-          throw new Error('Function not implemented.');
-        } }
-        type='file'
-        variant='secondary'
+      <RadioButtons 
+          label={fields.restauration_place_type.label} 
+          name={fields.restauration_place_type.name} 
+          options={options} 
+          onInputChange={handleInputChange} 
       />
 
       <Input
-        icon="User"
-        name={fields.restauration_place_photo_type.name}
-        label={fields.restauration_place_photo_type.label}
-        required={true}
-        onInputChange={handleInputChange}
-        value={formData.restauration_place_photo_type}
-      />
-
-      <Input
-        icon="User"
-        name={fields.restauration_place_photo_phone.name}
-        label={fields.restauration_place_photo_phone.label}
+        icon="Phone"
+        type="tel"
+        name={fields.restauration_place_phone.name}
+        label={fields.restauration_place_phone.label}
         required={true}
         onInputChange={handleInputChange}
         value={formData.restauration_place_photo_phone}
       />
 
       <Input
-        icon="User"
+        icon="Location"
         name={fields.link_to_establishment.name}
         label={fields.link_to_establishment.label}
         required={true}
         onInputChange={handleInputChange}
         value={formData.link_to_establishment}
       />
+
+      <FileInput 
+
+      />
+
+
 
       <Box sx={{ display: 'flex', gap: 2, width : '100%', justifyContent: 'center' }}>
       <Button title={buttonBackTitle} onclick={onBackButton} variant="secondary" />
