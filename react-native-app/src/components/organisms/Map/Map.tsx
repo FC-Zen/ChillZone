@@ -1,20 +1,19 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { BookingInfo } from '@components/molecules/BookingInfo';
-import { ReservationButton } from '@components/molecules/ReservationButton';
+import { BookingInfo, ReservationButton } from '@components/molecules';
 import { styles } from './style';
+import { useTranslation } from 'react-i18next';
 
 export const Map = () => {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>
-        Retrouvez votre prochaine réservation
-      </Text>
-      <View style={styles.bookingInfoContainer}>
+      <Text style={styles.headerText}>{t('info.reservation')}</Text>
+      <View>
         <BookingInfo />
       </View>
       <ReservationButton
-        title="Annuler la réservation"
+        title={t('buttons.actions.cancelReservation')}
         onPress={() => {}}
         iconName="Cross"
       />

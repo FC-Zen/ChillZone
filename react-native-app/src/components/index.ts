@@ -23,4 +23,5 @@ export {
   ForgotMdpTemplate,
   ForgotPasswordTemplate,
   ResetPasswordTemplate,
+  HomeScreenTemplate,
 } from './templates';

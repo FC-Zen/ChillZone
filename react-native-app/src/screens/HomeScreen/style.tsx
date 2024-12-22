@@ -6,18 +6,4 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  scrollView: {
-    width: '100%',
-  },
-  headerText: {
-    fontSize: 24,
-    margin: 16,
-    textAlign: 'center',
-  },
-  boldText: {
-    fontWeight: 'bold',
-  },
-  scrollContainer: {
-    paddingBottom: 100,
-  },
 });

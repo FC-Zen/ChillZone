@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 
-type UserContextType = {
+export type UserContextType = {
   userName: string | null;
   setUserName: (name: string) => void;
 };

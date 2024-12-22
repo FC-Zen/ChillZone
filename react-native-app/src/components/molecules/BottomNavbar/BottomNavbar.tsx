@@ -3,6 +3,16 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { colors } from '@theme';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { ROUTE } from '@enums';
+
+type RootStackParamList = {
+  HomeScreen: undefined;
+  ReserveScreen: undefined;
+  LunchScreen: undefined;
+  CalendarScreen: undefined;
+  NavigationScreen: undefined;
+};
 
 export type NavItem = {
   name: string;
@@ -11,6 +21,7 @@ export type NavItem = {
 };
 
 export const BottomNavbar = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const items: NavItem[] = [
@@ -23,6 +34,31 @@ export const BottomNavbar = () => {
 
   const handlePress = (name: string) => {
     setSelectedItem(name);
+
+    switch (name) {
+      case 'Home':
+        console.log('Home');
+        navigation.navigate(ROUTE.HOME);
+        break;
+      case 'Reserve':
+        console.log('Reserve');
+        // navigation.navigate(ROUTE.RESERVE);
+        break;
+      case 'Lunch':
+        console.log('Lunch');
+        // navigation.navigate(ROUTE.LUNCH);
+        break;
+      case 'Calendar':
+        console.log('Calendar');
+        // navigation.navigate(ROUTE.CALENDAR);
+        break;
+      case 'Navigation':
+        console.log('Navigation');
+        // navigation.navigate(ROUTE.NAVIGATION);
+        break;
+      default:
+        break;
+    }
   };
 
   return (

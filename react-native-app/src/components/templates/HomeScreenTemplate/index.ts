@@ -1,0 +1,1 @@
+export { HomeScreenTemplate } from './HomeScreenTemplate';

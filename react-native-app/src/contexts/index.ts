@@ -1,1 +1,1 @@
-export { UserProvider, useUser } from './AppContrext';
+export { UserProvider, useUser, UserContextType } from './AppContrext';

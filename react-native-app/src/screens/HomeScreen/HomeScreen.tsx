@@ -1,25 +1,39 @@
 import React from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import { TopBar } from '@components/molecules/TopBar';
-import { BottomNavbar, Map, RestaurantSlider } from '@components';
+import { BottomNavbar } from '@components/molecules/BottomNavbar';
 import { useUser } from '@contexts/AppContrext';
+import { HomeScreenTemplate } from '@components';
+import { useNavigation } from '@react-navigation/native';
 import { styles } from './style';
 
 export const HomeScreen = () => {
-  const username = useUser();
+  const navigation = useNavigation();
+  const { userName } = useUser();
+
+  const handleUserPress = () => {
+    console.log('on navigue');
+    // navigation.navigate();
+  };
+
+  const handleFaqPress = () => {
+    console.log('on navigue');
+    // navigation.navigate();
+  };
+
+  const handleNotificationPress = () => {
+    console.log('on navigue');
+    // navigation.navigate();
+  };
+
   return (
     <View style={styles.container}>
-      <TopBar />
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        style={styles.scrollView}
-      >
-        <Text style={styles.headerText}>
-          Bonjour, <Text style={styles.boldText}>{username.userName}</Text>
-        </Text>
-        <Map />
-        <RestaurantSlider />
-      </ScrollView>
+      <TopBar
+        onUserPress={handleUserPress}
+        onFaqPress={handleFaqPress}
+        onNotificationPress={handleNotificationPress}
+      />
+      <HomeScreenTemplate username={userName} />
       <BottomNavbar />
     </View>
   );

@@ -1,18 +1,18 @@
 import { StyleSheet } from 'react-native';
-import { colors, layout } from '@theme';
+import { colors, layout, typography } from '@theme';
 
 export const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    width: layout.window.width,
-    height: layout.window.height * 0.35,
+    width: '100%',
+    height: layout.window.height * 0.3,
     borderRadius: 10,
     overflow: 'hidden',
     backgroundColor: colors.white,
     borderColor: colors.resolutionBlue,
     borderWidth: 4,
     elevation: 5,
-    marginVertical: 10,
+    marginBottom: 10,
   },
   image: {
     width: '100%',
@@ -39,7 +39,9 @@ export const styles = StyleSheet.create({
   },
   iconContainer: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 5,
   },
   iconContainer2: {
@@ -57,7 +59,7 @@ export const styles = StyleSheet.create({
   iconText: {
     textAlign: 'center',
     color: colors.white,
-    fontSize: 16,
+    fontSize: typography.h3.fontSize,
     marginLeft: 10,
   },
 });

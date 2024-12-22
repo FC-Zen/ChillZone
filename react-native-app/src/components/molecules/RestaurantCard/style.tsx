@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
   card: {
     display: 'flex',
     width: 272,
+    height: 180,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -54,7 +55,7 @@ export const styles = StyleSheet.create({
     width: 37,
     height: 37,
     borderRadius: 18.5,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -65,12 +66,16 @@ export const styles = StyleSheet.create({
   restaurantName: {
     fontWeight: 'bold',
     fontSize: typography.h3.fontSize,
-    marginTop: 10,
     color: colors.white,
+    lineHeight: 40,
+    height: 30,
+    textAlign: 'center',
   },
   distance: {
-    color: colors.silver,
-    marginTop: 6,
-    marginBottom: 10,
+    color: colors.white,
+    marginBottom: 20,
+    lineHeight: 20,
+    height: 30,
+    textAlign: 'center',
   },
 });

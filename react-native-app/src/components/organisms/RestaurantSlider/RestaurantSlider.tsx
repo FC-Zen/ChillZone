@@ -3,6 +3,7 @@ import { View, ScrollView, Text } from 'react-native';
 import { RestaurantCard } from '@components/molecules';
 import { styles } from './style';
 import { restaurant } from '@assets/Images';
+import { useTranslation } from 'react-i18next';
 
 const restaurantsData = [
   {
@@ -36,9 +37,10 @@ const restaurantsData = [
 ];
 
 export const RestaurantSlider = () => {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Explorez les restaurants à proximité</Text>
+      <Text style={styles.title}>{t('info.restaurants')}</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {restaurantsData.map((restaurant, index) => (
           <RestaurantCard
