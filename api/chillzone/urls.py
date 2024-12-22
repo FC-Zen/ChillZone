@@ -19,6 +19,11 @@ from django.urls import path, include
 from decouple import config
 
 from chillzone.views import restauration_place, user
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +35,14 @@ urlpatterns = [
     path('api/user/list',user.UsersView.as_view(), name='api/user/list'),
 
     path('api/restauration/place/<int:id_restaurant>/', restauration_place.RestaurationPlaceView.as_view(), name='api/restauration/place/id'),
-    path('api/restauration/places', restauration_place.RestaurationPlacesView.as_view(), name='api/restauration/places')
+    path('api/restauration/places', restauration_place.RestaurationPlacesView.as_view(), name='api/restauration/places'),
+
+    # Endpoint pour le schéma OpenAPI JSON
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Documentation Swagger UI
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    # Documentation Redoc UI
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 
 if config('DEBUG') :
