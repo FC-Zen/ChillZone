@@ -1,0 +1,8 @@
+Django
+django-debug-toolbar
+django-filter
+djangorestframework
+Markdown
+mysqlclient
+pillow
+python-decouple
