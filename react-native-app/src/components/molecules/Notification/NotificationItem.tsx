@@ -1,5 +1,5 @@
 // src/components/molecules/NotificationItem.tsx
-import React, { useEffect } from 'react';
+import { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity } from 'react-native';
 import { Icon } from '@components/atoms';
 import { styles } from './style';
@@ -62,7 +62,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
   description,
   time,
 }) => {
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View>
       <Modal

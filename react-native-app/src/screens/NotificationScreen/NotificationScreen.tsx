@@ -1,6 +1,6 @@
 import React from 'react';
-import { NotificationTemplate } from '../../components/templates/NotificationTemplate/NotificationTemplate';
-import notificationsData from '../../assets/data/notifications.json';
+import { NotificationTemplate } from '@components/templates/NotificationTemplate/NotificationTemplate';
+import notificationsData from '@assets/data/notifications.json';
 import { View } from 'react-native';
 import { styles } from './style';
 

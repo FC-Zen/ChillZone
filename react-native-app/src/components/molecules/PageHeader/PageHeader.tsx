@@ -1,8 +1,7 @@
 // src/components/molecules/PageHeader/PageHeader.tsx
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { Icon } from '@components/atoms';
-import Text from '../../atoms/Text/Text';
 import { styles } from './style';
 import { useHeaderHeight } from '@react-navigation/elements';
 

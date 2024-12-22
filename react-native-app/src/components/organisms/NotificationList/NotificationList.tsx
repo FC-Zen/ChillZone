@@ -1,6 +1,6 @@
 // src/components/organisms/NotificationList.tsx
 import React from 'react';
-import { FlatList, Modal, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { NotificationItem } from '@components/molecules/Notification';
 import { styles } from './style';
 

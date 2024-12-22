@@ -18,7 +18,7 @@ export type RouteParamList = {
   ForgotPasswordScreen: undefined;
   ForgotMdpScreen: undefined;
   ResetPasswordScreen: undefined;
-  NOrification: undefined;
+  NOrificationScreen: undefined;
 };
 
 // Typage des propriétés des écrans
