@@ -6,4 +6,3 @@ Markdown
 mysqlclient
 pillow
 python-decouple
-drf-spectacular
