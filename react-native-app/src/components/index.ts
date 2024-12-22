@@ -1,14 +1,27 @@
 export { Button, Checkbox } from './atoms';
-export { Input, SnackBar, VectorHeader, VectorBottom } from './molecules';
+export {
+  BookingInfo,
+  BottomNavbar,
+  Input,
+  ReservationButton,
+  RestaurantCard,
+  SnackBar,
+  TopBar,
+  VectorHeader,
+  VectorBottom,
+} from './molecules';
 export {
   Connection,
   ForgotMdp,
   ForgotPassword,
+  Map,
   ResetPassword,
+  RestaurantSlider,
 } from './organisms';
 export {
   ConnectionTemplate,
   ForgotMdpTemplate,
   ForgotPasswordTemplate,
   ResetPasswordTemplate,
+  HomeScreenTemplate,
 } from './templates';

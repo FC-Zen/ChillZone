@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import { ROUTE } from '@enums';
 
 export type RootStackParamList = {
-  [ROUTE.HOME]: undefined;
+  [ROUTE.HOME]: { userName: string };
   [ROUTE.LOGIN_SCREEN]: undefined;
   [ROUTE.FORGOT_PASSWORD]: undefined;
   [ROUTE.FORGOT_MDP]: undefined;
@@ -12,7 +12,7 @@ export type RootStackParamList = {
 
 // Définition des routes et de leurs paramètres
 export type RouteParamList = {
-  Home: undefined;
+  HomeScreen: undefined;
   LoginScreen: undefined; // Correspond à ROUTE.LOGIN_SCREEN
   ForgotPasswordScreen: undefined;
   ForgotMdpScreen: undefined;

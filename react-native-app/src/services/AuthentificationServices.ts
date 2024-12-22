@@ -33,7 +33,6 @@ export const authenticateUser = async (formData: {
       throw new Error('Email ou mot de passe incorrect');
     }
   } catch (error: any) {
-    console.error("Erreur lors de l'authentification:", error.message);
     throw new Error(error.message);
   }
 };

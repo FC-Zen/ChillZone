@@ -3,3 +3,4 @@ export { NotificationScreen } from './NotificationScreen';
 export { ForgotPasswordScreen } from './ForgotPasswordScreen';
 export { ForgotMdpScreen } from './ForgotMdpScreen';
 export { ResetPasswordScreen } from './ResetPasswordScreen';
+export { HomeScreen } from './HomeScreen';

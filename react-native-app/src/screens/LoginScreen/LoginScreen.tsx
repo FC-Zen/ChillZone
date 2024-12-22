@@ -7,6 +7,7 @@ import { logoIUT } from '@assets/Images';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
+import { useUser } from '@contexts/AppContrext';
 
 export const LoginScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -14,6 +15,7 @@ export const LoginScreen: React.FC = () => {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [isChecked, setChecked] = useState(false);
+  const { setUserName } = useUser();
 
   const [authResult, setAuthResult] = useState<{
     severity: 'success' | 'error';
@@ -32,9 +34,17 @@ export const LoginScreen: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      await authenticateUser(inputEmail, inputPassword);
-      console.log('Connexion réussie !');
-      setAuthResult({ severity: 'success', message: 'Connexion réussie !' });
+      const result = await authenticateUser({
+        login: inputEmail,
+        password: inputPassword,
+      });
+
+      console.log(result.message);
+      setAuthResult({ severity: 'success', message: result.message });
+
+      const userName = inputEmail;
+      setUserName(userName);
+      navigation.navigate(ROUTE.HOME);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Une erreur est survenue.';

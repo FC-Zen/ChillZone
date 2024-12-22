@@ -1,3 +1,3 @@
 export { layout } from './layout';
-export { colors } from './colors';
+export { colors, Colors } from './colors';
 export { typography } from './typography';
