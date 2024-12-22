@@ -1,5 +1,5 @@
 from django.db import models
-from chillzone.models import RestaurationPlace
+from .restauration_place import RestaurationPlace
 from django.contrib.auth.models import User
 
 class Establishment(models.Model) :
@@ -22,6 +22,4 @@ class Establishment(models.Model) :
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
-    restaurants = models.ManyToManyField(RestaurationPlace,through='LinkTo',related_name='restaurant') 
-
-    locations = models.ManyToManyField('Location',through='IsLocated', related_name='establishments')
+    restaurants = models.ManyToManyField(RestaurationPlace)                 # Pour personnaliser il faut créer un model correspondant à la table

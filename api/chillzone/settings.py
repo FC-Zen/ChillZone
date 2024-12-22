@@ -47,21 +47,7 @@ INSTALLED_APPS += [
     'django_filters',
     'rest_framework',
     'chillzone',
-    'drf_spectacular',
 ]
-
-# ----------------------------- Pour drf-spectacular ---------------------------------------------
-REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
-
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'API ChillZone',
-    'DESCRIPTION': 'Documentation de l\'API ChillZone.',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,  # Désactive l'inclusion automatique du schéma dans Swagger
-}
-# ----------------------------- Pour drf-spectacular ---------------------------------------------
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': [
