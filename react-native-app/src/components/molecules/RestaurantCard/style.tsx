@@ -60,12 +60,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ratingText: {
-    fontWeight: 'bold',
+    fontFamily: typography.h1.fontFamily,
     color: colors.aquaDeep,
   },
   restaurantName: {
     fontWeight: 'bold',
     fontSize: typography.h3.fontSize,
+    fontFamily: typography.h2.fontFamily,
     color: colors.white,
     lineHeight: 40,
     height: 30,
@@ -73,6 +74,7 @@ export const styles = StyleSheet.create({
   },
   distance: {
     color: colors.white,
+    fontFamily: typography.h3.fontFamily,
     marginBottom: 20,
     lineHeight: 20,
     height: 30,

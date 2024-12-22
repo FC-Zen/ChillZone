@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colors, typography } from '@theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,8 +8,12 @@ export const styles = StyleSheet.create({
   },
   headerText: {
     marginTop: 35,
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 17,
+    fontFamily: typography.h2.fontFamily,
     marginBottom: 15,
+  },
+  highlightedText: {
+    color: colors.resolutionBlue,
+    fontFamily: typography.h1.fontFamily,
   },
 });

@@ -71,6 +71,7 @@ export const BottomNavbar = () => {
         >
           <Icon
             name={item.icon}
+            onPress={() => handlePress(item.name)}
             style={styles.icon}
             color={selectedItem === item.name ? colors.white : colors.silver}
           />

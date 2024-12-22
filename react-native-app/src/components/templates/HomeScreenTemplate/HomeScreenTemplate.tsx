@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { Map, RestaurantSlider } from '@components';
 import { styles } from './style';
+import { useTranslation } from 'react-i18next';
 
 type HomeScreenTemplateProps = {
   username: string | null;
@@ -10,6 +11,7 @@ type HomeScreenTemplateProps = {
 export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
   username,
 }) => {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
       <ScrollView
@@ -17,7 +19,8 @@ export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
         style={styles.scrollView}
       >
         <Text style={styles.headerText}>
-          Bonjour, <Text style={styles.boldText}>{username}</Text>
+          {t('userGreeting.hello', { nom: '' })}
+          <Text style={styles.boldText}>{username}</Text>
         </Text>
         <Map />
         <RestaurantSlider />

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors, layout } from '@theme';
+import { colors, layout, typography } from '@theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 10,
+    gap: 5,
   },
   icon: {
     width: 24,
@@ -28,5 +28,6 @@ export const styles = StyleSheet.create({
   label: {
     color: colors.white,
     fontSize: 12,
+    fontFamily: typography.h3.fontFamily,
   },
 });

@@ -23,40 +23,20 @@ export const BookingInfo: React.FC = () => {
     <View style={styles.container}>
       <Image source={map} style={styles.image} />
       <View style={styles.content}>
-        {/* Conteneur pour centrer les lignes */}
-        <View>
-          {/* Première ligne avec 3 icônes */}
-          <View style={styles.row}>
-            {items.slice(0, 3).map((item, index) => (
-              <View key={index} style={styles.iconContainer}>
-                <View style={styles.iconLabelContainer}>
-                  <Icon
-                    name={item.icon}
-                    color={colors.white}
-                    height={16}
-                    width={16}
-                  />
-                  <Text style={styles.iconText}>{item.label}</Text>
-                </View>
+        <View style={styles.iconRow}>
+          {items.map((item, index) => (
+            <View key={index} style={styles.iconContainer}>
+              <View style={styles.iconLabelContainer}>
+                <Icon
+                  name={item.icon}
+                  color={colors.white}
+                  height={16}
+                  width={16}
+                />
+                <Text style={styles.iconText}>{item.label}</Text>
               </View>
-            ))}
-          </View>
-          {/* Deuxième ligne avec 2 icônes */}
-          <View style={styles.row}>
-            {items.slice(3, 5).map((item, index) => (
-              <View key={index} style={styles.iconContainer2}>
-                <View style={styles.iconLabelContainer}>
-                  <Icon
-                    name={item.icon}
-                    color={colors.white}
-                    height={16}
-                    width={16}
-                  />
-                  <Text style={styles.iconText}>{item.label}</Text>
-                </View>
-              </View>
-            ))}
-          </View>
+            </View>
+          ))}
         </View>
       </View>
     </View>

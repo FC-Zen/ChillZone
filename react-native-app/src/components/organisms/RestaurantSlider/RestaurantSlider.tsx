@@ -38,9 +38,15 @@ const restaurantsData = [
 
 export const RestaurantSlider = () => {
   const { t } = useTranslation();
+  const restaurantText = t('info.restaurants');
+  const restaurantWords = restaurantText.split(' ');
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('info.restaurants')}</Text>
+      <Text style={styles.title}>
+        <Text style={styles.highlightedText}>{restaurantWords[0]} </Text>
+        {restaurantWords.slice(1).join(' ')}
+      </Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {restaurantsData.map((restaurant, index) => (
           <RestaurantCard

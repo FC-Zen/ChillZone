@@ -30,12 +30,11 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
   },
-  row: {
+  iconRow: {
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: 10,
   },
   iconContainer: {
     display: 'flex',
@@ -44,22 +43,16 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 5,
   },
-  iconContainer2: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10,
-  },
   iconLabelContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   iconText: {
     textAlign: 'center',
+    fontFamily: typography.h3.fontFamily,
     color: colors.white,
     fontSize: typography.h3.fontSize,
-    marginLeft: 10,
+    marginLeft: 5,
   },
 });

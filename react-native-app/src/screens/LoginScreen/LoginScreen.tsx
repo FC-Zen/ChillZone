@@ -46,10 +46,8 @@ export const LoginScreen: React.FC = () => {
       setUserName(userName);
       navigation.navigate(ROUTE.HOME);
     } catch (error) {
-      // Gérer l'erreur et définir le message d'erreur
       const errorMessage =
         error instanceof Error ? error.message : 'Une erreur est survenue.';
-      console.error('Erreur de connexion:', errorMessage);
       setAuthResult({ severity: 'error', message: errorMessage });
     }
   };

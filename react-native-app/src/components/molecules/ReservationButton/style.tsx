@@ -22,5 +22,6 @@ export const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'center',
     fontSize: typography.h3.fontSize,
+    fontFamily: typography.h3.fontFamily,
   },
 });
