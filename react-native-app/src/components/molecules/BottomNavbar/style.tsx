@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     display: 'flex',
     width: layout.window.width,
-    height: 100,
+    height: 80,
     padding: 14,
     flexDirection: 'row',
     justifyContent: 'space-around',

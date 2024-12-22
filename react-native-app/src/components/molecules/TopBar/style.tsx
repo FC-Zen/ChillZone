@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   header: {
-    marginTop: 21,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -11,11 +10,11 @@ export const styles = StyleSheet.create({
   container: {
     display: 'flex',
     width: layout.screen.width,
-    height: layout.screen.height * 0.2,
+    height: 128,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 28,
   },
   rightIcons: {
     display: 'flex',
