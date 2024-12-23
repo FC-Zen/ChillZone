@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native'; // Importation de TouchableOpacity pour gérer l'événement onPress
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from './style';
 import { colors } from '@theme';
 
