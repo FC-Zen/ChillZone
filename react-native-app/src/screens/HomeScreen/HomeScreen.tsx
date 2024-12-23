@@ -9,11 +9,7 @@ import { styles } from './style';
 import { transformBookings } from '@services';
 import { useTranslation } from 'react-i18next';
 import { transformRestaurantData } from '@services';
-
-// Mappage de l'image
-const imagesMap: { [key: string]: any } = {
-  'restaurant_image.png': require('@assets/data/Images_test/restaurant_image.png'),
-};
+import { ImagesMap } from '@utils';
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
@@ -32,7 +28,7 @@ export const HomeScreen = () => {
       const restaurants = await transformRestaurantData();
 
       const transformedRestaurants = restaurants.map((restaurant) => {
-        const image = imagesMap[restaurant.photo_link];
+        const image = ImagesMap[restaurant.photo_link];
         return {
           id: restaurant.id,
           name: restaurant.name,
