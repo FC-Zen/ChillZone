@@ -68,16 +68,8 @@ export const styles = StyleSheet.create({
     fontSize: typography.h3.fontSize,
     fontFamily: typography.h2.fontFamily,
     color: colors.white,
-    lineHeight: 40,
-    height: 30,
-    textAlign: 'center',
-  },
-  distance: {
-    color: colors.white,
-    fontFamily: typography.h3.fontFamily,
-    marginBottom: 20,
-    lineHeight: 20,
-    height: 30,
+    lineHeight: 50,
+    height: 80,
     textAlign: 'center',
   },
 });

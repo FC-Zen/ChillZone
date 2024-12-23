@@ -1,28 +1,27 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native'; // Importation de TouchableOpacity pour gérer l'événement onPress
 import { styles } from './style';
 import { colors } from '@theme';
 
 type RestaurantCardProps = {
-  imageUrl: any;
-  status: 'Ouvert' | 'Fermé' | string;
-  restaurantName: string;
-  distance: string;
-  rating: number;
+  status: 'Ouvert' | 'Fermé';
+  name: string;
+  photo_link: any;
+  onPress: () => void;
 };
 
 export const RestaurantCard: React.FC<RestaurantCardProps> = ({
-  imageUrl,
+  name,
+  photo_link,
   status,
-  restaurantName,
-  distance,
-  rating,
+  onPress,
 }) => {
   const isOpen = status === 'Ouvert';
 
   return (
-    <View style={styles.card}>
-      <Image source={imageUrl} style={styles.image} />
+    <TouchableOpacity onPress={onPress} style={styles.card}>
+      {' '}
+      <Image source={photo_link} style={styles.image} />
       <View style={styles.statusContainer}>
         <View
           style={[
@@ -41,13 +40,7 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
           {status}
         </Text>
       </View>
-      <View style={styles.ratingContainer}>
-        <View style={styles.ratingCircle}>
-          <Text style={styles.ratingText}>{rating.toFixed(1)}</Text>
-        </View>
-      </View>
-      <Text style={styles.restaurantName}>{restaurantName}</Text>
-      <Text style={styles.distance}>{distance}</Text>
-    </View>
+      <Text style={styles.restaurantName}>{name}</Text>
+    </TouchableOpacity>
   );
 };

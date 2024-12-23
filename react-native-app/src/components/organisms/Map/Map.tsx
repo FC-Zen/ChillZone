@@ -3,8 +3,16 @@ import { View, Text } from 'react-native';
 import { BookingInfo, ReservationButton } from '@components/molecules';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
+import { NavItem } from '@components/molecules/BookingInfo';
 
-export const Map = () => {
+type ReservationButtonProps = React.ComponentProps<typeof ReservationButton>;
+
+type MapProps = {
+  items: NavItem[];
+  reservationButtonProps: ReservationButtonProps;
+};
+
+export const Map: React.FC<MapProps> = ({ items, reservationButtonProps }) => {
   const { t } = useTranslation();
   const reservationText = t('info.reservation');
   const reservationWords = reservationText.split(' ');
@@ -16,13 +24,9 @@ export const Map = () => {
         {reservationWords.slice(1).join(' ')}
       </Text>
       <View>
-        <BookingInfo />
+        <BookingInfo items={items} />
       </View>
-      <ReservationButton
-        title={t('buttons.actions.cancelReservation')}
-        onPress={() => {}}
-        iconName="Cross"
-      />
+      <ReservationButton {...reservationButtonProps} />
     </View>
   );
 };

@@ -1,17 +1,36 @@
 import React from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { Map, RestaurantSlider } from '@components';
 import { styles } from './style';
-import { useTranslation } from 'react-i18next';
+import { NavItem } from '@components/molecules/BookingInfo';
+import { IconProps } from '@components/atoms';
 
-type HomeScreenTemplateProps = {
+type ReservationButtonProps = {
+  title: string;
+  onPress: () => void;
+  iconName: IconProps['name'];
+};
+
+export type HomeScreenTemplateProps = {
   username: string | null;
+  items: NavItem[];
+  reservationButtonProps: ReservationButtonProps;
+  restaurantsData: {
+    id: number;
+    name: string;
+    photo_link: any;
+    status: 'Ouvert' | 'Fermé';
+  }[];
+  onPress: (restaurantName: string) => void;
 };
 
 export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
   username,
+  items,
+  reservationButtonProps,
+  restaurantsData,
+  onPress,
 }) => {
-  const { t } = useTranslation();
   return (
     <View style={styles.container}>
       <ScrollView
@@ -19,11 +38,10 @@ export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
         style={styles.scrollView}
       >
         <Text style={styles.headerText}>
-          {t('userGreeting.hello', { nom: '' })}
-          <Text style={styles.boldText}>{username}</Text>
+          {username && `Bonjour, ${username}`}
         </Text>
-        <Map />
-        <RestaurantSlider />
+        <Map items={items} reservationButtonProps={reservationButtonProps} />
+        <RestaurantSlider restaurantsData={restaurantsData} onPress={onPress} />
       </ScrollView>
     </View>
   );

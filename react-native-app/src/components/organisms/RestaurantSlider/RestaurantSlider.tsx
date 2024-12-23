@@ -2,41 +2,22 @@ import React from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { RestaurantCard } from '@components/molecules';
 import { styles } from './style';
-import { restaurant } from '@assets/Images';
 import { useTranslation } from 'react-i18next';
 
-const restaurantsData = [
-  {
-    imageUrl: restaurant,
-    status: 'Ouvert',
-    restaurantName: "Au p'tit creux",
-    distance: 'à 200m',
-    rating: 4.0,
-  },
-  {
-    imageUrl: restaurant,
-    status: 'Ouvert',
-    restaurantName: 'Le Gourmet',
-    distance: 'à 300m',
-    rating: 4.5,
-  },
-  {
-    imageUrl: restaurant,
-    status: 'Fermé',
-    restaurantName: 'Pizza Time',
-    distance: 'à 150m',
-    rating: 3.8,
-  },
-  {
-    imageUrl: restaurant,
-    status: 'Ouvert',
-    restaurantName: 'Sushi Place',
-    distance: 'à 250m',
-    rating: 4.2,
-  },
-];
+type RestaurantSliderProps = {
+  restaurantsData: {
+    id: number;
+    name: string;
+    photo_link: any;
+    status: 'Ouvert' | 'Fermé';
+  }[];
+  onPress: (restaurantName: string) => void;
+};
 
-export const RestaurantSlider = () => {
+export const RestaurantSlider: React.FC<RestaurantSliderProps> = ({
+  restaurantsData,
+  onPress,
+}) => {
   const { t } = useTranslation();
   const restaurantText = t('info.restaurants');
   const restaurantWords = restaurantText.split(' ');
@@ -51,11 +32,10 @@ export const RestaurantSlider = () => {
         {restaurantsData.map((restaurant, index) => (
           <RestaurantCard
             key={index}
-            imageUrl={restaurant.imageUrl}
+            photo_link={restaurant.photo_link}
             status={restaurant.status}
-            restaurantName={restaurant.restaurantName}
-            distance={restaurant.distance}
-            rating={restaurant.rating}
+            name={restaurant.name}
+            onPress={() => onPress(restaurant.name)}
           />
         ))}
       </ScrollView>
