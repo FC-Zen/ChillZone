@@ -20,9 +20,15 @@ export type NavItem = {
   label: string;
 };
 
-export const BottomNavbar = () => {
+type BottomNavbarProps = {
+  activeIcon: string;
+};
+
+export const BottomNavbar: React.FC<BottomNavbarProps> = ({ 
+  activeIcon,
+}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | null>(activeIcon);
 
   const items: NavItem[] = [
     { name: 'Home', icon: 'Home', label: 'Accueil' },
