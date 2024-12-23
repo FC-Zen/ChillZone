@@ -1,1 +1,1 @@
-export { BookingInfo } from './BookingInfo';
+export { BookingInfo, NavItem } from './BookingInfo';

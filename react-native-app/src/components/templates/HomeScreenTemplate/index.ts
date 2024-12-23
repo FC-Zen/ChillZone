@@ -1,1 +1,4 @@
-export { HomeScreenTemplate } from './HomeScreenTemplate';
+export {
+  HomeScreenTemplate,
+  HomeScreenTemplateProps,
+} from './HomeScreenTemplate';
