@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { TopBar } from '@components/molecules/TopBar';
-import { BottomNavbar } from '@components/molecules/BottomNavbar';
+import { BottomNavbar } from '@components/molecules';
 import { useUser } from '@contexts/AppContrext';
 import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import { transformBookings } from '@services';
 import { useTranslation } from 'react-i18next';
 import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
+import { ROUTE } from '@enums';
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
@@ -55,7 +56,7 @@ export const HomeScreen = () => {
 
   const handleNotificationPress = () => {
     console.log('on navigue');
-    // navigation.navigate();
+    navigation.navigate(ROUTE.NOTIFICATION);
   };
 
   const handleRestaurantPress = (restaurantName: string) => {
