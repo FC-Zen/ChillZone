@@ -5,31 +5,23 @@ import { fonts } from '@theme/typography';
 export const styles = StyleSheet.create({
     container: {
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         height: 'auto',
         textAlign: 'center',
         paddingVertical: '3%',
-        paddingHorizontal: 20,  
-    },
-    backButton: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 16,
-        height: 16,
-        marginRight: 10,
+        paddingHorizontal: '10%',
+        gap: '20%',
     },
     icon: {
         width: 16,
         height: 16,
     },
     title: {
-        width: 326,
         color: colors.black, 
         textAlign: 'center',
-        fontFamily: fonts.semiBold,
+        fontFamily: typography.h2.fontFamily,
         fontSize: typography.h2.fontSize,
-        fontWeight: '600',
     },
 });
