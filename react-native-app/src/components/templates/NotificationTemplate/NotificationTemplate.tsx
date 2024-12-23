@@ -6,14 +6,15 @@ import { styles } from './style';
 
 export type NotificationTemplateProps = {
   notifications: NotificationListProps["notifications"];
+  onBackPress: () => void;
 };
 
 export const NotificationTemplate : React.FC<NotificationTemplateProps> = ({
-  notifications,
+  notifications, onBackPress
 }) => {
     return (
       <View style={styles.container}>
-        <PageHeader title="Notifications" />
+        <PageHeader title="Notifications" variant='back' onBackPress={onBackPress}/>
         <NotificationList notifications={notifications} />
       </View>
     );

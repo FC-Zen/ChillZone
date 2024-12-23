@@ -3,6 +3,8 @@ import { NotificationTemplate } from '@components/templates/NotificationTemplate
 import notificationsData from '@assets/data/notifications.json';
 import { View } from 'react-native';
 import { styles } from './style';
+import { useNavigation } from '@hooks';
+import { ROUTE } from '@enums';
 
 export const NotificationScreen: React.FC = () => {
   // Mapper les données JSON aux propriétés attendues par NotificationTemplate
@@ -15,9 +17,11 @@ export const NotificationScreen: React.FC = () => {
     })
   );
 
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <NotificationTemplate notifications={notifications} />
+      <NotificationTemplate notifications={notifications} onBackPress={() => navigation.navigate(ROUTE.HOME)}/>
     </View>
   );
 };

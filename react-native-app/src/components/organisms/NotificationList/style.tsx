@@ -3,12 +3,32 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: layout.screen.width,
-    height: '70%',
-    overflow: 'scroll',
+    width: '100%',
+    height: '100%',
+  },
+  contentContainer: {
+    flexDirection: "column",
+  },
+  outsideArea: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'transparent',
+    display: 'flex',
+    flex : 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'hsla(0, 0%, 0%, 0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContent: {
+    width: 'auto',
+    height: 'auto',
+    borderRadius: 10,
   },
 });

@@ -1,4 +1,4 @@
-import { colors } from '@theme';
+import { colors, typography } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -26,26 +26,20 @@ export const styles = StyleSheet.create({
 
   date: {
     color: colors.black,
-    fontFamily: 'Montserrat',
-    fontSize: 12,
-    fontWeight: '400',
-    lineHeight: 18,
+    fontFamily: typography.h4.fontFamily,
+    fontSize: typography.h4.fontSize,
   },
 
   title: {
     color: colors.resolutionBlue,
-    fontFamily: 'Montserrat',
-    fontSize: 14,
-    fontWeight: '600',
-    lineHeight: 20,
+    fontFamily: typography.h2.fontFamily,
+    fontSize: typography.h3.fontSize,
   },
 
   description: {
     color: colors.black,
-    fontFamily: 'Montserrat',
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 20,
+    fontFamily: typography.h4.fontFamily,
+    fontSize: typography.h4.fontSize,
   },
 
 });

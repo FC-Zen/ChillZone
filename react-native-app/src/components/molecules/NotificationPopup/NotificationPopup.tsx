@@ -1,17 +1,14 @@
-// src/components/organisms/NotificationList.tsx
 import React from 'react';
-import { FlatList, View, Text, TouchableOpacity } from 'react-native';
-import { NotificationItem } from '@components/molecules/Notification';
-import { NotificationItemProps } from '@components/molecules/Notification/NotificationItem';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './style';
 import { Icon } from '@components/atoms';
-import { date } from 'zod';
+import { colors } from '@theme';
 
 export type NotificationPopupProps = {
   title: string,
   description: string,
   date: string,
-  handlePress : () => void
+  handlePress : () => void,
 }
 
 export const NotificationPopup: React.FC<NotificationPopupProps> = ({
@@ -24,9 +21,7 @@ export const NotificationPopup: React.FC<NotificationPopupProps> = ({
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.date}>{date}</Text>
-        <TouchableOpacity onPress={handlePress}>
-        <Icon name="Cross" color="#000"/>
-        </TouchableOpacity>
+        <Icon name="Cross" color={colors.resolutionBlue} onPress={handlePress} width={20} height={20}/>
       </View>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>

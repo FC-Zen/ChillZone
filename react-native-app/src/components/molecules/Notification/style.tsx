@@ -1,4 +1,5 @@
 import { colors } from '@theme';
+import { fonts, typography } from '@theme/typography';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -11,30 +12,8 @@ export const styles = StyleSheet.create({
     paddingVertical: '4%',
     borderWidth: 0.5,
     borderColor: colors.silver,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     gap: 10,
-  },
-  outsideArea: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'transparent',
-    display: 'flex',
-    flex : 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    display: 'flex',
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'hsla(0, 0%, 0%, 0.5)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalContent: {
-    width: 'auto',
-    height: 'auto',
-    borderRadius: 10,
   },
   iconContainer: {
     width: 50,
@@ -50,27 +29,22 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
   },
   title: {
-    width: 190,
+    width: '98%',
     color: colors.resolutionBlue,
-    fontFamily: 'Montserrat',
-    fontSize: 14,
-    fontWeight: '600',
-    lineHeight: 20,
+    fontFamily: typography.h2.fontFamily,
+    fontSize: typography.h3.fontSize,
   },
   message: {
-    width: '100%',
+    width: '98%',
     maxHeight: 40,
-    color: '#000',
-    fontFamily: 'Montserrat',
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 20,
+    color: colors.black,
+    fontFamily: typography.h3.fontFamily,
+    fontSize: typography.h3.fontSize,
   },
   time: {
-    color: '#000',
-    fontFamily: 'Montserrat',
-    fontSize: 12,
-    fontWeight: '400',
+    color: colors.black,
+    fontFamily: typography.h4.fontFamily,
+    fontSize: typography.h4.fontSize,
     lineHeight: 18,
   },
 });
