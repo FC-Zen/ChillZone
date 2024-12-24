@@ -1,0 +1,1 @@
+export { FaqScreen } from './Faq';
