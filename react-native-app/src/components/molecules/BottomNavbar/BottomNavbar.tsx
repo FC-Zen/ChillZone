@@ -12,6 +12,7 @@ type RootStackParamList = {
   LunchScreen: undefined;
   CalendarScreen: undefined;
   NavigationScreen: undefined;
+  RestaurationScreen: undefined;
 };
 
 export type NavItem = {
