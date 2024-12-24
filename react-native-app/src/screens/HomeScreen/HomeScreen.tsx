@@ -4,16 +4,13 @@ import { TopBar } from '@components/molecules/TopBar';
 import { BottomNavbar } from '@components/molecules';
 import { useUser } from '@contexts/AppContrext';
 import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
-import { useNavigation } from '@react-navigation/native';
 import { styles } from './style';
 import { transformBookings } from '@services';
 import { useTranslation } from 'react-i18next';
 import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
-import { ROUTE } from '@enums';
 
 export const HomeScreen = () => {
-  const navigation = useNavigation();
   const { userName } = useUser();
   const items = transformBookings();
   const { t } = useTranslation();
@@ -47,21 +44,6 @@ export const HomeScreen = () => {
     fetchData();
   }, []);
 
-  const handleUserPress = () => {
-    console.log('on navigue');
-    // navigation.navigate();
-  };
-
-  const handleFaqPress = () => {
-    console.log('on navigue');
-    // navigation.navigate();
-  };
-
-  const handleNotificationPress = () => {
-    console.log('on navigue');
-    navigation.navigate(ROUTE.NOTIFICATION);
-  };
-
   const handleRestaurantPress = (restaurantName: string) => {
     console.log(`Le restaurant ${restaurantName} a été cliqué.`);
     // navigation.navigate(ROUTE.RESTAURANT_DETAILS, { restaurantName });
@@ -69,11 +51,7 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TopBar
-        onUserPress={handleUserPress}
-        onFaqPress={handleFaqPress}
-        onNotificationPress={handleNotificationPress}
-      />
+      <TopBar />
       <HomeScreenTemplate
         welcomeMessage={restaurantWords}
         username={userName}
@@ -88,7 +66,7 @@ export const HomeScreen = () => {
         restaurantsData={restaurantsData}
         onPress={handleRestaurantPress}
       />
-      <BottomNavbar activeIcon="" />
+      <BottomNavbar activeIcon="Home" />
     </View>
   );
 };
