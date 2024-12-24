@@ -84,7 +84,7 @@ export const HomeScreen = () => {
         restaurantsData={restaurantsData}
         onPress={handleRestaurantPress}
       />
-      <BottomNavbar />
+      <BottomNavbar activeIcon='Home'/>
     </View>
   );
 };
