@@ -212,5 +212,13 @@
         "thursday": "Thursday",
         "friday": "Friday",
         "saturday": "Saturday"
-    }
+    },
+
+    "timeUnit": {
+    "hour": "hour",
+    "minute": "minute",
+    "second": "second",
+    "now": "now",
+    "day": "day"
+  }
 }

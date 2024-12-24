@@ -6,3 +6,5 @@ export { BottomNavbar } from './BottomNavbar';
 export { BookingInfo } from './BookingInfo';
 export { ReservationButton } from './ReservationButton';
 export { RestaurantCard } from './RestaurantCard';
+export { NotificationItem } from './Notification';
+export { NotificationPopup } from './NotificationPopup'

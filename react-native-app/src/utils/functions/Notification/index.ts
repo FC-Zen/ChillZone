@@ -1,0 +1,1 @@
+export { diff_time } from './DiffTime';

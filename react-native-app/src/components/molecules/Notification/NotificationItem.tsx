@@ -1,32 +1,50 @@
 // src/components/molecules/NotificationItem.tsx
-import React from 'react';
-import { View, Text } from 'react-native';
-import { Icon } from '@components/atoms';
+import { View, Text, Modal, TouchableOpacity } from 'react-native';
+import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
+import { colors } from '@theme';
+import { diff_time } from '@utils/functions/Notification';
 
-export type NotificationItemProps = {
+export type NotificationProps = {
+  id: number;
   title: string;
   description: string;
   time: string;
-}
+  icon: {
+    name: IconProps['name'];
+    color: string;
+  }
+  handlePress?: () => void;
+};
 
-export const NotificationItem: React.FC<NotificationItemProps> = ({
+export const NotificationItem: React.FC<NotificationProps> = ({
   title,
   description,
   time,
+  icon,
+  handlePress,
 }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.iconContainer}>
-        <Icon name="Bell" color="#fff" />
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.message} numberOfLines={2}>
-          {description}
-        </Text>
-      </View>
-      <Text style={styles.time}>{time}</Text>
+    <View>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={handlePress}
+        activeOpacity={1}
+      >
+        <View style={styles.iconContainer}>
+          <Icon
+            name={icon?.name || 'Bell'}
+            color={icon?.color || colors.black}
+          />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.message} numberOfLines={2}>
+            {description}
+          </Text>
+        </View>
+        <Text style={styles.time}>{diff_time(new Date(time), new Date())}</Text>
+      </TouchableOpacity>
     </View>
   );
 };

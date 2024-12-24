@@ -4,3 +4,4 @@ export { ForgotMdp } from './ForgotMdp';
 export { ResetPassword } from './ResetPassword';
 export { Map } from './Map';
 export { RestaurantSlider } from './RestaurantSlider';
+export { NotificationList } from './NotificationList';

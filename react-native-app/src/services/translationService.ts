@@ -7,7 +7,7 @@ export const translationService = {
    * Si la langue actuelle est 'en', elle sera changée en 'fr'.
    */
     toggleLanguage: () => {
-        const newLanguage = i18n.language === 'fr' ? 'en' : 'fr';
+        const newLanguage = i18n.language === 'fr' ? 'fr' : 'en';
         i18n.changeLanguage(newLanguage);
     },
 
