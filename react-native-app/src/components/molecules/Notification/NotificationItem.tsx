@@ -1,10 +1,10 @@
 // src/components/molecules/NotificationItem.tsx
 import { View, Text, Modal, TouchableOpacity } from 'react-native';
-import { Icon } from '@components/atoms';
+import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 
 export type NotificationProps = {
-  id?: number;
+  id: number;
   title: string;
   description: string;
   time: string;
@@ -25,7 +25,10 @@ export const NotificationItem: React.FC<NotificationProps> = ({
         activeOpacity={1}
       >
         <View style={styles.iconContainer}>
-          <Icon name="Bell" color="#fff" />
+          <Icon
+            name={icon?.name || 'Bell'}
+            color={icon?.color || colors.black}
+          />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>

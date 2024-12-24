@@ -1,1 +1,1 @@
-export { NotificationList } from './NotificationList';
+export { NotificationList, NotificationListProps } from './NotificationList';

@@ -19,6 +19,7 @@ export type NotificationListProps = {
 
 export const NotificationList: React.FC<NotificationListProps> = ({
   notifications,
+  popupIcon,
 }) => {
   const [selectedNotificationId, setSelectedNotificationId] = useState<
     number | null
