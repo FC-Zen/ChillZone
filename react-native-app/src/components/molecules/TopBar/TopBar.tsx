@@ -1,30 +1,42 @@
 import { Icon } from '@components/atoms';
 import React from 'react';
-import { View, GestureResponderEvent } from 'react-native';
+import { View } from 'react-native';
 import { styles } from './style';
+import { ROUTE } from '@enums';
+import { useNavigation } from '@hooks';
 
-type TopBarProps = {
-  onUserPress: () => void;
-  onFaqPress: () => void;
-  onNotificationPress: () => void;
-};
+export const TopBar = () => {
+  const navigation = useNavigation();
 
-export const TopBar: React.FC<TopBarProps> = ({
-  onUserPress,
-  onFaqPress,
-  onNotificationPress,
-}) => {
+  const handleUserPress = () => {
+    console.log('on navigue');
+    // navigation.navigate();
+  };
+
+  const handleFaqPress = () => {
+    console.log('on navigue');
+    // navigation.navigate();
+  };
+
+  const handleNotificationPress = () => {
+    console.log('on navigue');
+    navigation.navigate(ROUTE.NOTIFICATION);
+  };
   return (
     <View style={styles.header}>
       <View style={styles.container}>
-        <Icon name="UserCircle" style={styles.icon} onPress={onUserPress} />
+        <Icon name="UserCircle" style={styles.icon} onPress={handleUserPress} />
         <View style={styles.rightIcons}>
-          <Icon name="FaqQuestion" style={styles.icon} onPress={onFaqPress} />
+          <Icon
+            name="FaqQuestion"
+            style={styles.icon}
+            onPress={handleFaqPress}
+          />
           <View style={styles.spacing} />
           <Icon
             name="Notification"
             style={styles.icon}
-            onPress={onNotificationPress}
+            onPress={handleNotificationPress}
           />
         </View>
       </View>

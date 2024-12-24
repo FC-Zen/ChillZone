@@ -43,21 +43,6 @@ export const RestaurationScreen = () => {
     fetchData();
   }, []);
 
-  const handleUserPress = () => {
-    console.log('on navigue');
-    // navigation.navigate();
-  };
-
-  const handleFaqPress = () => {
-    console.log('on navigue');
-    // navigation.navigate();
-  };
-
-  const handleNotificationPress = () => {
-    console.log('on navigue');
-    navigation.navigate(ROUTE.NOTIFICATION);
-  };
-
   const handleRestaurantPress = (restaurantName: string) => {
     console.log(`Le restaurant ${restaurantName} a été cliqué.`);
     // navigation.navigate(ROUTE.RESTAURANT_DETAILS, { restaurantName });
@@ -65,13 +50,9 @@ export const RestaurationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TopBar
-        onUserPress={handleUserPress}
-        onFaqPress={handleFaqPress}
-        onNotificationPress={handleNotificationPress}
-      />
+      <TopBar />
       <RestaurationTemplate
-        onPressRestaurant={() => {}}
+        onPressRestaurant={handleRestaurantPress}
         restaurantsData1={restaurantsData}
         restaurantsData2={restaurantsData}
         restaurantWords1={[t('categories.restaurants')]}
