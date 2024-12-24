@@ -5,4 +5,5 @@ export enum ROUTE {
   RESET_PASSWORD = 'ResetPasswordScreen',
   NOTIFICATION = 'NotificationScreen',
   HOME = 'HomeScreen',
+  RESTAURATION = 'RestaurationScreen',
 }

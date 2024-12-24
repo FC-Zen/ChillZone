@@ -1,220 +1,221 @@
 {
-    "headers": {
-        "pwdReset": "Forgot password",
-        "pwdChange": "Reset my password",
-        "alerts": "Notifications",
-        "faq": "Frequently Asked Questions",
-        "reservation": "Book",
-        "account": "My account",
-        "links": "IUT Links",
-        "recapCommands": "Recap of my orders",
-        "recapReservation": "Recap of my reservations",
-        "calendar": "My calendar",
-        "map": "Map",
-        "command": "Order your meal",
-        "cart": "Cart",
-        "pay": "Payment",
-        "finalCommand": "Enjoy your meal!",
-        "timeReservation": "It’s time for your room reservation!",
-        "cancelReservation": "Cancel reservation",
-        "conflictReservation": "Issue with your reservation?",
-        "finalConflict": "Thank you for your report!"
-    },
+  "headers": {
+    "pwdReset": "Forgot password",
+    "pwdChange": "Reset my password",
+    "alerts": "Notifications",
+    "faq": "Frequently Asked Questions",
+    "reservation": "Book",
+    "account": "My account",
+    "links": "IUT Links",
+    "recapCommands": "Recap of my orders",
+    "recapReservation": "Recap of my reservations",
+    "calendar": "My calendar",
+    "map": "Map",
+    "command": "Order your meal",
+    "cart": "Cart",
+    "pay": "Payment",
+    "finalCommand": "Enjoy your meal!",
+    "timeReservation": "It’s time for your room reservation!",
+    "cancelReservation": "Cancel reservation",
+    "conflictReservation": "Issue with your reservation?",
+    "finalConflict": "Thank you for your report!"
+  },
 
-    "userGreeting": {
-        "hello": "Hello, {{nom}}"
-    },
+  "userGreeting": {
+    "hello": "Hello, {{nom}}"
+  },
 
-    "modals": {
-        "pwdChange": "Change my password",
-        "infoChange": "Change my information"
-    },
+  "modals": {
+    "pwdChange": "Change my password",
+    "infoChange": "Change my information"
+  },
 
-    "navbar": {
-        "home": "Home",
-        "reservation": "Book",
-        "food": "Lunch",
-        "calendar": "Calendar",
-        "navigation": "Navigation"
-    },
+  "navbar": {
+    "home": "Home",
+    "reservation": "Book",
+    "food": "Lunch",
+    "calendar": "Calendar",
+    "navigation": "Navigation"
+  },
 
-    "buttons": {
-        "auth": {
-            "connect": "Log in",
-            "returnHome": "Return to the homepage",
-            "resetPwd": "Reset my password",
-            "changePwd": "Change my password"
-        },
-        "actions": {
-            "send": "Send",
-            "confirm": "Confirm",
-            "reset": "Reset",
-            "cancelReservation": "Cancel reservation",
-            "imCanceling": "I am canceling my reservation",
-            "yesCancel": "Yes, I am canceling",
-            "yesImHere": "Yes, I am here",
-            "conflictReservation": "Report an issue",
-            "filter": "Filter",
-            "cart": "View cart",
-            "payNow": "Pay now",
-            "pay": "Pay",
-            "qrCode": "Download QR CODE"
-        },
-        "add": {
-            "generic": "Add {{ x }} item(s) to the cart"
-        },
-        "profile": {
-            "changeInfo": "Change my information",
-            "changePp": "Change profile picture",
-            "deletePp": "Delete profile picture",
-            "darkTheme": "Dark theme",
-            "changelng": "Change language",
-            "actus": "University news",
-            "commands": "My orders",
-            "reservations": "My reservations"
-        }
+  "buttons": {
+    "auth": {
+      "connect": "Log in",
+      "returnHome": "Return to the homepage",
+      "resetPwd": "Reset my password",
+      "changePwd": "Change my password"
     },
-
-    "fields": {
-        "common": {
-            "mail": "Email address",
-            "commentary": "Commentary",
-            "first_name": "First name",
-            "last_name": "Last name",
-            "phone": "Phone",
-            "date": "Date",
-            "establishment": "Establishment"
-        },
-        "search": "Search",
-        "auth": {
-            "password": "Password",
-            "newPassword": "New password",
-            "verifyNewPassword": "Confirm the password",
-            "lastPassword": "Enter your old password"
-        },
-        "room": {
-            "type": "Room type",
-            "hours": "Time slots",
-            "schedules": "Schedules"
-        },
-        "card": {
-            "number": "Card number",
-            "name": "Card name",
-            "date": "Expiration date",
-            "code": "Security code"
-        }
-    },
-
-    "status": {
-        "open": "Open",
-        "close": "Closed"
-    },
-
-    "checks": {
-        "characters": "12+ characters",
-        "maj": "1+ uppercase",
-        "minus": "1+ lowercase",
-        "number": "1+ number",
-        "special": "1+ special character"
-    },
-
-    "rooms": {
-        "baseFloor": "Ground floor",
-        "floor": "Floor {{x}}",
-        "AR": "Augmented Reality"
-    },
-
     "actions": {
-        "chooseDestination": "Choose a destination",
-        "change": "Change",
-        "scan": "Scanning in progress"
+      "send": "Send",
+      "confirm": "Confirm",
+      "reset": "Reset",
+      "cancelReservation": "Cancel reservation",
+      "imCanceling": "I am canceling my reservation",
+      "yesCancel": "Yes, I am canceling",
+      "yesImHere": "Yes, I am here",
+      "conflictReservation": "Report an issue",
+      "filter": "Filter",
+      "cart": "View cart",
+      "payNow": "Pay now",
+      "pay": "Pay",
+      "qrCode": "Download QR CODE"
     },
-
-    "categories": {
-        "restaurants": "Restaurants",
-        "product": "Dishes",
-        "menus": "Menus",
-        "fridges": "Fridges",
-        "rememberMe": "Remember me"
+    "add": {
+      "generic": "Add {{ x }} item(s) to the cart"
     },
+    "profile": {
+      "changeInfo": "Change my information",
+      "changePp": "Change profile picture",
+      "deletePp": "Delete profile picture",
+      "darkTheme": "Dark theme",
+      "changelng": "Change language",
+      "actus": "University news",
+      "commands": "My orders",
+      "reservations": "My reservations"
+    }
+  },
 
-    "cart": {
-        "restaurants": "Order at {{ res }}",
-        "collectTime": "Your collection slot",
-        "standard": "Standard",
-        "timed": "Scheduled for",
-        "command": "Your order",
-        "creditCard": "Credit/Debit card",
-        "champs": "All fields must be filled",
-        "formatDay": "Format MM/YY",
-        "numbers": "The 3 digits on the back of the card",
-        "infoPay": "By proceeding with the payment of your meal, you agree to waive your right of withdrawal in accordance with applicable legal provisions for goods or services that are immediately consumable or personalized.",
-        "total": "Total",
-        "confirmText": "Your order no. {{id}} has been confirmed",
-        "readyText": "It's ready! Go to the collection point and scan this QR Code to enjoy your dish!"
+  "fields": {
+    "common": {
+      "mail": "Email address",
+      "commentary": "Commentary",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "phone": "Phone",
+      "date": "Date",
+      "establishment": "Establishment"
     },
-
-    "questions": {
-        "pwd": "Forgot your password?",
-        "infoPwd": "If the account exists, you will receive an email shortly"
+    "search": "Search",
+    "auth": {
+      "password": "Password",
+      "newPassword": "New password",
+      "verifyNewPassword": "Confirm the password",
+      "lastPassword": "Enter your old password"
     },
-
-    "info": {
-        "reservation": "Find your next reservation",
-        "restaurants": "Explore nearby restaurants"
+    "room": {
+      "type": "Room type",
+      "hours": "Time slots",
+      "schedules": "Schedules"
     },
+    "card": {
+      "number": "Card number",
+      "name": "Card name",
+      "date": "Expiration date",
+      "code": "Security code"
+    }
+  },
 
-    "filters": {
-        "hoursOpen": "Available hours",
-        "roomsOpen": "Available rooms"
+  "status": {
+    "open": "Open",
+    "close": "Closed"
+  },
+
+  "checks": {
+    "characters": "12+ characters",
+    "maj": "1+ uppercase",
+    "minus": "1+ lowercase",
+    "number": "1+ number",
+    "special": "1+ special character"
+  },
+
+  "rooms": {
+    "baseFloor": "Ground floor",
+    "floor": "Floor {{x}}",
+    "AR": "Augmented Reality"
+  },
+
+  "actions": {
+    "chooseDestination": "Choose a destination",
+    "change": "Change",
+    "scan": "Scanning in progress"
+  },
+
+  "categories": {
+    "restaurants": "Restaurants",
+    "crous": "Crous",
+    "product": "Dishes",
+    "menus": "Menus",
+    "fridges": "Fridges",
+    "rememberMe": "Remember me"
+  },
+
+  "cart": {
+    "restaurants": "Order at {{ res }}",
+    "collectTime": "Your collection slot",
+    "standard": "Standard",
+    "timed": "Scheduled for",
+    "command": "Your order",
+    "creditCard": "Credit/Debit card",
+    "champs": "All fields must be filled",
+    "formatDay": "Format MM/YY",
+    "numbers": "The 3 digits on the back of the card",
+    "infoPay": "By proceeding with the payment of your meal, you agree to waive your right of withdrawal in accordance with applicable legal provisions for goods or services that are immediately consumable or personalized.",
+    "total": "Total",
+    "confirmText": "Your order no. {{id}} has been confirmed",
+    "readyText": "It's ready! Go to the collection point and scan this QR Code to enjoy your dish!"
+  },
+
+  "questions": {
+    "pwd": "Forgot your password?",
+    "infoPwd": "If the account exists, you will receive an email shortly"
+  },
+
+  "info": {
+    "reservation": "Find your next reservation",
+    "restaurants": "Explore nearby restaurants"
+  },
+
+  "filters": {
+    "hoursOpen": "Available hours",
+    "roomsOpen": "Available rooms"
+  },
+
+  "reservationConflicts": {
+    "timeReservationConflictCareful": "Attention: ",
+    "timeReservationConflict1": "Your report concerns an irregularity in the handling of the room reservation.",
+    "timeReservationConflict2": "You indicate that the room is currently occupied by a person or group without a legitimate reservation.",
+    "timeReservationCancel": "Are you sure you want to cancel your reservation? The room will be considered free for this time slot",
+    "timeReservationConflictDone": "Your report has been sent to the administrator of your establishment",
+    "confirm-resa": "Reservation confirmed!"
+  },
+
+  "recap": {
+    "today": {
+      "commands": "Today's orders",
+      "reservations": "Today's reservations"
     },
+    "previous": {
+      "commands": "Past orders",
+      "reservations": "Upcoming reservations"
+    }
+  },
 
-    "reservationConflicts": {
-        "timeReservationConflictCareful": "Attention: ",
-        "timeReservationConflict1": "Your report concerns an irregularity in the handling of the room reservation.",
-        "timeReservationConflict2": "You indicate that the room is currently occupied by a person or group without a legitimate reservation.",
-        "timeReservationCancel": "Are you sure you want to cancel your reservation? The room will be considered free for this time slot",
-        "timeReservationConflictDone": "Your report has been sent to the administrator of your establishment",
-        "confirm-resa": "Reservation confirmed!"
-    },
+  "months": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  },
 
-    "recap": {
-        "today": {
-            "commands": "Today's orders",
-            "reservations": "Today's reservations"
-        },
-        "previous": {
-            "commands": "Past orders",
-            "reservations": "Upcoming reservations"
-        }
-    },
+  "days": {
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
+  },
 
-    "months": {
-        "january": "January",
-        "february": "February",
-        "march": "March",
-        "april": "April",
-        "may": "May",
-        "june": "June",
-        "july": "July",
-        "august": "August",
-        "september": "September",
-        "october": "October",
-        "november": "November",
-        "december": "December"
-    },
-
-    "days": {
-        "sunday": "Sunday",
-        "monday": "Monday",
-        "tuesday": "Tuesday",
-        "wednesday": "Wednesday",
-        "thursday": "Thursday",
-        "friday": "Friday",
-        "saturday": "Saturday"
-    },
-
-    "timeUnit": {
+  "timeUnit": {
     "hour": "hour",
     "minute": "minute",
     "second": "second",

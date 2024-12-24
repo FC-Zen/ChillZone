@@ -25,4 +25,5 @@ export {
   ResetPasswordTemplate,
   HomeScreenTemplate,
   HomeScreenTemplateProps,
+  RestaurationTemplate,
 } from './templates';

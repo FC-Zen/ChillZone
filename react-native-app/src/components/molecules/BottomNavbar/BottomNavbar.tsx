@@ -24,9 +24,7 @@ type BottomNavbarProps = {
   activeIcon: string;
 };
 
-export const BottomNavbar: React.FC<BottomNavbarProps> = ({ 
-  activeIcon,
-}) => {
+export const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeIcon }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [selectedItem, setSelectedItem] = useState<string | null>(activeIcon);
 
@@ -52,7 +50,7 @@ export const BottomNavbar: React.FC<BottomNavbarProps> = ({
         break;
       case 'Lunch':
         console.log('Lunch');
-        // navigation.navigate(ROUTE.LUNCH);
+        navigation.navigate(ROUTE.RESTAURATION);
         break;
       case 'Calendar':
         console.log('Calendar');

@@ -1,0 +1,1 @@
+export { RestaurationScreen } from './RestaurationScreen';

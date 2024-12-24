@@ -2,7 +2,6 @@ import React from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { RestaurantCard } from '@components/molecules';
 import { styles } from './style';
-import { useTranslation } from 'react-i18next';
 
 type RestaurantSliderProps = {
   restaurantsData: {
@@ -12,16 +11,14 @@ type RestaurantSliderProps = {
     status: 'Ouvert' | 'Fermé';
   }[];
   onPress: (restaurantName: string) => void;
+  restaurantWords: string[];
 };
 
 export const RestaurantSlider: React.FC<RestaurantSliderProps> = ({
   restaurantsData,
   onPress,
+  restaurantWords,
 }) => {
-  const { t } = useTranslation();
-  const restaurantText = t('info.restaurants');
-  const restaurantWords = restaurantText.split(' ');
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
