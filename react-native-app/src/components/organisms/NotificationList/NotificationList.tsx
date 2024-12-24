@@ -5,21 +5,17 @@ import { NotificationItem } from '@components/molecules';
 import { styles } from './style';
 import { NotificationPopup } from '@components/molecules';
 import { useState } from 'react';
-
-export type NotificationProps = {
-  id: number;
-  title: string;
-  description: string;
-  time: string;
-};
+import { NotificationPopupProps, PopupProps } from '@components/molecules/NotificationPopup';
+import { NotificationProps } from '@components/molecules/Notification';
 
 export type NotificationListProps = {
   notifications: NotificationProps[];
+  popupProps: PopupProps;
 };
 
 export const NotificationList: React.FC<NotificationListProps> = ({
   notifications,
-  popupIcon,
+  popupProps,
 }) => {
   const [selectedNotificationId, setSelectedNotificationId] = useState<
     number | null
@@ -51,15 +47,8 @@ export const NotificationList: React.FC<NotificationListProps> = ({
                   <NotificationPopup
                     title={notification.title}
                     description={notification.description}
-                    date={new Date(notification.time).toLocaleDateString(
-                      undefined,
-                      {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      }
-                    )}
+                    date={notification.time}
+                    icon={popupProps}
                     handlePress={closeModal}
                   />
                 </TouchableOpacity>
@@ -67,9 +56,14 @@ export const NotificationList: React.FC<NotificationListProps> = ({
             </View>
           </Modal>
           <NotificationItem
+            id={notification.id}
             title={notification.title}
             description={notification.description}
             time={notification.time}
+            icon={{
+              name: notification.icon?.name || 'Bell',
+              color: notification.icon?.color || '#fff',
+            }}
             handlePress={() => setSelectedNotificationId(notification.id)}
           />
         </View>

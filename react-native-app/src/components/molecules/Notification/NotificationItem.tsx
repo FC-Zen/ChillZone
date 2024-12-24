@@ -2,19 +2,26 @@
 import { View, Text, Modal, TouchableOpacity } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
+import { colors } from '@theme';
+import { diff_time } from '@utils/functions/Notification';
 
 export type NotificationProps = {
   id: number;
   title: string;
   description: string;
   time: string;
-  handlePress: () => void;
+  icon: {
+    name: IconProps['name'];
+    color: string;
+  }
+  handlePress?: () => void;
 };
 
 export const NotificationItem: React.FC<NotificationProps> = ({
   title,
   description,
   time,
+  icon,
   handlePress,
 }) => {
   return (
@@ -36,7 +43,7 @@ export const NotificationItem: React.FC<NotificationProps> = ({
             {description}
           </Text>
         </View>
-        <Text style={styles.time}>{time}</Text>
+        <Text style={styles.time}>{diff_time(new Date(time), new Date())}</Text>
       </TouchableOpacity>
     </View>
   );

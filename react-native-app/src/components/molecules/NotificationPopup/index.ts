@@ -1,1 +1,1 @@
-export { NotificationPopup, PopupProps } from './NotificationPopup';
+export { NotificationPopup, PopupProps, NotificationPopupProps } from './NotificationPopup';

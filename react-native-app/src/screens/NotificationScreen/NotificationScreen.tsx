@@ -34,8 +34,24 @@ export const NotificationScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <NotificationTemplate
-        notifications={notifications}
-        onBackPress={() => navigation.navigate(ROUTE.HOME)}
+        notificationsData={notificationData}
+        popupProps={{
+          name: 'Cross',
+          color: '#000',
+          width: 20,
+          height: 20,
+        }}
+        pageHeaderProps={{
+          title: 'Notifications',
+          variant: 'back',
+          icon: {
+            name: 'Cross',
+            color: '#000',
+            width: 20,
+            height: 20,
+          },
+          onBackPress: () => navigation.navigate(ROUTE.HOME),
+        }}
       />
     </View>
   );
