@@ -9,6 +9,7 @@ export type RootStackParamList = {
   [ROUTE.FORGOT_MDP]: undefined;
   [ROUTE.RESET_PASSWORD]: undefined;
   [ROUTE.NOTIFICATION]: undefined;
+  [ROUTE.FAQ]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
@@ -20,6 +21,7 @@ export type RouteParamList = {
   ResetPasswordScreen: undefined;
   NotificationScreen: undefined;
   RestaurationScreen: undefined;
+  FaqScreen: undefined;
 };
 
 // Typage des propriétés des écrans
