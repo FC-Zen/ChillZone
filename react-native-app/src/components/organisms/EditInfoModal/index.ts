@@ -1,0 +1,1 @@
+export {EditInfoModal} from './EditInfoModal';

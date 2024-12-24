@@ -1,0 +1,1 @@
+export { ChangeProfilePictureModal } from './ChangeProfilePictureModal';

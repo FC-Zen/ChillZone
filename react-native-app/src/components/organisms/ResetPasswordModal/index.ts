@@ -1,0 +1,1 @@
+export {ResetPasswordModal} from './ResetPasswordModal';

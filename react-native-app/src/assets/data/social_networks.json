@@ -17,11 +17,11 @@
             "link_network": "https://www.linkedin.com/company/universite-gustave-eiffel"
         },
         {
-            "type": "Workspace",
+            "type": "ENT",
             "link_network": "https://workspace.google.com/universite.gustave.eiffel"
         },
         {
-            "type": "Website",
+            "type": "Site de l'université",
             "link_network": "https://www.univ-eiffel.fr"
         }
     ]
