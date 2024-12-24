@@ -163,6 +163,18 @@ export const AccountOptionsList: React.FC = () => {
         isOpen={isReservationsModalOpen}
         onClose={() => setReservationsModalOpen(false)}
       />
+
+      {/* Modale pour les commandes */}
+      <OrdersModal
+        isOpen={isOrderModalOpen}
+        onClose={() => setOrderModalOpen(false)} // Ferme la modale
+        orders={ordersData} // Passe les données JSON
+      />
+      {/* Modale des réservations */}
+      <ReservationsModal
+        isOpen={isReservationsModalOpen}
+        onClose={() => setReservationsModalOpen(false)} // Ferme la modale
+      />
     </View>
   );
 };
