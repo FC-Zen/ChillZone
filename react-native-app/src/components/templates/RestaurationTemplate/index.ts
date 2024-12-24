@@ -1,0 +1,1 @@
+export { RestaurationTemplate } from './RestaurationTemplate';

@@ -8,6 +8,7 @@ import {
   ResetPasswordScreen,
   NotificationScreen,
   HomeScreen,
+  RestaurationScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 import { UserProvider } from '@contexts/AppContrext';
@@ -47,6 +48,11 @@ export const RootNavigator = () => {
           <Stack.Screen
             name={ROUTE.NOTIFICATION}
             component={NotificationScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ROUTE.RESTAURATION}
+            component={RestaurationScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

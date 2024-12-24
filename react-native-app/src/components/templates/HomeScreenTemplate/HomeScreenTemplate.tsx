@@ -12,6 +12,7 @@ type ReservationButtonProps = {
 };
 
 export type HomeScreenTemplateProps = {
+  welcomeMessage: string[];
   username: string | null;
   items: NavItem[];
   reservationButtonProps: ReservationButtonProps;
@@ -25,6 +26,7 @@ export type HomeScreenTemplateProps = {
 };
 
 export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
+  welcomeMessage,
   username,
   items,
   reservationButtonProps,
@@ -41,7 +43,11 @@ export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
           {username && `Bonjour, ${username}`}
         </Text>
         <Map items={items} reservationButtonProps={reservationButtonProps} />
-        <RestaurantSlider restaurantsData={restaurantsData} onPress={onPress} />
+        <RestaurantSlider
+          restaurantWords={welcomeMessage}
+          restaurantsData={restaurantsData}
+          onPress={onPress}
+        />
       </ScrollView>
     </View>
   );

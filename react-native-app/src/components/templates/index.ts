@@ -6,3 +6,4 @@ export {
   HomeScreenTemplate,
   HomeScreenTemplateProps,
 } from './HomeScreenTemplate';
+export { RestaurationTemplate } from './RestaurationTemplate';

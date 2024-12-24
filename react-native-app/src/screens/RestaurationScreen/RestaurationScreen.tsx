@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { TopBar } from '@components/molecules/TopBar';
-import { BottomNavbar } from '@components/molecules';
-import { useUser } from '@contexts/AppContrext';
-import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text } from 'react-native';
 import { styles } from './style';
-import { transformBookings } from '@services';
-import { useTranslation } from 'react-i18next';
+
 import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
+import { BottomNavbar, RestaurationTemplate, TopBar } from '@components';
+import { useTranslation } from 'react-i18next';
 import { ROUTE } from '@enums';
+import { useNavigation } from '@hooks';
 
-export const HomeScreen = () => {
-  const navigation = useNavigation();
-  const { userName } = useUser();
-  const items = transformBookings();
-  const { t } = useTranslation();
-
-  const restaurantText = t('info.restaurants');
-  const restaurantWords = restaurantText.split(' ');
-
+export const RestaurationScreen = () => {
   // État pour stocker les données des restaurants
-  const [restaurantsData, setRestaurantsData] = useState<
-    HomeScreenTemplateProps['restaurantsData']
-  >([]);
+  type Restaurant = {
+    id: number;
+    name: string;
+    photo_link: any;
+    status: 'Ouvert' | 'Fermé';
+  };
+
+  const [restaurantsData, setRestaurantsData] = useState<Restaurant[]>([]);
+  const { t } = useTranslation();
+  const navigation = useNavigation();
 
   // Chargement des données des restaurants au démarrage
   useEffect(() => {
@@ -74,23 +70,15 @@ export const HomeScreen = () => {
         onFaqPress={handleFaqPress}
         onNotificationPress={handleNotificationPress}
       />
-      <HomeScreenTemplate
-        welcomeMessage={restaurantWords}
-        username={userName}
-        items={items}
-        reservationButtonProps={{
-          title: t('buttons.actions.cancelReservation'),
-          onPress: () => {
-            console.log('On annule la réservation');
-          },
-          iconName: 'Cross',
-        }}
-        restaurantsData={restaurantsData}
-        onPress={handleRestaurantPress}
+      <RestaurationTemplate
+        onPressRestaurant={() => {}}
+        restaurantsData1={restaurantsData}
+        restaurantsData2={restaurantsData}
+        restaurantWords1={[t('categories.restaurants')]}
+        restaurantWords2={[t('categories.crous')]}
+        pageHeaderTitle={t('headers.command')}
       />
-      <BottomNavbar activeIcon="" />
+      <BottomNavbar activeIcon="Lunch" />
     </View>
   );
 };
-
-export default HomeScreen;
