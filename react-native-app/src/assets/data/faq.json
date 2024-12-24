@@ -1,40 +1,102 @@
 [
     {
-        "category": "Admissions",
+        "category": "Paramètres de compte",
         "faq_details": [
             {
-                "question": "Quels sont les documents nécessaires pour une admission ?",
-                "answer": "Un CV, une lettre de motivation, et les relevés de notes."
+                "question": "Comment modifier mes informations personnelles (nom, adresse email, etc.) ?",
+                "answer": "Facile : ouvrez votre profil, cherchez le bouton magique 'Modifier' et cliquez. Si ça ne marche pas, invoquez un `console.log('Pourquoi ça ne marche pas ?')` et appelez votre admin préféré."
             },
             {
-                "question": "Y a-t-il une limite d'âge pour postuler ?",
-                "answer": "Non, il n'y a pas de limite d'âge."
+                "question": "Comment modifier mon mot de passe ?",
+                "answer": "Cherchez 'Changer de mot de passe', mais cette fois, choisissez autre chose que `password123`. Pensez à une passphrase comme : `ILoveJavaScriptButHateSemicolons!`."
+            },
+            {
+                "question": "Que faire si j’ai oublié mon mot de passe ?",
+                "answer": "Pas de panique, il y a toujours un bouton 'Mot de passe oublié'. C'est un peu comme une exception : on la gère quand elle arrive."
+            },
+            {
+                "question": "Comment supprimer mon compte ?",
+                "answer": "C'est comme effacer un fichier avec `rm -rf /important`. Réfléchissez bien, car il n'y a pas de corbeille pour les comptes."
             }
         ]
     },
     {
-        "category": "Campus",
+        "category": "Notifications",
         "faq_details": [
             {
-                "question": "Quels services sont disponibles sur le campus ?",
-                "answer": "Bibliothèque, cafétéria, espaces de coworking."
+                "question": "Puis-je recevoir des notifications pour mes réservations ou commandes ?",
+                "answer": "Oui, sauf si votre téléphone a décidé de passer en mode 'Je fais grève'. Vérifiez vos paramètres pour ne pas manquer une notification."
             },
             {
-                "question": "Le campus est-il accessible aux personnes à mobilité réduite ?",
-                "answer": "Oui, le campus est entièrement accessible."
+                "question": "Comment activer ou désactiver les notifications ?",
+                "answer": "Direction les paramètres de l'application. C'est un peu comme passer d'un `true` à un `false` dans votre configuration."
+            },
+            {
+                "question": "Puis-je recevoir des notifications pour des événements ou des changements d’horaires ?",
+                "answer": "Oui, mais n'espérez pas une notification pour 'Pause café prolongée' (malheureusement)."
+            },
+            {
+                "question": "Comment personnaliser les notifications reçues ?",
+                "answer": "Vous pouvez choisir vos préférences. Par exemple, des alertes pour 'Pizza gratuite' plutôt que 'Mise à jour de l'application'."
             }
         ]
     },
     {
-        "category": "Examens",
+        "category": "Données et confidentialité",
         "faq_details": [
             {
-                "question": "Puis-je reporter un examen ?",
-                "answer": "Oui, en cas de justification valide (maladie, etc.)."
+                "question": "Comment mes données personnelles sont-elles protégées ?",
+                "answer": "Avec un solide firewall et beaucoup de prières aux divinités des serveurs. Mais surtout grâce à un bon chiffrement."
             },
             {
-                "question": "Comment connaître les dates des examens ?",
-                "answer": "Les dates sont disponibles sur le portail étudiant."
+                "question": "Où puis-je consulter la politique de confidentialité ?",
+                "answer": "Dans le menu 'À propos'. C'est comme lire les termes d'utilisation : vous ne le ferez pas, mais ça existe."
+            },
+            {
+                "question": "L’application partage-t-elle mes données avec des tiers ?",
+                "answer": "Non. Sauf si vous considérez votre téléphone comme un 'tiers', parce qu'il en sait beaucoup sur vous."
+            }
+        ]
+    },
+    {
+        "category": "Click & Collect (repas)",
+        "faq_details": [
+            {
+                "question": "Comment passer une commande en Click & Collect ?",
+                "answer": "Cliquez sur 'Commander', sélectionnez un repas, et priez pour que le serveur ne soit pas en mode '503 Service Unavailable'."
+            },
+            {
+                "question": "Quels types de repas sont disponibles à la commande ?",
+                "answer": "Tout sauf du 'Bug au chocolat'. Celui-là est réservé aux développeurs."
+            },
+            {
+                "question": "Puis-je commander pour plusieurs personnes en même temps ?",
+                "answer": "Oui, mais attention : votre ami prendra toujours une frite dans votre commande, même si ce n’est pas noté."
+            },
+            {
+                "question": "Puis-je choisir un horaire spécifique pour récupérer mon repas ?",
+                "answer": "Absolument ! Mais souvenez-vous : 'À l'heure' est une notion relative pour certains cuisiniers."
+            }
+        ]
+    },
+    {
+        "category": "Réservation des salles",
+        "faq_details": [
+            {
+                "question": "Comment réserver une salle pour étudier/travailler ?",
+                "answer": "Cliquez sur 'Réserver' et choisissez une salle. Astuce : prenez celle près de la machine à café."
+            },
+            {
+                "question": "Puis-je réserver plusieurs créneaux consécutifs pour une salle ?",
+                "answer": "Oui, sauf si quelqu’un d’autre est plus rapide que vous. C’est un peu comme une `race condition`."
+            },
+            {
+                "question": "Combien de temps à l’avance puis-je réserver une salle ?",
+                "answer": "Cela dépend du calendrier, mais pas besoin de coder un `setTimeout()` pour le vérifier."
+            },
+            {
+                "question": "Puis-je réserver une salle pour un groupe d’étudiants ?",
+                "answer": "Bien sûr, mais attention : dans un groupe, il y aura toujours un 'spectateur professionnel'."
             }
         ]
     }
