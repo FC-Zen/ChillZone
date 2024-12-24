@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { styles } from './style';
 
 import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
 import { BottomNavbar, RestaurationTemplate, TopBar } from '@components';
 import { useTranslation } from 'react-i18next';
-import { ROUTE } from '@enums';
-import { useNavigation } from '@hooks';
 
 export const RestaurationScreen = () => {
-  // État pour stocker les données des restaurants
+  // Type pour les restaurants
   type Restaurant = {
     id: number;
     name: string;
@@ -18,16 +16,24 @@ export const RestaurationScreen = () => {
     status: 'Ouvert' | 'Fermé';
   };
 
-  const [restaurantsData, setRestaurantsData] = useState<Restaurant[]>([]);
+  const [restaurantsData1, setRestaurantsData1] = useState<Restaurant[]>([]);
+  const [restaurantsData2, setRestaurantsData2] = useState<Restaurant[]>([]);
   const { t } = useTranslation();
-  const navigation = useNavigation();
 
   // Chargement des données des restaurants au démarrage
   useEffect(() => {
     const fetchData = async () => {
-      const restaurants = await transformRestaurantData();
+      const allRestaurants = await transformRestaurantData();
 
-      const transformedRestaurants = restaurants.map((restaurant) => {
+      const firstSet = allRestaurants.filter(
+        (restaurant) => restaurant.id === 1 || restaurant.id === 3
+      );
+      const secondSet = allRestaurants.filter(
+        (restaurant) => restaurant.id === 2
+      );
+
+      // Transformation des données pour le premier RestaurantSlider
+      const transformedFirstSet = firstSet.map((restaurant) => {
         const image = ImagesMap[restaurant.photo_link];
         return {
           id: restaurant.id,
@@ -37,7 +43,19 @@ export const RestaurationScreen = () => {
         };
       });
 
-      setRestaurantsData(transformedRestaurants);
+      // Transformation des données pour le second RestaurantSlider
+      const transformedSecondSet = secondSet.map((restaurant) => {
+        const image = ImagesMap[restaurant.photo_link];
+        return {
+          id: restaurant.id,
+          name: restaurant.name,
+          photo_link: image,
+          status: restaurant.status,
+        };
+      });
+
+      setRestaurantsData1(transformedFirstSet);
+      setRestaurantsData2(transformedSecondSet);
     };
 
     fetchData();
@@ -53,10 +71,10 @@ export const RestaurationScreen = () => {
       <TopBar />
       <RestaurationTemplate
         onPressRestaurant={handleRestaurantPress}
-        restaurantsData1={restaurantsData}
-        restaurantsData2={restaurantsData}
+        restaurantsData1={restaurantsData1}
+        restaurantsData2={restaurantsData2}
         restaurantWords1={[t('categories.restaurants')]}
-        restaurantWords2={[t('categories.crous')]}
+        restaurantWords2={[t('categories.fridges')]}
         pageHeaderTitle={t('headers.command')}
       />
       <BottomNavbar activeIcon="Lunch" />
