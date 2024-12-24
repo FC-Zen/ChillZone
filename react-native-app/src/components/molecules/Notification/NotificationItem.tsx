@@ -3,14 +3,15 @@ import { View, Text, Modal, TouchableOpacity } from 'react-native';
 import { Icon } from '@components/atoms';
 import { styles } from './style';
 
-export type NotificationItemProps = {
+export type NotificationProps = {
+  id?: number;
   title: string;
   description: string;
   time: string;
   handlePress: () => void;
 };
 
-export const NotificationItem: React.FC<NotificationItemProps> = ({
+export const NotificationItem: React.FC<NotificationProps> = ({
   title,
   description,
   time,

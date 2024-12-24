@@ -1,12 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { NotificationList, NotificationListProps } from '@components/organisms/NotificationList/NotificationList';
+import { NotificationList } from '@components/organisms/NotificationList/NotificationList';
 import { PageHeader } from '@components/molecules/PageHeader';
 import { styles } from './style';
+import { NotificationProps } from '@components/molecules/Notification';
 
 export type NotificationTemplateProps = {
-  notifications: NotificationListProps["notifications"];
-  onBackPress: () => void;
+  notifications: NotificationProps[];
+  onBackPress?: () => void;
 };
 
 export const NotificationTemplate : React.FC<NotificationTemplateProps> = ({
