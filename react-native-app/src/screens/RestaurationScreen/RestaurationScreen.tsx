@@ -8,7 +8,6 @@ import { BottomNavbar, RestaurationTemplate, TopBar } from '@components';
 import { useTranslation } from 'react-i18next';
 
 export const RestaurationScreen = () => {
-  // Type pour les restaurants
   type Restaurant = {
     id: number;
     name: string;
@@ -20,45 +19,49 @@ export const RestaurationScreen = () => {
   const [restaurantsData2, setRestaurantsData2] = useState<Restaurant[]>([]);
   const { t } = useTranslation();
 
-  // Chargement des données des restaurants au démarrage
+  const fetchFirstSet = async () => {
+    const allRestaurants = await transformRestaurantData();
+
+    const firstSet = allRestaurants.filter(
+      (restaurant) => restaurant.id === 1 || restaurant.id === 3
+    );
+
+    const transformedFirstSet = firstSet.map((restaurant) => {
+      const image = ImagesMap[restaurant.photo_link];
+      return {
+        id: restaurant.id,
+        name: restaurant.name,
+        photo_link: image,
+        status: restaurant.status,
+      };
+    });
+
+    setRestaurantsData1(transformedFirstSet);
+  };
+
+  const fetchSecondSet = async () => {
+    const allRestaurants = await transformRestaurantData();
+
+    const secondSet = allRestaurants.filter(
+      (restaurant) => restaurant.id === 2
+    );
+
+    const transformedSecondSet = secondSet.map((restaurant) => {
+      const image = ImagesMap[restaurant.photo_link];
+      return {
+        id: restaurant.id,
+        name: restaurant.name,
+        photo_link: image,
+        status: restaurant.status,
+      };
+    });
+
+    setRestaurantsData2(transformedSecondSet);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const allRestaurants = await transformRestaurantData();
-
-      const firstSet = allRestaurants.filter(
-        (restaurant) => restaurant.id === 1 || restaurant.id === 3
-      );
-      const secondSet = allRestaurants.filter(
-        (restaurant) => restaurant.id === 2
-      );
-
-      // Transformation des données pour le premier RestaurantSlider
-      const transformedFirstSet = firstSet.map((restaurant) => {
-        const image = ImagesMap[restaurant.photo_link];
-        return {
-          id: restaurant.id,
-          name: restaurant.name,
-          photo_link: image,
-          status: restaurant.status,
-        };
-      });
-
-      // Transformation des données pour le second RestaurantSlider
-      const transformedSecondSet = secondSet.map((restaurant) => {
-        const image = ImagesMap[restaurant.photo_link];
-        return {
-          id: restaurant.id,
-          name: restaurant.name,
-          photo_link: image,
-          status: restaurant.status,
-        };
-      });
-
-      setRestaurantsData1(transformedFirstSet);
-      setRestaurantsData2(transformedSecondSet);
-    };
-
-    fetchData();
+    fetchFirstSet();
+    fetchSecondSet();
   }, []);
 
   const handleRestaurantPress = (restaurantName: string) => {
