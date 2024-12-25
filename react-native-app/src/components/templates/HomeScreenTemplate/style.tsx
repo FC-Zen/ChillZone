@@ -11,11 +11,8 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   headerText: {
-    fontSize: typography.h2.fontSize,
+    fontSize: 20,
     textAlign: 'center',
-  },
-  boldText: {
-    fontWeight: 'bold',
   },
   scrollContainer: {
     paddingBottom: 100,

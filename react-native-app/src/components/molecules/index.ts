@@ -13,3 +13,4 @@ export { PageHeader } from './PageHeader';
 export { NotificationPopup } from './NotificationPopup';
 export { SelectedButtonMeal } from './SelectedButtonMeal';
 export { SearchItem } from './SearchItem';
+export { Field } from './Field';
