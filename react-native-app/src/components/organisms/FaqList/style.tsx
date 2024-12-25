@@ -1,6 +1,7 @@
 import { colors, layout } from '@theme';
 import { fonts, typography } from '@theme/typography';
 import { StyleSheet } from 'react-native';
+import { RotateOutDownRight } from 'react-native-reanimated';
 
 export const styles = StyleSheet.create({
   //Style for a container for a defined category
@@ -27,5 +28,18 @@ export const styles = StyleSheet.create({
   title: {
     fontFamily: fonts.semiBold,
     fontSize: typography.h3.fontSize,
-  }
+  },
+
+  button: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+
+  icon: {
+    marginTop: 20,
+    width: 24,
+    height: 24,
+  },
 });
