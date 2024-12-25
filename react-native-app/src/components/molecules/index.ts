@@ -12,3 +12,4 @@ export { Button } from './Button';
 export { PageHeader } from './PageHeader';
 export { NotificationPopup } from './NotificationPopup';
 export { SelectedButtonMeal } from './SelectedButtonMeal';
+export { SearchItem } from './SearchItem';
