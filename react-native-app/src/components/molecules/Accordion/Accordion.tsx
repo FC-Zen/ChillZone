@@ -18,8 +18,8 @@ export const Accordion: React.FC<FaqDetail> = (detail:FaqDetail) => {
         title={detail.question} 
         titleNumberOfLines={2}  // Limite le texte à 2 lignes
         style={styles.accordion} 
-        titleStyle={styles.title}>
-        <Icon name="Arrow" color={colors.white} style={styles.icon}/>
+        titleStyle={styles.title}
+        right={props => <Icon name='Arrow' />}>
         <Text style={styles.answer}>{detail.answer}</Text>
       </List.Accordion>
     </>

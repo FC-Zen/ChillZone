@@ -4,15 +4,18 @@ import { View, Text, ScrollView } from 'react-native';
 import { styles } from './style';
 import { useNavigation } from '@hooks';
 import { getFaq } from '@services';
-import { FaqTemplate, FaqTemplateProps } from '@components/templates/FaqTemplate';
+import { FaqTemplate } from '@components/templates/FaqTemplate';
 import { FaqCategory } from '@services/FaqServices';
 import { ROUTE } from '@enums';
+import { useTranslation } from 'react-i18next';
+import { colors } from '@theme';
 
 export const FaqScreen: React.FC = () => {
   
   const navigation = useNavigation();
   // Données pour la Faq
   const [FaqData, setFaqData] = useState<FaqCategory[]>();
+  const { t } = useTranslation();
   
   // Chargement des données des restaurants au démarrage
   useEffect(() => {
@@ -27,7 +30,16 @@ export const FaqScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <PageHeader title='Foire aux question' onBackPress={() => navigation.navigate(ROUTE.HOME)} />
+      <PageHeader 
+        title={t('headers.faq')}
+        variant='back'
+        onBackPress={() => navigation.navigate(ROUTE.HOME)} 
+        icon={{
+          name: 'Cross',
+          color: colors.black,
+          width: 24,
+          height: 24
+        }} />
       {FaqData && <FaqTemplate categories={FaqData}/>}
     </View>
   );
