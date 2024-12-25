@@ -11,6 +11,7 @@ type RestaurantSliderProps = {
     status: 'Ouvert' | 'Fermé';
   }[];
   onPress: () => void;
+  restaurantWords: string[];
 };
 
 export const RestaurantSlider: React.FC<RestaurantSliderProps> = ({
