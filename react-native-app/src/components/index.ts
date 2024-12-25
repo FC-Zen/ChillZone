@@ -6,6 +6,7 @@ export {
   ReservationButton,
   RestaurantCard,
   SelectedButtonMeal,
+  SearchItem,
   SnackBar,
   TopBar,
   VectorHeader,
