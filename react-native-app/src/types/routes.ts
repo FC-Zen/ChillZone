@@ -11,6 +11,7 @@ export type RootStackParamList = {
   [ROUTE.NOTIFICATION]: undefined;
   [ROUTE.FAQ]: undefined;
   [ROUTE.PAYMENT]: undefined;
+  [ROUTE.DISPENSER]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
@@ -24,6 +25,7 @@ export type RouteParamList = {
   RestaurationScreen: undefined;
   FaqScreen: undefined;
   PaymentScreen: undefined;
+  DispenserScreen: undefined;
 };
 
 // Typage des propriétés des écrans

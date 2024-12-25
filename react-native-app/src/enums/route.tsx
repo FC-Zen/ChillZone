@@ -8,4 +8,5 @@ export enum ROUTE {
   RESTAURATION = 'RestaurationScreen',
   FAQ = 'FaqScreen',
   PAYMENT = 'PaymentScreen',
+  DISPENSER = 'DispenserScreen',
 }

@@ -11,6 +11,7 @@ import {
   RestaurationScreen,
   FaqScreen,
   PaymentScreen,
+  DispenserScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 import { UserProvider } from '@contexts/AppContrext';
@@ -60,6 +61,11 @@ export const RootNavigator = () => {
           <Stack.Screen
             name={ROUTE.FAQ}
             component={FaqScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ROUTE.DISPENSER}
+            component={DispenserScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
