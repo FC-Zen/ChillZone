@@ -5,6 +5,7 @@ export {
   Input,
   ReservationButton,
   RestaurantCard,
+  SelectedButtonMeal,
   SnackBar,
   TopBar,
   VectorHeader,

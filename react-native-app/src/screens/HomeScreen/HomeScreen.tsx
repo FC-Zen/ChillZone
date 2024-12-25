@@ -46,7 +46,7 @@ export const HomeScreen = () => {
 
   const handleRestaurantPress = (restaurantName: string) => {
     console.log(`Le restaurant ${restaurantName} a été cliqué.`);
-    // navigation.navigate(ROUTE.RESTAURANT_DETAILS, { restaurantName });
+    navigation.navigate(ROUTE.DISPENSER);
   };
 
   return (
