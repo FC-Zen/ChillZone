@@ -1,25 +1,25 @@
 {
-  "headers": {
-    "pwdReset": "Forgot password",
-    "pwdChange": "Reset my password",
-    "alerts": "Notifications",
-    "faq": "Frequently Asked Questions",
-    "reservation": "Book",
-    "account": "My account",
-    "links": "IUT Links",
-    "recapCommands": "Recap of my orders",
-    "recapReservation": "Recap of my reservations",
-    "calendar": "My calendar",
-    "map": "Map",
-    "command": "Order your meal",
-    "cart": "Cart",
-    "pay": "Payment",
-    "finalCommand": "Enjoy your meal!",
-    "timeReservation": "It’s time for your room reservation!",
-    "cancelReservation": "Cancel reservation",
-    "conflictReservation": "Issue with your reservation?",
-    "finalConflict": "Thank you for your report!"
-  },
+    "headers": {
+        "pwdReset": "Forgot password",
+        "pwdChange": "Reset my password",
+        "alerts": "Notifications",
+        "faq": "Frequent Questions",
+        "reservation": "Book",
+        "account": "My account",
+        "links": "IUT Links",
+        "recapCommands": "Recap of my orders",
+        "recapReservation": "Recap of my reservations",
+        "calendar": "My calendar",
+        "map": "Map",
+        "command": "Order your meal",
+        "cart": "Cart",
+        "pay": "Payment",
+        "finalCommand": "Enjoy your meal!",
+        "timeReservation": "It’s time for your room reservation!",
+        "cancelReservation": "Cancel reservation",
+        "conflictReservation": "Issue with your reservation?",
+        "finalConflict": "Thank you for your report!"
+    },
 
   "userGreeting": {
     "hello": "Hello, {{nom}}"
