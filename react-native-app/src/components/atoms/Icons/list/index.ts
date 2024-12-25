@@ -17,3 +17,4 @@ export { default as Cross } from './Cross';
 export { default as Arrow } from './Arrow';
 export { default as BackArrow } from './BackArrow';
 export { default as CarretUp } from './CarretUp';
+export { default as Search } from './Search';

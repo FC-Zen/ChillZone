@@ -4,6 +4,8 @@ import { Map, RestaurantSlider } from '@components';
 import { styles } from './style';
 import { NavItem } from '@components/molecules/BookingInfo';
 import { IconProps } from '@components/atoms';
+import { useTranslation } from 'react-i18next';
+import { typography } from '@theme';
 
 type ReservationButtonProps = {
   title: string;
@@ -33,6 +35,8 @@ export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
   restaurantsData,
   onPress,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -40,7 +44,20 @@ export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
         style={styles.scrollView}
       >
         <Text style={styles.headerText}>
-          {username && `Bonjour, ${username}`}
+          {username ? (
+            <>
+              {t('userGreeting.hello', { nom: '' })}
+              <Text
+                style={{
+                  fontFamily: typography.h1.fontFamily,
+                }}
+              >
+                {username}
+              </Text>
+            </>
+          ) : (
+            ''
+          )}
         </Text>
         <Map items={items} reservationButtonProps={reservationButtonProps} />
         <RestaurantSlider

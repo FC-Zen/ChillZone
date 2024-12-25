@@ -1,0 +1,38 @@
+import React, { useState } from 'react';
+import { View, TextInput, TextInputProps } from 'react-native';
+import { styles } from './style';
+import { Icon, IconProps } from '@components/atoms';
+import { colors } from '@theme';
+
+export const Field: React.FC<
+  {
+    data: string[];
+    onFilter: (filteredData: string[]) => void;
+    iconName: IconProps['name'];
+    placeholder?: string;
+  } & TextInputProps
+> = ({ data, onFilter, iconName, placeholder, ...textInputProps }) => {
+  const [searchText, setSearchText] = useState<string>('');
+
+  const handleChange = (text: string) => {
+    setSearchText(text);
+    const filteredData = data.filter((item) =>
+      item.toLowerCase().startsWith(text.toLowerCase())
+    );
+    onFilter(filteredData);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Icon name={iconName} color={colors.silver} />
+      <TextInput
+        style={styles.input}
+        value={searchText}
+        onChangeText={handleChange}
+        placeholder={placeholder}
+        placeholderTextColor={colors.silver}
+        {...textInputProps}
+      />
+    </View>
+  );
+};

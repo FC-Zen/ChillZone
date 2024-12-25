@@ -2,6 +2,7 @@ export { Checkbox } from './atoms';
 export {
   BookingInfo,
   BottomNavbar,
+  Field,
   Input,
   ReservationButton,
   RestaurantCard,

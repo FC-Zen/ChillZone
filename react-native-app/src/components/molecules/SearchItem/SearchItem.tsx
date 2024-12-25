@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  TouchableOpacityProps,
+} from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { colors } from '@theme';
 
-type SearchItemProps = {
-  options: string[];
-  onSelect: (option: string) => void;
-  initialOption?: string;
-  iconName?: IconProps['name'];
-};
-
-export const SearchItem: React.FC<SearchItemProps> = ({
+export const SearchItem: React.FC<
+  {
+    options: string[];
+    onSelect: (option: string) => void;
+    initialOption?: string;
+    iconName?: IconProps['name'];
+  } & TouchableOpacityProps
+> = ({
   options,
   onSelect,
   initialOption = 'Filtrer',
+  iconName = 'CarretUp', // Valeur par défaut pour l'icône
+  ...touchableProps
 }) => {
   const [currentOption, setCurrentOption] = useState<string>(initialOption);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
@@ -30,9 +38,10 @@ export const SearchItem: React.FC<SearchItemProps> = ({
       <TouchableOpacity
         style={styles.dropdown}
         onPress={() => setIsDropdownVisible((prev) => !prev)}
+        {...touchableProps}
       >
         <Text style={styles.dropdownText}>{currentOption}</Text>
-        <Icon name="CarretUp" color={colors.silver} style={styles.icon} />
+        <Icon name={iconName} color={colors.silver} style={styles.icon} />
       </TouchableOpacity>
 
       {isDropdownVisible && (
