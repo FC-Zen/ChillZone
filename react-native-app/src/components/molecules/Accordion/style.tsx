@@ -20,6 +20,8 @@ export const styles = StyleSheet.create({
     fontSize: typography.h4.fontSize,
     flexWrap: 'wrap',
     width: '100%',
+    margin: 0,
+    padding: 0,
   },
   answer: {
     color: colors.black, 
@@ -28,5 +30,10 @@ export const styles = StyleSheet.create({
     flexWrap: 'wrap', 
     width: '100%', 
     paddingVertical: 5,
-  }
+    marginBottom: 10,
+  },
+  icon: {
+    width: 16,
+    height: 16,
+  },
 });

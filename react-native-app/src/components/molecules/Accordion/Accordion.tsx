@@ -2,6 +2,7 @@ import { FaqDetail } from '@services/FaqServices';
 import React from 'react';
 import { List } from 'react-native-paper';
 import { styles } from './style';
+import { Icon } from '@components/atoms';
 
 /**
  * @param detail instance of FaqDetail
@@ -16,6 +17,7 @@ export const Accordion: React.FC<FaqDetail> = (detail:FaqDetail) => {
         titleNumberOfLines={2}  // Limite le texte à 2 lignes
         style={styles.accordion} 
         titleStyle={styles.title}>
+        <Icon name="Arrow" color="#000" style={styles.icon}/>
         <List.Item title={detail.answer} style={styles.answer} titleNumberOfLines={5}/>
       </List.Accordion>
     </>
