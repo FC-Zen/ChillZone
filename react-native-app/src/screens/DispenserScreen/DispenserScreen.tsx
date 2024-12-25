@@ -4,7 +4,7 @@ import { SelectedButtonMeal } from '@components/molecules';
 import { colors } from '@theme';
 import { styles } from './style';
 
-export const DispenserScreen = () => {
+export const DispenserScreen: React.FC = () => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
