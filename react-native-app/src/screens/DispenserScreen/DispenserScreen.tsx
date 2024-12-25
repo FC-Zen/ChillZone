@@ -73,6 +73,13 @@ export const DispenserScreen: React.FC = () => {
           onBackPress: () => navigation.navigate(ROUTE.HOME),
         }}
       />
+
+      {/* Ajout du composant SearchItem */}
+      <SearchItem
+        options={['Menus', 'Plats', 'Boisson', 'Desserts']}
+        onSelect={handleFilterSelect}
+        initialOption={selectedFilter}
+      />
     </View>
   );
 };
