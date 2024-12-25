@@ -64,8 +64,8 @@ export const RestaurationScreen = () => {
     fetchSecondSet();
   }, []);
 
-  const handleRestaurantPress = (restaurantName: string) => {
-    console.log(`Le restaurant ${restaurantName} a été cliqué.`);
+  const handleRestaurantPress = () => {
+    console.log(`Le restaurant a été cliqué.`);
     // navigation.navigate(ROUTE.RESTAURANT_DETAILS, { restaurantName });
   };
 

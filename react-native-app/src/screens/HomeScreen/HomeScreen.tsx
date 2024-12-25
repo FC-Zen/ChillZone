@@ -9,11 +9,14 @@ import { transformBookings } from '@services';
 import { useTranslation } from 'react-i18next';
 import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
+import { useNavigation } from '@hooks';
+import { ROUTE } from '@enums';
 
 export const HomeScreen = () => {
   const { userName } = useUser();
   const items = transformBookings();
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const restaurantText = t('info.restaurants');
   const restaurantWords = restaurantText.split(' ');
@@ -44,8 +47,7 @@ export const HomeScreen = () => {
     fetchData();
   }, []);
 
-  const handleRestaurantPress = (restaurantName: string) => {
-    console.log(`Le restaurant ${restaurantName} a été cliqué.`);
+  const handleRestaurantPress = () => {
     navigation.navigate(ROUTE.DISPENSER);
   };
 
