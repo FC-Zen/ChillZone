@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@components/atoms/Button';
+import { Button } from '@components/molecules';
 import { View } from 'react-native';
 import { styles } from './style';
 
@@ -21,6 +21,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
       {...({
         icon: icon,
       } as any)}
+      textColor={colors.white}
     />
   </View>
 );
