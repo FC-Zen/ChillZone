@@ -3,6 +3,7 @@ export {
   BookingInfo,
   BottomNavbar,
   Field,
+  FoodCard,
   Input,
   ReservationButton,
   RestaurantCard,
