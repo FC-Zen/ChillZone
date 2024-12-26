@@ -1,0 +1,1 @@
+export { AdminAccountLayout } from './AdminAccountLayout';
