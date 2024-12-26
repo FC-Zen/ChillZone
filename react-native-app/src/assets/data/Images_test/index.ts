@@ -1,7 +1,4 @@
-import meal from './meal.png';
-
-import restaurant_image from './restaurant_image.png';
-
-import qrcode from './qrcode.png';
-
-import plan from './plan.png';
+export const meal = require('./meal.png');
+export const restaurant_image = require('./restaurant_image.png');
+export const qrcode = require('./qrcode.png');
+export const plan = require('./plan.png');

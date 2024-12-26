@@ -14,3 +14,4 @@ export { NotificationPopup } from './NotificationPopup';
 export { SelectedButtonMeal } from './SelectedButtonMeal';
 export { SearchItem } from './SearchItem';
 export { Field } from './Field';
+export { FoodCard } from './FoodCard';
