@@ -1,45 +1,43 @@
 import { StyleSheet } from 'react-native';
-import { colors, layout, typography } from '@theme';
+import { colors, typography } from '@theme';
 
 export const styles = StyleSheet.create({
   accordion: {
-    display: 'flex',
-    width:'100%',
-    marginBottom: 8,
+    width: '100%',
     backgroundColor: colors.resolutionBlue,
-    borderBlockColor: colors.white,
-    borderColor: colors.white, 
-    borderWidth: 1, 
     borderRadius: 10,
-    padding: 0,
+    borderWidth: 1,
+    borderColor: colors.white,
+    marginBottom: 15,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
   },
   title: {
     color: colors.white,
-    textAlign: 'left',
-    fontFamily: typography.h4.fontFamily,
     fontSize: typography.h4.fontSize,
+    fontFamily: typography.h4.fontFamily,
+    flex: 1,
     flexWrap: 'wrap',
-    width: '100%',
-    margin: 0,
-    padding: 0,
+  },
+  iconContainer: {
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  body: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
   },
   answer: {
-    display: 'flex',
-    color: colors.black, 
-    fontFamily: typography.h4.fontFamily,
+    color: colors.white,
     fontSize: typography.h4.fontSize,
-    flexWrap: 'wrap', 
-    width: '100%', 
-    padding: 0,
-    paddingLeft: 10,
-    marginTop: 0,
-    marginBottom: 10,
+    fontFamily: typography.h4.fontFamily,
+    textAlign: 'justify',
   },
-  icon: {
-    width: 16,
-    height: 16,
-    margin: 0,
-    padding: 0,
-  },
-  
 });
