@@ -3,160 +3,200 @@
         "id": 292,
         "first_name": "Kyle",
         "last_name": "Miller",
+        "email": "kyle.miller@universite.fr",
         "role": "Etudiant",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 7
+        "reservation_count": 7,
+        "status": "Verified"
     },
     {
         "id": 990,
         "first_name": "Barbara",
         "last_name": "White",
+        "email": "barbara.white@universite.fr",
         "role": "Etudiant",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 4
+        "reservation_count": 4,
+        "status": "Unverified"
     },
     {
         "id": 711,
         "first_name": "Robert",
         "last_name": "Contreras",
+        "email": "robert.contreras@universite.fr",
         "role": "Etudiant",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 5
+        "reservation_count": 5,
+        "status": "Verified"
     },
     {
         "id": 298,
         "first_name": "Robert",
         "last_name": "Patterson",
+        "email": "robert.patterson@universite.fr",
         "role": "Sécrétaire",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 9
+        "reservation_count": 9,
+        "status": "Blocked"
     },
     {
         "id": 176,
         "first_name": "Jessica",
         "last_name": "Ramirez",
+        "email": "jessica.ramirez@universite.fr",
         "role": "Sécrétaire",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 2
+        "reservation_count": 2,
+        "status": "Verified"
     },
     {
         "id": 810,
         "first_name": "Brittney",
         "last_name": "Harrison",
+        "email": "brittney.harrison@universite.fr",
         "role": "Professeur",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 9
+        "reservation_count": 9,
+        "status": "Unverified"
     },
     {
         "id": 300,
         "first_name": "Willie",
         "last_name": "Faulkner",
+        "email": "willie.faulkner@universite.fr",
         "role": "Sécrétaire",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 2
+        "reservation_count": 2,
+        "status": "Verified"
     },
     {
         "id": 840,
         "first_name": "Kaitlyn",
         "last_name": "Gonzalez",
+        "email": "kaitlyn.gonzalez@universite.fr",
         "role": "Sécrétaire",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 1
+        "reservation_count": 1,
+        "status": "Blocked"
     },
     {
         "id": 992,
         "first_name": "Holly",
         "last_name": "Alexander",
+        "email": "holly.alexander@universite.fr",
         "role": "Etudiant",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 10
+        "reservation_count": 10,
+        "status": "Verified"
     },
     {
         "id": 544,
         "first_name": "Zachary",
         "last_name": "Gallegos",
+        "email": "zachary.gallegos@universite.fr",
         "role": "Professeur",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 6
+        "reservation_count": 6,
+        "status": "Verified"
     },
     {
         "id": 844,
         "first_name": "Joan",
         "last_name": "Garcia",
+        "email": "joan.garcia@universite.fr",
         "role": "Etudiant",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 7
+        "reservation_count": 7,
+        "status": "Unverified"
     },
     {
         "id": 709,
         "first_name": "Anthony",
         "last_name": "Brown",
+        "email": "anthony.brown@universite.fr",
         "role": "Etudiant",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 9
+        "reservation_count": 9,
+        "status": "Verified"
     },
     {
         "id": 766,
         "first_name": "Tami",
         "last_name": "Noble",
+        "email": "tami.noble@universite.fr",
         "role": "Sécrétaire",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 10
+        "reservation_count": 10,
+        "status": "Verified"
     },
     {
         "id": 668,
         "first_name": "Krystal",
         "last_name": "Meyer",
+        "email": "krystal.meyer@universite.fr",
         "role": "Professeur",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 5
+        "reservation_count": 5,
+        "status": "Unverified"
     },
     {
         "id": 184,
         "first_name": "Beverly",
         "last_name": "Griffin",
+        "email": "beverly.griffin@universite.fr",
         "role": "Etudiant",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 2
+        "reservation_count": 2,
+        "status": "Blocked"
     },
     {
         "id": 569,
         "first_name": "Zachary",
         "last_name": "Williams",
+        "email": "zachary.williams@universite.fr",
         "role": "Sécrétaire",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 8
+        "reservation_count": 8,
+        "status": "Verified"
     },
     {
         "id": 966,
         "first_name": "Courtney",
         "last_name": "Parker",
+        "email": "courtney.parker@universite.fr",
         "role": "Professeur",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 9
+        "reservation_count": 9,
+        "status": "Verified"
     },
     {
         "id": 914,
         "first_name": "Tracy",
         "last_name": "Cruz",
+        "email": "tracy.cruz@universite.fr",
         "role": "Sécrétaire",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 3
+        "reservation_count": 3,
+        "status": "Unverified"
     },
     {
         "id": 829,
         "first_name": "Alicia",
         "last_name": "Brennan",
+        "email": "alicia.brennan@universite.fr",
         "role": "Professeur",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 9
+        "reservation_count": 9,
+        "status": "Verified"
     },
     {
         "id": 583,
         "first_name": "Vincent",
         "last_name": "Smith",
+        "email": "vincent.smith@universite.fr",
         "role": "Professeur",
         "establishment": "Université Gustave Eiffel",
-        "reservation_count": 0
+        "reservation_count": 0,
+        "status": "Blocked"
     }
 ]

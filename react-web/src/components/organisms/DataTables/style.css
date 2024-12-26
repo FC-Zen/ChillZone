@@ -1,0 +1,75 @@
+.css-2lyh9o-MuiButtonBase-root-MuiButton-root{
+    display: flex!important;
+    background-color: #2e2a85 !important;
+    color: white!important;
+    border-radius: 5px!important;
+    padding: 8px 19px!important;
+    gap: 5px!important;
+    justify-content: center;
+    align-items: center;
+}  
+
+.customBtnDataTable {
+    padding: 7px 12px!important;
+    background-color: #005745 !important;
+    gap: 5px;
+}
+
+.custom-quick-filter {
+    display: flex;
+    align-items: left;
+    width: 100%!important;
+    max-width: 350px!important;
+    padding: 5px 10px!important;
+    border: 1px solid #d3d3d3!important;
+    border-radius: 8px;
+    background-color: #FFFFFF!important;
+    color: #555;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-quick-filter input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+}
+
+.custom-quick-filter::placeholder {
+    color: #aaa;
+}
+
+.custom-quick-filter svg {
+    color: #aaa;
+}
+
+.css-5h82ro-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before {
+    border-bottom : 1px solid #d3d3d3!important;
+}
+
+.css-5h82ro-MuiInputBase-root-MuiInput-root::after {
+    border-bottom : none!important;
+}
+
+.custom-tool-bar {
+    margin: 5px;
+}
+
+.css-5wdp45-MuiDataGrid-root .MuiDataGrid-withBorderColor {
+    background-color: #2e2a85 !important;
+    color: white!important;
+}
+
+.css-1gak8h1-MuiToolbar-root-MuiTablePagination-toolbar {
+    color: white!important;
+}
+
+.css-cdtzx3-MuiButtonBase-root-MuiIconButton-root.Mui-disabled {
+    background-color: transparent;
+    color: white!important;
+}
+
+.css-5wdp45-MuiDataGrid-root .MuiDataGrid-row--borderBottom .MuiDataGrid-columnHeader, .css-5wdp45-MuiDataGrid-root .MuiDataGrid-row--borderBottom .MuiDataGrid-filler, .css-5wdp45-MuiDataGrid-root .MuiDataGrid-row--borderBottom .MuiDataGrid-scrollbarFiller {
+    background-color: #2e2a85 !important;
+    color: white!important;
+}

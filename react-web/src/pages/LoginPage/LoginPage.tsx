@@ -39,6 +39,7 @@ export const LoginPage: React.FC = () => {
         severity: 'success',
         message: 'Connexion réussie !',
       });
+      navigation.navigate(ROUTE.ADMIN_DASHBOARD);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Une erreur est survenue.';
