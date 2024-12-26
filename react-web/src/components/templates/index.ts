@@ -7,3 +7,5 @@ export { SignUpOwnerFinishTemplate } from './SignUpOwnerFinishTemplate';
 export { SignUpOwnerRestaurantTemplate } from './SignUpOwnerRestaurantTemplate';
 export { AdminAccountLayout } from './AdminAccountLayout';
 export { AdminRoomLayout } from './AdminRoomLayout';
+export { OwnerHomeLayout } from './OwnerHomeLayout';
+export { AdminHomeLayout } from './AdminHomeLayout';

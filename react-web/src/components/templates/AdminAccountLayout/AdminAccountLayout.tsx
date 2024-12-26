@@ -6,14 +6,14 @@ type AdminAccountLayoutProps = {
   userEmail: string;
   organization: string;
   part: string;
-  addAccountBtn : () => void; 
-  deleteBtn: (id: number) => void; 
-  toggleBtn: (id: number, isActive: string) => void; 
+  addAccountBtn: () => void;
+  deleteBtn: (id: number) => void;
+  toggleBtn: (id: number, isActive: string) => void;
   data: {
     id: number;
     first_name: string;
     last_name: string;
-    email : string;
+    email: string;
     role: string;
     establishment: string;
     reservation_count: number;
@@ -21,7 +21,7 @@ type AdminAccountLayoutProps = {
   }[];
 };
 
-export const AdminAccountLayout = ({
+export const AdminAccountLayout: React.FC<AdminAccountLayoutProps> = ({
   username,
   userEmail,
   organization,
@@ -29,13 +29,15 @@ export const AdminAccountLayout = ({
   addAccountBtn,
   deleteBtn,
   toggleBtn,
-  data
-}: AdminAccountLayoutProps) => {
+  data,
+}) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
 
-      <div className="flex-1">
+      {/* Contenu principal */}
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
         <Header
           userName={username}
           userEmail={userEmail}
@@ -43,14 +45,12 @@ export const AdminAccountLayout = ({
           part={part}
         />
 
-        <main className="p-6">
-          <AccountDataTable
+        <AccountDataTable
           addAccountBtn={addAccountBtn}
           deleteBtn={deleteBtn}
           toggleBtn={toggleBtn}
           data={data}
-          />
-        </main>
+        />
       </div>
     </div>
   );

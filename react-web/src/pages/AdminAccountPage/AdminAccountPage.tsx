@@ -56,7 +56,7 @@ export const AdminAccountPage: React.FC = () => {
   }, [userData]);
 
   return (
-    <div>
+    <>
       {/* Layout principal contenant le tableau */}
       <AdminAccountLayout
         userEmail="kellianbre@outlook.fr"
@@ -114,6 +114,6 @@ export const AdminAccountPage: React.FC = () => {
           </button>
         </form>
       </AccountModal>
-    </div>
-  );
+    </>
+  )
 };

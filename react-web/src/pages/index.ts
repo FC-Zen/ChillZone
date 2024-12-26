@@ -3,5 +3,7 @@ export { ForgotPasswordPage } from './ForgotPasswordPage';
 export { ForgotMdpPage } from './ForgotMdpPage';
 export { ResetPasswordPage } from './ResetPasswordPage';
 export { SignUpOwnerPage } from './SignUpOwnerPage';
-export { AdminAccountPage } from './AdminAccountPage';
 export { AdminRoomsPage } from './AdminRoomsPage';
+export { AdminHomePage } from './AdminHomePage';
+export { OwnerHomePage } from './OwnerHomePage';
+export { AdminAccountPage } from './AdminAccountPage';

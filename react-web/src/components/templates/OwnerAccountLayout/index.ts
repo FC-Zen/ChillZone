@@ -1,0 +1,1 @@
+export { OwnerHomeLayout } from './OwnerAccountLayout';

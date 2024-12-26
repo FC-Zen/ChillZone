@@ -7,6 +7,8 @@ import {
   SignUpOwnerPage,
   AdminAccountPage,
   AdminRoomsPage,
+  AdminHomePage,
+  OwnerHomePage,
 } from '@pages';
 
 function App() {
@@ -19,8 +21,12 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/forgot-mdp" element={<ForgotMdpPage />} />
         <Route path="/sign-up" element={<SignUpOwnerPage />} />
+
+        <Route path="/admin-dashboard" element={<AdminHomePage />} />
         <Route path="/admin-accounts" element={<AdminAccountPage />} />
         <Route path="/admin-rooms" element={<AdminRoomsPage />} />
+
+        <Route path="/owner-dashboard" element={<OwnerHomePage />} />
       </Routes>
     </Router>
   );

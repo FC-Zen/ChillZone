@@ -16,5 +16,7 @@ export {
   SignUpOwnerFinishTemplate,
   SignUpOwnerRestaurantTemplate,
   AdminAccountLayout,
-  AdminRoomLayout
+  AdminRoomLayout,
+  OwnerHomeLayout,
+  AdminHomeLayout
 } from './templates';
