@@ -12,4 +12,5 @@ export enum ROUTE {
   DISPENSER_MODAL = 'DispenserModal',
   FINAL_PAYMENT = 'FinalPaymentScreen',
   RESERVATION = 'ReservationScreen',
+  ACCOUNT = 'AccountScreen',
 }
