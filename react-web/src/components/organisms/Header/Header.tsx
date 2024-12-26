@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar } from '@atoms/Avatar';
 import { LogOut } from 'lucide-react';
+import { logoutUser } from '@services'; // Service de déconnexion
 
 type HeaderProps = {
   userName: string;
@@ -15,6 +16,21 @@ export const Header = ({
   organization,
   part,
 }: HeaderProps) => {
+  const handleLogout = async () => {
+    const confirmLogout = window.confirm(
+      'Êtes-vous sûr de vouloir vous déconnecter ?'
+    );
+    if (!confirmLogout) return;
+
+    try {
+      await logoutUser(); // Appel du service de déconnexion
+      window.location.href = '/login'; // Redirection après déconnexion
+    } catch (error: any) {
+      console.error('Erreur lors de la déconnexion :', error.message);
+      alert('Erreur lors de la déconnexion. Veuillez réessayer.');
+    }
+  };
+
   return (
     <div style={styles.headerContainer}>
       {/* Section Gauche */}
@@ -37,7 +53,13 @@ export const Header = ({
             <p style={styles.email}>{userEmail}</p>
             <p style={styles.organizationRight}>{organization}</p>
           </div>
-          <LogOut size={20} color="#FFF" style={styles.logoutIcon} />
+          {/* Icône de déconnexion avec gestionnaire de clic */}
+          <LogOut
+            size={20}
+            color="#FFF"
+            style={styles.logoutIcon}
+            onClick={handleLogout} // Ajout du gestionnaire de déconnexion
+          />
         </div>
       </div>
     </div>
