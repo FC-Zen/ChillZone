@@ -8,7 +8,7 @@ type AdminAccountLayoutProps = {
   part: string;
   addAccountBtn : () => void; 
   deleteBtn: (id: number) => void; 
-  toggleBtn: (id: number, isActive: boolean) => void; 
+  toggleBtn: (id: number, isActive: string) => void; 
   data: {
     id: number;
     first_name: string;

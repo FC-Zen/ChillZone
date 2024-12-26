@@ -13,8 +13,8 @@ export const AdminAccountPage: React.FC = () => {
     console.log(`Suppression de l'utilisateur avec ID : ${id}`);
   };
   
-  const handleToggleAccount = (id: number, isActive: boolean) => {
-    console.log(`Blocage/Déblocage de l'utilisateur avec ID : ${id}. Actif : ${!isActive}`);
+  const handleToggleAccount = (id: number, isActive: string) => {
+    console.log(`Blocage/Déblocage de l'utilisateur avec ID : ${id}. Actif : ${isActive}`);
   };  
 
   return (

@@ -15,7 +15,7 @@ import { EditIcon } from 'lucide-react';
 type AccountDataTableProps = {
   addAccountBtn: () => void;
   deleteBtn: (id: number) => void;
-  toggleBtn: (id: number, isActive: boolean) => void;
+  toggleBtn: (id: number, isActive: string) => void;
   data: {
     id: number;
     first_name: string;
@@ -65,13 +65,19 @@ export const AccountDataTable = ({
       { field: 'reservation_count', headerName: 'Nombre de réservations faites', flex: 2 },
       {
         field: 'toggle', headerName: 'Bloquer les réservations', flex: 2,
-        renderCell: (params: any) => (
-          <Switch
-            checked={params.row.isActive}
-            onChange={() => toggleBtn(params.row.id, params.row.isActive)}
-            color="primary"
-          />
-        ),
+        renderCell: (params: any) => {
+          const isActive = params.row.status === 'Blocked';
+          return (
+            <Switch
+              checked={isActive}
+              onChange={() => {
+                const newStatus = isActive ? 'Blocked' : 'Verified'; 
+                toggleBtn(params.row.id, newStatus);
+              }}
+              color="primary"
+            />
+          );
+        },
       },
       {
         field: 'actions', headerName: 'Supprimer le compte', flex: 2, sortable: false,
