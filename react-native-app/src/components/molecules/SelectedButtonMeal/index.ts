@@ -1,1 +1,4 @@
-export { SelectedButtonMeal } from './SelectedButtonMeal';
+export {
+  SelectedButtonMeal,
+  SelectedButtonMealProps,
+} from './SelectedButtonMeal';

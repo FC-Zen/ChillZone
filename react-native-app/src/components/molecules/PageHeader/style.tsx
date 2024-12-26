@@ -1,6 +1,5 @@
 import { colors, layout, typography } from '@theme';
 import { StyleSheet } from 'react-native';
-import { fonts } from '@theme/typography';
 
 export const styles = StyleSheet.create({
   container: {
@@ -14,6 +13,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 30,
     gap: 20,
   },
+
   back: {
     justifyContent: 'flex-start',
   },

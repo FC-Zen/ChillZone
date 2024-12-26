@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import {
-  FoodCardList,
-  // Field,
-  // SelectedButtonMeal,
-  // SearchItem,
-  TopBar,
-} from '@components';
+import { DispenserTemplate } from '@components';
 import { colors } from '@theme';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
-import { meal } from '@assets/data/Images_test';
+import { ROUTE } from '@enums';
+import { useNavigation } from '@hooks';
 
 export const DispenserScreen: React.FC = () => {
   const [isSelected, setIsSelected] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string>('Filtrer');
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const handlePress = () => {
     setIsSelected(!isSelected);
@@ -30,37 +26,53 @@ export const DispenserScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TopBar />
-      {/* <SelectedButtonMeal
-        title={t('categories.product')}
-        isSelected={isSelected}
-        onPress={handlePress}
-        color={color}
-      /> */}
-
-      {/* Ajout du composant SearchItem */}
-      {/* <SearchItem
-        options={[
-          t('categories.menus'),
-          t('categories.product'),
-          t('categories.drink'),
-          t('categories.desserts'),
+      <DispenserTemplate
+        selectedButtonMealProps={[
+          {
+            title: 'Plats',
+            isSelected: isSelected,
+            onPress: handlePress,
+            color: color,
+          },
+          {
+            title: 'Menus',
+            isSelected: !isSelected,
+            onPress: handlePress,
+            color: color,
+          },
         ]}
-        onSelect={handleFilterSelect}
-        initialOption={selectedFilter}
-        iconName="CarretUp"
+        searchItemProps={{
+          options: ['Option 1', 'Option 2'],
+          onSelect: handleFilterSelect,
+          initialOption: selectedFilter,
+          iconName: 'CarretUp',
+        }}
+        fieldProps={{
+          data: ['Item 1', 'Item 2'],
+          onFilter: (filteredData) => console.log(filteredData),
+          iconName: 'Search',
+          placeholder: 'Chercher',
+        }}
+        foodCardListProps={{
+          foodItems: [],
+          onItemSelect: (item) => console.log('Item sélectionnée:', item),
+        }}
+        buttonProps={{
+          title: 'Voir le panier',
+          onPress: () => console.log('Go panier'),
+        }}
+        pageHeaderProps={{
+          title: t('categories.restaurants'),
+          variant: 'back',
+          icon: {
+            name: 'Cross',
+            color: colors.black,
+            width: 16,
+            height: 16,
+          },
+          onBackPress: () => navigation.navigate(ROUTE.HOME),
+        }}
       />
-
-      <Field
-        data={[]}
-        onFilter={(filteredData) => console.log(filteredData)}
-        iconName="Search"
-        placeholder={t('fields.search')}
-        keyboardType="default"
-        autoCapitalize="none"
-      /> */}
-
-      <FoodCardList foodItems={[]} />
     </View>
   );
 };

@@ -1,1 +1,1 @@
-export { SearchItem } from './SearchItem';
+export { SearchItem, SearchItemProps } from './SearchItem';

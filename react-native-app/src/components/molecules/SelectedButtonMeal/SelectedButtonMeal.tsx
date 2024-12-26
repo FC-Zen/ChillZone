@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './style';
 
-type SelectedButtonMealProps = {
+export type SelectedButtonMealProps = {
   title: string;
   isSelected: boolean;
   onPress: () => void;

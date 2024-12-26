@@ -26,6 +26,7 @@ export {
 } from './organisms';
 export {
   ConnectionTemplate,
+  DispenserTemplate,
   ForgotMdpTemplate,
   ForgotPasswordTemplate,
   ResetPasswordTemplate,
