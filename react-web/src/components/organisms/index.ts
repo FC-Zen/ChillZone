@@ -6,3 +6,4 @@ export { Header } from './Header';
 export { Sidebar } from './Sidebar';
 export { DataTable } from './DataTable';
 export { AccountModal } from './AccountModal';
+export {DashboardGraphs} from './DashboardGraphs';
