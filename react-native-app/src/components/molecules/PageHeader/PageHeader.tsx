@@ -1,4 +1,3 @@
-// src/components/molecules/PageHeader/PageHeader.tsx
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
@@ -37,13 +36,15 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         <Icon
           name={icon.name}
           color={icon.color}
-          style={styles.icon}
           onPress={onBackPress}
           width={icon.width}
           height={icon.height}
         />
       )}
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, variant === 'back' && styles.titleWithBack]}>
+        {title}
+      </Text>
+      {variant === 'back' && <View style={styles.spacer} />}{' '}
     </View>
   );
 };

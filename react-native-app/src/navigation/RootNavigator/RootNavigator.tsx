@@ -9,6 +9,7 @@ import {
   NotificationScreen,
   HomeScreen,
   RestaurationScreen,
+  FaqScreen
 } from '@screens';
 import { ROUTE } from '@enums';
 import { UserProvider } from '@contexts/AppContrext';
@@ -53,6 +54,11 @@ export const RootNavigator = () => {
           <Stack.Screen
             name={ROUTE.RESTAURATION}
             component={RestaurationScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ROUTE.FAQ}
+            component={FaqScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

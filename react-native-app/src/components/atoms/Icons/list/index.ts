@@ -14,3 +14,4 @@ export { default as Marker } from './Marker';
 export { default as HomeLocation } from './HomeLocation';
 export { default as Clock } from './Clock';
 export { default as Cross } from './Cross';
+export { default as Arrow } from './Arrow';

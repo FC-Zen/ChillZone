@@ -6,4 +6,5 @@ export enum ROUTE {
   NOTIFICATION = 'NotificationScreen',
   HOME = 'HomeScreen',
   RESTAURATION = 'RestaurationScreen',
+  FAQ = 'FaqScreen',
 }
