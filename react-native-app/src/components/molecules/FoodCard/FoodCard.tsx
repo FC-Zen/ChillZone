@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { colors } from '@theme';
@@ -10,6 +10,7 @@ type ProductCardProps = {
   subTitle: string;
   imageUrl: any;
   iconName: IconProps['name'];
+  onPress?: () => void;
 };
 
 export const FoodCard: React.FC<ProductCardProps> = ({
@@ -18,9 +19,14 @@ export const FoodCard: React.FC<ProductCardProps> = ({
   subTitle,
   imageUrl,
   iconName,
+  onPress,
 }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onPress}
+      activeOpacity={0.7}
+    >
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.price}>{price}</Text>
@@ -32,6 +38,6 @@ export const FoodCard: React.FC<ProductCardProps> = ({
           <Icon name={iconName} width={32} height={32} color={colors.white} />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };

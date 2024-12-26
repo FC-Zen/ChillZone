@@ -17,6 +17,7 @@ export {
 } from './molecules';
 export {
   Connection,
+  FoodCardList,
   ForgotMdp,
   ForgotPassword,
   Map,

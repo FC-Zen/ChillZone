@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import {
+  FoodCardList,
   // Field,
   // SelectedButtonMeal,
   // SearchItem,
-  FoodCard,
   TopBar,
-} from '@components/molecules';
+} from '@components';
 import { colors } from '@theme';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
@@ -60,13 +60,7 @@ export const DispenserScreen: React.FC = () => {
         autoCapitalize="none"
       /> */}
 
-      <FoodCard
-        title={'Pasta Crous'}
-        price={'3,30 €'}
-        subTitle={'Pasta Crous au saumon'}
-        imageUrl={meal}
-        iconName="Add"
-      />
+      <FoodCardList foodItems={[]} />
     </View>
   );
 };
