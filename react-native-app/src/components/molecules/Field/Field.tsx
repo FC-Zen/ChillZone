@@ -4,14 +4,20 @@ import { styles } from './style';
 import { Icon, IconProps } from '@components/atoms';
 import { colors } from '@theme';
 
-export const Field: React.FC<
-  {
-    data: string[];
-    onFilter: (filteredData: string[]) => void;
-    iconName: IconProps['name'];
-    placeholder?: string;
-  } & TextInputProps
-> = ({ data, onFilter, iconName, placeholder, ...textInputProps }) => {
+export type FieldProps = {
+  data: string[];
+  onFilter: (filteredData: string[]) => void;
+  iconName: IconProps['name'];
+  placeholder?: string;
+} & TextInputProps;
+
+export const Field: React.FC<FieldProps> = ({
+  data,
+  onFilter,
+  iconName,
+  placeholder,
+  ...textInputProps
+}) => {
   const [searchText, setSearchText] = useState<string>('');
 
   const handleChange = (text: string) => {

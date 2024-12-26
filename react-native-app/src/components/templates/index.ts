@@ -8,3 +8,4 @@ export {
 } from './HomeScreenTemplate';
 export { RestaurationTemplate } from './RestaurationTemplate';
 export { PaymentTemplate } from './PaymentTemplate';
+export { DispenserTemplate } from './DispenserTemplate';

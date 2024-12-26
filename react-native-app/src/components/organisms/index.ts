@@ -6,4 +6,4 @@ export { Map } from './Map';
 export { RestaurantSlider } from './RestaurantSlider';
 export { NotificationList } from './NotificationList';
 export { CreditInput } from './CreditInput';
-export { FoodCardList } from './FoodCardList';
+export { FoodCardList, FoodCardListProps } from './FoodCardList';

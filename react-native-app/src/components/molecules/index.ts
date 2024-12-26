@@ -11,7 +11,10 @@ export { IconWithText } from './IconWithText';
 export { Button } from './Button';
 export { PageHeader } from './PageHeader';
 export { NotificationPopup } from './NotificationPopup';
-export { SelectedButtonMeal } from './SelectedButtonMeal';
-export { SearchItem } from './SearchItem';
-export { Field } from './Field';
+export {
+  SelectedButtonMeal,
+  SelectedButtonMealProps,
+} from './SelectedButtonMeal';
+export { SearchItem, SearchItemProps } from './SearchItem';
+export { Field, FieldProps } from './Field';
 export { FoodCard } from './FoodCard';

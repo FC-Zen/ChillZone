@@ -1,1 +1,1 @@
-export { FoodCardList } from './FoodCardList';
+export { FoodCardList, FoodCardListProps } from './FoodCardList';

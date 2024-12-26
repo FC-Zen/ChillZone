@@ -10,14 +10,14 @@ import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { colors } from '@theme';
 
-export const SearchItem: React.FC<
-  {
-    options: string[];
-    onSelect: (option: string) => void;
-    initialOption?: string;
-    iconName?: IconProps['name'];
-  } & TouchableOpacityProps
-> = ({
+export type SearchItemProps = {
+  options: string[];
+  onSelect: (option: string) => void;
+  initialOption?: string;
+  iconName?: IconProps['name'];
+} & TouchableOpacityProps;
+
+export const SearchItem: React.FC<SearchItemProps> = ({
   options,
   onSelect,
   initialOption = 'Filtrer',
