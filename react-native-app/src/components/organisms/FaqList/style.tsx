@@ -36,9 +36,10 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 
-  icon: {
-    marginTop: 20,
+  iconContainer: {
     width: 24,
     height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
