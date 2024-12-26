@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
     paddingVertical: 35,
     paddingHorizontal: 30,
+    gap: 20,
   },
   back: {
     justifyContent: 'flex-start',
@@ -27,8 +28,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   titleWithBack: {
-    textAlign: 'left',
-    marginLeft: 30,
+    textAlign: 'center',
   },
   spacer: {
     width: 16,
