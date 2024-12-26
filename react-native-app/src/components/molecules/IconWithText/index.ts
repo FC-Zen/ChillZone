@@ -1,0 +1,1 @@
+export { IconWithText, IconWithTextProps } from './IconWithText';
