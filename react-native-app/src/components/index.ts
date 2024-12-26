@@ -1,4 +1,4 @@
-export { Button, Checkbox } from './atoms';
+export { Checkbox } from './atoms';
 export {
   BookingInfo,
   BottomNavbar,
@@ -9,6 +9,7 @@ export {
   TopBar,
   VectorHeader,
   VectorBottom,
+  Button,
 } from './molecules';
 export {
   Connection,
