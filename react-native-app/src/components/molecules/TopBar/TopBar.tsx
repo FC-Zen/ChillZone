@@ -15,7 +15,7 @@ export const TopBar = () => {
 
   const handleFaqPress = () => {
     console.log('on navigue');
-    // navigation.navigate();
+    navigation.navigate(ROUTE.FAQ);
   };
 
   const handleNotificationPress = () => {

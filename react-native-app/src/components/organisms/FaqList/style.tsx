@@ -1,22 +1,21 @@
-import { colors, layout } from '@theme';
+import { colors } from '@theme';
 import { fonts, typography } from '@theme/typography';
 import { StyleSheet } from 'react-native';
-import { RotateOutDownRight } from 'react-native-reanimated';
 
 export const styles = StyleSheet.create({
   //Style for a container for a defined category
   container: {
-    backgroundColor:  colors.white,
+    backgroundColor: colors.white,
     display: 'flex',
     flexDirection: 'column',
     gap: 5,
     borderBlockColor: colors.black,
-    borderColor: colors.black, 
-    borderWidth: 1, 
+    borderColor: colors.black,
+    borderWidth: 1,
     borderRadius: 10,
-    shadowColor: '#000', 
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25, 
+    shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 4,
     paddingVertical: 10,

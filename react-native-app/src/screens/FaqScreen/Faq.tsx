@@ -11,12 +11,11 @@ import { useTranslation } from 'react-i18next';
 import { colors } from '@theme';
 
 export const FaqScreen: React.FC = () => {
-  
   const navigation = useNavigation();
   // Données pour la Faq
   const [FaqData, setFaqData] = useState<FaqCategory[]>();
   const { t } = useTranslation();
-  
+
   // Chargement des données des restaurants au démarrage
   useEffect(() => {
     const fetchData = async () => {
@@ -30,17 +29,18 @@ export const FaqScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <PageHeader 
+      <PageHeader
         title={t('headers.faq')}
-        variant='back'
-        onBackPress={() => navigation.navigate(ROUTE.HOME)} 
+        variant="back"
+        onBackPress={() => navigation.navigate(ROUTE.HOME)}
         icon={{
           name: 'Cross',
           color: colors.black,
-          width: 24,
-          height: 24
-        }} />
-      {FaqData && <FaqTemplate categories={FaqData}/>}
+          width: 16,
+          height: 16,
+        }}
+      />
+      {FaqData && <FaqTemplate categories={FaqData} />}
     </View>
   );
 };
