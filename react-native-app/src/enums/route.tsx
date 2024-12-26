@@ -7,4 +7,5 @@ export enum ROUTE {
   HOME = 'HomeScreen',
   RESTAURATION = 'RestaurationScreen',
   FAQ = 'FaqScreen',
+  PAYMENT = 'PaymentScreen',
 }
