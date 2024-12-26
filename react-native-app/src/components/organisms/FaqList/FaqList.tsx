@@ -16,7 +16,9 @@ export const FaqList: React.FC<FaqCategory> = ({category, faq_details}) => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.title}>{category}</Text>
-        <Icon name="Arrow" color={colors.black} style={styles.icon}/> 
+        <View style={[styles.iconContainer, { transform: [{ rotate: expanded ? '180deg' : '0deg' }] }]}>
+          <Icon name="Arrow" color={colors.black}/>
+        </View>
       </TouchableOpacity>
       <List.Section style={expanded ? {display:'flex'} : { display:'none'}}>
         {faq_details.map((data) => <Accordion question={data.question} answer={data.answer} /> )}

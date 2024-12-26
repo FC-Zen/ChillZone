@@ -1,30 +1,38 @@
-import React from 'react';
-import { List } from 'react-native-paper';
-import { Text } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './style';
 import { Icon } from '@components/atoms';
 
 type AccordionProps = {
   question: string;
   answer: string;
-}; //Dois toujours être égale à FaqDetail de '@services/FaqServices' pour l'intégration de la Faq 
+};
 
 /**
  * @param detail instance of FaqDetail
- *  
- * @returns An accordion with the question as a title and the answer below when you click on it
+ * 
+ * @returns A custom accordion component with a clickable question and the answer displayed below.
  */
-export const Accordion: React.FC<AccordionProps> = (detail) => {
+export const Accordion: React.FC<AccordionProps> = ({ question, answer }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleAccordion = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
-    <>
-      <List.Accordion 
-        title={detail.question} 
-        titleNumberOfLines={2}  // Limite le texte à 2 lignes
-        style={styles.accordion} 
-        titleStyle={styles.title}
-        right={props => <Icon name='Arrow' />}>
-        <Text style={styles.answer}>{detail.answer}</Text>
-      </List.Accordion>
-    </>
+    <View style={styles.accordion}>
+      <TouchableOpacity style={styles.header} onPress={handleAccordion}>
+        <Text style={styles.title}>{question}</Text>
+        <View style={[styles.iconContainer, { transform: [{ rotate: isExpanded ? '180deg' : '0deg' }] }]}>
+          <Icon name="Arrow" />
+        </View>
+      </TouchableOpacity>
+      {isExpanded && (
+        <View style={styles.body}>
+          <Text style={styles.answer}>{answer}</Text>
+        </View>
+      )}
+    </View>
   );
 };
