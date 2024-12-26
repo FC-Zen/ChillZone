@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import TableHeader from '../components/molecules/TableHeader';
-import Modal from '../components/organisms/AccountModal'; // Le composant de modale
-import DataTable from '../components/organisms/DataTable'; // Import the DataTable component
+import { AccountModal } from '@components/organisms'; // Le composant de modale
+import { AdminAccountLayout } from '@components/templates'; // Import the AdminAccountLayout component
 
-const AdminAccountPage = () => {
+export const AdminAccountPage: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = () => setModalOpen(true);
@@ -12,11 +11,15 @@ const AdminAccountPage = () => {
   return (
     <div>
       {/* Header avec le bouton pour ouvrir la modale */}
-      <TableHeader onAddUser={handleOpenModal} />
-      <DataTable />
+      <AdminAccountLayout
+        userEmail="kellianbre@outlook.fr"
+        username="Kellian Bredeau"
+        organization="Université Gustave Eiffel"
+        part="Accueil"
+      />
 
       {/* Modale */}
-      <Modal
+      <AccountModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title="Création d’un compte"
@@ -47,9 +50,7 @@ const AdminAccountPage = () => {
             Création
           </button>
         </form>
-      </Modal>
+      </AccountModal>
     </div>
   );
 };
-
-export default AdminAccountPage;

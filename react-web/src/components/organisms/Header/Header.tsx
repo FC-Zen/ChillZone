@@ -1,5 +1,5 @@
 import React from 'react';
-import Avatar from '@atoms/Avatar';
+import { Avatar } from '@atoms/Avatar';
 import { LogOut } from 'lucide-react';
 
 type HeaderProps = {
@@ -9,7 +9,12 @@ type HeaderProps = {
   part: string;
 };
 
-const Header = ({ userName, userEmail, organization, part }: HeaderProps) => {
+export const Header = ({
+  userName,
+  userEmail,
+  organization,
+  part,
+}: HeaderProps) => {
   return (
     <div style={styles.headerContainer}>
       {/* Section Gauche */}
@@ -112,5 +117,3 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: 'pointer',
   },
 };
-
-export default Header;

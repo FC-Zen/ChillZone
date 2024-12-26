@@ -7,7 +7,7 @@ type AccountModalprops = {
   children: React.ReactNode;
 };
 
-const AccountModal = ({
+export const AccountModal = ({
   isOpen,
   onClose,
   title,
@@ -72,5 +72,3 @@ const styles = {
     marginTop: '20px',
   },
 };
-
-export default AccountModal;

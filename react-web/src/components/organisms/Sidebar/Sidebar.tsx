@@ -1,7 +1,7 @@
 import React from 'react';
 import { Home, User, Box, Calendar, Building, Utensils } from 'lucide-react';
 
-const Sidebar = () => (
+export const Sidebar = () => (
   <div
     style={{
       background: '#2E2A85',
@@ -23,5 +23,3 @@ const Sidebar = () => (
     <Utensils size={24} />
   </div>
 );
-
-export default Sidebar;

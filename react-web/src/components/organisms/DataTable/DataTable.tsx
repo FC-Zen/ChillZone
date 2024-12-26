@@ -8,7 +8,7 @@ const data = Array(10).fill({
   location: 'IUT - Marne la Vallée',
 });
 
-const DataTable = () => (
+export const DataTable = () => (
   <table className="w-full text-left border-collapse mt-4">
     <thead>
       <tr className="bg-gray-200">
@@ -36,5 +36,3 @@ const DataTable = () => (
     </tbody>
   </table>
 );
-
-export default DataTable;
