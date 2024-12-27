@@ -26,22 +26,35 @@ export const AdminRoomsPage: React.FC = () => {
     setSelectedRoom(null); // Réinitialisation de la salle sélectionnée lors de la fermeture de la modale
   };
 
+  const handleToggleRoomStatus = (id: number, status: boolean) => {
+    // Mise à jour du statut de la salle
+    const roomToEdit = roomsData.find((room) => room.id === id);
+    if (roomToEdit) {
+      const updatedRoom = {
+        id: roomToEdit.id,
+        name: roomToEdit.name,
+        description: roomToEdit.description,
+        capacity: roomToEdit.capacity,
+        floor: roomToEdit.floor,
+        establishment: roomToEdit.establishment,
+        status: status
+      };
+      // Service à mettre ici
+      setRoomsData((prevData) =>
+        prevData.map((room) =>
+          room.id === id ? { ...room, status: status } : room
+        )
+      );
+      console.log(`Salle avec ID ${id} mise à jour : ${status}.`);
+    }
+  };
+
   const handleEditRoom = (id: number) => {
     const roomToEdit = roomsData.find((room) => room.id === id);
     if (roomToEdit) {
       setSelectedRoom(roomToEdit); // Pré-sélection de la salle à modifier
       handleOpenModal();
     }
-  };
-
-  const handleToggleRoomStatus = (id: number, status: boolean) => {
-    // Mise à jour du statut de la salle
-    setRoomsData((prevData) =>
-      prevData.map((room) =>
-        room.id === id ? { ...room, status: status } : room
-      )
-    );
-    console.log(`Salle avec ID ${id} mise à jour : ${status}.`);
   };
 
   const handleUpdateRoom = (event: React.FormEvent<HTMLFormElement>) => {
@@ -60,6 +73,8 @@ export const AdminRoomsPage: React.FC = () => {
     };
 
     // Mise à jour des données de la salle
+    // Service à mettre ici
+    // Simulation à la place
     setRoomsData((prevData) =>
       prevData.map((room) =>
         room.id === selectedRoom.id ? updatedRoom : room
@@ -82,6 +97,8 @@ export const AdminRoomsPage: React.FC = () => {
       establishment: formData.get('establishment') as string,
       status: true, // Statut par défaut 'Disponible'
     };
+    // Service à mettre ici
+    // Simulation à la place
     setRoomsData((prevData) => [...prevData, newRoom]);
     handleCloseModal();
     console.log('Nouvelle salle ajoutée :', newRoom);

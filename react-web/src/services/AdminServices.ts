@@ -60,3 +60,56 @@ export const addAccount = async (formData: {
         throw new Error(error.message);
     }
 };
+
+
+
+/**
+ * Ajoute une salle en envoyant une requête POST à l'API.
+ *
+ * @param {Object} roomData - Les informations de la salle à ajouter.
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Object>} Réponse de l'API.
+ */
+export const addRoom = async (roomData: {
+    name: string;
+    description: string;
+    capacity: number;
+    floor: string;
+    establishment: string;
+    status: boolean;
+}) => {
+    try {
+        // AXIOS
+        return { success: true };
+    } catch (error: any) {
+        console.error('Erreur lors de l\'ajout de la salle:', error.message);
+        throw new Error(error.message);
+    }
+};
+
+/**
+ * Met à jour les informations d'une salle en envoyant une requête PUT à l'API.
+ *
+ * @param {number} id - L'ID de la salle à mettre à jour.
+ * @param {Object} roomData - Les nouvelles informations de la salle.
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Object>} Réponse de l'API.
+ */
+export const updateRoom = async (id: number, roomData: {
+    name: string;
+    description: string;
+    capacity: number;
+    floor: string;
+    establishment: string;
+    status: boolean;
+}) => {
+    try {
+        // AXIOS
+        return { success: true };
+    } catch (error: any) {
+        console.error('Erreur lors de la mise à jour de la salle:', error.message);
+        throw new Error(error.message);
+    }
+};
