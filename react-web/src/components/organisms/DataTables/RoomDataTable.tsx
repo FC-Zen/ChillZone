@@ -62,13 +62,13 @@ export const RoomDataTable = ({
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 0.5 },
     { field: 'name', headerName: 'Nom de la salle', flex: 2 },
-    { field: 'description', headerName: 'Description', flex: 5 },
+    { field: 'description', headerName: 'Description de la salle', flex: 5 },
     { field: 'capacity', headerName: 'Capacité', flex: 1 },
     { field: 'floor', headerName: 'Étage', flex: 1.5 },
     { field: 'establishment', headerName: 'Établissement', flex: 2 },
     {
       field: 'toggle',
-      headerName: 'Bloquer les réservations',
+      headerName: 'La salle est libre actuellement ?',
       flex: 2,
       align: 'center',
       renderCell: (params: any) => {
@@ -86,8 +86,8 @@ export const RoomDataTable = ({
     },
     {
       field: 'actions',
-      headerName: 'Supprimer la salle',
-      flex: 1.5,
+      headerName: 'Modifier',
+      flex: 0.75,
       sortable: false,
       renderCell: (params: any) => (
         <div className="flex gap-2 justify-center">
