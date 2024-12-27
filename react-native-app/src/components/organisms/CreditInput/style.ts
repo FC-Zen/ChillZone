@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: '5%',
-        paddingHorizontal: '2%',
+        paddingHorizontal: '5%',
     },
     formContainer: {
         display: 'flex',

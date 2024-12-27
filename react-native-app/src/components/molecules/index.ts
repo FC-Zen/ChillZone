@@ -10,4 +10,4 @@ export { NotificationItem } from './Notification';
 export { NotificationPopup } from './NotificationPopup'
 export { IconWithText } from './IconWithText';
 export { Button } from './Button';
-export { PageHeader } from './PageHeader/PageHeader';
+export { PageHeader } from './PageHeader';

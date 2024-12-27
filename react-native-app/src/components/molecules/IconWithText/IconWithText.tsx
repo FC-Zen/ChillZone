@@ -3,12 +3,7 @@ import { View, Text, StyleProp, ViewStyle } from 'react-native';
 import { styles } from './style';
 
 export type IconWithTextProps = {
-    icon: {
-        name: IconProps['name'];
-        color: string;
-        width?: number;
-        height?: number;
-    };
+    icon: IconProps;
     text: string;
     textColor?: string;
     variant: 'vertical' | 'horizontal';
@@ -27,8 +22,8 @@ export const IconWithText: React.FC<IconWithTextProps> = ({
             <Icon
                 name={icon.name}
                 color={icon.color}
-                width={icon.width || 16}
-                height={icon.height || 16}
+                width={icon.width}
+                height={icon.height}
             />
             <Text style={[styles.text, {color: textColor}]}>{text}</Text>
         </View>

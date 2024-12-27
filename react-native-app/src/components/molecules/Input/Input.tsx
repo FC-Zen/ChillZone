@@ -13,6 +13,7 @@ export type InputProps = {
   style?: StyleProp<ViewStyle>;
   subtitle?: string;
   subtitleColor?: string;
+  textSize?: number;
 };
 
 export const Input: FC<InputProps> = ({
@@ -24,6 +25,7 @@ export const Input: FC<InputProps> = ({
   style,
   subtitle = '',
   subtitleColor,
+  textSize,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(
     variant === 'password'
@@ -44,7 +46,7 @@ export const Input: FC<InputProps> = ({
         )}{' '}
         {/* Passer l'icône ici */}
         <TextInput
-          style={InputStyles.input}
+          style={[InputStyles.input, textSize ? {fontSize: textSize}: {}]}
           placeholder={placeholder}
           onChangeText={onChangeText}
           value={value}

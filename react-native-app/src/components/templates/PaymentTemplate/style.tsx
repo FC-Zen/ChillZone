@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         width: layout.screen.width,
         height: layout.screen.height,
+        gap: 10,
     },
     infoText: {
         width: '90%',

@@ -77,6 +77,7 @@ export const CreditInput: React.FC<CreditInputProps> = ({
                         onChangeText={setInputCardNumber}
                         placeholder={placeholderCardNumber}
                         style={styles.input}
+                        textSize={12}
                     />
 
                     <Input 
@@ -84,6 +85,7 @@ export const CreditInput: React.FC<CreditInputProps> = ({
                         onChangeText={setInputCardName}
                         placeholder={placeholderCardName}
                         style={styles.input}
+                        textSize={12}
                     />
 
                     <View style={styles.inputsRow}>
@@ -96,6 +98,7 @@ export const CreditInput: React.FC<CreditInputProps> = ({
                                 variant="subtitled"
                                 subtitle={inputCardExpirationSubtitle}
                                 subtitleColor={colors.white}
+                                textSize={12}
                             />
                         </View>
 
@@ -108,6 +111,7 @@ export const CreditInput: React.FC<CreditInputProps> = ({
                                 variant="subtitled"
                                 subtitle={inputCardCVCSubtitle}
                                 subtitleColor={colors.white}
+                                textSize={12}
                             />
                         </View>
                     </View>
