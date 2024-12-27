@@ -1,11 +1,24 @@
-import React from 'react';
-import { Sidebar, Header, DataTable } from '@components/organisms';
+import { Sidebar, Header } from '@components/organisms';
+import { AccountDataTable } from '@components/organisms/DataTables';
 
 type AdminAccountLayoutProps = {
   username: string;
   userEmail: string;
   organization: string;
   part: string;
+  addAccountBtn : () => void; 
+  deleteBtn: (id: number) => void; 
+  toggleBtn: (id: number, isActive: string) => void; 
+  data: {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email : string;
+    role: string;
+    establishment: string;
+    reservation_count: number;
+    status: string;
+  }[];
 };
 
 export const AdminAccountLayout = ({
@@ -13,15 +26,16 @@ export const AdminAccountLayout = ({
   userEmail,
   organization,
   part,
+  addAccountBtn,
+  deleteBtn,
+  toggleBtn,
+  data
 }: AdminAccountLayoutProps) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Barre latérale */}
       <Sidebar />
 
-      {/* Contenu principal */}
       <div className="flex-1">
-        {/* Header */}
         <Header
           userName={username}
           userEmail={userEmail}
@@ -29,9 +43,13 @@ export const AdminAccountLayout = ({
           part={part}
         />
 
-        {/* Contenu de la page */}
         <main className="p-6">
-          <DataTable />
+          <AccountDataTable
+          addAccountBtn={addAccountBtn}
+          deleteBtn={deleteBtn}
+          toggleBtn={toggleBtn}
+          data={data}
+          />
         </main>
       </div>
     </div>

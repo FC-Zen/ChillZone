@@ -4,5 +4,5 @@ export { ForgotMdp } from './ForgotMdp';
 export { ResetPassword } from './ResetPassword';
 export { Header } from './Header';
 export { Sidebar } from './Sidebar';
-export { DataTable } from './DataTable';
+export * from './DataTables/';
 export { AccountModal } from './AccountModal';

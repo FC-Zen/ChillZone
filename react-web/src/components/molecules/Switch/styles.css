@@ -1,0 +1,71 @@
+.custom-switch-container {
+    display: inline-flex;
+    align-items: center;
+}
+
+.custom-switch-container .IOSSwitch {
+    width: 42px;
+    height: 26px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+
+.custom-switch-container .MuiSwitch-switchBase {
+    padding: 0;
+    margin: 2px;
+    transition-duration: 300ms;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.custom-switch-container .MuiSwitch-switchBase.Mui-checked {
+    transform: translateX(16px);
+    color: #fff;
+}
+
+.custom-switch-container .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+    background-color: #19887E;
+    opacity: 1;
+    border: none;
+}
+
+.custom-switch-container.dark .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+    background-color: #19887E;
+}
+
+.custom-switch-container .MuiSwitch-switchBase.Mui-focusVisible .MuiSwitch-thumb {
+    color: #19887E;
+    border: 6px solid #fff;
+}
+
+.custom-switch-container .MuiSwitch-switchBase.Mui-disabled .MuiSwitch-thumb {
+    color: #E9E9EA;
+}
+
+.custom-switch-container .MuiSwitch-switchBase.Mui-disabled + .MuiSwitch-track {
+    opacity: 0.7;
+}
+
+.custom-switch-container.dark .MuiSwitch-switchBase.Mui-disabled + .MuiSwitch-track {
+    opacity: 0.3;
+}
+
+.custom-switch-container .MuiSwitch-thumb {
+    box-sizing: border-box;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.custom-switch-container .MuiSwitch-track {
+    border-radius: 13px;
+    background-color: #E9E9EA;
+    opacity: 1;
+    transition: background-color 500ms;
+}
+
