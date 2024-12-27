@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontSize: typography.h4.fontSize,
     fontFamily: typography.h4.fontFamily,
+    fontWeight: 'bold',
     flex: 1,
     flexWrap: 'wrap',
   },

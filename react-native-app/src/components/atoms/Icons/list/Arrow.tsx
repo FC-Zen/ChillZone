@@ -2,7 +2,7 @@ import { colors } from '@theme';
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-const ArrowIcon = ({ width = 16, height = 16, color = colors.white }) => {
+const ArrowIcon = ({ width = 24, height = 30, color = colors.white }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 25 24" fill="none">
       <Path

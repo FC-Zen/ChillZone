@@ -20,7 +20,7 @@ export const FaqList: React.FC<FaqCategory> = ({category, faq_details}) => {
             style={[styles.iconContainer, { transform: [{ rotate: expanded ? '180deg' : '0deg' }] }]}
             onPress={handlePress}
           >
-          <Icon name="Arrow" color={colors.black}/>
+          <Icon name="Arrow" color={colors.black} onPress={handlePress}/>
         </TouchableOpacity>
       </View>
       <List.Section style={expanded ? {display:'flex'} : { display:'none'}}>
