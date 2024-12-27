@@ -21,11 +21,13 @@ export const InputIcon = ({ children }: { children: ReactNode }) => {
 
 export const InputStyles = StyleSheet.create({
   wrapper: {
+    display: 'flex',
     flexDirection: 'row',
     height: 60,
-    minWidth: '80%',
+    width: '100%',
     paddingHorizontal: 25,
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 15,
     borderRadius: 10,
     borderWidth: 2,
@@ -46,4 +48,10 @@ export const InputStyles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: typography.h4.fontFamily,
   },
+  subtitledContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  }
 });

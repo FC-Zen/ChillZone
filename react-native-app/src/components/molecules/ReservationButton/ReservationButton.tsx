@@ -24,5 +24,3 @@ export const ReservationButton: React.FC<ReservationButtonProps> = ({
     </TouchableOpacity>
   );
 };
-
-export default ReservationButton;

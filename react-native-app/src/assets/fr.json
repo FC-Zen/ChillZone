@@ -101,8 +101,8 @@
     "card": {
       "number": "Numéro de la carte",
       "name": "Nom de la carte",
-      "date": "Date d’expiration",
-      "code": "Code de sécurité"
+      "date": "Expiration",
+      "code": "CVC"
     }
   },
 

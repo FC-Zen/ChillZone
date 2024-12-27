@@ -100,8 +100,8 @@
     "card": {
       "number": "Card number",
       "name": "Card name",
-      "date": "Expiration date",
-      "code": "Security code"
+      "date": "Expiration",
+      "code": "CVC"
     }
   },
 

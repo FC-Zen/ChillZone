@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './style';
-import { Button, Checkbox, Input } from '@components';
+import { Checkbox } from '@components/atoms';
+import { Button, Input } from '@components/molecules';
 
 export type ConnectionProps = {
   inputEmail: string;

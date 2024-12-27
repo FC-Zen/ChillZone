@@ -7,19 +7,14 @@ import { useHeaderHeight } from '@react-navigation/elements';
 export type PageHeaderProps = {
   title: string;
   variant: 'default' | 'back';
-  icon?: {
-    name: IconProps['name'];
-    color: string;
-    width: number;
-    height: number;
-  }; // Rendre icon optionnel
+  icon?: IconProps; // Rendre icon optionnel
   onBackPress?: () => void;
 };
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
   title,
   variant,
-  icon,
+  icon = { name: 'Cross', color: 'black' },
   onBackPress,
 }) => {
   const headerHeight = useHeaderHeight();
@@ -29,7 +24,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
       style={[
         styles.container,
         variant === 'back' ? styles.back : styles.default,
-        { top: headerHeight },
+        variant === 'back' && { top: headerHeight > 0 ? headerHeight : '5%' },
       ]}
     >
       {variant === 'back' && icon && (

@@ -7,3 +7,4 @@ export {
   HomeScreenTemplateProps,
 } from './HomeScreenTemplate';
 export { RestaurationTemplate } from './RestaurationTemplate';
+export { PaymentTemplate } from './PaymentTemplate';
