@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '@organisms/Sidebar';
+import Sidebar from '@components/organisms/AdminSideBar';
 import Header from '@organisms/Header';
 
 type DashboardLayoutProps = {

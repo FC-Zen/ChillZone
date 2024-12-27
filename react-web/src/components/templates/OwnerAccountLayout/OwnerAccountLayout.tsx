@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sidebar, Header } from '@components/organisms';
+import { OwnerSidebar, Header } from '@components/organisms';
 
 type OwnerHomeLayoutProps = {
   username: string;
@@ -19,7 +19,7 @@ export const OwnerHomeLayout: React.FC<OwnerHomeLayoutProps> = ({
   mainContent,
 }) => (
   <div className="flex min-h-screen bg-gray-100">
-    <Sidebar />
+    <OwnerSidebar />
     <div className="flex-1">
       <Header
         userName={username}

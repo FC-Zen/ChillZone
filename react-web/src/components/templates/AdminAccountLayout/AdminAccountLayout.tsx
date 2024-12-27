@@ -1,5 +1,6 @@
-import { Sidebar, Header } from '@components/organisms';
 import { AccountDataTable } from '@components/organisms/DataTables';
+import React from 'react';
+import { AdminSideBar, Header } from '@components/organisms'; // Sidebar et Header
 
 type AdminAccountLayoutProps = {
   username: string;
@@ -33,7 +34,8 @@ export const AdminAccountLayout: React.FC<AdminAccountLayoutProps> = ({
 }) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
+      {/* Barre latérale */}
+      <AdminSideBar />
 
       {/* Contenu principal */}
       <div className="flex-1 flex flex-col">
