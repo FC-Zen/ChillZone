@@ -31,7 +31,11 @@ export const Accordion: React.FC<AccordionProps> = ({ question, answer }) => {
             setIsExpanded(!isExpanded);
           }}
         >
-          <Icon name="Arrow" />
+          <Icon name="Arrow"           
+            onPress={() => {
+            setIsExpanded(!isExpanded);
+            }} 
+          />
         </TouchableOpacity>
       </TouchableOpacity>
       {isExpanded && (
