@@ -24,9 +24,15 @@ export const Accordion: React.FC<AccordionProps> = ({ question, answer }) => {
     <View style={styles.accordion}>
       <TouchableOpacity style={styles.header} onPress={handleAccordion}>
         <Text style={styles.title}>{question}</Text>
-        <View style={[styles.iconContainer, { transform: [{ rotate: isExpanded ? '180deg' : '0deg' }] }]}>
+        <TouchableOpacity 
+          style={[styles.iconContainer, { transform: [{ rotate: isExpanded ? '180deg' : '0deg' }] }]} 
+          onPress={(e) => {
+            e.stopPropagation(); // Empêche la propagation
+            setIsExpanded(!isExpanded);
+          }}
+        >
           <Icon name="Arrow" />
-        </View>
+        </TouchableOpacity>
       </TouchableOpacity>
       {isExpanded && (
         <View style={styles.body}>

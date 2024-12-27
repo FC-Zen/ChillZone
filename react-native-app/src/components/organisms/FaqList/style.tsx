@@ -25,8 +25,8 @@ export const styles = StyleSheet.create({
 
   // Style for the category title
   title: {
-    fontFamily: fonts.semiBold,
-    fontSize: typography.h3.fontSize,
+    fontFamily: fonts.bold,
+    fontSize: 20,
   },
 
   button: {
@@ -37,8 +37,8 @@ export const styles = StyleSheet.create({
   },
 
   iconContainer: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },

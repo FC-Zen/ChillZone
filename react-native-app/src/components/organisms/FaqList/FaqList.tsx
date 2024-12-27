@@ -14,12 +14,15 @@ export const FaqList: React.FC<FaqCategory> = ({category, faq_details}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={handlePress}>
-        <Text style={styles.title}>{category}</Text>
-        <View style={[styles.iconContainer, { transform: [{ rotate: expanded ? '180deg' : '0deg' }] }]}>
+      <View style={styles.button} >
+        <Text style={styles.title} onPress={handlePress}>{category}</Text>
+        <TouchableOpacity 
+            style={[styles.iconContainer, { transform: [{ rotate: expanded ? '180deg' : '0deg' }] }]}
+            onPress={handlePress}
+          >
           <Icon name="Arrow" color={colors.black}/>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
       <List.Section style={expanded ? {display:'flex'} : { display:'none'}}>
         {faq_details.map((data) => <Accordion question={data.question} answer={data.answer} /> )}
       </List.Section>
