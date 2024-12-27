@@ -6,3 +6,4 @@ export { SignUpOwnerAccountTemplate } from './SignUpOwnerAccountTemplate';
 export { SignUpOwnerFinishTemplate } from './SignUpOwnerFinishTemplate';
 export { SignUpOwnerRestaurantTemplate } from './SignUpOwnerRestaurantTemplate';
 export { AdminAccountLayout } from './AdminAccountLayout';
+export { AdminRoomLayout } from './AdminRoomLayout';

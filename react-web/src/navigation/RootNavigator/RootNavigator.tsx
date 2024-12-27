@@ -6,6 +6,7 @@ import {
   ResetPasswordPage,
   SignUpOwnerPage,
   AdminAccountPage,
+  AdminRoomsPage,
 } from '@pages';
 import { ROUTE } from '@enums';
 
@@ -18,7 +19,8 @@ export const RootNavigator = () => {
         <Route path={ROUTE.FORGOT_MDP} element={<ForgotMdpPage />} />
         <Route path={ROUTE.RESET_PASSWORD} element={<ResetPasswordPage />} />
         <Route path={ROUTE.SIGNUP_OWNER} element={<SignUpOwnerPage />} />
-        <Route path={ROUTE.ADMIN_DASHBOARD} element={<AdminAccountPage />} />
+        <Route path={ROUTE.ADMIN_ACCOUNTS} element={<AdminAccountPage />} />
+        <Route path={ROUTE.ADMIN_ROOMS} element={<AdminRoomsPage />} />
       </Routes>
     </Router>
   );

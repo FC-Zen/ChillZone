@@ -8,3 +8,4 @@ export { default as Location } from './Location';
 export { default as Picture } from './Picture';
 export { default as AddIcon } from './AddIcon';
 export { default as DeleteAccount } from './DeleteAccount';
+export { default as Pencil } from './Pencil';
