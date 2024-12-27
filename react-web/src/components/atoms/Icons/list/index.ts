@@ -6,3 +6,5 @@ export { default as Phone } from './Phone';
 export { default as Browser } from './Browser';
 export { default as Location } from './Location';
 export { default as Picture } from './Picture';
+export { default as AddIcon } from './AddIcon';
+export { default as DeleteAccount } from './DeleteAccount';

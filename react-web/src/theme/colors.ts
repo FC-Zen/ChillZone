@@ -5,4 +5,5 @@ export const colors = {
   silver: '#BBBBBB',
   white: '#FFFFFF',
   black: '#000000',
+  red : '#EC221F',
 } as const;

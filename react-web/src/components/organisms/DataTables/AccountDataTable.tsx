@@ -9,8 +9,9 @@ import {
 } from '@mui/x-data-grid';
 import { Button, IconButton, Switch } from '@mui/material';
 import './style.css';
-import { Icon } from '@components/atoms/Icons';
+import { DeleteAccount, Icon } from '@components/atoms/Icons';
 import { EditIcon } from 'lucide-react';
+import { CustomSwitch } from '@components/molecules';
 
 type AccountDataTableProps = {
   addAccountBtn: () => void;
@@ -42,7 +43,7 @@ function CustomToolbar({ onActionClick }: { onActionClick: () => void }) {
       <GridToolbarExport/>
 
       <Button variant="contained" className="customBtnDataTable" onClick={onActionClick} >
-        <Icon name="User" />
+        <Icon name="AddIcon" />
         Ajouter une salle
       </Button>
     </GridToolbarContainer>
@@ -64,17 +65,18 @@ export const AccountDataTable = ({
       { field: 'establishment', headerName: 'Établissement', flex: 3 },
       { field: 'reservation_count', headerName: 'Nombre de réservations faites', flex: 2 },
       {
-        field: 'toggle', headerName: 'Bloquer les réservations', flex: 2,
+        field: 'toggle', headerName: 'Bloquer les réservations', flex: 2, align: 'center', 
         renderCell: (params: any) => {
           const isActive = params.row.status === 'Blocked';
           return (
-            <Switch
+            <CustomSwitch
               checked={isActive}
               onChange={() => {
-                const newStatus = isActive ? 'Blocked' : 'Verified'; 
+                const newStatus = isActive ? 'Verified' : 'Blocked'; 
+                console.log(isActive);
+                console.log(newStatus);
                 toggleBtn(params.row.id, newStatus);
               }}
-              color="primary"
             />
           );
         },
@@ -82,12 +84,12 @@ export const AccountDataTable = ({
       {
         field: 'actions', headerName: 'Supprimer le compte', flex: 2, sortable: false,
         renderCell: (params: any) => (
-          <div className="flex gap-2">
+          <div className="flex gap-2 justify-center">
             <IconButton
               color="primary"
               onClick={() => deleteBtn(params.row.id)}
             >
-              <EditIcon />
+              <Icon name="DeleteAccount" />
             </IconButton>
           </div>
         ),
