@@ -6,6 +6,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: layout.screen.width,
+    paddingHorizontal: "15%",
   },
   logo: {
     width: 100,
