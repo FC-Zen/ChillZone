@@ -14,5 +14,7 @@ export {
   ResetPasswordTemplate,
   SignUpOwnerAccountTemplate,
   SignUpOwnerFinishTemplate,
-  SignUpOwnerRestaurantTemplate
+  SignUpOwnerRestaurantTemplate,
+  AdminAccountLayout,
+  AdminRoomLayout
 } from './templates';
