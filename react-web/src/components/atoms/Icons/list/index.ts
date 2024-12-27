@@ -17,3 +17,7 @@ export { default as Shop } from './Shop';
 export { default as Pizza } from './Pizza';
 export { default as Document } from './Document';
 export { default as Package } from './Package';
+export { default as Flag } from './Flag';
+export { default as Dashboard } from './Dashboard';
+export { default as Layers } from './Layers';
+
