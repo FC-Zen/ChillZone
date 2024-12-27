@@ -1,11 +1,11 @@
 import React from 'react';
-import { colors } from '@theme';
+import { buttonStyle, labelStyle, hoverStyle, activeStyle } from './style';
 
 export type NavigationButtonProps = {
   icon: React.ReactNode;
   onClick: () => void;
-  label?: string; // Si vous souhaitez ajouter une étiquette optionnelle
-  active?: boolean; // Pour indiquer si le bouton est actif
+  label?: string; // Étiquette optionnelle
+  active?: boolean; // État actif
 };
 
 export const NavigationButton: React.FC<NavigationButtonProps> = ({
@@ -19,28 +19,19 @@ export const NavigationButton: React.FC<NavigationButtonProps> = ({
       onClick={onClick}
       style={{
         ...buttonStyle,
-        backgroundColor: active ? colors.resolutionBlue : 'transparent',
+        ...(active ? activeStyle : {}),
+      }}
+      onMouseEnter={(e) => {
+        const target = e.currentTarget;
+        Object.assign(target.style, hoverStyle);
+      }}
+      onMouseLeave={(e) => {
+        const target = e.currentTarget;
+        Object.assign(target.style, buttonStyle, active ? activeStyle : {});
       }}
     >
       {icon}
       {label && <span style={labelStyle}>{label}</span>}
     </button>
   );
-};
-
-// Styles
-const buttonStyle: React.CSSProperties = {
-  background: 'none',
-  border: 'none',
-  padding: '0.5rem',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
-  color: colors.white,
-};
-
-const labelStyle: React.CSSProperties = {
-  marginTop: '0.5rem',
-  fontSize: '0.75rem',
 };
