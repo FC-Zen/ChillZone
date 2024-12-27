@@ -62,7 +62,7 @@ export const AdminAccountPage: React.FC = () => {
         userEmail="kellianbre@outlook.fr"
         username="Kellian Bredeau"
         organization="Université Gustave Eiffel"
-        part="Accueil"
+        part="Comptes"
         addAccountBtn={handleOpenModal}
         deleteBtn={handleDeleteAccount}
         toggleBtn={handleToggleAccount}
