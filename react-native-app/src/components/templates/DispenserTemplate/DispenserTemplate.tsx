@@ -9,7 +9,7 @@ import {
   SelectedButtonMealProps,
 } from '@components/molecules';
 import { FoodCardList, FoodCardListProps } from '@components/organisms';
-import { Button, ButtonProps } from '@components/atoms';
+import { Button, ButtonProps } from '@components/molecules';
 import { styles } from './style';
 import { PageHeader, PageHeaderProps } from '@components/molecules/PageHeader';
 
