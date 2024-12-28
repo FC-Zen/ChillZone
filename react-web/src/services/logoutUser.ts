@@ -18,6 +18,5 @@ export const logoutUser = async () => {
     return { success: true, message: 'Déconnexion réussie.' };
   } catch (error: any) {
     console.error('Erreur lors de la déconnexion :', error.message);
-    throw new Error('Impossible de déconnecter l’utilisateur.');
   }
 };

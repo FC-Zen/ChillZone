@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar } from '@atoms/Avatar';
 import { LogOut } from 'lucide-react';
 import { logoutUser } from '@services'; // Service de déconnexion
+import { colors } from '@theme';
 
 type HeaderProps = {
   userName: string;
@@ -26,7 +27,6 @@ export const Header = ({
       await logoutUser(); // Appel du service de déconnexion
       window.location.href = '/login'; // Redirection après déconnexion
     } catch (error: any) {
-      console.error('Erreur lors de la déconnexion :', error.message);
       alert('Erreur lors de la déconnexion. Veuillez réessayer.');
     }
   };
@@ -82,7 +82,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   title: {
     fontSize: '24px',
-    color: '#000',
+    color: colors.black,
     margin: 0,
   },
   bold: {
@@ -111,7 +111,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: '10px',
     padding: '15px 20px',
     gap: '15px',
-    color: '#FFF',
+    color: colors.white,
   },
   profileInfo: {
     display: 'flex',

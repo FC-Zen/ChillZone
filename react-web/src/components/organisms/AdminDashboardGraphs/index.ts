@@ -1,1 +1,1 @@
-export {AdminDashboardGraphs} from './DashboardGraphs';
+export {AdminDashboardGraphs} from './AdminDashboardGraphs';
