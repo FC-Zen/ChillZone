@@ -53,12 +53,19 @@ export const OwnerHomePage: React.FC = () => {
     </div>
   );
 
+  function t(key: string): string {
+    const translations: { [key: string]: string } = {
+      'navbar.home': 'Accueil',
+      // Ajoutez d'autres traductions ici si nécessaire
+    };
+    return translations[key] || key;
+  }
   return (
     <OwnerHomeLayout
       username="Kellian Bredeau"
       userEmail="kellianbre@outlook.fr"
       organization="Université Gustave Eiffel"
-      part="Accueil"
+      part={t('navbar.home')}
       statsSection={statsSection}
       mainContent={mainContent}
     />

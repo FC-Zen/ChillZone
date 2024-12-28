@@ -19,7 +19,9 @@ export type RouteParamList = {
   ForgotMdpScreen: undefined;
   ResetPasswordScreen: undefined;
   AdminAccount: undefined;
-  OwnerAccount: undefined;
+  OwnerHome: undefined;
+  AdminHome: undefined;
+  AdminRooms: undefined;
 };
 
 // Typage des propriétés des écrans

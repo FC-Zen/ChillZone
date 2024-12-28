@@ -1,5 +1,9 @@
+// src/components/organisms/AdminSideBar/AdminSideBar.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import du hook de navigation
+import { NavigationButton } from '@components/molecules';
+import { ROUTE } from '@enums'; // Import des routes
+import { colors } from '@theme'; // Import des couleurs
 import {
   Home,
   User,
@@ -7,10 +11,7 @@ import {
   Calendar,
   Building,
   Shop,
-} from '@components/atoms/Icons';
-import { NavigationButton } from '@components/molecules';
-import { colors } from '@theme';
-import { ROUTE } from '@enums'; // Import des routes
+} from '@components/atoms/Icons'; // Import des icônes nécessaires
 
 export const AdminSideBar = () => {
   const navigate = useNavigate(); // Hook pour naviguer
@@ -41,13 +42,13 @@ export const AdminSideBar = () => {
       {/* Profil de l'admin */}
       <NavigationButton
         icon={<User color={colors.white} />}
-        onClick={() => handleIconClick('/admin-profile')} // Ajustez cette route si nécessaire
+        onClick={() => handleIconClick(ROUTE.ADMIN_ACCOUNTS)} // Ajustez cette route si nécessaire
       />
 
       {/* Produits */}
       <NavigationButton
         icon={<Cube color={colors.white} />}
-        onClick={() => handleIconClick('/admin-products')} // Ajustez cette route si nécessaire
+        onClick={() => handleIconClick(ROUTE.ADMIN_ROOMS)} // Ajustez cette route si nécessaire
       />
 
       {/* Calendrier */}
@@ -70,3 +71,5 @@ export const AdminSideBar = () => {
     </div>
   );
 };
+
+export default AdminSideBar;

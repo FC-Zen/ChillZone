@@ -1,13 +1,12 @@
 import React from 'react';
 import { colors } from '@theme';
 import { ReactElement } from 'react';
-
-export type IconProps = {
+type IconProps = {
   color?: string;
-  height?: string | number;
-  width?: string | number;
+  height?: number | string;
+  width?: number | string;
+  style?: React.CSSProperties;
 };
-
 const Dashboard = ({
   color = colors.silver,
   height = 24,

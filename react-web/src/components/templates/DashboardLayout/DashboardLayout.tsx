@@ -1,6 +1,5 @@
+import { AdminSideBar, Header } from '@components/organisms';
 import React from 'react';
-import Sidebar from '@components/organisms/AdminSideBar';
-import Header from '@organisms/Header';
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -9,12 +8,13 @@ type DashboardLayoutProps = {
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
+      <AdminSideBar />
       <div className="flex-1">
         <Header
           userName="Kellian BREDEAU"
           userEmail="kellian.bre@outlook.fr"
           organization="Université Gustave Eiffel"
+          part="Acceuil"
         />
         <main className="p-6">{children}</main>
       </div>

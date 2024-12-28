@@ -1,13 +1,14 @@
 import { colors } from '@theme';
 import { ReactElement } from 'react';
 
-export type IconProps = {
+type IconProps = {
   color?: string;
-  height?: string | number;
-  width?: string | number;
+  height?: number | string;
+  width?: number | string;
+  style?: React.CSSProperties;
 };
 
-const Lock = ({
+const User = ({
   color = colors.silver,
   height = 24,
   width = 24,
@@ -26,4 +27,4 @@ const Lock = ({
   );
 };
 
-export default Lock;
+export default User;

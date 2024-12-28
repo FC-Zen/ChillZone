@@ -3,6 +3,8 @@ import { Avatar } from '@atoms/Avatar';
 import { LogOut } from 'lucide-react';
 import { logoutUser } from '@services'; // Service de déconnexion
 import { colors } from '@theme';
+import { ROUTE } from '@enums';
+import { useNavigate } from 'react-router-dom';
 
 type HeaderProps = {
   userName: string;
@@ -17,6 +19,8 @@ export const Header = ({
   organization,
   part,
 }: HeaderProps) => {
+  const navigate = useNavigate(); // Hook pour naviguer
+
   const handleLogout = async () => {
     const confirmLogout = window.confirm(
       'Êtes-vous sûr de vouloir vous déconnecter ?'
@@ -25,7 +29,7 @@ export const Header = ({
 
     try {
       await logoutUser(); // Appel du service de déconnexion
-      window.location.href = '/login'; // Redirection après déconnexion
+      navigate(ROUTE.LOGIN); // Redirection après déconnexion
     } catch (error: any) {
       alert('Erreur lors de la déconnexion. Veuillez réessayer.');
     }

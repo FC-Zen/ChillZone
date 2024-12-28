@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { AccountModal } from '@components/organisms'; // Composant de modale
-import { AdminAccountLayout } from '@components/templates'; 
+import { AdminAccountLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import users from '@assets/data/users.json';
 
 export const AdminAccountPage: React.FC = () => {
   const { t } = useTranslation();
-  
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [userData, setUserData] = useState(users);
 
@@ -30,7 +30,7 @@ export const AdminAccountPage: React.FC = () => {
     );
     console.log(`Utilisateur avec ID ${id} mis à jour : ${isActive}.`);
   };
-  
+
   const handleAddAccount = (event: React.FormEvent<HTMLFormElement>) => {
     // Service à mettre ici
     // Simulation à la place
@@ -62,7 +62,7 @@ export const AdminAccountPage: React.FC = () => {
         userEmail="kellianbre@outlook.fr"
         username="Kellian Bredeau"
         organization="Université Gustave Eiffel"
-        part="Comptes"
+        part={t('navbar.admin.users')}
         addAccountBtn={handleOpenModal}
         deleteBtn={handleDeleteAccount}
         toggleBtn={handleToggleAccount}
@@ -115,5 +115,5 @@ export const AdminAccountPage: React.FC = () => {
         </form>
       </AccountModal>
     </>
-  )
+  );
 };

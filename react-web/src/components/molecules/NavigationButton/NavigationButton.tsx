@@ -1,8 +1,10 @@
+// src/components/molecules/NavigationButton.tsx
 import React from 'react';
-import { buttonStyle, labelStyle, hoverStyle, activeStyle } from './style';
+import './NavigationButton.css'; // Import du fichier CSS
+import { colors } from '@theme';
 
 export type NavigationButtonProps = {
-  icon: React.ReactNode;
+  icon: React.ReactNode; // Accepte un élément React
   onClick: () => void;
   label?: string; // Étiquette optionnelle
   active?: boolean; // État actif
@@ -14,24 +16,15 @@ export const NavigationButton: React.FC<NavigationButtonProps> = ({
   label,
   active = false,
 }) => {
+  // Définir les classes CSS en fonction de l'état actif
+  const buttonClass = active ? 'button button--active' : 'button';
+
   return (
-    <button
-      onClick={onClick}
-      style={{
-        ...buttonStyle,
-        ...(active ? activeStyle : {}),
-      }}
-      onMouseEnter={(e) => {
-        const target = e.currentTarget;
-        Object.assign(target.style, hoverStyle);
-      }}
-      onMouseLeave={(e) => {
-        const target = e.currentTarget;
-        Object.assign(target.style, buttonStyle, active ? activeStyle : {});
-      }}
-    >
+    <button className={buttonClass} onClick={onClick}>
       {icon}
-      {label && <span style={labelStyle}>{label}</span>}
+      {label && <span className="label">{label}</span>}
     </button>
   );
 };
+
+export default NavigationButton;
