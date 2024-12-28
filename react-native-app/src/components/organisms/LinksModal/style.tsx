@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
-const styles = StyleSheet.create({
+import { colors } from '@theme';
+
+export const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -8,22 +10,16 @@ const styles = StyleSheet.create({
   },
   modal: {
     width: '90%',
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 10,
     padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   closeButton: {
     alignSelf: 'flex-end',
   },
   closeButtonText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
+    color: '#512D6D',
   },
   title: {
     fontSize: 18,
@@ -31,24 +27,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  link: {
+  linkContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: '#EEE',
     paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.silver,
   },
-  icon: {
-    fontSize: 18,
+  linkIcon: {
+    fontSize: 24,
     marginRight: 10,
   },
   linkText: {
-    fontSize: 16,
     flex: 1,
-  },
-  arrow: {
     fontSize: 16,
-    color: '#512D6D',
+    color: '#333',
   },
 });
