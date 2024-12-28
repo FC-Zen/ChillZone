@@ -64,5 +64,3 @@ export const OwnerHomePage: React.FC = () => {
     />
   );
 };
-
-export default OwnerAccountPage;

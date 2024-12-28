@@ -1,4 +1,4 @@
-import { Sidebar, Header } from '@components/organisms';
+import { AdminSideBar, Header } from '@components/organisms';
 
 type AdminHomeLayoutProps = {
   username: string;
@@ -19,7 +19,7 @@ export const AdminHomeLayout: React.FC<AdminHomeLayoutProps> = ({
 }) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
+      <AdminSideBar />
 
       {/* Contenu principal */}
       <div className="flex-1 flex flex-col">
