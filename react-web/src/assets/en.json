@@ -185,7 +185,8 @@
         },
         "headers": {
             "user": {
-                "fullName": "Full Name",
+                "fullName": "Name",
+                "last_name" : "Surname",
                 "mail": "Email address",
                 "type": "Role",
                 "establishment": "Establishment",
