@@ -12,6 +12,8 @@ import { Button, IconButton } from '@mui/material';
 import './style.css';
 import { Icon } from '@components/atoms/Icons';
 import { CustomSwitch } from '@components/molecules';
+import { useTranslation } from 'react-i18next';
+
 
 type AccountDataTableProps = {
   addAccountBtn: () => void;
@@ -60,20 +62,22 @@ export const AccountDataTable = ({
   toggleBtn,
   data,
 }: AccountDataTableProps) => {
+  const { t } = useTranslation();
+
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 0.5 },
-    { field: 'first_name', headerName: 'Prénom', flex: 2 },
-    { field: 'last_name', headerName: 'Nom', flex: 2 },
-    { field: 'role', headerName: 'Rôle', flex: 1.5 },
-    { field: 'establishment', headerName: 'Établissement', flex: 3 },
+    { field: 'first_name', headerName: t('tables.headers.user.fullName'), flex: 2 },
+    { field: 'last_name', headerName: t('tables.headers.user.last_name'), flex: 2 },
+    { field: 'role', headerName: t('tables.headers.user.type'), flex: 1.5 },
+    { field: 'establishment', headerName: t('tables.headers.user.establishment'), flex: 3 },
     {
       field: 'reservation_count',
-      headerName: 'Nombre de réservations faites',
+      headerName: t('tables.headers.user.reservationCount'),
       flex: 2,
     },
     {
       field: 'toggle',
-      headerName: 'Bloquer les réservations',
+      headerName: t('tables.headers.user.blockReservations'),
       flex: 2,
       align: 'center',
       renderCell: (params: any) => {
@@ -93,7 +97,7 @@ export const AccountDataTable = ({
     },
     {
       field: 'actions',
-      headerName: 'Supprimer le compte',
+      headerName: t('tables.headers.user.deleteAccount'),
       flex: 2,
       sortable: false,
       renderCell: (params: any) => (
