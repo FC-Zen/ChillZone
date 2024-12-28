@@ -78,4 +78,18 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
+  newsButton: {
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: colors.resolutionBlue,
+    borderRadius: 80,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 10,
+  },
+  newsText: {
+    color: colors.resolutionBlue,
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
 });
