@@ -3,6 +3,7 @@ import { AdminHomeLayout } from '@components/templates'; // Layout principal
 import { StatCard } from '@components/molecules'; // Cartes statistiques
 import { AdminDashboardGraphs } from '@components/organisms'; // Composant pour les graphiques
 import { Users, MessageSquare, Package, Percent } from 'lucide-react'; // Icônes nécessaires
+import AdminCardData from '@assets/fr.json'; // Import des données FR (renommées)
 
 export const AdminHomePage: React.FC = () => {
   // Section des statistiques
@@ -10,21 +11,25 @@ export const AdminHomePage: React.FC = () => {
     <div className="flex flex-col gap-6">
       <StatCard
         icon={<Users />}
-        title="Utilisateurs actifs"
-        value="410"
+        title={AdminCardData.dashboard.info.users}
+        value={AdminCardData.dashboard.info.usersValue}
         trend={{ value: 9.9, isPositive: true }}
       />
       <StatCard
         icon={<MessageSquare />}
-        title="Signalements reçus"
-        value="10"
+        title={AdminCardData.dashboard.info.conflict}
+        value={AdminCardData.dashboard.info.conflictValue}
         trend={{ value: 1.2, isPositive: false }}
       />
-      <StatCard icon={<Package />} title="Salles disponibles" value="41" />
+      <StatCard
+        icon={<Package />}
+        title={AdminCardData.dashboard.info.openRooms}
+        value={AdminCardData.dashboard.info.openRoomsValue}
+      />
       <StatCard
         icon={<Percent />}
-        title="Taux d'occupation"
-        value="84%"
+        title={AdminCardData.dashboard.info.occupationTime}
+        value={AdminCardData.dashboard.info.occupationTimeValue}
         trend={{ value: 9.9, isPositive: true }}
       />
     </div>

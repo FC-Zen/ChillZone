@@ -25,7 +25,6 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminHomePage />} />
         <Route path="/admin-accounts" element={<AdminAccountPage />} />
         <Route path="/admin-rooms" element={<AdminRoomsPage />} />
-
         <Route path="/owner-dashboard" element={<OwnerHomePage />} />
       </Routes>
     </Router>

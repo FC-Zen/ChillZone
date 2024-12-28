@@ -109,6 +109,7 @@
         },
         "info" : {
             "users" : "Utilisateurs",
+            "usersValue" : "410",
             "conflict" : "Signalements reçus",
             "conflictValue" : "10",
             "openRooms" : "Salles / box disponibles",
