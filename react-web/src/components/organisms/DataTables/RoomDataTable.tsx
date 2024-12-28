@@ -12,6 +12,7 @@ import { Button, IconButton } from '@mui/material';
 import './style.css';
 import { Icon } from '@components/atoms/Icons';
 import { CustomSwitch } from '@components/molecules';
+import { useTranslation } from 'react-i18next';
 
 type RoomDataTableProps = {
   addRoomBtn: () => void;
@@ -59,16 +60,18 @@ export const RoomDataTable = ({
   toggleBtn,
   data,
 }: RoomDataTableProps) => {
+  const { t } = useTranslation();
+
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 0.5 },
-    { field: 'name', headerName: 'Nom de la salle', flex: 2 },
-    { field: 'description', headerName: 'Description de la salle', flex: 5 },
-    { field: 'capacity', headerName: 'Capacité', flex: 1 },
-    { field: 'floor', headerName: 'Étage', flex: 1.5 },
-    { field: 'establishment', headerName: 'Établissement', flex: 2 },
+    { field: 'name', headerName: t('tables.headers.room.name'), flex: 2 },
+    { field: 'description', headerName: t('tables.headers.room.description'), flex: 5 },
+    { field: 'capacity', headerName: t('tables.headers.room.capacity'), flex: 1.5 },
+    { field: 'floor', headerName: t('tables.headers.room.floor'), flex: 1.5 },
+    { field: 'establishment', headerName: t('tables.headers.user.establishment'), flex: 2 },
     {
       field: 'toggle',
-      headerName: 'La salle est libre actuellement ?',
+      headerName:  t('tables.headers.room.isRoomFree'),
       flex: 2,
       align: 'center',
       renderCell: (params: any) => {
@@ -86,7 +89,7 @@ export const RoomDataTable = ({
     },
     {
       field: 'actions',
-      headerName: 'Modifier',
+      headerName:  t('tables.headers.room.modify'),
       flex: 0.75,
       sortable: false,
       renderCell: (params: any) => (
