@@ -1,3 +1,4 @@
+import { typography } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -8,9 +9,15 @@ export const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: 'column',
     padding: 16,
-    gap: 16,
   },
-  cardContainer: {
-    marginBottom: 12,
+  text: {
+    fontSize: typography.h2.fontSize,
+    fontFamily: typography.h2.fontFamily,
+  },
+  text2: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
 });
