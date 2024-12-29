@@ -7,12 +7,14 @@ export const styles = StyleSheet.create({
     paddingVertical: 24,
   },
   container: {
-    flex: 1,
+    height: '100%',
+    position: 'relative',
+    top: -80,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     width: layout.screen.width,
     paddingHorizontal: 10,
     paddingVertical: 14,
@@ -45,6 +47,7 @@ export const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingBottom: 24,
+    paddingTop: 31,
   },
 });

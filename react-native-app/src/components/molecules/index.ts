@@ -18,3 +18,4 @@ export {
 export { SearchItem, SearchItemProps } from './SearchItem';
 export { Field, FieldProps } from './Field';
 export { FoodCard } from './FoodCard';
+export { Counter } from './Counter';

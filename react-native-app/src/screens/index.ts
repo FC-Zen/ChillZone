@@ -7,4 +7,4 @@ export { HomeScreen } from './HomeScreen';
 export { RestaurationScreen } from './RestaurationScreen';
 export { FaqScreen } from './FaqScreen';
 export { PaymentScreen } from './PaymentScreen';
-export { DispenserScreen } from './DispenserScreen';
+export { DispenserScreen, DispenserModal } from './DispenserScreen';

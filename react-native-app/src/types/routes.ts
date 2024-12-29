@@ -1,6 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { ROUTE } from '@enums';
+import { MealProps } from '@services/DispenserServices';
 
 export type RootStackParamList = {
   [ROUTE.HOME]: { userName: string };
@@ -26,6 +27,7 @@ export type RouteParamList = {
   FaqScreen: undefined;
   PaymentScreen: undefined;
   DispenserScreen: undefined;
+  DispenserModal: { meal: MealProps };
 };
 
 // Typage des propriétés des écrans

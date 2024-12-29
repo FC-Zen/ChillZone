@@ -32,8 +32,8 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           name={icon.name}
           color={icon.color}
           onPress={onBackPress}
-          width={icon.width}
-          height={icon.height}
+          width={16}
+          height={16}
         />
       )}
       <Text style={[styles.title, variant === 'back' && styles.titleWithBack]}>

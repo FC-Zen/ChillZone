@@ -73,10 +73,9 @@ export const DispenserScreen: React.FC = () => {
       iconName: meal.iconName,
     }));
 
-  const color = isSelected ? colors.aquaDeep : colors.darkCyan;
-
   const handleItemSelect = (item: MealProps) => {
     console.log('Item sélectionné:', item);
+    navigation.navigate(ROUTE.DISPENSER_MODAL, { meal: item });
   };
 
   const handleSearchChange = (query: string) => {
@@ -90,14 +89,14 @@ export const DispenserScreen: React.FC = () => {
           {
             title: t('categories.product'),
             isSelected: isProductSelected,
-            onPress: () => handlePress(true), // Sélectionne le premier bouton
-            color: isProductSelected ? colors.aquaDeep : colors.darkCyan, // Applique la couleur en fonction de la sélection
+            onPress: () => handlePress(true),
+            color: isProductSelected ? colors.aquaDeep : colors.darkCyan,
           },
           {
             title: t('categories.menus'),
             isSelected: !isProductSelected,
-            onPress: () => handlePress(false), // Sélectionne le deuxième bouton
-            color: !isProductSelected ? colors.aquaDeep : colors.darkCyan, // Applique la couleur en fonction de la sélection
+            onPress: () => handlePress(false),
+            color: !isProductSelected ? colors.aquaDeep : colors.darkCyan,
           },
         ]}
         searchItemProps={{
