@@ -9,4 +9,5 @@ export enum ROUTE {
   FAQ = 'FaqScreen',
   PAYMENT = 'PaymentScreen',
   DISPENSER = 'DispenserScreen',
+  DISPENSER_MODAL = 'DispenserModal',
 }

@@ -20,3 +20,5 @@ export { default as CarretUp } from './CarretUp';
 export { default as Search } from './Search';
 export { default as Add } from './Add';
 export { default as Hamburger } from './Hamburger';
+export { default as Less } from './Less';
+export { default as More } from './More';
