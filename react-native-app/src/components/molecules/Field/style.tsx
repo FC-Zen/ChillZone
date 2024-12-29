@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
   container: {
     display: 'flex',
     height: 50,
-    width: '60%',
-    minWidth: 200,
+    width: '70%',
+    minWidth: 220,
     padding: 10,
     paddingHorizontal: 25,
     alignItems: 'center',

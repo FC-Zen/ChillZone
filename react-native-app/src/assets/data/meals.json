@@ -62,5 +62,20 @@
         "tag_label": "Anti-diabétique"
       }
     ]
+  },
+  {
+    "meal_id": 4,
+    "meal_name": "Ice Tea",
+    "meal_description": "Une boisson rafraîchissante à base de thé glacé.",
+    "meal_type": "Drink",
+    "meal_photo": "meal.png",
+    "meal_price": 1.5,
+    "meal_stock": 12,
+    "tags": [
+      {
+        "tag_id": 3,
+        "tag_label": "Vegetarian"
+      }
+    ]
   }
 ]

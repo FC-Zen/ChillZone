@@ -31,28 +31,37 @@ export const DispenserTemplate: React.FC<DispenserTemplateProps> = ({
   pageHeaderProps,
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.outerContainer}>
       <PageHeader {...pageHeaderProps} />
-      <View style={styles.row}>
-        {selectedButtonMealProps.map((props, index) => (
-          <View key={index} style={styles.selectedButtonMeal}>
-            <SelectedButtonMeal {...props} />
+
+      <View style={styles.container}>
+        <View style={styles.row}>
+          {selectedButtonMealProps.map((props, index) => (
+            <View key={index} style={styles.selectedButtonMeal}>
+              <SelectedButtonMeal {...props} />
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.row}>
+          <View>
+            <SearchItem {...searchItemProps} />
           </View>
-        ))}
-      </View>
-      <View style={styles.row}>
-        <View>
-          <SearchItem {...searchItemProps} />
+          <View>
+            <Field {...fieldProps} />
+          </View>
         </View>
-        <View>
-          <Field {...fieldProps} />
+
+        <FoodCardList
+          foodItems={foodCardListProps.foodItems}
+          onItemSelect={foodCardListProps.onItemSelect}
+          iconName={foodCardListProps.iconName}
+          text={foodCardListProps.text}
+        />
+
+        <View style={styles.buttonContainer}>
+          <Button {...buttonProps} />
         </View>
-      </View>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <FoodCardList {...foodCardListProps} />
-      </ScrollView>
-      <View style={styles.buttonContainer}>
-        <Button {...buttonProps} />
       </View>
     </View>
   );

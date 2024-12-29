@@ -6,7 +6,7 @@ import { colors } from '@theme';
 
 export type FieldProps = {
   data: string[];
-  onFilter: (filteredData: string[]) => void;
+  onFilter: (filteredData: string) => void;
   iconName: IconProps['name'];
   placeholder?: string;
 } & TextInputProps;
@@ -19,13 +19,9 @@ export const Field: React.FC<FieldProps> = ({
   ...textInputProps
 }) => {
   const [searchText, setSearchText] = useState<string>('');
-
   const handleChange = (text: string) => {
     setSearchText(text);
-    const filteredData = data.filter((item) =>
-      item.toLowerCase().startsWith(text.toLowerCase())
-    );
-    onFilter(filteredData);
+    onFilter(text);
   };
 
   return (

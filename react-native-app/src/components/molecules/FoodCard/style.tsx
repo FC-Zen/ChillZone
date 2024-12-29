@@ -6,8 +6,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     borderColor: colors.silver,
-    alignItems: 'flex-start',
-    backgroundColor: colors.white,
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
   textContainer: {
@@ -18,6 +17,7 @@ export const styles = StyleSheet.create({
   title: {
     color: colors.resolutionBlue,
     fontFamily: typography.h2.fontFamily,
+    paddingVertical: 2,
     fontSize: 20,
     fontWeight: '600',
     lineHeight: 18,
@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
     height: 95,
     position: 'relative',
     marginRight: 10,
+    marginVertical: 10,
   },
   image: {
     width: '100%',
@@ -51,5 +52,11 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 5,
     right: 5,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: colors.silver,
+    alignSelf: 'stretch',
+    marginVertical: 0.027,
   },
 });

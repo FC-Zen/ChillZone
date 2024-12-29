@@ -2,30 +2,26 @@ import { colors, layout } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
+  outerContainer: {
+    flex: 1,
+    paddingVertical: 24,
   },
   container: {
     flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 24,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     width: layout.screen.width,
-    paddingHorizontal: 25,
-    marginBottom: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 14,
   },
   selectedButtonMeal: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 10,
     flex: 1,
   },
   foodCardList: {
@@ -39,7 +35,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.silver,
   },
