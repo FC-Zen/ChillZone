@@ -4,7 +4,7 @@ import { InputProps } from './Input';
 import { colors, typography } from '@theme';
 
 interface InputWrapperProps extends InputProps {
-  children: ReactNode; // Ajout de children
+  children: ReactNode;
 }
 
 export const InputWrapper: FC<InputWrapperProps> = ({
@@ -53,5 +53,5 @@ export const InputStyles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-  }
+  },
 });

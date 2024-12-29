@@ -3,20 +3,20 @@ import { View, ScrollView } from 'react-native';
 import {
   SearchItem,
   SearchItemProps,
-  Field,
-  FieldProps,
+  Input,
+  InputProps,
   SelectedButtonMeal,
   SelectedButtonMealProps,
 } from '@components/molecules';
 import { FoodCardList, FoodCardListProps } from '@components/organisms';
 import { Button, ButtonProps } from '@components/molecules';
 import { styles } from './style';
-import { PageHeader, PageHeaderProps } from '@components/molecules/PageHeader';
+import { PageHeader, PageHeaderProps } from '@components/molecules';
 
 type DispenserTemplateProps = {
   selectedButtonMealProps: SelectedButtonMealProps[];
   searchItemProps: SearchItemProps;
-  fieldProps: FieldProps;
+  inputProps: InputProps;
   foodCardListProps: FoodCardListProps;
   buttonProps: ButtonProps;
   pageHeaderProps: PageHeaderProps;
@@ -25,7 +25,7 @@ type DispenserTemplateProps = {
 export const DispenserTemplate: React.FC<DispenserTemplateProps> = ({
   selectedButtonMealProps,
   searchItemProps,
-  fieldProps,
+  inputProps,
   foodCardListProps,
   buttonProps,
   pageHeaderProps,
@@ -48,15 +48,13 @@ export const DispenserTemplate: React.FC<DispenserTemplateProps> = ({
             <SearchItem {...searchItemProps} />
           </View>
           <View>
-            <Field {...fieldProps} />
+            <Input variant="search" {...inputProps} style={styles.search} />
           </View>
         </View>
 
         <FoodCardList
           foodItems={foodCardListProps.foodItems}
           onItemSelect={foodCardListProps.onItemSelect}
-          iconName={foodCardListProps.iconName}
-          text={foodCardListProps.text}
         />
 
         <View style={styles.buttonContainer}>

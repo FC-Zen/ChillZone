@@ -1,15 +1,11 @@
-import { colors, layout } from '@theme';
+import { colors, layout, typography } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    paddingVertical: 24,
-  },
-  container: {
-    height: '100%',
-    position: 'relative',
-    top: -80,
+    paddingBottom: 24,
+    paddingTop: 5,
   },
   row: {
     flexDirection: 'row',
@@ -17,7 +13,12 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: layout.screen.width,
     paddingHorizontal: 10,
-    paddingVertical: 14,
+    paddingVertical: 3,
+  },
+  container: {
+    height: '100%',
+    position: 'relative',
+    top: -80,
   },
   selectedButtonMeal: {
     display: 'flex',
@@ -49,5 +50,21 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 24,
     paddingTop: 31,
+  },
+  search: {
+    backgroundColor: 'none',
+    display: 'flex',
+    height: 50,
+    minWidth: 220,
+    paddingHorizontal: 25,
+    alignItems: 'center',
+    gap: 15,
+    flexDirection: 'row',
+    borderColor: colors.silver,
+    borderWidth: 2,
+    borderRadius: 10,
+    flex: 0,
+    fontFamily: typography.h3.fontFamily,
+    fontSize: typography.h3.fontSize,
   },
 });

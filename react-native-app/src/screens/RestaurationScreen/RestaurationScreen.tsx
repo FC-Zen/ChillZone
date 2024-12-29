@@ -6,6 +6,8 @@ import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
 import { BottomNavbar, RestaurationTemplate, TopBar } from '@components';
 import { useTranslation } from 'react-i18next';
+import { ROUTE } from '@enums';
+import { useNavigation } from '@hooks';
 
 export const RestaurationScreen = () => {
   type Restaurant = {
@@ -18,6 +20,7 @@ export const RestaurationScreen = () => {
   const [restaurantsData1, setRestaurantsData1] = useState<Restaurant[]>([]);
   const [restaurantsData2, setRestaurantsData2] = useState<Restaurant[]>([]);
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const fetchFirstSet = async () => {
     const allRestaurants = await transformRestaurantData();
@@ -66,7 +69,7 @@ export const RestaurationScreen = () => {
 
   const handleRestaurantPress = () => {
     console.log(`Le restaurant a été cliqué.`);
-    // navigation.navigate(ROUTE.RESTAURANT_DETAILS, { restaurantName });
+    navigation.navigate(ROUTE.DISPENSER);
   };
 
   return (

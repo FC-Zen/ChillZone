@@ -77,5 +77,65 @@
         "tag_label": "Vegetarian"
       }
     ]
+  },
+  {
+    "meal_id": 5,
+    "meal_name": "Eau minérale",
+    "meal_description": "Eau minérale plate.",
+    "meal_type": "Drink",
+    "meal_photo": "meal.png",
+    "meal_price": 1.0,
+    "meal_stock": 15,
+    "tags": [
+      {
+        "tag_id": 4,
+        "tag_label": "Anti-diabétique"
+      }
+    ]
+  },
+  {
+    "meal_id": 6,
+    "meal_name": "Pasta Crous",
+    "meal_description": "Pasta Crous avec sauce tomate, mozzarella, et basilic frais.",
+    "meal_type": "Main",
+    "meal_photo": "meal.png",
+    "meal_price": 3.3,
+    "meal_stock": 15,
+    "tags": [
+      {
+        "tag_id": 4,
+        "tag_label": "Anti-diabétique"
+      }
+    ]
+  },
+  {
+    "meal_id": 7,
+    "meal_name": "Frites",
+    "meal_description": "Frites maison croustillantes et dorées.",
+    "meal_type": "Side",
+    "meal_photo": "meal.png",
+    "meal_price": 3.3,
+    "meal_stock": 8,
+    "tags": [
+      {
+        "tag_id": 4,
+        "tag_label": "Anti-diabétique"
+      }
+    ]
+  },
+  {
+    "meal_id": 8,
+    "meal_name": "Bonbons gélifiés",
+    "meal_description": "Bonbons gélifiés en forme de fruits et de légumes.",
+    "meal_type": "Other",
+    "meal_photo": "meal.png",
+    "meal_price": 1.5,
+    "meal_stock": 25,
+    "tags": [
+      {
+        "tag_id": 3,
+        "tag_label": "Vegetarian"
+      }
+    ]
   }
 ]

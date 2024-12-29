@@ -9,11 +9,13 @@ export type InputProps = {
   icon?: IconProps['name'];
   onChangeText: (text: string) => void;
   value: string;
-  variant?: 'default' | 'password' | 'subtitled';
+  variant?: 'default' | 'password' | 'subtitled' | 'search';
   style?: StyleProp<ViewStyle>;
   subtitle?: string;
   subtitleColor?: string;
   textSize?: number;
+  data?: string[];
+  onFilter?: (filteredData: string) => void; // Pour le filtrage
 };
 
 export const Input: FC<InputProps> = ({
@@ -26,35 +28,50 @@ export const Input: FC<InputProps> = ({
   subtitle = '',
   subtitleColor,
   textSize,
+  onFilter,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(
     variant === 'password'
   );
 
+  const handleChange = (text: string) => {
+    onChangeText(text);
+    if (onFilter) {
+      onFilter(text);
+    }
+  };
+
   return (
-    <View style={variant === 'subtitled' && subtitle !== '' ? InputStyles.subtitledContainer : {}}>
+    <View
+      style={
+        variant === 'subtitled' && subtitle !== ''
+          ? InputStyles.subtitledContainer
+          : {}
+      }
+    >
       <InputWrapper
         style={style}
         placeholder={placeholder}
-        onChangeText={onChangeText}
+        onChangeText={handleChange}
         value={value}
       >
         {icon && (
           <InputIcon>
             <Icon name={icon} />
           </InputIcon>
-        )}{' '}
-        {/* Passer l'icône ici */}
+        )}
         <TextInput
-          style={[InputStyles.input, textSize ? {fontSize: textSize}: {}]}
+          style={[InputStyles.input, textSize ? { fontSize: textSize } : {}]}
           placeholder={placeholder}
-          onChangeText={onChangeText}
+          onChangeText={handleChange}
           value={value}
           secureTextEntry={isPasswordVisible}
           placeholderTextColor={colors.silver}
         />
       </InputWrapper>
-      {variant === 'subtitled' && subtitle !== '' && <Text style={{color: subtitleColor}} >{subtitle}</Text>}
+      {variant === 'subtitled' && subtitle !== '' && (
+        <Text style={{ color: subtitleColor }}>{subtitle}</Text>
+      )}
     </View>
   );
 };
