@@ -3,6 +3,7 @@ import { ScrollView, View } from 'react-native';
 import { FoodCard, IconWithText } from '@components/molecules';
 import { styles } from './style';
 import { IconProps } from '@components/atoms';
+import { useTranslation } from 'react-i18next';
 
 export type FoodItemProps = {
   id: number;
@@ -17,41 +18,72 @@ export type FoodItemProps = {
 export type FoodCardListProps = {
   foodItems: FoodItemProps[];
   onItemSelect?: (item: FoodItemProps) => void;
-  iconName: IconProps['name'];
-  text: string;
 };
 
 export const FoodCardList: React.FC<FoodCardListProps> = ({
   foodItems,
   onItemSelect,
-  iconName,
-  text,
 }) => {
+  const { t } = useTranslation();
+
+  const getMealTypeLabel = (mealType: string): string => {
+    switch (mealType) {
+      case 'Starter':
+        return t('categories.entry');
+      case 'Main':
+        return t('categories.product');
+      case 'Drink':
+        return t('categories.drink');
+      case 'Dessert':
+        return t('categories.desserts');
+      case 'Side':
+        return t('categories.sides');
+      case 'Other':
+        return t('categories.other');
+      default:
+        return mealType;
+    }
+  };
+
+  const groupedItems = foodItems.reduce(
+    (acc, foodItem) => {
+      if (!acc[foodItem.meal_type]) {
+        acc[foodItem.meal_type] = [];
+      }
+      acc[foodItem.meal_type].push(foodItem);
+      return acc;
+    },
+    {} as Record<string, FoodItemProps[]>
+  );
+
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <IconWithText
-        icon={iconName}
-        iconWidth={24}
-        iconHeight={24}
-        textStyle={styles.text}
-        style={styles.text2}
-        variant="horizontal"
-        text={text}
-      />{' '}
-      {/* Utilisation des props */}
-      {foodItems.map((foodItem) => (
-        <View key={foodItem.id}>
-          <FoodCard
-            title={foodItem.title}
-            price={foodItem.price}
-            subTitle={foodItem.subTitle}
-            imageUrl={foodItem.imageUrl}
-            iconName={foodItem.iconName}
-            onPress={() => onItemSelect?.(foodItem)}
+      {Object.entries(groupedItems).map(([mealType, items]) => (
+        <View key={mealType}>
+          <IconWithText
+            icon="Hamburger"
+            iconWidth={24}
+            iconHeight={24}
+            textStyle={styles.text}
+            style={styles.text2}
+            variant="horizontal"
+            text={getMealTypeLabel(mealType)}
           />
+          {items.map((foodItem) => (
+            <View key={foodItem.id}>
+              <FoodCard
+                title={foodItem.title}
+                price={foodItem.price}
+                subTitle={foodItem.subTitle}
+                imageUrl={foodItem.imageUrl}
+                iconName={foodItem.iconName}
+                onPress={() => onItemSelect?.(foodItem)}
+              />
+            </View>
+          ))}
         </View>
       ))}
     </ScrollView>

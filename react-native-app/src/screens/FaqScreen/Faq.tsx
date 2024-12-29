@@ -32,7 +32,7 @@ export const FaqScreen: React.FC = () => {
       <PageHeader
         title={t('headers.faq')}
         variant="back"
-        onBackPress={() => navigation.navigate(ROUTE.HOME)}
+        onBackPress={() => navigation.goBack()}
         icon={{
           name: 'Cross',
           color: colors.black,

@@ -1,3 +1,4 @@
+import { colors } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -10,17 +11,17 @@ export const styles = StyleSheet.create({
     height: 48,
     paddingVertical: 10,
     paddingHorizontal: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: colors.white,
     borderRadius: 8,
     justifyContent: 'space-between', // Aligne texte et icône
     alignItems: 'center',
     flexDirection: 'row', // Texte et icône sur la même ligne
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: colors.white,
   },
   dropdownText: {
-    color: '#999',
-    fontSize: 16,
+    color: colors.silver,
+    fontSize: 12,
   },
   icon: {
     marginLeft: 8, // Espacement entre le texte et l'icône
@@ -29,10 +30,10 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     top: 50,
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: colors.silver,
     zIndex: 1000,
   },
   option: {
@@ -40,7 +41,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   optionText: {
-    fontSize: 16,
-    color: '#333',
+    fontSize: 14,
+    color: colors.black,
   },
 });

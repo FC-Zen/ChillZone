@@ -1,4 +1,4 @@
-export { Input } from './Input';
+export { Input, InputProps } from './Input';
 export { VectorHeader, VectorBottom } from './Vectors';
 export { SnackBar, SnackBarProps } from './SnackBar';
 export { TopBar } from './TopBar';
@@ -9,13 +9,12 @@ export { RestaurantCard } from './RestaurantCard';
 export { NotificationItem } from './Notification';
 export { IconWithText } from './IconWithText';
 export { Button, ButtonProps } from './Button';
-export { PageHeader } from './PageHeader';
+export { PageHeader, PageHeaderProps } from './PageHeader';
 export { NotificationPopup } from './NotificationPopup';
 export {
   SelectedButtonMeal,
   SelectedButtonMealProps,
 } from './SelectedButtonMeal';
 export { SearchItem, SearchItemProps } from './SearchItem';
-export { Field, FieldProps } from './Field';
 export { FoodCard } from './FoodCard';
 export { Counter } from './Counter';

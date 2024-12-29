@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-  NotificationTemplate,
-  NotificationTemplateProps,
-} from '@components/templates/NotificationTemplate/NotificationTemplate';
-import notificationsData from '@assets/data/notifications.json';
+import { NotificationTemplate } from '@components/templates/NotificationTemplate/NotificationTemplate';
 import { View } from 'react-native';
 import { styles } from './style';
 import { useNavigation } from '@hooks';
-import { ROUTE } from '@enums';
-import { NotificationListProps } from '@components/organisms/NotificationList/NotificationList';
 import { getNotifications } from '@services/NotificationServices';
 import { NotificationProps } from '@components/molecules/Notification';
+import { colors } from '@theme';
 
 export const NotificationScreen: React.FC = () => {
   // État pour stocker les données des restaurants
@@ -37,7 +32,7 @@ export const NotificationScreen: React.FC = () => {
         notificationsData={notificationData}
         popupProps={{
           name: 'Cross',
-          color: '#000',
+          color: colors.black,
           width: 20,
           height: 20,
         }}
@@ -46,11 +41,11 @@ export const NotificationScreen: React.FC = () => {
           variant: 'back',
           icon: {
             name: 'Cross',
-            color: '#000',
+            color: colors.black,
             width: 20,
             height: 20,
           },
-          onBackPress: () => navigation.navigate(ROUTE.HOME),
+          onBackPress: () => navigation.goBack(),
         }}
       />
     </View>
