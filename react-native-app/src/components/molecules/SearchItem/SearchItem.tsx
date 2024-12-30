@@ -13,14 +13,14 @@ import { colors } from '@theme';
 export type SearchItemProps = {
   options: string[];
   onSelect: (option: string) => void;
-  initialOption?: string;
+  initialOption: string;
   iconName?: IconProps['name'];
 } & TouchableOpacityProps;
 
 export const SearchItem: React.FC<SearchItemProps> = ({
   options,
   onSelect,
-  initialOption = 'Filtrer',
+  initialOption,
   iconName = 'CarretUp', // Valeur par défaut pour l'icône
   ...touchableProps
 }) => {

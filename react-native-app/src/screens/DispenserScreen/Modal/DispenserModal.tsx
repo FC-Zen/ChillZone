@@ -11,7 +11,7 @@ type ModalScreenProps = {
       meal: {
         title: string;
         subTitle: string;
-        price: number;
+        price: Float;
         imageUrl: any;
       };
     };
@@ -35,7 +35,8 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
   };
 
   const handleAddToCart = () => {
-    console.log(`Ajouté au panier: ${meal.title}, Quantité: ${quantity}`);
+    const price = parseFloat(meal.price);
+    console.log(`Ajouté au panier: ${meal.title}, Quantité: ${quantity}, Total : ${(price * quantity).toFixed(2)} €`);
     // navigation.goBack();
   };
 

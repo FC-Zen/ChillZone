@@ -14,7 +14,7 @@ export const DispenserScreen: React.FC = () => {
   const [isSelected, setIsSelected] = useState(false);
   const { t } = useTranslation();
   const [selectedFilter, setSelectedFilter] = useState<string>(
-    t('categories.product')
+    t('categories.Main')
   );
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [mealTypeFilter, setMealTypeFilter] = useState<string>('');
@@ -32,10 +32,12 @@ export const DispenserScreen: React.FC = () => {
   // Fonction pour trier les repas par type
   const sortMeals = (meals: MealProps[]) => {
     const order = [
-      t('categories.entry'),
-      t('categories.product'),
-      t('categories.drink'),
-      t('categories.desserts'),
+      t('categories.Starter'),
+      t('categories.Main'),
+      t('categories.Drink'),
+      t('categories.Dessert'),
+      t('categories.Side'),
+      t('categories.Other'),
     ];
 
     return meals.sort((a, b) => {
@@ -50,18 +52,20 @@ export const DispenserScreen: React.FC = () => {
     setSelectedFilter(option);
     console.log('Option sélectionnée :', option);
 
-    if (option === t('categories.entry')) {
+    if (option === t('categories.Starter')) {
       setMealTypeFilter('Starter');
-    } else if (option === t('categories.product')) {
+    } else if (option === t('categories.Main')) {
       setMealTypeFilter('Main');
-    } else if (option === t('categories.drink')) {
+    } else if (option === t('categories.Drink')) {
       setMealTypeFilter('Drink');
-    } else if (option === t('categories.desserts')) {
+    } else if (option === t('categories.Dessert')) {
       setMealTypeFilter('Dessert');
-    } else if (option === t('categories.sides')) {
+    } else if (option === t('categories.Side')) {
       setMealTypeFilter('Side');
-    } else if (option === t('categories.other')) {
+    } else if (option === t('categories.Other')) {
       setMealTypeFilter('Other');
+    } else if (option === t('buttons.actions.filter')) {
+      setMealTypeFilter('');
     }
   };
 
@@ -102,7 +106,7 @@ export const DispenserScreen: React.FC = () => {
       <DispenserTemplate
         selectedButtonMealProps={[
           {
-            title: t('categories.product'),
+            title: t('categories.Main'),
             isSelected: isProductSelected,
             onPress: () => handlePress(true),
             color: isProductSelected ? colors.aquaDeep : colors.darkCyan,
@@ -116,12 +120,13 @@ export const DispenserScreen: React.FC = () => {
         ]}
         searchItemProps={{
           options: [
-            t('categories.entry'),
-            t('categories.product'),
-            t('categories.drink'),
-            t('categories.desserts'),
-            t('categories.sides'),
-            t('categories.other'),
+            t('buttons.actions.filter'),
+            t('categories.Starter'),
+            t('categories.Main'),
+            t('categories.Drink'),
+            t('categories.Dessert'),
+            t('categories.Side'),
+            t('categories.Other'),
           ],
           onSelect: handleFilterSelect,
           initialOption: selectedFilter && t('buttons.actions.filter'),

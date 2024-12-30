@@ -29,17 +29,17 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
   const getMealTypeLabel = (mealType: string): string => {
     switch (mealType) {
       case 'Starter':
-        return t('categories.entry');
+        return t('categories.Starter');
       case 'Main':
-        return t('categories.product');
+        return t('categories.Main');
       case 'Drink':
-        return t('categories.drink');
+        return t('categories.Drink');
       case 'Dessert':
-        return t('categories.desserts');
+        return t('categories.Dessert');
       case 'Side':
-        return t('categories.sides');
+        return t('categories.Side');
       case 'Other':
-        return t('categories.other');
+        return t('categories.Other');
       default:
         return mealType;
     }
