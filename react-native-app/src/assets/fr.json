@@ -133,14 +133,14 @@
 
   "categories": {
     "restaurants": "Restaurants",
-    "entry": "Entrées",
-    "product": "Plats",
     "menus": "Menus",
-    "drink": "Boissons",
-    "desserts": "Desserts",
-    "sides": "Accompagnements",
-    "other": "Autres",
     "fridges": "Frigos",
+    "Starter": "Entrées",
+    "Main": "Plats",
+    "Drink": "Boissons",
+    "Dessert": "Desserts",
+    "Side": "Accompagnements",
+    "Other": "Autres",
     "rememberMe": "Se souvenir de moi"
   },
 

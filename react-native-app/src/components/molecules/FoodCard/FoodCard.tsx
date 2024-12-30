@@ -36,7 +36,7 @@ export const FoodCard: React.FC<ProductCardProps> = ({
         <View style={styles.imageContainer}>
           <Image source={imageUrl} style={styles.image} />
           <View style={styles.iconContainer}>
-            <Icon name={iconName} width={32} height={32} color={colors.white} />
+            <Icon name={iconName} width={32} height={32} color={colors.white} onPress={onPress}/>
           </View>
         </View>
       </TouchableOpacity>

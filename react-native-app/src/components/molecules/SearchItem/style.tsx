@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   optionText: {
-    fontSize: 14,
+    fontSize: 12,
     color: colors.black,
   },
 });

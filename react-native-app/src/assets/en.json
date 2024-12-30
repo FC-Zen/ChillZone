@@ -132,14 +132,14 @@
 
   "categories": {
     "restaurants": "Restaurants",
-    "entry": "Starters",
-    "product": "Dishes",
     "menus": "Menus",
-    "drink": "Drinks",
-    "desserts": "Desserts",
-    "sides": "Sides",
-    "other": "Others",
     "fridges": "Fridges",
+    "Starter": "Starters",
+    "Main": "Dishes",
+    "Drink": "Drinks",
+    "Dessert": "Desserts",
+    "Side": "Sides",
+    "Other": "Others",
     "rememberMe": "Remember me"
   },
 
