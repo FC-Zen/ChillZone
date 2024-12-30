@@ -11,7 +11,7 @@ type ModalScreenProps = {
       meal: {
         title: string;
         subTitle: string;
-        price: Float;
+        price: number;
         imageUrl: any;
       };
     };

@@ -28,7 +28,7 @@
       "description": "Un restaurant proposant des menus équilibrés pour les étudiants.",
       "location": "Campus Université Gustave Eiffel, Bâtiment C",
       "type": "Restaurant",
-      "opening_time": "11:30:00",
+      "opening_time": "13:30:00",
       "closing_time": "14:30:00",
       "status": false,
       "photo_link": "restaurant_image.png"

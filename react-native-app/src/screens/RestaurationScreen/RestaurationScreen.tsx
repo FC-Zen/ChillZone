@@ -4,7 +4,7 @@ import { styles } from './style';
 
 import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
-import { BottomNavbar, RestaurationTemplate, TopBar } from '@components';
+import { BottomNavbar, RestaurationTemplate, SnackBar, TopBar } from '@components';
 import { useTranslation } from 'react-i18next';
 import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
@@ -21,6 +21,16 @@ export const RestaurationScreen = () => {
   const [restaurantsData2, setRestaurantsData2] = useState<Restaurant[]>([]);
   const { t } = useTranslation();
   const navigation = useNavigation();
+
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    severity: 'success' | 'error';
+    message: string;
+  }>({
+    open: false,
+    severity: 'success',
+    message: '',
+  });
 
   const fetchFirstSet = async () => {
     const allRestaurants = await transformRestaurantData();
@@ -67,13 +77,34 @@ export const RestaurationScreen = () => {
     fetchSecondSet();
   }, []);
 
-  const handleRestaurantPress = () => {
-    console.log(`Le restaurant a été cliqué.`);
-    navigation.navigate(ROUTE.DISPENSER);
+  const handleRestaurantPress = (selectedRestaurant: {
+    id: number;
+    name: string;
+    photo_link: any;
+    status: 'Ouvert' | 'Fermé';
+  }) => {
+    console.log(`Le restaurant a été cliqué.`,selectedRestaurant.name);
+    if (selectedRestaurant.status == 'Ouvert') {
+      navigation.navigate(ROUTE.DISPENSER);
+    } else {
+      setSnackbar({
+        open: true,
+        severity: "error",
+        message: "Le restaurant est fermé en ce moment",
+      });
+    }
   };
 
   return (
+    
     <View style={styles.container}>
+      <SnackBar
+        visible={snackbar.open}
+        message={snackbar.message}
+        onDismiss={() => setSnackbar({ ...snackbar, open: false })}
+        severity={snackbar.severity}
+      />
+            
       <TopBar />
       <RestaurationTemplate
         onPressRestaurant={handleRestaurantPress}
