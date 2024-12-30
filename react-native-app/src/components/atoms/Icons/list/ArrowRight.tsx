@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
-import Svg, { Path, G, Defs, ClipPath } from 'react-native-svg'; // Importez Svg, Path, G, Defs, et ClipPath
-import { IconProps } from '@components/atoms/Icons/Icon';
+import React from 'react';
+import Svg, { Path } from 'react-native-svg';
+import { IconProps } from '@components/atoms';
 import { colors } from '@theme';
 
-const Bell: React.FC<Omit<IconProps, 'name'>> = ({
+const ArrowRight: React.FC<Omit<IconProps, 'name'>> = ({
   color = colors.silver,
   height = 24,
   width = 24,
@@ -22,4 +22,4 @@ const Bell: React.FC<Omit<IconProps, 'name'>> = ({
   );
 };
 
-export default Bell;
+export default ArrowRight;

@@ -1,18 +1,17 @@
-// src/components/organisms/NotificationList.tsx
 import React from 'react';
 import { FlatList } from 'react-native';
-import NotificationItem from '../../molecules/Notification/NotificationItem';
+import { NotificationItem } from '@components/molecules';
 
-interface Notification {
+type Notification = {
   id: number;
   title: string;
   message: string;
   time: string;
-}
+};
 
-interface NotificationListProps {
+type NotificationListProps = {
   notifications: Notification[];
-}
+};
 
 const NotificationList: React.FC<NotificationListProps> = ({
   notifications,

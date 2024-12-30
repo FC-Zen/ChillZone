@@ -10,7 +10,7 @@ export const TopBar = () => {
 
   const handleUserPress = () => {
     console.log('on navigue');
-    // navigation.navigate();
+    navigation.navigate(ROUTE.ACCOUNT);
   };
 
   const handleFaqPress = () => {

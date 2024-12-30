@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { PageHeader } from '@components/molecules/PageHeader';
 import { ProfileHeader } from '@components/molecules/ProfileHeader';
 import { AccountOptionsList } from '@components/templates/AccountOptionsList';
-import { colors } from '@theme';
+import { styles } from './style';
 
 export type AccountTemplateProps = {
   isDarkTheme: boolean;
@@ -36,7 +36,7 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
       isDarkTheme && styles.darkContainer,
     ]}
   >
-    <PageHeader title="Mon compte" variant="default" />
+    <PageHeader title="Mon compte" variant="back" />
     <ProfileHeader name="Kellian BREDEAU" />
     <AccountOptionsList
       isDarkTheme={isDarkTheme}
@@ -52,8 +52,3 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
     />
   </ScrollView>
 );
-
-const styles = StyleSheet.create({
-  container: { padding: 20, backgroundColor: colors.white },
-  darkContainer: { backgroundColor: colors.aquaDeep },
-});

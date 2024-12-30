@@ -35,6 +35,7 @@ export type RouteParamList = {
   DispenserModal: { meal: MealProps };
   FinalPaymentScreen: undefined;
   ReservationScreen: undefined;
+  AccountScreen: undefined;
 };
 
 // Typage des propriétés des écrans

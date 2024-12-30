@@ -1,12 +1,12 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { IconProps } from '@components/atoms/Icons/Icon';
+import { IconProps } from '@components/atoms';
 import { colors } from '@theme';
 
 const Group: React.FC<Omit<IconProps, 'name'>> = ({
   color = colors.white,
-  height = 23,
-  width = 20,
+  height = 24,
+  width = 24,
 }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 20 23" fill="none">

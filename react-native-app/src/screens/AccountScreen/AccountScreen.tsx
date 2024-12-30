@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { AccountTemplate } from '@components/templates/AccountTemplate';
 import {
   LinksModal,
@@ -11,7 +11,7 @@ import {
 } from '@components/organisms';
 import ordersData from 'src/assets/data/commands.json';
 import i18next from 'i18next';
-import { colors } from '@theme';
+import { styles } from './style';
 
 export const AccountScreen: React.FC = () => {
   // États pour les modales
@@ -85,8 +85,3 @@ export const AccountScreen: React.FC = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.white }, // Style par défaut
-  darkContainer: { backgroundColor: colors.aquaDeep }, // Style pour le thème sombre
-});

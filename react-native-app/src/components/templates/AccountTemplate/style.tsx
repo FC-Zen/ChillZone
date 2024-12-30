@@ -2,9 +2,6 @@ import { colors } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  divider: {
-    height: 1,
-    backgroundColor: colors.silver,
-    marginVertical: 4,
-  },
+  container: { backgroundColor: colors.white },
+  darkContainer: { backgroundColor: colors.aquaDeep },
 });

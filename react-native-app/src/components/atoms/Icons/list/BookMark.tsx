@@ -1,6 +1,6 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { IconProps } from '@components/atoms/Icons/Icon';
+import { IconProps } from '@components/atoms';
 import { colors } from '@theme';
 
 const BookMark: React.FC<Omit<IconProps, 'name'>> = ({
@@ -19,5 +19,3 @@ const BookMark: React.FC<Omit<IconProps, 'name'>> = ({
 };
 
 export default BookMark;
-
-
