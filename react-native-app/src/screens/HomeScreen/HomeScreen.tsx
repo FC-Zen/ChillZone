@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { TopBar } from '@components/molecules/TopBar';
-import { BottomNavbar } from '@components/molecules';
+import { BottomNavbar, SnackBar } from '@components/molecules';
 import { useUser } from '@contexts/AppContrext';
 import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
 import { styles } from './style';
@@ -17,6 +17,16 @@ export const HomeScreen = () => {
   const items = transformBookings();
   const { t } = useTranslation();
   const navigation = useNavigation();
+
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    severity: 'success' | 'error';
+    message: string;
+  }>({
+    open: false,
+    severity: 'success',
+    message: '',
+  });
 
   const restaurantText = t('info.restaurants');
   const restaurantWords = restaurantText.split(' ');
@@ -47,12 +57,33 @@ export const HomeScreen = () => {
     fetchData();
   }, []);
 
-  const handleRestaurantPress = () => {
-    navigation.navigate(ROUTE.DISPENSER);
+  const handleRestaurantPress = (selectedRestaurant: {
+    id: number;
+    name: string;
+    photo_link: any;
+    status: 'Ouvert' | 'Fermé';
+  }) => {
+    console.log(`Le restaurant a été cliqué.`,selectedRestaurant.name);
+    if (selectedRestaurant.status == 'Ouvert') {
+      navigation.navigate(ROUTE.DISPENSER);
+    } else {
+      setSnackbar({
+        open: true,
+        severity: "error",
+        message: "Le restaurant est fermé en ce moment",
+      });
+    }
   };
 
   return (
     <View style={styles.container}>
+      <SnackBar
+        visible={snackbar.open}
+        message={snackbar.message}
+        onDismiss={() => setSnackbar({ ...snackbar, open: false })}
+        severity={snackbar.severity}
+      />
+      
       <TopBar />
       <HomeScreenTemplate
         welcomeMessage={restaurantWords}

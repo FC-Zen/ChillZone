@@ -28,7 +28,7 @@ export const SnackBar: React.FC<SnackBarProps> = ({
       wrapperStyle={{
         zIndex: 999,
         top: '5%',
-        margin: 16,
+        margin: 0,
         borderRadius: 4,
       }}
     >

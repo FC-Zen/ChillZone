@@ -10,7 +10,12 @@ type RestaurantSliderProps = {
     photo_link: any;
     status: 'Ouvert' | 'Fermé';
   }[];
-  onPress: () => void;
+  onPress: ( restaurant : {
+    id: number;
+    name: string;
+    photo_link: any;
+    status: 'Ouvert' | 'Fermé';
+  }) => void;
   restaurantWords: string[];
 };
 
@@ -32,7 +37,7 @@ export const RestaurantSlider: React.FC<RestaurantSliderProps> = ({
             photo_link={restaurant.photo_link}
             status={restaurant.status}
             name={restaurant.name}
-            onPress={() => onPress()}
+            onPress={() => onPress(restaurant)}
           />
         ))}
       </ScrollView>

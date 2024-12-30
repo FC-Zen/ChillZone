@@ -16,7 +16,12 @@ type RestaurationTemplateProps = {
   restaurantsData2: Restaurant[];
   restaurantWords1: string[];
   restaurantWords2: string[];
-  onPressRestaurant: () => void;
+  onPressRestaurant: ( restaurant : {
+    id: number;
+    name: string;
+    photo_link: any;
+    status: 'Ouvert' | 'Fermé';
+  }) => void;
 };
 
 export const RestaurationTemplate: React.FC<RestaurationTemplateProps> = ({

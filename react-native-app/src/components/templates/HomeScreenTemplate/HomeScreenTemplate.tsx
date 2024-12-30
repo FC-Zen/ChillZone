@@ -24,7 +24,12 @@ export type HomeScreenTemplateProps = {
     photo_link: any;
     status: 'Ouvert' | 'Fermé';
   }[];
-  onPress: () => void;
+  onPress: ( restaurant : {
+    id: number;
+    name: string;
+    photo_link: any;
+    status: 'Ouvert' | 'Fermé';
+  }) => void;
 };
 
 export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
