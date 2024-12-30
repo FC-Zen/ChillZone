@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    padding: 10,
+    padding: 2,
     borderColor: colors.silver,
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -32,9 +32,9 @@ export const styles = StyleSheet.create({
   subTitle: {
     color: colors.resolutionBlue,
     fontFamily: typography.h3.fontFamily,
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '400',
-    lineHeight: 20,
+    lineHeight: 16,
   },
   imageContainer: {
     width: 95,
