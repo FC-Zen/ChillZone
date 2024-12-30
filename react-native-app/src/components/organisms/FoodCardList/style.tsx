@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: 'column',
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 3,
   },
   text: {
     fontSize: typography.h2.fontSize,
@@ -18,6 +19,6 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginTop: 25,
+    marginTop: 10,
   },
 });
