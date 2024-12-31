@@ -39,4 +39,5 @@ export {
   RestaurationTemplate,
   PaymentTemplate,
   FinalPaymentTemplate,
+  ReservationTemplate,
 } from './templates';

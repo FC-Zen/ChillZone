@@ -6,10 +6,10 @@ import { colors } from '@theme';
 
 export type InputProps = {
   placeholder: string;
-  icon?: IconProps['name'];
+  icon?: IconProps['name']; // Icône à gauche
   onChangeText: (text: string) => void;
   value: string;
-  variant?: 'default' | 'password' | 'subtitled' | 'search';
+  variant?: 'default' | 'password' | 'subtitled' | 'search' | 'select';
   style?: StyleProp<ViewStyle>;
   subtitle?: string;
   subtitleColor?: string;
@@ -55,11 +55,12 @@ export const Input: FC<InputProps> = ({
         onChangeText={handleChange}
         value={value}
       >
-        {icon && (
+        {icon && variant !== 'select' && (
           <InputIcon>
             <Icon name={icon} />
           </InputIcon>
         )}
+
         <TextInput
           style={[InputStyles.input, textSize ? { fontSize: textSize } : {}]}
           placeholder={placeholder}
@@ -68,7 +69,15 @@ export const Input: FC<InputProps> = ({
           secureTextEntry={isPasswordVisible}
           placeholderTextColor={colors.silver}
         />
+
+        {variant === 'select' && (
+          <InputIcon>
+            {icon && <Icon name={icon} />}
+            <Icon name="CarretUp" />
+          </InputIcon>
+        )}
       </InputWrapper>
+
       {variant === 'subtitled' && subtitle !== '' && (
         <Text style={{ color: subtitleColor }}>{subtitle}</Text>
       )}

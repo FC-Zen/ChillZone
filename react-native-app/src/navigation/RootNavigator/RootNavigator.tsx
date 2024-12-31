@@ -14,6 +14,7 @@ import {
   DispenserScreen,
   DispenserModal,
   FinalPaymentScreen,
+  ReservationScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 import { UserProvider } from '@contexts/AppContrext';
@@ -25,7 +26,7 @@ export const RootNavigator = () => {
     <UserProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          { /* ECRANS DE CONNEXIONS */ }
+          {/* ECRANS DE CONNEXIONS */}
           <Stack.Screen
             name={ROUTE.LOGIN_SCREEN}
             component={LoginScreen}
@@ -46,8 +47,8 @@ export const RootNavigator = () => {
             component={ResetPasswordScreen}
             options={{ headerShown: false }}
           />
-          
-          { /* ECRAN HOME */ }
+
+          {/* ECRAN HOME */}
           <Stack.Screen
             name={ROUTE.HOME}
             component={HomeScreen}
@@ -64,7 +65,7 @@ export const RootNavigator = () => {
             options={{ headerShown: false }}
           />
 
-          { /* ECRANS DE CLICK N COLLECT */ }
+          {/* ECRANS DE CLICK N COLLECT */}
           <Stack.Screen
             name={ROUTE.RESTAURATION}
             component={RestaurationScreen}
@@ -88,6 +89,11 @@ export const RootNavigator = () => {
           <Stack.Screen
             name={ROUTE.FINAL_PAYMENT}
             component={FinalPaymentScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ROUTE.RESERVATION}
+            component={ReservationScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

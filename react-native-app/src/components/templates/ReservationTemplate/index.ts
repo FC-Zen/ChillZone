@@ -1,0 +1,1 @@
+export { ReservationTemplate } from './ReservationTemplate';
