@@ -84,7 +84,7 @@ export const Input: FC<InputProps> = ({
         onChangeText={handleChange}
         value={value}
       >
-        {icon && (
+        {icon && variant !== 'select' && (
           <InputIcon>
             <Icon name={icon} />
           </InputIcon>
@@ -122,6 +122,7 @@ export const Input: FC<InputProps> = ({
           />
         )}
       </InputWrapper>
+
       {variant === 'subtitled' && subtitle !== '' && (
         <Text style={{ color: subtitleColor }}>{subtitle}</Text>
       )}
