@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { AccountModal } from '@components/organisms'; // Composant de modale
-import { AdminRoomLayout } from '@components/templates'; 
+import { AdminRoomLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import rooms from '@assets/data/rooms.json'; // Données des salles
 
 export const AdminRoomsPage: React.FC = () => {
   const { t } = useTranslation();
-  
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [roomsData, setRoomsData] = useState(rooms);
-  const [selectedRoom, setSelectedRoom] = useState<null | 
-  {
+  const [selectedRoom, setSelectedRoom] = useState<null | {
     id: number;
     name: string;
     description: string;
@@ -30,7 +29,7 @@ export const AdminRoomsPage: React.FC = () => {
     // Mise à jour du statut de la salle
     const roomToEdit = roomsData.find((room) => room.id === id);
     if (roomToEdit) {
-      const updatedRoom = {
+      /*       const updatedRoom = {
         id: roomToEdit.id,
         name: roomToEdit.name,
         description: roomToEdit.description,
@@ -38,7 +37,7 @@ export const AdminRoomsPage: React.FC = () => {
         floor: roomToEdit.floor,
         establishment: roomToEdit.establishment,
         status: status
-      };
+      }; */
       // Service à mettre ici
       setRoomsData((prevData) =>
         prevData.map((room) =>
@@ -76,9 +75,7 @@ export const AdminRoomsPage: React.FC = () => {
     // Service à mettre ici
     // Simulation à la place
     setRoomsData((prevData) =>
-      prevData.map((room) =>
-        room.id === selectedRoom.id ? updatedRoom : room
-      )
+      prevData.map((room) => (room.id === selectedRoom.id ? updatedRoom : room))
     );
 
     handleCloseModal(); // Fermeture de la modale après la mise à jour
@@ -115,7 +112,7 @@ export const AdminRoomsPage: React.FC = () => {
         userEmail="kellianbre@outlook.fr"
         username="Kellian Bredeau"
         organization="Université Gustave Eiffel"
-        part="Salles"
+        part={t('navbar.admin.rooms')}
         addBtn={handleOpenModal}
         deleteBtn={handleEditRoom}
         toggleBtn={handleToggleRoomStatus}
@@ -125,7 +122,9 @@ export const AdminRoomsPage: React.FC = () => {
       <AccountModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        title={selectedRoom ? "Modification d’une salle" : "Création d’une salle"}
+        title={
+          selectedRoom ? 'Modification d’une salle' : 'Création d’une salle'
+        }
       >
         <form
           className="flex flex-col space-y-4"

@@ -7,7 +7,9 @@ export type RootStackParamList = {
   [ROUTE.FORGOT_MDP]: undefined;
   [ROUTE.RESET_PASSWORD]: undefined;
   [ROUTE.ADMIN_DASHBOARD]: undefined;
-
+  [ROUTE.OWNER_DASHBOARD]: undefined;
+  [ROUTE.ADMIN_ACCOUNTS]: undefined;
+  [ROUTE.ADMIN_ROOMS]: undefined;
 };
 
 export type RouteParamList = {
@@ -17,6 +19,9 @@ export type RouteParamList = {
   ForgotMdpScreen: undefined;
   ResetPasswordScreen: undefined;
   AdminAccount: undefined;
+  OwnerHome: undefined;
+  AdminHome: undefined;
+  AdminRooms: undefined;
 };
 
 // Typage des propriétés des écrans

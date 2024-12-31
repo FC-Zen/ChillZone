@@ -1,0 +1,29 @@
+/* src/components/molecules/NavigationButton.css */
+.button {
+  background-color: #2E2A85;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: #fff; /* Assure que le texte et l'icône sont en blanc */
+}
+
+.button:hover {
+  /* Style appliqué au survol */
+  background-color: #3A36AA;
+}
+
+.button--active {
+  /* Style additionnel quand le bouton est actif */
+  background-color: #4C47C6;
+}
+
+/* Style pour le label */
+.label {
+  margin-left: 8px;
+  font-weight: 600;
+  color: #fff;
+}

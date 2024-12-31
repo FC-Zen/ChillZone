@@ -102,27 +102,27 @@
     },
 
     "dashboard": {
-      "graph": {
-        "reservation": "Nombre de réservation par mois",
-        "commands": "Nombre de commandes par mois",
-        "cnx": "Nombre de connexions par mois"
-      },
-      "info": {
-        "users": "Utilisateurs",
-        "conflict": "Signalements reçus",
-        "openRooms": "Salles / box disponibles",
-        "occupationTime": "Taux d’occupation des box/salles",
-        "mostWantedProduct": "Produit le plus vendu",
-        "mostWantedMenu": "Menu le plus vendu",
-        "commandsNow": "Commandes à faire",
-        "commandsToday": "Commandes réalisées",
-        "commandsTodo": "Commandes prévues",
-        "actives": "actifs",
-        "onMonth": "sur le mois",
-        "onHour": "sur l’heure actuelle",
-        "now": "actuellement",
-        "today": "aujourd'hui"
-      }
+        "graph" : {
+            "reservation" : "Nombre de réservation par mois",
+            "commands" : "Nombre de commandes par mois",
+            "cnx" : "Nombre de connexions par mois"
+        },
+        "info" : {
+            "users" : "Utilisateurs",
+            "conflict" : "Signalements reçus",
+            "openRooms" : "Salles / box disponibles",
+            "occupationTime" : "Taux d’occupation des box/salles",
+            "mostWantedProduct" : "Produit le plus vendu",
+            "mostWantedMenu" : "Menu le plus vendu",
+            "commandsNow" : "Commandes à faire",
+            "commandsToday" : "Commandes réalisées",
+            "commandsTodo" : "Commandes prévues",
+            "actives" : "actifs",
+            "onMonth" : "sur le mois",
+            "onHour" : "sur l’heure actuelle",
+            "now" : "actuellement",
+            "today" : "aujourd'hui"
+        }
     },
 
     "info": {
