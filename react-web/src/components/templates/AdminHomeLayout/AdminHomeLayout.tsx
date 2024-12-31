@@ -3,6 +3,7 @@ import { AdminSideBar, Header } from '@components/organisms';
 type AdminHomeLayoutProps = {
   username: string;
   userEmail: string;
+  icon: React.ReactNode; // Accepte une icône React
   organization: string;
   part: string;
   statsSection: React.ReactNode;
@@ -12,6 +13,7 @@ type AdminHomeLayoutProps = {
 export const AdminHomeLayout: React.FC<AdminHomeLayoutProps> = ({
   username,
   userEmail,
+  icon,
   organization,
   part,
   statsSection,
@@ -27,6 +29,7 @@ export const AdminHomeLayout: React.FC<AdminHomeLayoutProps> = ({
         <Header
           userName={username}
           userEmail={userEmail}
+          icon={icon}
           organization={organization}
           part={part}
         />

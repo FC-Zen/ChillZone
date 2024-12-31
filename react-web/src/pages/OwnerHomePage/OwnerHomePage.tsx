@@ -2,9 +2,10 @@ import React from 'react';
 import { OwnerHomeLayout } from '@components/templates';
 import { OwnerDashboardGraphs } from '@components/organisms';
 import { StatCard } from '@components/molecules'; // Réutilisation du StatCard d'Admin
-import { User, Flag, Layers } from '@components/atoms/Icons'; // Icônes nécessaires
+import { User, Flag, Layers, Graduation } from '@components/atoms/Icons'; // Icônes nécessaires
 import { colors } from '@theme'; // Couleurs
 import OwnerCardData from '@assets/fr.json'; // Import des données FR (renommées)
+import OwnerCardDataValues from '@assets/data/stat_card_value.json'; // Import des données FR (renommées)
 
 export const OwnerHomePage: React.FC = () => {
   // Section des statistiques
@@ -13,22 +14,22 @@ export const OwnerHomePage: React.FC = () => {
       <StatCard
         icon={<User color={colors.white} />}
         title={OwnerCardData.dashboard.info.mostWantedProduct}
-        value={OwnerCardData.dashboard.info.mostWantedName}
+        value={OwnerCardDataValues.mostWantedName}
       />
       <StatCard
         icon={<Flag color={colors.white} />}
         title={OwnerCardData.dashboard.info.mostWantedMenu}
-        value={OwnerCardData.dashboard.info.mostWantedMenuName}
+        value={OwnerCardDataValues.mostWantedMenuName}
       />
       <StatCard
         icon={<User color={colors.white} />}
         title={OwnerCardData.dashboard.info.onHour}
-        value={OwnerCardData.dashboard.info.onHourValue}
+        value={OwnerCardDataValues.onHourValue}
       />
       <StatCard
         icon={<Layers color={colors.white} />}
         title={OwnerCardData.dashboard.info.commandsToday}
-        value={OwnerCardData.dashboard.info.onTodayValue}
+        value={OwnerCardDataValues.onTodayValue}
       />
     </div>
   );
@@ -64,6 +65,7 @@ export const OwnerHomePage: React.FC = () => {
     <OwnerHomeLayout
       username="Kellian Bredeau"
       userEmail="kellianbre@outlook.fr"
+      icon={<Graduation color={colors.black} />} // Icône passée correctement
       organization="Université Gustave Eiffel"
       part={t('navbar.home')}
       statsSection={statsSection}

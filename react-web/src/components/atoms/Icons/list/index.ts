@@ -20,4 +20,6 @@ export { default as Package } from './Package';
 export { default as Flag } from './Flag';
 export { default as Dashboard } from './Dashboard';
 export { default as Layers } from './Layers';
-
+export { default as ArrowUp } from './ArrowUp';
+export { default as ArrowDown } from './ArrowDown';
+export { default as Graduation } from './Graduation';

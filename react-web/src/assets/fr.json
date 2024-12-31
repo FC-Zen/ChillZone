@@ -109,27 +109,17 @@
         },
         "info" : {
             "users" : "Utilisateurs",
-            "usersValue" : "410",
             "conflict" : "Signalements reçus",
-            "conflictValue" : "10",
             "openRooms" : "Salles / box disponibles",
-            "openRoomsValue" : "41",
             "occupationTime" : "Taux d’occupation des box/salles",
-            "occupationTimeValue" : "84%",
             "mostWantedProduct" : "Produit le plus vendu",
-            "mostWantedName" : "Cookies",
             "mostWantedMenu" : "Menu le plus vendu",
-            "mostWantedMenuName" : "Menu étudiant",
             "commandsNow" : "Commandes à faire",
             "commandsToday" : "Commandes réalisées",
-            "onTodayValue" : "24",
             "commandsTodo" : "Commandes prévues",
             "actives" : "actifs",
-            "activesValue" : "410",
-            
             "onMonth" : "sur le mois",
             "onHour" : "sur l’heure actuelle",
-            "onHourValue" : "8",
             "now" : "actuellement",
             "today" : "aujourd'hui"
         }
