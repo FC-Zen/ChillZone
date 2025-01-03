@@ -1,5 +1,7 @@
 import { AdminSideBar, BookingDataTable, ConflictDataTable, Header } from '@components/organisms';
 import "./style.css" ;
+import { HeaderIcon } from '@components/atoms';
+import { useTranslation } from 'react-i18next';
 
 type AdminBookingLayoutProps = {
   username: string;
@@ -31,6 +33,8 @@ export const AdminBookingLayout = ({
   reservationsData,
   conflictsData,
 }: AdminBookingLayoutProps) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="flex min-h-screen bg-gray-100">
       <AdminSideBar />
@@ -43,14 +47,20 @@ export const AdminBookingLayout = ({
           part={part} 
           icon={undefined}        
           />
-
+        
         <main className="mainContainerBooking">
+          <div className="table-layout">
+          <HeaderIcon title={t('tables.titles.reservations')} icon={'Calendar'}/>
           <BookingDataTable
             data={reservationsData}
           />
+          </div>
+          <div className="table-layout">
+          <HeaderIcon title={t('tables.titles.conflicts')} icon={'ExclamationFilled'}/>
           <ConflictDataTable
             data={conflictsData}
           />
+          </div>
         </main>
       </div>
     </div>

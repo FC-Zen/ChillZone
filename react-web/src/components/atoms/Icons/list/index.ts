@@ -23,3 +23,6 @@ export { default as Layers } from './Layers';
 export { default as ArrowUp } from './ArrowUp';
 export { default as ArrowDown } from './ArrowDown';
 export { default as Graduation } from './Graduation';
+export { default as Check } from './Check';
+export { default as Exclamation } from './Exclamation';
+export { default as ExclamationFilled } from './ExclamationFilled';

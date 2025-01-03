@@ -6,3 +6,7 @@
     flex-wrap: nowrap;
     justify-content: space-around;
 }
+
+.table-layout {
+    width: 48%;
+}

@@ -45,14 +45,14 @@ export const ConflictDataTable = ({
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 0.5 },
-    { field: 'day_reservation', headerName: t('tables.headers.reservation.day_reservation'), flex: 1 },
+    { field: 'day_reservation', headerName: t('tables.headers.reservation.day_reservation'), flex: 0.7 },
     { field: 'user_name', headerName:t('tables.headers.conflict.user'), flex: 1.5 },
     { field: 'location_name', headerName: t('tables.headers.room.name'), flex: 1 },
     { field: 'comment', headerName: t('tables.headers.conflict.comment'), flex: 2, cellClassName: 'wrap-text' }
   ];
 
   return (
-    <div style={{ height: 700, width: '49%' }}>
+    <div style={{ height: 700, width: '100%' }}>
       <DataGrid
         rows={data}
         columns={columns}
