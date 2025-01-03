@@ -7,3 +7,4 @@ export { AdminRoomsPage } from './AdminRoomsPage';
 export { AdminHomePage } from './AdminHomePage';
 export { OwnerHomePage } from './OwnerHomePage';
 export { AdminAccountPage } from './AdminAccountPage';
+export { AdminBookingPage } from './AdminBookingPage';

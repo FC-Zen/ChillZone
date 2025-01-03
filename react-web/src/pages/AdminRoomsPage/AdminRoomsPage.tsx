@@ -3,10 +3,12 @@ import { AccountModal } from '@components/organisms'; // Composant de modale
 import { AdminRoomLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import rooms from '@assets/data/rooms.json'; // Données des salles
+import { useUser } from '@hooks';
 
 export const AdminRoomsPage: React.FC = () => {
   const { t } = useTranslation();
-
+  const { user } = useUser();
+  
   const [isModalOpen, setModalOpen] = useState(false);
   const [roomsData, setRoomsData] = useState(rooms);
   const [selectedRoom, setSelectedRoom] = useState<null | {
@@ -109,9 +111,9 @@ export const AdminRoomsPage: React.FC = () => {
     <div>
       {/* Layout principal contenant le tableau */}
       <AdminRoomLayout
-        userEmail="kellianbre@outlook.fr"
-        username="Kellian Bredeau"
-        organization="Université Gustave Eiffel"
+        userEmail={user?.userEmail ?? ""}
+        username={user?.username ?? ""}
+        organization={user?.organization ?? ""}
         part={t('navbar.admin.rooms')}
         addBtn={handleOpenModal}
         deleteBtn={handleEditRoom}

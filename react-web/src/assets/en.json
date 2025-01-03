@@ -42,96 +42,6 @@
       "establishment": "Establishment information"
     },
 
-    "tables": {
-      "titles": {
-        "table_restauration_place": "Table of dining locations affiliated with the establishment",
-        "affiliationRequests": "Table of affiliation requests for dining locations to the establishment",
-        "reservations": "Table of reservations",
-        "conflicts": "Table of reports",
-        "currentcommands": "Latest ongoing orders",
-        "restauration_place": "My dining locations"
-      },
-      "headers": {
-        "user": {
-          "fullName": "Name",
-          "last_name": "Surname",
-          "mail": "Email address",
-          "type": "Role",
-          "establishment": "Establishment",
-          "reservationCount": "Number of reservations made",
-          "blockReservations": "Block reservations",
-          "deleteAccount": "Delete account"
-        },
-        "room": {
-          "name": "Room name",
-          "description": "Room description",
-          "capacity": "Room capacity",
-          "floor": "Floor",
-          "isRoomFree": "Is the room free now?",
-          "modify": "Edit"
-        },
-        "reservation": {
-          "id": "Reservation ID",
-          "day_reservation": "Date",
-          "start_time": "Start time",
-          "end_time": "End time",
-          "status": "Status",
-          "isCanceled": "Canceled?"
-        },
-        "conflict": {
-          "comment": "Report description",
-          "user": "Responsible student"
-        },
-        "restaurant": {
-          "name": "Dining location name",
-          "type": "Type of dining location",
-          "location": "Dining location address",
-          "email": "Dining location email",
-          "isCurrentlyOpen": "Currently open",
-          "unlinkRestaurant": "Unlink dining location from the establishment",
-          "declineAffiliation": "Decline affiliation",
-          "acceptAffiliation": "Accept affiliation"
-        },
-        "command": {
-          "id": "Order ID",
-          "user": "Student",
-          "total_amount": "Total",
-          "location": "Location name",
-          "collectionStartTime": "Collection start time",
-          "client": "Client name",
-          "creation_date": "Creation date",
-          "actions": {
-            "viewcommand": "View order",
-            "actionDetails": "Order details",
-            "editQuantity": "Edit quantity"
-          }
-        },
-        "product": {
-          "type": "Type",
-          "name": "Product name",
-          "description": "Product description",
-          "price": "Price",
-          "quantity": "Quantity",
-          "category": "Category",
-          "tag": "Tags"
-        },
-        "menu": {
-          "name": "Menu name",
-          "description": "Menu description",
-          "price": "Price",
-          "activeTypes": "Active types",
-          "activeCategories": "Categories included in the menu"
-        },
-        "owner": {
-          "head": "Head Restaurateur Name",
-          "name": "Restaurant name",
-          "acceptAccount": "Accept account",
-          "declineAccount": "Decline account",
-          "deleteRestaurantAccount": "Delete account"
-        }
-      }
-    },
-
     "rooms": {
       "baseFloor": "Ground floor",
       "floor": "Floor {{x}}",
@@ -320,7 +230,8 @@
     },
     "headers": {
       "user": {
-        "fullName": "Full Name",
+        "fullName": "Name",
+        "last_name": "Surname",
         "mail": "Email address",
         "type": "Role",
         "establishment": "Establishment",

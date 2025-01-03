@@ -19,7 +19,7 @@
     display: flex;
     align-items: left;
     width: 100%!important;
-    max-width: 350px!important;
+    max-width: 300px!important;
     padding: 5px 10px!important;
     border: 1px solid #d3d3d3!important;
     border-radius: 8px;
@@ -72,4 +72,10 @@
 .css-5wdp45-MuiDataGrid-root .MuiDataGrid-row--borderBottom .MuiDataGrid-columnHeader, .css-5wdp45-MuiDataGrid-root .MuiDataGrid-row--borderBottom .MuiDataGrid-filler, .css-5wdp45-MuiDataGrid-root .MuiDataGrid-row--borderBottom .MuiDataGrid-scrollbarFiller {
     background-color: #2e2a85 !important;
     color: white!important;
+}
+
+.wrap-text {
+    white-space: normal !important;
+    word-wrap: break-word  !important;
+    overflow-wrap: break-word  !important;
 }

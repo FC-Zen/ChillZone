@@ -42,15 +42,17 @@ export const AdminAccountLayout: React.FC<AdminAccountLayoutProps> = ({
           userName={username}
           userEmail={userEmail}
           organization={organization}
-          part={part}
+          part={part}        
         />
 
+        <main className="p-6">
         <AccountDataTable
           addAccountBtn={addAccountBtn}
           deleteBtn={deleteBtn}
           toggleBtn={toggleBtn}
           data={data}
         />
+        </main>
       </div>
     </div>
   );

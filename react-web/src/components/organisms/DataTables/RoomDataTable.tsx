@@ -30,6 +30,8 @@ type RoomDataTableProps = {
 };
 
 function CustomToolbar({ onActionClick }: { onActionClick: () => void }) {
+  const { t } = useTranslation();
+  
   return (
     <GridToolbarContainer className="custom-tool-bar">
       <GridToolbarQuickFilter
@@ -48,7 +50,7 @@ function CustomToolbar({ onActionClick }: { onActionClick: () => void }) {
         onClick={onActionClick}
       >
         <Icon name="AddIcon" />
-        Ajouter une salle
+        {t('buttons.add.room')}
       </Button>
     </GridToolbarContainer>
   );
@@ -72,18 +74,20 @@ export const RoomDataTable = ({
     {
       field: 'toggle',
       headerName:  t('tables.headers.room.isRoomFree'),
-      flex: 2,
+      flex: 1.5,
       align: 'center',
       renderCell: (params: any) => {
         const isActive = params.row.status;
         return (
-          <CustomSwitch
-            checked={isActive}
-            onChange={() => {
-              const newStatus = isActive ? false : true; // Modification du statut
-              toggleBtn(params.row.id, newStatus);
-            }}
-          />
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <CustomSwitch
+              checked={isActive}
+              onChange={() => {
+                const newStatus = isActive ? false : true; // Modification du statut
+                toggleBtn(params.row.id, newStatus);
+              }}
+            />
+          </div>
         );
       },
     },
@@ -93,7 +97,7 @@ export const RoomDataTable = ({
       flex: 0.75,
       sortable: false,
       renderCell: (params: any) => (
-        <div className="flex gap-2 justify-center">
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
           <IconButton color="primary" onClick={() => editRoomBtn(params.row.id)}>
             <Icon name="Pencil" />
           </IconButton>

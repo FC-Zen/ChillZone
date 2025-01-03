@@ -6,8 +6,11 @@ import { User, Flag, Layers, Graduation } from '@components/atoms/Icons'; // Ic�
 import { colors } from '@theme'; // Couleurs
 import OwnerCardData from '@assets/fr.json'; // Import des données FR (renommées)
 import OwnerCardDataValues from '@assets/data/stat_card_value.json'; // Import des données FR (renommées)
+import { useUser } from '@hooks';
 
 export const OwnerHomePage: React.FC = () => {
+  const { user } = useUser();
+    
   // Section des statistiques
   const statsSection = (
     <div className="space-y-6">
@@ -63,10 +66,9 @@ export const OwnerHomePage: React.FC = () => {
   }
   return (
     <OwnerHomeLayout
-      username="Kellian Bredeau"
-      userEmail="kellianbre@outlook.fr"
-      icon={<Graduation color={colors.black} />} // Icône passée correctement
-      organization="Université Gustave Eiffel"
+      userEmail={user?.userEmail ?? ""}
+      username={user?.username ?? ""}
+      organization={user?.organization ?? ""}
       part={t('navbar.home')}
       statsSection={statsSection}
       mainContent={mainContent}

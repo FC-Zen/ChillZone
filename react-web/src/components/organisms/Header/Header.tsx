@@ -5,11 +5,12 @@ import { logoutUser } from '@services'; // Service de déconnexion
 import { ROUTE } from '@enums';
 import { useNavigate } from 'react-router-dom';
 import { styles } from './style'; // Import des styles
+import { Icon } from '@components/atoms';
+import { colors } from '@theme';
 
 type HeaderProps = {
   userName: string;
   userEmail: string;
-  icon: React.ReactNode; // Accepte une icône React
   organization: string;
   part: string;
 };
@@ -17,7 +18,6 @@ type HeaderProps = {
 export const Header: React.FC<HeaderProps> = ({
   userName,
   userEmail,
-  icon,
   organization,
   part,
 }) => {
@@ -46,7 +46,7 @@ export const Header: React.FC<HeaderProps> = ({
         </h1>
         <p style={styles.part}>{part}</p>
         <div style={styles.organizationContainer}>
-          {icon && <span style={styles.icon}>{icon}</span>}
+          <Icon name={'Graduation'} color={colors.black}/>
           <p style={styles.organization}>{organization}</p>
         </div>
       </div>

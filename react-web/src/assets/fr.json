@@ -133,96 +133,6 @@
       "rememberMe": "Se souvenir de moi"
     },
 
-    "tables": {
-      "titles": {
-        "table_restauration_place": "Tableau des lieux de restauration affiliés à l’établissement",
-        "affiliationRequests": "Tableau de demandes d'affiliation des lieux de restauration à l’établissement",
-        "reservations": "Tableau des réservations",
-        "conflicts": "Tableau des signalements",
-        "currentcommands": "Dernières commandes en cours",
-        "restauration_place": "Mes lieux de restauration"
-      },
-      "headers": {
-        "user": {
-          "fullName": "Prénom",
-          "last_name": "Nom",
-          "mail": "Adresse mail",
-          "type": "Rôle",
-          "establishment": "Etablissement",
-          "reservationCount": "Nombre de réservations faites",
-          "blockReservations": "Bloquer les réservations",
-          "deleteAccount": "Supprimer le compte"
-        },
-        "room": {
-          "name": "Nom de la salle",
-          "description": "Description de la salle",
-          "capacity": "Capacité de la salle",
-          "floor": "Etage",
-          "isRoomFree": "La salle est libre actuellement ?",
-          "modify": "Modifier"
-        },
-        "reservation": {
-          "id": "ID réservation",
-          "day_reservation": "Date",
-          "start_time": "Heure de début",
-          "end_time": "Heure de fin",
-          "status": "Status",
-          "isCanceled": "Annulé ?"
-        },
-        "conflict": {
-          "comment": "Description du signalement",
-          "user": "Etudiant responsable"
-        },
-        "restaurant": {
-          "name": "Nom du lieu de restauration",
-          "type": "Type de lieu de restauration",
-          "location": "Emplacement du lieu de restauration",
-          "email": "Adresse mail du lieu de restauration",
-          "isCurrentlyOpen": "Ouvert actuellement",
-          "unlinkRestaurant": "Supprimer le lien entre le lieu et l’établissement",
-          "declineAffiliation": "Refuser l’affiliation",
-          "acceptAffiliation": "Accepter l’affiliation"
-        },
-        "command": {
-          "id": "ID commande",
-          "user": "Etudiant",
-          "total_amount": "Total",
-          "location": "Nom du lieu",
-          "collectionStartTime": "Début de l’heure de collecte",
-          "client": "Nom du client",
-          "creation_date": "Date de création",
-          "actions": {
-            "viewcommand": "Voir la commande",
-            "actionDetails": "Détails de la commande",
-            "editQuantity": "Modifier la quantité"
-          }
-        },
-        "product": {
-          "type": "Type",
-          "name": "Nom du produit",
-          "description": "Description du produit",
-          "price": "Prix",
-          "quantity": "Quantité",
-          "category": "Catégorie",
-          "tag": "Tags"
-        },
-        "menu": {
-          "name": "Nom du menu",
-          "description": "Description du menu",
-          "price": "Prix",
-          "activeTypes": "Types actifs",
-          "activeCategories": "Catégories comprises dans le menu"
-        },
-        "owner": {
-          "head": "Nom Prénom du restaurateur chef",
-          "name": "Nom du restaurant",
-          "acceptAccount": "Accepter le compte",
-          "declineAccount": "Refuser le compte",
-          "deleteRestaurantAccount": "Supprimer le compte"
-        }
-      }
-    },
-
     "rooms": {
       "baseFloor": "RDC",
       "floor": "Etage {{x}}",
@@ -423,7 +333,8 @@
     },
     "headers": {
       "user": {
-        "fullName": "Nom Prénom",
+        "fullName": "Prénom",
+        "last_name": "Nom",
         "mail": "Adresse mail",
         "type": "Rôle",
         "establishment": "Etablissement",
@@ -436,7 +347,7 @@
         "description": "Description de la salle",
         "capacity": "Capacité de la salle",
         "floor": "Etage",
-        "isRoomFree": "La salle est libre actuellement ?",
+        "isRoomFree": "La salle est bloquée ?",
         "modify": "Modifier"
       },
       "reservation": {

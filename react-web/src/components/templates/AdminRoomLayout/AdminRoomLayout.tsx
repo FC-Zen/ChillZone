@@ -39,8 +39,8 @@ export const AdminRoomLayout = ({
           userName={username}
           userEmail={userEmail}
           organization={organization}
-          part={part}
-        />
+          part={part} 
+          />
 
         <main className="p-6">
           <RoomDataTable

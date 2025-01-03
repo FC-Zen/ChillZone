@@ -3,9 +3,11 @@ import { AccountModal } from '@components/organisms'; // Composant de modale
 import { AdminAccountLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import users from '@assets/data/users.json';
+import { useUser } from '@hooks';
 
 export const AdminAccountPage: React.FC = () => {
   const { t } = useTranslation();
+  const { user } = useUser();
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [userData, setUserData] = useState(users);
@@ -59,9 +61,9 @@ export const AdminAccountPage: React.FC = () => {
     <>
       {/* Layout principal contenant le tableau */}
       <AdminAccountLayout
-        userEmail="kellianbre@outlook.fr"
-        username="Kellian Bredeau"
-        organization="Université Gustave Eiffel"
+        userEmail={user?.userEmail ?? ""}
+        username={user?.username ?? ""}
+        organization={user?.organization ?? ""}
         part={t('navbar.admin.users')}
         addAccountBtn={handleOpenModal}
         deleteBtn={handleDeleteAccount}

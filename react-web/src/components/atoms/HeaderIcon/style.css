@@ -1,0 +1,8 @@
+.headerTitle{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap : 20px;
+    padding: 5px;
+}

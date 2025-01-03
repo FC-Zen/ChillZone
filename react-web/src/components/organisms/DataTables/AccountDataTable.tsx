@@ -32,6 +32,8 @@ type AccountDataTableProps = {
 };
 
 function CustomToolbar({ onActionClick }: { onActionClick: () => void }) {
+  const { t } = useTranslation();
+  
   return (
     <GridToolbarContainer className="custom-tool-bar">
       <GridToolbarQuickFilter
@@ -50,7 +52,7 @@ function CustomToolbar({ onActionClick }: { onActionClick: () => void }) {
         onClick={onActionClick}
       >
         <Icon name="AddIcon" />
-        Ajouter une salle
+        {t('buttons.add.user')}
       </Button>
     </GridToolbarContainer>
   );
@@ -78,30 +80,32 @@ export const AccountDataTable = ({
     {
       field: 'toggle',
       headerName: t('tables.headers.user.blockReservations'),
-      flex: 2,
+      flex: 1.5,
       align: 'center',
       renderCell: (params: any) => {
         const isActive = params.row.status === 'Blocked';
         return (
-          <CustomSwitch
-            checked={isActive}
-            onChange={() => {
-              const newStatus = isActive ? 'Verified' : 'Blocked';
-              console.log(isActive);
-              console.log(newStatus);
-              toggleBtn(params.row.id, newStatus);
-            }}
-          />
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <CustomSwitch
+              checked={isActive}
+              onChange={() => {
+                const newStatus = isActive ? 'Verified' : 'Blocked';
+                console.log(isActive);
+                console.log(newStatus);
+                toggleBtn(params.row.id, newStatus);
+              }}
+            />
+          </div>
         );
       },
     },
     {
       field: 'actions',
       headerName: t('tables.headers.user.deleteAccount'),
-      flex: 2,
+      flex: 1.5,
       sortable: false,
       renderCell: (params: any) => (
-        <div className="flex gap-2 justify-center">
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
           <IconButton color="primary" onClick={() => deleteBtn(params.row.id)}>
             <Icon name="DeleteAccount" />
           </IconButton>

@@ -9,6 +9,7 @@ import {
   AdminRoomsPage,
   AdminHomePage,
   OwnerHomePage,
+  AdminBookingPage
 } from '@pages';
 import { ROUTE } from '@enums';
 
@@ -25,6 +26,7 @@ export const RootNavigator = () => {
         <Route path={ROUTE.ADMIN_DASHBOARD} element={<AdminHomePage />} />
         <Route path={ROUTE.ADMIN_ACCOUNTS} element={<AdminAccountPage />} />
         <Route path={ROUTE.ADMIN_ROOMS} element={<AdminRoomsPage />} />
+        <Route path={ROUTE.ADMIN_BOOKING} element={<AdminBookingPage />} />
 
         <Route path={ROUTE.OWNER_DASHBOARD} element={<OwnerHomePage />} />
       </Routes>
