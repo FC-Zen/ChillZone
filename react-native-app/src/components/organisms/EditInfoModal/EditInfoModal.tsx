@@ -1,33 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal } from 'react-native';
 import { styles } from './style';
+import { Cross } from '@components/atoms/Icons';
+import { colors } from '@theme';
+import user_data from 'src/assets/fr.json';
 
+// Déclaration des props juste au-dessus du composant
 export type EditInfoModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (data: {
+  data: {
     firstName: string;
     lastName: string;
     phone: string;
     email: string;
-  }) => void;
+  };
+  onChange: (field: keyof EditInfoModalProps['data'], value: string) => void;
+  onConfirm: () => void;
 };
 
 export const EditInfoModal: React.FC<EditInfoModalProps> = ({
   isOpen,
   onClose,
+  data = { firstName: '', lastName: '', phone: '', email: '' }, // Valeur par défaut
+  onChange,
   onConfirm,
 }) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-
-  const handleConfirm = () => {
-    onConfirm({ firstName, lastName, phone, email });
-    onClose();
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -36,50 +34,49 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({
         <View style={styles.modal}>
           {/* Bouton de fermeture */}
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>✖</Text>
+            <Cross width={15} height={15} color={colors.black} />
           </TouchableOpacity>
 
           {/* Titre */}
-          <Text style={styles.title}>Modifier mes informations</Text>
+          <Text style={styles.title}>{user_data.modals.infoChange}</Text>
 
           {/* Inputs */}
           <TextInput
             style={styles.input}
-            placeholder="Prénom"
+            placeholder={user_data.fields.common.first_name}
             placeholderTextColor="#ccc"
-            value={firstName}
-            onChangeText={setFirstName}
+            value={data.firstName}
+            onChangeText={(text) => onChange('firstName', text)}
           />
           <TextInput
             style={styles.input}
-            placeholder="Nom"
+            placeholder={user_data.fields.common.last_name}
             placeholderTextColor="#ccc"
-            value={lastName}
-            onChangeText={setLastName}
+            value={data.lastName}
+            onChangeText={(text) => onChange('lastName', text)}
           />
           <TextInput
             style={styles.input}
-            placeholder="Téléphone"
+            placeholder={user_data.fields.common.phone}
             placeholderTextColor="#ccc"
             keyboardType="phone-pad"
-            value={phone}
-            onChangeText={setPhone}
+            value={data.phone}
+            onChangeText={(text) => onChange('phone', text)}
           />
           <TextInput
             style={styles.input}
-            placeholder="Adresse mail"
+            placeholder={user_data.fields.common.mail}
             placeholderTextColor="#ccc"
             keyboardType="email-address"
-            value={email}
-            onChangeText={setEmail}
+            value={data.email}
+            onChangeText={(text) => onChange('email', text)}
           />
 
           {/* Bouton Confirmer */}
-          <TouchableOpacity
-            style={styles.confirmButton}
-            onPress={handleConfirm}
-          >
-            <Text style={styles.confirmButtonText}>Confirmer</Text>
+          <TouchableOpacity style={styles.confirmButton} onPress={onConfirm}>
+            <Text style={styles.confirmButtonText}>
+              {user_data.buttons.actions.confirm}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

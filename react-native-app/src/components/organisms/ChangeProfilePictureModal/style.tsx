@@ -23,7 +23,10 @@ export const styles = StyleSheet.create({
     zIndex: 10,
   },
   closeButtonText: {
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: 'Montserrat',
+    fontWeight: '600', // Semi-bold
+    lineHeight: 16, // Line height exact de 100%
     color: colors.white,
   },
   avatarContainer: {
@@ -49,8 +52,11 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   primaryButtonText: {
+    fontSize: 16,
+    fontFamily: 'Montserrat',
+    fontWeight: '600', // Semi-bold
+    lineHeight: 16, // 100% de la taille de la police
     color: colors.resolutionBlue,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   secondaryButton: {
@@ -62,8 +68,11 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   secondaryButtonText: {
+    fontSize: 16,
+    fontFamily: 'Montserrat',
+    fontWeight: '600', // Semi-bold
+    lineHeight: 16, // 100% de la taille de la police
     color: colors.white,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
 });

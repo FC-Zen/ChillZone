@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
   },
   confirmButton: {
     backgroundColor: colors.aquaDeep,
-    borderRadius: 8,
+    borderRadius: 50,
     paddingVertical: 12,
     alignItems: 'center',
     marginTop: 10,

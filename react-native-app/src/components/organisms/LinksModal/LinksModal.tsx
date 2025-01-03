@@ -7,6 +7,16 @@ import { colors } from '@theme';
 
 // 1. On importe les styles depuis notre fichier externe
 import { styles } from './style';
+import {
+  Cross,
+  Facebook,
+  Instagram,
+  X,
+  Youtube,
+  LinkendIn,
+  Ent,
+  Web,
+} from '@components/atoms/Icons/';
 
 export type LinksModalProps = {
   isOpen: boolean;
@@ -23,17 +33,19 @@ export const LinksModal: React.FC<LinksModalProps> = ({ isOpen, onClose }) => {
   const getIconForType = (type: string) => {
     switch (type) {
       case 'Facebook':
-        return '📘';
+        return <Facebook width={24} height={24} color={colors.white} />;
+      case 'X':
+        return <X width={24} height={24} />;
       case 'Instagram':
-        return '📸';
+        return <Instagram width={24} height={24} />;
       case 'Youtube':
-        return '📹';
+        return <Youtube width={24} height={24} />;
       case 'LinkedIn':
-        return '💼';
+        return <LinkendIn width={24} height={24} />;
       case 'ENT':
-        return '🗂️';
+        return <Ent width={24} height={24} />;
       case "Site de l'université":
-        return '🌐';
+        return <Web width={24} height={24} />;
       default:
         return '🔗';
     }
@@ -47,7 +59,7 @@ export const LinksModal: React.FC<LinksModalProps> = ({ isOpen, onClose }) => {
         <View style={styles.modal}>
           {/* Bouton de fermeture */}
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>✖</Text>
+            <Cross width={15} height={15} color={colors.black} />
           </TouchableOpacity>
 
           {/* Titre */}

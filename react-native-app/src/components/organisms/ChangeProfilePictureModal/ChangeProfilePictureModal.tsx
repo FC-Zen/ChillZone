@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { styles } from './style';
-
+import user_profile_data from 'src/assets/fr.json';
+import { User, Cross } from '@components/atoms/Icons';
+import { colors } from '@theme';
 export type ChangeProfilePictureModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -22,25 +24,25 @@ export const ChangeProfilePictureModal = ({
         <View style={styles.modal}>
           {/* Bouton Fermer */}
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>✖</Text>
+            <Cross width={15} height={15} color={colors.white} />
           </TouchableOpacity>
 
           {/* Avatar ou icône */}
           <View style={styles.avatarContainer}>
-            <Text style={styles.avatarIcon}>👤</Text>
+            <User width={60} height={60} color={colors.resolutionBlue} />
           </View>
 
-          {/* Bouton pour changer le mot de passe */}
+          {/* Bouton pour changer la photo */}
           <TouchableOpacity style={styles.primaryButton}>
             <Text style={styles.primaryButtonText}>
-              Changer la photo de profil
+              {user_profile_data.buttons.profile.changePp}
             </Text>
           </TouchableOpacity>
 
           {/* Bouton pour supprimer */}
           <TouchableOpacity style={styles.secondaryButton}>
             <Text style={styles.secondaryButtonText}>
-              Supprimer la photo de profil
+              {user_profile_data.buttons.profile.deletePp}
             </Text>
           </TouchableOpacity>
         </View>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,33 +6,28 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
-  Alert,
 } from 'react-native';
+
+import data_from_fr_json from 'src/assets/fr.json';
+import { Cross } from '@components/atoms/Icons';
+import { colors } from '@theme';
+import styles from './style';
 
 export type ResetPasswordModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  email: string;
+  setEmail: (email: string) => void;
+  handleResetPassword: () => void;
 };
 
 export const ResetPasswordModal = ({
   isOpen,
   onClose,
+  email,
+  setEmail,
+  handleResetPassword,
 }: ResetPasswordModalProps) => {
-  const [email, setEmail] = useState('');
-
-  const handleResetPassword = () => {
-    if (!email) {
-      Alert.alert('Erreur', 'Veuillez entrer une adresse e-mail.');
-      return;
-    }
-
-    Alert.alert(
-      'Succès',
-      `Un e-mail de réinitialisation a été envoyé à ${email}.`
-    );
-    onClose(); // Ferme la modale après soumission
-  };
-
   return (
     <Modal
       animationType="slide"
@@ -42,12 +37,14 @@ export const ResetPasswordModal = ({
     >
       <View style={styles.overlay}>
         <View style={styles.modal}>
-          <Text style={styles.title}>Réinitialiser le mot de passe</Text>
+          <Text style={styles.title}>
+            {data_from_fr_json.headers.pwdChange}
+          </Text>
 
           {/* Champ pour entrer l'email */}
           <TextInput
             style={styles.input}
-            placeholder="Adresse e-mail"
+            placeholder={data_from_fr_json.fields.common.mail}
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
@@ -55,12 +52,14 @@ export const ResetPasswordModal = ({
 
           {/* Bouton Réinitialiser */}
           <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-            <Text style={styles.buttonText}>Réinitialiser</Text>
+            <Text style={styles.buttonText}>
+              {data_from_fr_json.buttons.actions.reset}
+            </Text>
           </TouchableOpacity>
 
           {/* Bouton Fermer */}
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>✖</Text>
+            <Cross width={15} height={15} color={colors.white} />
           </TouchableOpacity>
         </View>
       </View>
@@ -68,53 +67,38 @@ export const ResetPasswordModal = ({
   );
 };
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modal: {
-    backgroundColor: '#2E2A85',
-    borderRadius: 10,
-    padding: 20,
-    width: '90%',
-    maxWidth: 400,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFF',
-    marginBottom: 20,
-  },
-  input: {
-    backgroundColor: '#FFF',
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 15,
-    width: '100%',
-  },
-  button: {
-    backgroundColor: '#005745',
-    borderRadius: 8,
-    padding: 12,
-    alignItems: 'center',
-    width: '100%',
-  },
-  buttonText: {
-    color: '#FFF',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
-  closeButtonText: {
-    fontSize: 18,
-    color: '#FFF',
-  },
-});
+// Composant principal qui utilise la modale
+const ResetPassword = () => {
+  const [isModalOpen, setModalOpen] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+
+  const handleResetPassword = () => {
+    if (!email) {
+      alert('Erreur: Veuillez entrer une adresse e-mail.');
+      return;
+    }
+    alert(`Succès: Un e-mail de réinitialisation a été envoyé à ${email}.`);
+    setModalOpen(false);
+  };
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <TouchableOpacity
+        onPress={() => setModalOpen(true)}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Ouvrir la modale</Text>
+      </TouchableOpacity>
+
+      <ResetPasswordModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        email={email}
+        setEmail={setEmail}
+        handleResetPassword={handleResetPassword}
+      />
+    </View>
+  );
+};
+
+export default ResetPassword;

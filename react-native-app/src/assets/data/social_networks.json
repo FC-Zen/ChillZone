@@ -5,9 +5,14 @@
             "link_network": "https://www.facebook.com/universite.gustave.eiffel"
         },
         {
+            "type": "X",
+            "link_network": "https://twitter.com/UnivGustaveEiff"
+        },
+        {
             "type": "Instagram",
             "link_network": "https://www.instagram.com/universite.gustave.eiffel"
         },
+
         {
             "type": "Youtube",
             "link_network": "https://www.youtube.com/c/UniversiteGustaveEiffel"

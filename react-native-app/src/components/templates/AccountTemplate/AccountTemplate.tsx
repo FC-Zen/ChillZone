@@ -4,7 +4,8 @@ import { PageHeader } from '@components/molecules/PageHeader';
 import { ProfileHeader } from '@components/molecules/ProfileHeader';
 import { AccountOptionsList } from '@components/templates/AccountOptionsList';
 import { styles } from './style';
-
+import { ProfileHeaderWithModal } from '@components/organisms';
+import user_data from 'src/assets/fr.json';
 export type AccountTemplateProps = {
   isDarkTheme: boolean;
   onToggleTheme: () => void;
@@ -36,8 +37,8 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
       isDarkTheme && styles.darkContainer,
     ]}
   >
-    <PageHeader title="Mon compte" variant="back" />
-    <ProfileHeader name="Kellian BREDEAU" />
+    <PageHeader title={user_data.headers.account} variant="back" />
+    <ProfileHeaderWithModal />
     <AccountOptionsList
       isDarkTheme={isDarkTheme}
       onToggleTheme={onToggleTheme}

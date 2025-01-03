@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,8 +6,14 @@ import {
   StyleSheet,
   Modal,
   FlatList,
+  Alert,
 } from 'react-native';
-import reservationsData from 'src/assets/data/reservations.json'; // Importation du JSON
+import { Calendar, Clock, Marker, BackArrow } from '@components/atoms/Icons';
+import reservationsData from 'src/assets/data/reservations.json';
+import title_data from 'src/assets/fr.json';
+
+import { colors } from '@theme';
+import { styles } from './style';
 
 export type ReservationsModalProps = {
   isOpen: boolean;
@@ -18,7 +24,9 @@ export const ReservationsModal: React.FC<ReservationsModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  if (!isOpen) return null;
+  const [expandedReservationId, setExpandedReservationId] = useState<
+    number | null
+  >(null);
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -29,34 +37,91 @@ export const ReservationsModal: React.FC<ReservationsModalProps> = ({
     return new Date(dateString).toLocaleDateString('fr-FR', options);
   };
 
+  const formatTime = (timeString: string) => {
+    const [hours, minutes] = timeString.split(':');
+    return `${hours}H${minutes}`;
+  };
+
+  const toggleExpand = (reservationId: number) => {
+    setExpandedReservationId((prevId) =>
+      prevId === reservationId ? null : reservationId
+    );
+  };
+
+  const cancelReservation = (reservationId: number) => {
+    Alert.alert(
+      'Confirmation',
+      'Êtes-vous sûr de vouloir annuler cette réservation ?',
+      [
+        { text: 'Annuler', style: 'cancel' },
+        {
+          text: 'Confirmer',
+          onPress: () => {
+            console.log(`Réservation ${reservationId} annulée.`);
+          },
+          style: 'destructive',
+        },
+      ]
+    );
+  };
+
   const renderReservation = ({ item }: any) => (
-    <View style={styles.reservationCard}>
+    <TouchableOpacity
+      style={[
+        styles.reservationCard,
+        expandedReservationId === item.reservation_id && styles.expandedCard,
+      ]}
+      onPress={() => toggleExpand(item.reservation_id)}
+    >
       <Text style={styles.room}>{item.location.location_name}</Text>
       <View style={styles.detailsRow}>
-        <Text style={styles.detailIcon}>📅</Text>
+        <Calendar color={colors.resolutionBlue} width={20} height={20} />
         <Text style={styles.detailText}>
           {formatDate(item.day_reservation)}
         </Text>
       </View>
       <View style={styles.detailsRow}>
-        <Text style={styles.detailIcon}>⏰</Text>
+        <Clock color={colors.resolutionBlue} width={20} height={20} />
         <Text style={styles.detailText}>
-          {item.start_time} - {item.end_time}
+          {formatTime(item.start_time)} - {formatTime(item.end_time)}
         </Text>
       </View>
-      <Text style={styles.status}>
-        Statut:{' '}
-        {item.reservation_status === 'Confirmed' ? 'Confirmée' : 'En attente'}
-      </Text>
-    </View>
+
+      {expandedReservationId === item.reservation_id && (
+        <View style={styles.expandedContent}>
+          <View style={styles.detailsRow}>
+            <Marker color={colors.resolutionBlue} width={20} height={20} />
+            <Text style={styles.detailText}>
+              {item.establishment.establishment_name}
+            </Text>
+          </View>
+          <View style={styles.detailsRow}>
+            <Text style={styles.detailText}>
+              {`Étage : ${item.location.floor_name}`}
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => cancelReservation(item.reservation_id)}
+          >
+            <Text style={styles.cancelButtonText}>{title_data.buttons.actions.cancelReservation}</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </TouchableOpacity>
   );
 
   return (
     <Modal transparent visible={isOpen} animationType="slide">
       <View style={styles.overlay}>
         <View style={styles.modal}>
-          {/* Titre */}
-          <Text style={styles.title}>Récapitulatif de mes réservations</Text>
+          {/* Header avec flèche */}
+          <View style={styles.header}>
+            <TouchableOpacity onPress={onClose}>
+              <BackArrow width={20} height={20} color={colors.black} />
+            </TouchableOpacity>
+            <Text style={styles.title}>{title_data.headers.recapReservation}</Text>
+          </View>
 
           {/* Liste des réservations */}
           <FlatList
@@ -64,78 +129,8 @@ export const ReservationsModal: React.FC<ReservationsModalProps> = ({
             renderItem={renderReservation}
             keyExtractor={(item) => item.reservation_id.toString()}
           />
-
-          {/* Bouton de fermeture */}
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>Fermer</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modal: {
-    width: '90%',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    maxHeight: '80%',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  reservationCard: {
-    backgroundColor: '#F7F7F7',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 10,
-  },
-  room: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 5,
-  },
-  detailsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 5,
-  },
-  detailIcon: {
-    fontSize: 14,
-    marginRight: 5,
-    color: '#512D6D',
-  },
-  detailText: {
-    fontSize: 14,
-    color: '#333',
-  },
-  status: {
-    fontSize: 12,
-    color: '#666',
-    marginTop: 5,
-  },
-  closeButton: {
-    alignSelf: 'center',
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#512D6D',
-    borderRadius: 8,
-  },
-  closeButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-});
-
-export default ReservationsModal;
