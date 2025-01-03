@@ -67,9 +67,9 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     borderWidth: 1,
     borderColor: colors.resolutionBlue,
-    borderRadius: 80,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    borderRadius: 50,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
     marginTop: 10,
   },
   newsText: {
