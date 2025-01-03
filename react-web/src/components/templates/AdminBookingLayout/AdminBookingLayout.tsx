@@ -1,18 +1,25 @@
-import { AdminSideBar, BookingDataTable, Header } from '@components/organisms';
+import { AdminSideBar, BookingDataTable, ConflictDataTable, Header } from '@components/organisms';
+import "./style.css" ;
 
 type AdminBookingLayoutProps = {
   username: string;
   userEmail: string;
   organization: string;
   part: string;
-  data: {
+  reservationsData : {
     id: number;
-    name: string;
-    description: string;
-    capacity: number;
-    floor: string;
-    establishment: string;
-    status: boolean;
+    day_reservation: string; 
+    start_time: string; 
+    end_time: string;
+    location_name: string;
+    status: string;
+  }[];
+  conflictsData : {
+    id: number;
+    day_reservation: string;
+    user_name: string;
+    location_name: string;
+    comment: string;
   }[];
 };
 
@@ -21,7 +28,8 @@ export const AdminBookingLayout = ({
   userEmail,
   organization,
   part,
-  data,
+  reservationsData,
+  conflictsData,
 }: AdminBookingLayoutProps) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -36,9 +44,12 @@ export const AdminBookingLayout = ({
           icon={undefined}        
           />
 
-        <main className="p-6">
+        <main className="mainContainerBooking">
           <BookingDataTable
-            data={data}
+            data={reservationsData}
+          />
+          <ConflictDataTable
+            data={conflictsData}
           />
         </main>
       </div>

@@ -11,14 +11,13 @@ import {
 import './style.css';
 import { useTranslation } from 'react-i18next';
 
-type BookingDataTableProps = {
+type ConclictDataTableProps = {
   data: {
     id: number;
-    day_reservation: string; // Date au format "YYYY-MM-DD"
-    start_time: string; // Heure de début au format "HH:MM"
-    end_time: string; // Heure de fin au format "HH:MM"
+    day_reservation: string;
+    user_name: string;
     location_name: string;
-    status: string; // Par exemple "Confirmée"
+    comment: string;
   }[];
 };
 
@@ -39,18 +38,17 @@ function CustomToolbar() {
   );
 }
 
-export const BookingDataTable = ({
+export const ConflictDataTable = ({
   data,
-}: BookingDataTableProps) => {
+}: ConclictDataTableProps) => {
   const { t } = useTranslation();
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 0.5 },
     { field: 'day_reservation', headerName: t('tables.headers.reservation.day_reservation'), flex: 1 },
-    { field: 'start_time', headerName:t('tables.headers.reservation.start_time'), flex: 1 },
-    { field: 'end_time', headerName: t('tables.headers.reservation.end_time'), flex: 1 },
-    { field: 'location_name', headerName: t('tables.headers.room.name'), flex: 2 },
-    { field: 'status', headerName: t('tables.headers.reservation.status'), flex: 1 }
+    { field: 'user_name', headerName:t('tables.headers.conflict.user'), flex: 1.5 },
+    { field: 'location_name', headerName: t('tables.headers.room.name'), flex: 1 },
+    { field: 'comment', headerName: t('tables.headers.conflict.comment'), flex: 2, cellClassName: 'wrap-text' }
   ];
 
   return (

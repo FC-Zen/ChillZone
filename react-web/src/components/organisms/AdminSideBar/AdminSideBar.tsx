@@ -54,7 +54,7 @@ export const AdminSideBar = () => {
       {/* Calendrier */}
       <NavigationButton
         icon={<Calendar color={colors.white} />}
-        onClick={() => handleIconClick('/admin-calendar')} // Ajustez cette route si nécessaire
+        onClick={() => handleIconClick(ROUTE.ADMIN_BOOKING)} // Ajustez cette route si nécessaire
       />
 
       {/* Bâtiments */}
