@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-interface User {
+
+type User = {
     userEmail: string;
     username: string;
     organization: string;
 }
-interface UserContextType {
+
+type UserContextType = {
     user: User | null;
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }

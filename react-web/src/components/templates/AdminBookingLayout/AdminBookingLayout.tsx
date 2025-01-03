@@ -45,7 +45,6 @@ export const AdminBookingLayout = ({
           userEmail={userEmail}
           organization={organization}
           part={part} 
-          icon={undefined}        
           />
         
         <main className="mainContainerBooking">

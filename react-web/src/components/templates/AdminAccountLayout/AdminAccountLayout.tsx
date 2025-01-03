@@ -42,7 +42,7 @@ export const AdminAccountLayout: React.FC<AdminAccountLayoutProps> = ({
           userName={username}
           userEmail={userEmail}
           organization={organization}
-          part={part} icon={undefined}        
+          part={part}        
         />
 
         <main className="p-6">

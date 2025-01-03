@@ -4,7 +4,6 @@ import { OwnerSidebar, Header } from '@components/organisms';
 type OwnerHomeLayoutProps = {
   username: string;
   userEmail: string;
-  icon: React.ReactNode; // Ajout pour inclure une icône
   organization: string;
   part: string;
   statsSection: React.ReactNode;
@@ -14,7 +13,6 @@ type OwnerHomeLayoutProps = {
 export const OwnerHomeLayout: React.FC<OwnerHomeLayoutProps> = ({
   username,
   userEmail,
-  icon,
   organization,
   part,
   statsSection,
@@ -28,7 +26,6 @@ export const OwnerHomeLayout: React.FC<OwnerHomeLayoutProps> = ({
       <Header
         userName={username}
         userEmail={userEmail}
-        icon={icon} // Inclure l'icône
         organization={organization}
         part={part}
       />

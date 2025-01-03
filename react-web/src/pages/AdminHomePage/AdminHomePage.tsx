@@ -67,7 +67,6 @@ export const AdminHomePage: React.FC = () => {
       userEmail={user?.userEmail ?? ""}
       username={user?.username ?? ""}
       organization={user?.organization ?? ""}
-      icon={<Graduation color={colors.black} />} // Icône passée correctement
       part={t('navbar.home')}
       statsSection={statsSection}
       mainContent={mainContent}

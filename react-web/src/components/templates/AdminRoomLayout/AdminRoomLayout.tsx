@@ -40,7 +40,6 @@ export const AdminRoomLayout = ({
           userEmail={userEmail}
           organization={organization}
           part={part} 
-          icon={undefined}        
           />
 
         <main className="p-6">
