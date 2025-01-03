@@ -10,9 +10,11 @@ import {
   AdminHomePage,
   OwnerHomePage,
 } from '@pages';
+import { UserProvider } from '@hooks/UserContext/UserContext';
 
 function App() {
   return (
+    <UserProvider>
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
@@ -29,6 +31,7 @@ function App() {
         <Route path="/owner-dashboard" element={<OwnerHomePage />} />
       </Routes>
     </Router>
+    </UserProvider>
   );
 }
 

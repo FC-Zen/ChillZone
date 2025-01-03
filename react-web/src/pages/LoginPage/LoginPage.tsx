@@ -3,12 +3,17 @@ import { CssBaseline } from '@mui/material';
 import { ConnectionTemplate, SnackBar } from '@components';
 import { authenticateUser } from '@services';
 import { useTranslation } from 'react-i18next';
-import { useNavigation } from '@hooks';
+import { useNavigation, useUser } from '@hooks';
 import { ROUTE } from '@enums';
 
 export const LoginPage: React.FC = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const { setUser } = useUser();
+
+  const validEmail = 'user@example.com';
+  const validName = 'Personne Réelle';
+  const validOrganization = 'Université Gustave Eiffel';
 
   const [formData, setFormData] = useState({
     login : "",
@@ -38,6 +43,11 @@ export const LoginPage: React.FC = () => {
         open: true,
         severity: 'success',
         message: 'Connexion réussie !',
+      });
+      setUser({
+        userEmail: validEmail,
+        username: validName,
+        organization: validOrganization,
       });
       navigation.navigate(ROUTE.ADMIN_DASHBOARD);
     } catch (error) {

@@ -33,7 +33,7 @@
 .label {
   font-size: 16px;
   margin-left: 10px;
-  color: black;
+  color: black!important;
 }
 
 .label:hover {

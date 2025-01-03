@@ -1,14 +1,10 @@
-import { AdminSideBar, Header } from '@components/organisms';
-import { RoomDataTable } from '@components/organisms/DataTables';
+import { AdminSideBar, BookingDataTable, Header } from '@components/organisms';
 
-type AdminRoomLayoutProps = {
+type AdminBookingLayoutProps = {
   username: string;
   userEmail: string;
   organization: string;
   part: string;
-  addBtn: () => void;
-  deleteBtn: (id: number) => void;
-  toggleBtn: (id: number, isActive: boolean) => void;
   data: {
     id: number;
     name: string;
@@ -20,16 +16,13 @@ type AdminRoomLayoutProps = {
   }[];
 };
 
-export const AdminRoomLayout = ({
+export const AdminBookingLayout = ({
   username,
   userEmail,
   organization,
   part,
-  addBtn,
-  deleteBtn,
-  toggleBtn,
   data,
-}: AdminRoomLayoutProps) => {
+}: AdminBookingLayoutProps) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       <AdminSideBar />
@@ -44,10 +37,7 @@ export const AdminRoomLayout = ({
           />
 
         <main className="p-6">
-          <RoomDataTable
-            addRoomBtn={addBtn}
-            editRoomBtn={deleteBtn}
-            toggleBtn={toggleBtn}
+          <BookingDataTable
             data={data}
           />
         </main>

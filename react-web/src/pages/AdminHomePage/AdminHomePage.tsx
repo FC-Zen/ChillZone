@@ -13,8 +13,11 @@ import {
   Graduation,
 } from '@components/atoms/Icons';
 import { colors } from '@theme';
+import { useUser } from '@hooks';
 
 export const AdminHomePage: React.FC = () => {
+  const { user } = useUser();
+  
   // Section des statistiques
   const statsSection = (
     <div className="flex flex-col gap-6">
@@ -61,10 +64,10 @@ export const AdminHomePage: React.FC = () => {
   // Rendu de la page avec le layout
   return (
     <AdminHomeLayout
-      username="Kellian Bredeau"
-      userEmail="kellianbre@outlook.fr"
+      userEmail={user?.userEmail ?? ""}
+      username={user?.username ?? ""}
+      organization={user?.organization ?? ""}
       icon={<Graduation color={colors.black} />} // Icône passée correctement
-      organization="Université Gustave Eiffel"
       part={t('navbar.home')}
       statsSection={statsSection}
       mainContent={mainContent}
