@@ -113,3 +113,71 @@ export const updateRoom = async (id: number, roomData: {
         throw new Error(error.message);
     }
 };
+
+/**
+ * Récupère la liste des salles depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getRooms = async () => {
+    try {
+        // Simule une réponse API
+        return;
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+/**
+ * Récupère la liste des utilisateurs depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getAccounts = async () => {
+    try {
+        // Simule une réponse API
+        return;
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+/**
+ * Récupère la liste des signalements depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getConflicts = async () => {
+    try {
+        // Simule une réponse API
+        return;
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+/**
+ * Récupère la liste des réservations depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getReservations = async () => {
+    try {
+        // Simule une réponse API
+        return;
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
+    }
+};
