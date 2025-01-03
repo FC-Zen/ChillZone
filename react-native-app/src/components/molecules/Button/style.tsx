@@ -28,10 +28,8 @@ export const ButtonWrapper: FC<ButtonProps> = ({
         style,
       ]}
     >
-      {variant === 'icon' && icon && (
-        <Icon {...icon}/>
-      )}
-      <Text style={[styles.text, { color: textColor, fontFamily: textFont, fontSize: textSize }]}>{title}</Text>{' '}
+      {variant === 'icon' && icon && <Icon {...icon} />}
+      <Text style={[styles.text, { color: textColor }]}>{title}</Text>{' '}
     </TouchableOpacity>
   );
 };

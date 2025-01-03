@@ -42,3 +42,4 @@ export { default as LinkendIn } from './LinkedIn';
 export { default as Ent } from './Ent';
 export { default as Web } from './Web';
 export { default as Money } from './Money';
+export {default as Profile } from './Profile';

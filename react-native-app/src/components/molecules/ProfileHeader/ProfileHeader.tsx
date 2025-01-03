@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@components/atoms';
+import { Profile, User } from '@components/atoms/Icons'; // Remplacez par l'import correct de votre bibliothèque d'icônes
 import { styles } from './style';
 
 export type ProfileHeaderProps = {
@@ -14,9 +15,9 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      {/* Avatar cliquable */}
+      {/* Icône cliquable */}
       <TouchableOpacity onPress={onOpenModal}>
-        <View style={styles.avatar} />
+        <Profile />
       </TouchableOpacity>
       <Text style={styles.name}>{name}</Text>
     </View>

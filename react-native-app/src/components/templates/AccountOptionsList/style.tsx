@@ -2,26 +2,36 @@ import { StyleSheet } from 'react-native';
 import { colors } from '@theme';
 
 export const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   lightContainer: {
-    backgroundColor: '#fff',
-    padding: 20,
+    flexGrow: 1,
+    backgroundColor: colors.white,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   darkContainer: {
-    backgroundColor: '#333',
-    padding: 20,
+    flexGrow: 1,
+    backgroundColor: colors.darkGray,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  card: {
+    backgroundColor: colors.resolutionBlue,
+    borderRadius: 15,
+    padding: 10,
+    marginBottom: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   newsButton: {
     alignSelf: 'center',
     borderWidth: 1,
     borderColor: colors.resolutionBlue,
-    borderRadius: 80,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    borderRadius: 50,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
     marginTop: 10,
   },
   newsText: {
