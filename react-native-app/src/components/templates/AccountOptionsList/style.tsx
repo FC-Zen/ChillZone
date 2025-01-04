@@ -25,6 +25,28 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  languageRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  languageContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  languageIconWrapper: {
+    marginRight: 10,
+  },
+  languageSelectorWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  flag: {
+    width: 20,
+    height: 15,
+    marginRight: 5,
+  },
   newsButton: {
     alignSelf: 'center',
     borderWidth: 1,

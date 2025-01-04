@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { Divider } from '@components/atoms/Divider';
 import { ToggleSwitch } from '@components/atoms/ToggleSwitch';
 import { Button } from '@components/molecules';
 import { colors } from '@theme';
+import { SelectorPolygon } from '@components/atoms/Icons';
 import fr from 'src/assets/fr.json';
 import en from 'src/assets/en.json';
 
@@ -36,6 +37,12 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
 }) => {
   const accountOptionsData = currentLanguage === 'fr' ? fr : en;
 
+  // Détermine l'image du drapeau en fonction de la langue actuelle
+  const flagImage =
+    currentLanguage === 'fr'
+      ? require('src/assets/Images/fr.png') // Drapeau français
+      : require('src/assets/Images/en.png'); // Drapeau anglais
+
   const toggleLanguage = () => {
     const newLang = currentLanguage === 'fr' ? 'en' : 'fr';
     onChangeLanguage(newLang);
@@ -43,7 +50,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
 
   return (
     <View style={isDarkTheme ? styles.darkContainer : styles.lightContainer}>
-      {/* Section Réservations  */}
+      {/* Section Réservations */}
       <View style={styles.card}>
         <Button
           title={accountOptionsData.headers.recapReservation}
@@ -102,6 +109,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       {/* Section Thème et Langue */}
       <View style={styles.card}>
         <View style={styles.row}>
+          {/* Bouton Thème */}
           <Button
             title={
               isDarkTheme
@@ -112,22 +120,30 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
             variant="icon"
             color={colors.resolutionBlue}
             textColor={colors.white}
-            onPress={onToggleTheme}
+            //il manque le onpress c'est pour ça qu'il y'a une erreur rouge
           />
-          <ToggleSwitch isOn={isDarkTheme} onToggle={onToggleTheme} />
+          {/* ToggleSwitch */}
+          <ToggleSwitch value={isDarkTheme} onToggle={onToggleTheme} />
         </View>
-        <Button
-          title={`${accountOptionsData.buttons.profile.changelng} (${
-            currentLanguage === 'fr'
-              ? accountOptionsData.buttons.profile.fr
-              : accountOptionsData.buttons.profile.en
-          })`}
-          icon={{ name: 'Setting', color: colors.white }}
-          variant="icon"
-          color={colors.resolutionBlue}
-          textColor={colors.white}
-          onPress={toggleLanguage}
-        />
+        {/* Bouton Langue */}
+        <TouchableOpacity style={styles.languageRow} onPress={toggleLanguage}>
+          <View style={styles.languageContent}>
+            <View style={styles.languageIconWrapper}>
+              <Button
+                title={accountOptionsData.buttons.profile.changelng}
+                icon={{ name: 'Setting', color: colors.white }}
+                variant="icon"
+                color="transparent"
+                textColor={colors.white}
+                //il manque le onpress c'est pour ça qu'il y'a une erreur rouge
+              />
+            </View>
+          </View>
+          <View style={styles.languageSelectorWrapper}>
+            <Image source={flagImage} style={styles.flag} />
+            <SelectorPolygon width={10} height={9} color={colors.white} />
+          </View>
+        </TouchableOpacity>
       </View>
 
       {/* Section Actualités */}

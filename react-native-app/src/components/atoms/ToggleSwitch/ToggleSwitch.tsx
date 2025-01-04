@@ -1,26 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Switch } from 'react-native';
 import { styles } from './style';
 import { colors } from '@theme';
 
 export type ToggleSwitchProps = {
   value: boolean;
-  onChange: (newValue: boolean) => void;
+  onToggle: (newValue: boolean) => void;
 };
 
-export const ToggleSwitch = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
-
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-
+export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ value, onToggle }) => {
   return (
     <View style={styles.container}>
       <Switch
-        trackColor={{ false: colors.darkCyan, true: colors.aquaDeep }} // Couleurs personnalisées
-        thumbColor={isEnabled ? '#fff' : '#f4f3f4'}
+        trackColor={{ false: colors.darkCyan, true: colors.aquaDeep }}
+        thumbColor={value ? '#fff' : '#f4f3f4'}
         ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
+        onValueChange={onToggle}
+        value={value}
       />
     </View>
   );
