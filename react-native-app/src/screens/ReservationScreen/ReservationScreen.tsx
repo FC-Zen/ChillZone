@@ -11,12 +11,33 @@ export const ReservationScreen = () => {
       <TopBar />
       <PageHeader title={t('headers.reservation')} variant="default" />
       <Input
+        placeholder="Search"
+        icon="Cube"
+        subIcon="Lock"
         variant="select"
-        icon="Search"
-        value=""
-        onChangeText={() => {}}
-        placeholder={t('fields.room.type')}
+        data={['Option 1', 'Option 2']}
+        onSelect={(selected) => console.log('Selected:', selected)}
+        style={{ marginTop: 20 }}
       />
+      <Input
+        placeholder="Search"
+        icon="Cube"
+        subIcon="Lock"
+        variant="select"
+        data={['Option 1', 'Option 2']}
+        onSelect={(selected) => console.log('Selected:', selected)}
+        style={{ marginTop: 20 }}
+      />
+      <Input
+        placeholder="Search"
+        icon="Cube"
+        subIcon="Lock"
+        variant="select"
+        data={['Option 1', 'Option 2']}
+        onSelect={(selected) => console.log('Selected:', selected)}
+        style={{ marginTop: 20 }}
+      />
+
       <BottomNavbar activeIcon="Reserve" />
     </View>
   );

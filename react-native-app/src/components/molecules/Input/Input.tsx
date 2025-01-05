@@ -1,25 +1,35 @@
 import React, { FC, useState } from 'react';
-import { StyleProp, TextInput, View, ViewStyle, Text } from 'react-native';
+import {
+  StyleProp,
+  TextInput,
+  View,
+  ViewStyle,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { InputWrapper, InputIcon, InputStyles } from './style';
 import { Icon, IconProps } from '@components/atoms';
 import { colors } from '@theme';
 
 export type InputProps = {
   placeholder: string;
-  icon?: IconProps['name']; // Icône à gauche
-  onChangeText: (text: string) => void;
-  value: string;
+  icon?: IconProps['name'];
+  subIcon?: IconProps['name'];
+  onChangeText?: (text: string) => void;
+  value?: string;
   variant?: 'default' | 'password' | 'subtitled' | 'search' | 'select';
   style?: StyleProp<ViewStyle>;
   subtitle?: string;
   subtitleColor?: string;
   textSize?: number;
   data?: string[];
-  onFilter?: (filteredData: string) => void; // Pour le filtrage
+  onFilter?: (filteredData: string) => void;
+  onSelect?: (selected: string) => void;
 };
 
 export const Input: FC<InputProps> = ({
   icon,
+  subIcon,
   onChangeText,
   placeholder,
   value,
@@ -29,25 +39,37 @@ export const Input: FC<InputProps> = ({
   subtitleColor,
   textSize,
   onFilter,
+  data = [],
+  onSelect,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(
     variant === 'password'
   );
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(value || '');
 
   const handleChange = (text: string) => {
-    onChangeText(text);
+    if (variant === 'select') return;
+    onChangeText?.(text);
     if (onFilter) {
       onFilter(text);
     }
   };
 
+  const handleSelect = (item: string) => {
+    setSelectedValue(item);
+    setDropdownVisible(false);
+    onSelect?.(item);
+  };
+
   return (
     <View
-      style={
-        variant === 'subtitled' && subtitle !== ''
-          ? InputStyles.subtitledContainer
-          : {}
-      }
+      style={[
+        InputStyles.container,
+        variant === 'subtitled' &&
+          subtitle !== '' &&
+          InputStyles.subtitledContainer,
+      ]}
     >
       <InputWrapper
         style={style}
@@ -55,34 +77,63 @@ export const Input: FC<InputProps> = ({
         onChangeText={handleChange}
         value={value}
       >
-        {icon && variant !== 'select' && (
+        {icon && (
           <InputIcon>
             <Icon name={icon} />
           </InputIcon>
         )}
-
-        <TextInput
-          style={[InputStyles.input, textSize ? { fontSize: textSize } : {}]}
-          placeholder={placeholder}
-          onChangeText={handleChange}
-          value={value}
-          secureTextEntry={isPasswordVisible}
-          placeholderTextColor={colors.silver}
-        />
-
-        {variant === 'select' && (
-          <InputIcon>
-            {icon && <Icon name={icon} />}
+        {variant === 'select' ? (
+          <TouchableOpacity
+            style={[InputStyles.input, InputStyles.selectInput]}
+            onPress={() => setDropdownVisible(!isDropdownVisible)}
+          >
+            <Text
+              style={{
+                flex: 1,
+                color: selectedValue ? colors.black : colors.silver,
+                fontSize: textSize || InputStyles.input.fontSize,
+              }}
+            >
+              {selectedValue || placeholder}
+            </Text>
             <Icon name="CarretUp" />
-          </InputIcon>
+          </TouchableOpacity>
+        ) : (
+          <TextInput
+            style={[InputStyles.input, textSize ? { fontSize: textSize } : {}]}
+            placeholder={placeholder}
+            onChangeText={handleChange}
+            value={value}
+            secureTextEntry={isPasswordVisible}
+            placeholderTextColor={colors.silver}
+          />
         )}
       </InputWrapper>
-
       {variant === 'subtitled' && subtitle !== '' && (
         <Text style={{ color: subtitleColor }}>{subtitle}</Text>
+      )}
+      {variant === 'select' && isDropdownVisible && (
+        <View style={InputStyles.dropdown}>
+          {data.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={InputStyles.dropdownItem}
+              onPress={() => handleSelect(item)}
+            >
+              <View style={InputStyles.dropdownRow}>
+                {subIcon && (
+                  <Icon
+                    name={subIcon}
+                    color={colors.resolutionBlue}
+                    style={InputStyles.subIcon}
+                  />
+                )}
+                <Text style={InputStyles.dropdownText}>{item}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
       )}
     </View>
   );
 };
-
-export default Input;
