@@ -97,6 +97,25 @@ export const ReservationScreen = () => {
           onPress: () => console.log('Reserve button pressed'),
         }}
       />
+      <Input
+        placeholder="Search"
+        icon="Cube"
+        subIcon="Lock"
+        variant="select"
+        data={['Option 1', 'Option 2']}
+        onSelect={(selected) => console.log('Selected:', selected)}
+        style={{ marginTop: 20 }}
+      />
+      <Input
+        placeholder="Search"
+        icon="Cube"
+        subIcon="Lock"
+        variant="select"
+        data={['Option 1', 'Option 2']}
+        onSelect={(selected) => console.log('Selected:', selected)}
+        style={{ marginTop: 20 }}
+      />
+
       <BottomNavbar activeIcon="Reserve" />
     </View>
   );

@@ -22,7 +22,7 @@ export const InputStyles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 25,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     gap: 15,
     borderRadius: 10,
     borderWidth: 2,
