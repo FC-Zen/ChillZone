@@ -13,6 +13,7 @@ import {
   PaymentScreen,
   DispenserScreen,
   DispenserModal,
+  FinalPaymentScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 import { UserProvider } from '@contexts/AppContrext';
@@ -24,6 +25,11 @@ export const RootNavigator = () => {
     <UserProvider>
       <NavigationContainer>
         <Stack.Navigator>
+        <Stack.Screen
+            name={ROUTE.FINAL_PAYMENT}
+            component={FinalPaymentScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name={ROUTE.LOGIN_SCREEN}
             component={LoginScreen}
