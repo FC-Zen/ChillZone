@@ -36,6 +36,7 @@ export type RouteParamList = {
   FinalPaymentScreen: undefined;
   ReservationScreen: undefined;
   AccountScreen: undefined;
+  FinalPaymentScreen: undefined;
 };
 
 // Typage des propriétés des écrans
