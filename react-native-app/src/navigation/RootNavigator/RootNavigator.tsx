@@ -18,6 +18,7 @@ import {
   ReservationScreen,
   AccountScreen,
   LinksScreen,
+  FinalPaymentScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -120,6 +121,11 @@ export const RootNavigator = () => {
             <Stack.Screen
               name={ROUTE.FINAL_PAYMENT}
               component={FinalPaymentScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={ROUTE.LINKS}
+              component={LinksScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen
