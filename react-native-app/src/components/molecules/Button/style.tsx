@@ -13,6 +13,8 @@ export const ButtonWrapper: FC<ButtonProps> = ({
   icon,
   color,
   textColor,
+  textSize,
+  textFont,
 }) => {
   return (
     <TouchableOpacity
@@ -29,7 +31,7 @@ export const ButtonWrapper: FC<ButtonProps> = ({
       {variant === 'icon' && icon && (
         <Icon {...icon}/>
       )}
-      <Text style={[styles.text, { color: textColor }]}>{title}</Text>{' '}
+      <Text style={[styles.text, { color: textColor, fontFamily: textFont, fontSize: textSize }]}>{title}</Text>{' '}
     </TouchableOpacity>
   );
 };

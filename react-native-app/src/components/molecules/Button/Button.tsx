@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { ButtonWrapper } from './style';
 import { IconProps } from '@components/atoms';
-import { colors } from '@theme';
+import { colors, typography } from '@theme';
 
 export type ButtonProps = {
   title: string;
@@ -12,6 +12,8 @@ export type ButtonProps = {
   icon?: IconProps;
   color?: string;
   textColor?: string;
+  textSize?: number;
+  textFont?: string;
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -22,6 +24,8 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
   color,
   textColor = colors.white,
+  textSize = typography.h3.fontSize,
+  textFont = typography.h1.fontFamily,
 }) => {
   return (
     <ButtonWrapper
@@ -32,6 +36,8 @@ export const Button: React.FC<ButtonProps> = ({
       icon={icon}
       color={color}
       textColor={textColor}
+      textSize={textSize}
+      textFont={textFont}
     />
   );
 };
