@@ -125,7 +125,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
             //il manque le onpress c'est pour ça qu'il y'a une erreur rouge
           />
           {/* ToggleSwitch */}
-          <ToggleSwitch value={isDarkTheme} onToggle={onToggleTheme} />
+          <ToggleSwitch value={isDarkTheme} onChange={onToggleTheme} />
         </View>
         {/* Bouton Langue */}
         <TouchableOpacity style={styles.languageRow} onPress={toggleLanguage}>
