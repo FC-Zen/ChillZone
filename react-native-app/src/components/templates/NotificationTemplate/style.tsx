@@ -6,6 +6,6 @@ export const styles = StyleSheet.create({
     display: 'flex',
     width: '100%',
     height: '80%',
-    gap: 20,
+    gap: 60,
   },
 });

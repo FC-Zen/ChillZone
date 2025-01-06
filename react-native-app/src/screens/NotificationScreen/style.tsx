@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
     height: layout.screen.height,
     backgroundColor: colors.white,
     display: 'flex',
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
