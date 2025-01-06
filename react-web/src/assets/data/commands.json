@@ -2,7 +2,7 @@
     {
         "id": 1,
         "user_name": "Jean Dupont",
-        "command_status": "Livrée",
+        "command_status": "In progress",
         "creation_date": "2023-10-01T12:30:00",
         "total_amount": 45.75,
         "pickup_time": "2023-10-01T13:00:00",
@@ -10,7 +10,7 @@
         "lines": [
             {
                 "line_id": 1,
-                "quantity": 2,
+                "quantity": 1,
                 "meal_name": "Salade César",
                 "menu_name": "Menu Déjeuner"
             },
@@ -19,13 +19,31 @@
                 "quantity": 1,
                 "meal_name": "Tiramisu",
                 "menu_name": "Menu Déjeuner"
+            },
+            {
+                "line_id": 3,
+                "quantity": 2,
+                "meal_name": "Cookies chocolat",
+                "menu_name": ""
+            },
+            {
+                "line_id": 4,
+                "quantity": 1,
+                "meal_name": "Burger maison",
+                "menu_name": "Menu Burger"
+            },
+            {
+                "line_id": 5,
+                "quantity": 1,
+                "meal_name": "Frites",
+                "menu_name": "Menu Burger"
             }
         ]
     },
     {
         "id": 2,
         "user_name": "Marie Curie",
-        "command_status": "En cours",
+        "command_status": "Ready",
         "creation_date": "2023-10-01T12:45:00",
         "total_amount": 30.00,
         "pickup_time": "2023-10-01T13:15:00",
@@ -48,7 +66,7 @@
     {
         "id": 3,
         "user_name": "Pierre Martin",
-        "command_status": "Annulée",
+        "command_status": "Completed",
         "creation_date": "2023-10-02T11:00:00",
         "total_amount": 50.00,
         "pickup_time": "2023-10-02T11:30:00",
@@ -65,7 +83,7 @@
     {
         "id": 4,
         "user_name": "Sophie Durand",
-        "command_status": "Livrée",
+        "command_status": "In progress",
         "creation_date": "2023-10-02T12:00:00",
         "total_amount": 22.75,
         "pickup_time": "2023-10-02T12:30:00",
@@ -88,7 +106,7 @@
     {
         "id": 5,
         "user_name": "Lucie Bernard",
-        "command_status": "En cours",
+        "command_status": "Ready",
         "creation_date": "2023-10-03T13:15:00",
         "total_amount": 15.50,
         "pickup_time": "2023-10-03T13:45:00",

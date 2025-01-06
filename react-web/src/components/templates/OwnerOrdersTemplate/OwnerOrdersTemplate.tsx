@@ -1,8 +1,9 @@
-import React from 'react';
-import { OwnerSidebar, Header, OrdersDataTable } from '@components/organisms';
-import { StatCard } from '@components/molecules';
-import { User } from '@components/atoms/Icons';
-import { colors } from '@theme';
+import React from "react";
+import { OwnerSidebar, Header, OrdersDataTable } from "@components/organisms";
+import { StatCard } from "@components/molecules";
+import { User } from "@components/atoms/Icons";
+import { colors } from "@theme";
+import "./style.css"; // Importation du fichier CSS
 
 type OwnerHomeLayoutProps = {
   username: string;
@@ -10,17 +11,12 @@ type OwnerHomeLayoutProps = {
   organization: string;
   part: string;
   statsSection: {
-    commandsNow: { 
-      name: string;
-      value: string | number; };
-    commandsToday: { 
-      name: string;
-      value: string | number; };
-    commandsTodo: { 
-      name: string;
-      value: string | number; };
+    commandsNow: { name: string; value: string | number };
+    commandsToday: { name: string; value: string | number };
+    commandsTodo: { name: string; value: string | number };
   };
-  data : any;
+  data: any;
+  handleClick : (id: number) => void;
 };
 
 export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
@@ -30,11 +26,12 @@ export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
   part,
   statsSection,
   data,
+  handleClick
 }) => (
-  <div className="flex min-h-screen bg-gray-100">
+  <div className="Pagecontainer">
     <OwnerSidebar />
 
-    <div className="flex-1">
+    <div className="content">
       <Header
         userName={username}
         userEmail={userEmail}
@@ -42,32 +39,29 @@ export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
         part={part}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
-
-        <div className="lg:col-span-2 space-y-6">
-        <OrdersDataTable   
-          data={data}
-        />
+      <div className="main-content">
+        <div className="table-container">
+          <OrdersDataTable data={data} 
+          handleClick={handleClick}/>
         </div>
 
-        <div className="space-y-6">
+        <div className="stats-section">
           <StatCard
             icon={<User color={colors.white} />}
             title={statsSection.commandsNow.name}
             value={statsSection.commandsNow.value}
           />
-            <StatCard
+          <StatCard
             icon={<User color={colors.white} />}
             title={statsSection.commandsToday.name}
             value={statsSection.commandsToday.value}
           />
-            <StatCard
+          <StatCard
             icon={<User color={colors.white} />}
             title={statsSection.commandsTodo.name}
             value={statsSection.commandsTodo.value}
           />
         </div>
-
       </div>
     </div>
   </div>
