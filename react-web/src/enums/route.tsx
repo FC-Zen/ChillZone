@@ -8,5 +8,6 @@ export enum ROUTE {
   ADMIN_ACCOUNTS = '/admin-accounts',
   ADMIN_ROOMS = '/admin-rooms',
   OWNER_DASHBOARD = '/owner-dashboard',
-  ADMIN_BOOKING = '/admin-booking'
+  ADMIN_BOOKING = '/admin-booking',
+  OWNER_ORDERS = '/owner-orders'
 }

@@ -9,7 +9,8 @@ import {
   AdminRoomsPage,
   AdminHomePage,
   OwnerHomePage,
-  AdminBookingPage
+  AdminBookingPage,
+  OwnerOrdersPage
 } from '@pages';
 import { UserProvider } from '@hooks/UserContext/UserContext';
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/admin-booking" element={<AdminBookingPage />} />
 
         <Route path="/owner-dashboard" element={<OwnerHomePage />} />
+        <Route path="/owner-orders" element={<OwnerOrdersPage />} />
       </Routes>
     </Router>
     </UserProvider>

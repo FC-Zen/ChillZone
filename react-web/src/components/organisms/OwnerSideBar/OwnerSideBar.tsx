@@ -46,7 +46,7 @@ export const OwnerSidebar = () => {
       {/* Produits */}
       <NavigationButton
         icon={<Package color={colors.white} />}
-        onClick={() => handleIconClick('/owner-products')} // Ajuster cette route si nécessaire
+        onClick={() => handleIconClick(ROUTE.OWNER_ORDERS)} // Ajuster cette route si nécessaire
       />
     </div>
   );

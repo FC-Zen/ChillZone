@@ -26,3 +26,5 @@ export { default as Graduation } from './Graduation';
 export { default as Check } from './Check';
 export { default as Exclamation } from './Exclamation';
 export { default as ExclamationFilled } from './ExclamationFilled';
+export { default as Eye } from './Eye';
+export { default as Tablet } from './Tablet';

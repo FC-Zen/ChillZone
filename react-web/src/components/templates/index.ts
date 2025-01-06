@@ -9,3 +9,4 @@ export { AdminAccountLayout } from './AdminAccountLayout';
 export { AdminRoomLayout } from './AdminRoomLayout';
 export { OwnerHomeLayout } from './OwnerAccountLayout';
 export { AdminHomeLayout } from './AdminHomeLayout';
+export { OwnerOrdersTemplate } from './OwnerOrdersTemplate';

@@ -8,3 +8,4 @@ export { Header } from './Header';
 export { Logo } from './Logo';
 export {Avatar} from './Avatar';
 export { HeaderIcon } from './HeaderIcon';
+export { ButtonIcon } from "./ButtonIcon";

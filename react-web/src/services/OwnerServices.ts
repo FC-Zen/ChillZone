@@ -1,0 +1,51 @@
+import axios from 'axios';
+
+
+/**
+ * Récupère la liste des commandes depuis l'API.
+ * 
+ * @throws {Error} Si la requête échoue.
+ * @returns {Promise<Array>} Liste des commandes.
+ */
+export const fetchCommands = async () => {
+  try {
+    //AXIOS
+  } catch (error: any) {
+    console.error('Erreur lors de la récupération des commandes:', error.message);
+    throw new Error(error.message);
+  }
+};
+
+// services/commandsService.ts
+
+/**
+ * Met à jour le statut d'une commande dans l'API.
+ * 
+ * @param {number} id L'ID de la commande à mettre à jour.
+ * @param {string} status Le nouveau statut de la commande.
+ * @throws {Error} Si la requête échoue.
+ * @returns {Promise<any>} Réponse de l'API.
+ */
+
+export const updateCommandStatus = async (id: number, status: string) => {
+    try {
+/*       const response = await fetch(`${API_BASE_URL}/commands/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ command_status: status }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la mise à jour du statut de la commande: ${response.statusText}`);
+      }
+      
+      const updatedCommand = await response.json();
+      return updatedCommand; // Retourne la commande mise à jour */
+    } catch (error: any) {
+      console.error('Erreur lors de la mise à jour de la commande:', error.message);
+      throw new Error(error.message);
+    }
+  };
+  
