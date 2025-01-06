@@ -30,8 +30,11 @@ export const OwnerOrdersPage: React.FC = () => {
         command.command_status === "Completed" ? t('status.Completed') : 
         command.command_status
     }));
-    setCommandsData(updatedCommands);
-  }, [commandsData]);
+  
+    if (JSON.stringify(updatedCommands) !== JSON.stringify(commandsData)) {
+      setCommandsData(updatedCommands);
+    }
+  }, [commandsData, t]);
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedCommand, setSelectedCommand] = useState<null | {
