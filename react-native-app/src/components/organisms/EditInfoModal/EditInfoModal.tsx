@@ -34,7 +34,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({
         <View style={styles.modal}>
           {/* Bouton de fermeture */}
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Cross width={15} height={15} color={colors.black} />
+            <Cross width={15} height={15} color={colors.white} />
           </TouchableOpacity>
 
           {/* Titre */}

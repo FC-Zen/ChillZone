@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
+
   darkContainer: {
     flexGrow: 1,
     backgroundColor: colors.darkGray,
@@ -16,8 +17,8 @@ export const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: colors.resolutionBlue,
-    borderRadius: 15,
-    padding: 10,
+    borderRadius: 20,
+    padding: 5,
     marginBottom: 10,
   },
   row: {
@@ -43,10 +44,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   flag: {
-    width: 20,
-    height: 15,
+    width: 39,
+    height: 22,
     marginRight: 5,
   },
+
   newsButton: {
     alignSelf: 'center',
     borderWidth: 1,
