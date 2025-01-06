@@ -22,6 +22,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   noMargin,
 }) => {
   const navigation = useNavigation(); // Utilisation de votre hook personnalisé pour la navigation
+  const headerHeight = 60; // Définir une valeur pour headerHeight
 
   return (
     <View
