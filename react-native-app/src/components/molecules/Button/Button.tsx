@@ -6,7 +6,7 @@ import { colors, typography } from '@theme';
 
 export type ButtonProps = {
   title: string;
-  onPress: () => void | false;
+  onPress?: () => void | false;
   variant?: 'primary' | 'secondary' | 'icon';
   style?: StyleProp<ViewStyle>;
   icon?: IconProps;

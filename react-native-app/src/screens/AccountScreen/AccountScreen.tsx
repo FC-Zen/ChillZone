@@ -10,8 +10,8 @@ import {
   ReservationsModal,
 } from '@components/organisms';
 import ordersData from 'src/assets/data/commands.json';
-import i18next from 'i18next';
 import { styles } from './style';
+import { translationService } from '@services';
 
 export const AccountScreen: React.FC = () => {
   // États pour les modales
@@ -24,19 +24,18 @@ export const AccountScreen: React.FC = () => {
 
   // États pour le thème sombre et la langue
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  // Gestion du changement de langue
   const [currentLanguage, setCurrentLanguage] = useState(
-    i18next.language || 'fr'
+    translationService.getCurrentLanguage()
   );
+
+  const handleChangeLanguage = () => {
+    translationService.toggleLanguage();
+  };
 
   // Gestion du thème sombre
   const toggleTheme = () => setIsDarkTheme((prev) => !prev);
-
-  // Gestion du changement de langue
-  const handleChangeLanguage = () => {
-    const newLanguage = currentLanguage === 'fr' ? 'en' : 'fr';
-    setCurrentLanguage(newLanguage);
-    i18next.changeLanguage(newLanguage);
-  };
 
   return (
     <SafeAreaView

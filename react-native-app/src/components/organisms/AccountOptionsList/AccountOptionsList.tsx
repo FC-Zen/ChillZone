@@ -54,7 +54,6 @@ export const AccountOptionsList: React.FC = () => {
         textColor={colors.white}
         onPress={() => setReservationsModalOpen(true)}
       />
-      <Divider />
       <Button
         title="Mes commandes"
         icon={{ name: 'Hamburger', color: colors.white }}
@@ -63,7 +62,6 @@ export const AccountOptionsList: React.FC = () => {
         textColor={colors.white}
         onPress={() => setOrderModalOpen(true)}
       />
-      <Divider />
       <Button
         title="Modifier mes informations"
         icon={{ name: 'Following', color: colors.white }}
@@ -72,7 +70,6 @@ export const AccountOptionsList: React.FC = () => {
         textColor={colors.white}
         onPress={() => setEditInfoModalOpen(true)}
       />
-      <Divider />
       <Button
         title="Modifier mon mot de passe"
         icon={{ name: 'Lock', color: colors.white }}
@@ -81,7 +78,6 @@ export const AccountOptionsList: React.FC = () => {
         textColor={colors.white}
         onPress={() => setPasswordModalOpen(true)}
       />
-      <Divider />
       <Button
         title="Réinitialiser mon mot de passe"
         icon={{ name: 'Refresh', color: colors.white }}
@@ -90,7 +86,6 @@ export const AccountOptionsList: React.FC = () => {
         textColor={colors.white}
         onPress={() => setResetModalOpen(true)}
       />
-      <Divider />
       <View style={styles.row}>
         <Button
           title={
@@ -106,7 +101,6 @@ export const AccountOptionsList: React.FC = () => {
         />
         <ToggleSwitch value={isDarkTheme} onChange={handleToggleTheme} />
       </View>
-      <Divider />
       <Button
         title={`Changer de langue (${currentLanguage === 'fr' ? 'FR' : 'EN'})`}
         icon={{ name: 'Setting', color: colors.white }}
@@ -115,7 +109,6 @@ export const AccountOptionsList: React.FC = () => {
         textColor={colors.white}
         onPress={handleChangeLanguage}
       />
-      <Divider />
       <TouchableOpacity
         style={styles.newsButton}
         onPress={() => setLinksModalOpen(true)}
@@ -131,6 +124,14 @@ export const AccountOptionsList: React.FC = () => {
       <EditInfoModal
         isOpen={isEditInfoModalOpen}
         onClose={() => setEditInfoModalOpen(false)}
+        onConfirm={function (data: {
+          firstName: string;
+          lastName: string;
+          phone: string;
+          email: string;
+        }): void {
+          throw new Error('Function not implemented.');
+        }}
       />
       <PasswordModal
         isOpen={isPasswordModalOpen}

@@ -9,12 +9,14 @@ import fr from 'src/assets/fr.json';
 import en from 'src/assets/en.json';
 
 import { styles } from './style';
+import { translationService } from '@services';
+import { useTranslation } from 'react-i18next';
 
 export type AccountOptionsListProps = {
   isDarkTheme: boolean;
-  currentLanguage: 'fr' | 'en';
+  currentLanguage: string;
   onToggleTheme: () => void;
-  onChangeLanguage: (newLang: 'fr' | 'en') => void;
+  onChangeLanguage: () => void;
   onOpenReservationsModal: () => void;
   onOpenOrdersModal: () => void;
   onOpenEditInfoModal: () => void;
@@ -148,9 +150,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
 
       {/* Section Actualités */}
       <TouchableOpacity style={styles.newsButton} onPress={onOpenLinksModal}>
-        <Text style={styles.newsText}>
-          {accountOptionsData.buttons.profile.actus}
-        </Text>
+        <Text style={styles.newsText}>{t('buttons.profile.actus')}</Text>
       </TouchableOpacity>
     </View>
   );
