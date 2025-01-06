@@ -10,3 +10,12 @@ export const getTotalAmount = async () => {
     const response = PaymentInfos;
     return PaymentInfos[0].total_amount;
 }
+
+export const getPaymentId = async () => {
+    // Simule une requête API
+    /*
+    const response = await axios.get('https://api.exemple.com/paymentId');
+    return response.data;
+    */
+    return PaymentInfos[0].command_id;
+}

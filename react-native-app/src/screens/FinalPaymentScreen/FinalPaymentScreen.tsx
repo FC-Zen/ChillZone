@@ -9,6 +9,8 @@ import { styles } from "./style";
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { Asset } from 'expo-asset';
+import { getPaymentId } from "@services/PaymentServices";
+import { useEffect, useState } from "react";
 
 export const FinalPaymentScreen = () => {
     const { t } = useTranslation();
@@ -57,12 +59,25 @@ export const FinalPaymentScreen = () => {
                 fileUri
             );
             await saveFile(fileUri, 'qrcode.png', 'image/png');
-            Alert.alert('Succès', `Image copiée dans : ${fileUri}`);
+            Alert.alert('Succès', `Image copiée dans votre dossier`);
         } catch (error) {
             console.error('Erreur de téléchargement', error);
             Alert.alert('Erreur', 'Échec du téléchargement.');
         }
     };
+
+    const [id, setId] = useState(15461);
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await getPaymentId(); // Récup json 1st id
+            console.log(response);
+            if (response) {
+                setId(response);
+            }
+        };
+        fetchData();
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -70,7 +85,7 @@ export const FinalPaymentScreen = () => {
                 headerTitle={t('headers.finalCommand')}
                 navigateToHome={() => navigation.navigate(ROUTE.HOME)} 
                 qrImagelink={image} 
-                commandConfirmation={t('cart.confirmText')}
+                commandConfirmation={t('cart.confirmText', { id: id })}
                 downloadButtonTitle={t('buttons.actions.qrCode')}
                 onDownloadPress={onDownloadPress} 
                 bottomCommandInfo={t('cart.readyText')}

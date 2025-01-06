@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 
+// CONTEXTE POUR LE USER
+
 export type UserContextType = {
   userName: string | null;
   setUserName: (name: string) => void;
@@ -26,6 +28,8 @@ export const useUser = () => {
   }
   return context;
 };
+
+// CONTEXTE POUR LA COMMANDE
 
 export type CommandContextType = {
   commandId: string | null;

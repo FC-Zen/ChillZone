@@ -6,7 +6,7 @@ import { useHeaderHeight } from '@react-navigation/elements';
 
 export type PageHeaderProps = {
   title: string;
-  variant: 'default' | 'back';
+  variant: 'default' | 'back' | 'cross';
   icon?: IconProps; // Rendre icon optionnel
   onBackPress?: () => void;
   noMargin?: boolean;

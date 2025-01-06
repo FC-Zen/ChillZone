@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { PaymentTemplate } from "@components/templates";
 import { useTranslation } from "react-i18next";
 import { colors } from "@theme";
+import { useNavigation } from "@hooks";
+import { ROUTE } from "@enums";
 
 
 export const PaymentScreen = () => {
@@ -11,7 +13,7 @@ export const PaymentScreen = () => {
     const [cardName, setCardName] = useState("");
     const [cardExpiration, setCardExpiration] = useState("");
     const [cardCVC, setCardCVC] = useState("");
-
+    const navigation = useNavigation();
 
     return (
         <PaymentTemplate
@@ -42,7 +44,7 @@ export const PaymentScreen = () => {
             placeholderCardName={t("fields.card.name")}
             placeholderCardExpiration={t("fields.card.date")}
             placeholderCardCVC={t("fields.card.code")}
-            onPay={() => {}}
+            onPay={() => navigation.navigate(ROUTE.FINAL_PAYMENT)}
             paymentInfosText={t("cart.infoPay")}
         />
     );

@@ -31,7 +31,7 @@ export const FinalPaymentTemplate: React.FC<FinalPaymentTemplateProps> = ({
                 onBackPress={navigateToHome} 
                 variant='back' 
                 icon={{ 
-                    name: "BackArrow", 
+                    name: "Cross", 
                     color: colors.black 
                 }}
                 noMargin={true}

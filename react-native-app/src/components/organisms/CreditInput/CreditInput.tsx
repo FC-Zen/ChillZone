@@ -59,12 +59,8 @@ export const CreditInput: React.FC<CreditInputProps> = ({
         <View style={styles.container}>
             <View style={styles.formContainer}>
                 <IconWithText 
-                    icon={
-                        {
-                            name: formTitleIcon,
-                            color: formTitleIconColor,
-                        }
-                    } 
+                    icon={formTitleIcon}
+                    iconColor={colors.white}
                     text={formTitle}
                     textColor={colors.white}
                     variant='horizontal'
