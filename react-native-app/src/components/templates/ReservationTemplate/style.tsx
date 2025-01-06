@@ -13,17 +13,26 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: typography.h3.fontSize,
     color: colors.black,
-    paddingHorizontal: 51,
     justifyContent: 'flex-start',
     width: layout.screen.width,
-    marginBottom: 20,
-  },
-  inputContainer: {
-    marginBottom: 20,
+    fontFamily: typography.h3.fontFamily,
   },
   separator: {
     height: 1,
     backgroundColor: colors.darkCyan,
-    marginTop: 10,
+    marginVertical: 25,
+  },
+  scrollView: {
+    width: '100%',
+  },
+  scrollContainer: {
+    paddingBottom: 100,
+  },
+  titleSep: {
+    fontSize: typography.h3.fontSize,
+    color: colors.black,
+    justifyContent: 'flex-start',
+    width: layout.screen.width,
+    fontFamily: typography.h3.fontFamily,
   },
 });

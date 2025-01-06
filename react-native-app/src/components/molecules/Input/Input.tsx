@@ -47,6 +47,7 @@ export const Input: FC<InputProps> = ({
   );
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value || '');
+  const [isIconRotated, setIconRotated] = useState(false); // État pour la rotation de l'icône
 
   const handleChange = (text: string) => {
     if (variant === 'select') return;
@@ -59,7 +60,13 @@ export const Input: FC<InputProps> = ({
   const handleSelect = (item: string) => {
     setSelectedValue(item);
     setDropdownVisible(false);
+    setIconRotated(false); // Remettre l'icône à la position initiale
     onSelect?.(item);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible((prev) => !prev);
+    setIconRotated((prev) => !prev); // Changer l'état de rotation
   };
 
   return (
@@ -85,7 +92,7 @@ export const Input: FC<InputProps> = ({
         {variant === 'select' ? (
           <TouchableOpacity
             style={[InputStyles.input, InputStyles.selectInput]}
-            onPress={() => setDropdownVisible(!isDropdownVisible)}
+            onPress={toggleDropdown}
           >
             <Text
               style={{
@@ -96,7 +103,13 @@ export const Input: FC<InputProps> = ({
             >
               {selectedValue || placeholder}
             </Text>
-            <Icon name="CarretUp" />
+            <TouchableOpacity
+              style={{
+                transform: [{ rotate: isIconRotated ? '180deg' : '0deg' }],
+              }}
+            >
+              <Icon name="AngleDown" />
+            </TouchableOpacity>
           </TouchableOpacity>
         ) : (
           <TextInput
