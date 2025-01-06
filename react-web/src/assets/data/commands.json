@@ -1,6 +1,6 @@
 [
     {
-        "command_id": 1,
+        "id": 1,
         "user_name": "Jean Dupont",
         "command_status": "Livrée",
         "creation_date": "2023-10-01T12:30:00",
@@ -23,7 +23,7 @@
         ]
     },
     {
-        "command_id": 2,
+        "id": 2,
         "user_name": "Marie Curie",
         "command_status": "En cours",
         "creation_date": "2023-10-01T12:45:00",
@@ -46,7 +46,7 @@
         ]
     },
     {
-        "command_id": 3,
+        "id": 3,
         "user_name": "Pierre Martin",
         "command_status": "Annulée",
         "creation_date": "2023-10-02T11:00:00",
@@ -63,7 +63,7 @@
         ]
     },
     {
-        "command_id": 4,
+        "id": 4,
         "user_name": "Sophie Durand",
         "command_status": "Livrée",
         "creation_date": "2023-10-02T12:00:00",
@@ -86,7 +86,7 @@
         ]
     },
     {
-        "command_id": 5,
+        "id": 5,
         "user_name": "Lucie Bernard",
         "command_status": "En cours",
         "creation_date": "2023-10-03T13:15:00",

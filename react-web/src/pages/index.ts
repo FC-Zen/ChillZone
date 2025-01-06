@@ -8,3 +8,4 @@ export { AdminHomePage } from './AdminHomePage';
 export { OwnerHomePage } from './OwnerHomePage';
 export { AdminAccountPage } from './AdminAccountPage';
 export { AdminBookingPage } from './AdminBookingPage';
+export { OwnerOrdersPage } from './OwnerOrdersPage';
