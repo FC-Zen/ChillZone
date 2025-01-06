@@ -44,3 +44,4 @@ export { default as Web } from './Web';
 export { default as Money } from './Money';
 export {default as Profile } from './Profile';
 export {default as SelectorPolygon } from './SelectorPolygon';
+export { default as Download } from './Download';
