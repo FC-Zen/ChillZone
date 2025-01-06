@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
 
-const Profile = ({ width = 80, height = 80 }) => {
+const ProfileWithEditIcon = ({ width = 80, height = 80 }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 80 80" fill="none">
       {/* Fond bleu */}
@@ -34,4 +34,4 @@ const Profile = ({ width = 80, height = 80 }) => {
   );
 };
 
-export default Profile;
+export default ProfileWithEditIcon;
