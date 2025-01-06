@@ -84,7 +84,7 @@ export const ReservationScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <TopBar />
       <ReservationTemplate
         inputs={inputs}
