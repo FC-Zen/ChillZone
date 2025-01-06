@@ -5,11 +5,7 @@ import { colors, typography } from '@theme';
 interface InputWrapperProps extends InputProps {
   children: ReactNode;
 }
-export const InputWrapper: FC<InputWrapperProps> = ({
-  style,
-  children,
-  ...rest
-}) => {
+export const InputWrapper: FC<InputWrapperProps> = ({ style, children }) => {
   return <View style={[InputStyles.wrapper, style]}>{children}</View>;
 };
 export const InputIcon = ({ children }: { children: ReactNode }) => {
@@ -18,7 +14,6 @@ export const InputIcon = ({ children }: { children: ReactNode }) => {
 export const InputStyles = StyleSheet.create({
   container: {
     width: '100%',
-    marginBottom: 15,
   },
   wrapper: {
     display: 'flex',

@@ -171,6 +171,7 @@
   },
 
   "filters": {
+    "filterTitle": "Filtres",
     "hoursOpen": "Horaires disponibles",
     "roomsOpen": "Salles disponibles"
   },

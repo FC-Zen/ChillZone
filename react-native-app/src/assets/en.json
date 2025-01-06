@@ -170,6 +170,7 @@
   },
 
   "filters": {
+    "filterTitle": "Filters",
     "hoursOpen": "Available hours",
     "roomsOpen": "Available rooms"
   },
