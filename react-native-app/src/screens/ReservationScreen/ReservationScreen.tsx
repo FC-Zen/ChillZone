@@ -2,7 +2,9 @@ import { View } from 'react-native';
 import { ReservationTemplate } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import { ReservationTemplateProps } from '@components/templates/ReservationTemplate/ReservationTemplate';
-import { BottomNavbar, PageHeader, TopBar } from '@components';
+import { BottomNavbar, TopBar } from '@components';
+import { styles } from './style';
+import { colors } from '@theme';
 
 export const ReservationScreen = () => {
   const { t } = useTranslation();
@@ -43,14 +45,57 @@ export const ReservationScreen = () => {
     ],
   ];
 
+  const roomSelectorProps = {
+    title: 'Salles disponibles',
+    rooms: [
+      {
+        label: 'N°1',
+        info: {
+          name: 'Salle N°1',
+          level: '1',
+          capacity: '50',
+        },
+      },
+      {
+        label: 'N°2',
+        info: {
+          name: 'Salle N°2',
+          level: '2',
+          capacity: '52',
+        },
+      },
+      {
+        label: 'Salle 102',
+        info: {
+          name: 'Salle 102',
+          level: '1',
+          capacity: '24',
+        },
+      },
+      {
+        label: 'Salle 201',
+        info: {
+          name: 'Salle 201',
+          level: '2',
+          capacity: '28',
+        },
+      },
+    ],
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <TopBar />
-      <PageHeader title={t('headers.reservation')} variant="default" />
       <ReservationTemplate
         inputs={inputs}
+        titleHeader={t('headers.reservation')}
         subTitle={t('filters.filterTitle')}
         subTitle2={'Horaires disponibles'}
+        roomSelectorProps={roomSelectorProps}
+        buttonProps={{
+          title: t('headers.reservation'),
+          onPress: () => console.log('Reserve button pressed'),
+        }}
       />
       <BottomNavbar activeIcon="Reserve" />
     </View>

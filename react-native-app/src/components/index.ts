@@ -27,6 +27,7 @@ export {
   Map,
   ResetPassword,
   RestaurantSlider,
+  RoomAvailable,
 } from './organisms';
 export {
   ConnectionTemplate,

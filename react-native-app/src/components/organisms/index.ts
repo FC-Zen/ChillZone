@@ -7,3 +7,4 @@ export { RestaurantSlider } from './RestaurantSlider';
 export { NotificationList } from './NotificationList';
 export { CreditInput } from './CreditInput';
 export { FoodCardList, FoodCardListProps } from './FoodCardList';
+export { RoomAvailable, RoomSelectorProps } from './RoomAvailable';

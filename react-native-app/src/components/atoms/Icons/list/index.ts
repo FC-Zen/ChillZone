@@ -25,3 +25,5 @@ export { default as Download } from './Download';
 export { default as AngleDown } from './AngleDown';
 export { default as Expand } from './Expand';
 export { default as Clock } from './Clock';
+export { default as School } from './School';
+export { default as List } from './List';

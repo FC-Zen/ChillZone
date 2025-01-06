@@ -3,12 +3,21 @@ import { colors, layout, typography } from '@theme';
 
 export const styles = StyleSheet.create({
   container: {
-    display: 'flex',
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    width: layout.screen.width,
+    alignItems: 'stretch',
+    top: -30,
+  },
+  padd: {
     paddingHorizontal: 51,
+  },
+  padd2: {
+    paddingHorizontal: 29,
+  },
+  scrollView: {
+    width: '100%',
+    flex: 1,
   },
   title: {
     fontSize: typography.h3.fontSize,
@@ -22,17 +31,17 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.darkCyan,
     marginVertical: 25,
   },
-  scrollView: {
-    width: '100%',
-  },
-  scrollContainer: {
-    paddingBottom: 100,
-  },
   titleSep: {
     fontSize: typography.h3.fontSize,
     color: colors.black,
     justifyContent: 'flex-start',
     width: layout.screen.width,
     fontFamily: typography.h3.fontFamily,
+  },
+  buttonContainer: {
+    width: '100%',
+    alignItems: 'center',
+    paddingBottom: 100,
+    paddingTop: 31,
   },
 });
