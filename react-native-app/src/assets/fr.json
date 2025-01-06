@@ -59,7 +59,7 @@
       "cart": "Voir le panier",
       "payNow": "Payer maintenant",
       "pay": "Payer",
-      "qrCode": "Télécharger le QR CODE"
+      "qrCode": "TÉLÉCHARGER QR CODE"
     },
     "add": {
       "generic": "Ajouter {{ x }} article(s) au panier"
