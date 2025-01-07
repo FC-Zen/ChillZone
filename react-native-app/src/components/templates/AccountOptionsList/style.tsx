@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { colors } from '@theme';
+import { typography } from '@theme';
 
 export const styles = StyleSheet.create({
   lightContainer: {
@@ -20,6 +21,16 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 5,
     marginBottom: 10,
+  },
+  // Bouton personnalisé pour "Réinitialiser mon mot de passe"
+  resetPasswordButton: {
+    paddingVertical: 12, // Espacement vertical
+    paddingHorizontal: 20, // Espacement horizontal
+    paddingLeft: 55, // Espacement à gauche
+    justifyContent: 'center', // Centrage vertical
+    maxWidth: 300, // Forcer une largeur maximale pour ce bouton
+    color: colors.white,
+    fontSize: typography.h3.fontSize,
   },
   row: {
     flexDirection: 'row',
@@ -51,18 +62,27 @@ export const styles = StyleSheet.create({
   },
 
   newsButton: {
-    alignSelf: 'center',
-    borderWidth: 1,
-    borderColor: colors.resolutionBlue,
-    borderRadius: 50,
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    marginTop: 10,
+    display: 'flex', // Ajoute le flex pour la structure de la boîte
+    paddingVertical: 12, // Conforme à `padding: 12px 20px` verticalement
+    paddingHorizontal: 20, // Conforme à `padding: 12px 20px` horizontalement
+    justifyContent: 'center', // Centre le contenu verticalement
+    alignItems: 'center', // Centre le contenu horizontalement
+    gap: 10, // Ajoute un espacement entre les éléments enfants
+    borderRadius: 50, // Bord arrondi (50px)
+    borderWidth: 2, // Bordure de 2px
+    borderColor: colors.resolutionBlue, // Couleur de bordure
+    alignSelf: 'center', // Centré horizontalement
+    marginTop: 10, // Espacement en haut
   },
+
   newsText: {
     color: colors.resolutionBlue,
     fontWeight: 'bold',
     fontSize: 14,
+    fontFamily: 'Montserrat', // Police Montserrat
+    textAlign: 'center', // Aligne le texte au centre
+    lineHeight: 16, // Correspond à 100% de 16px
+    fontStyle: 'normal', // Style de police
   },
   newsButton: {
     alignSelf: 'center',

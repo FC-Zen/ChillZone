@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
-import { Divider } from '@components/atoms/Divider';
 import { ToggleSwitch } from '@components/atoms/ToggleSwitch';
 import { Button } from '@components/molecules';
 import { colors } from '@theme';
 import { SelectorPolygon } from '@components/atoms/Icons';
-import fr from 'src/assets/fr.json';
-import en from 'src/assets/en.json';
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@hooks';
+import { ROUTE } from '@enums';
 
 import { styles } from './style';
 import { translationService } from '@services';
@@ -22,22 +22,35 @@ export type AccountOptionsListProps = {
   onOpenEditInfoModal: () => void;
   onOpenPasswordModal: () => void;
   onOpenResetPasswordModal: () => void;
-  onOpenLinksModal: () => void;
 };
 
 export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
   isDarkTheme,
-  currentLanguage,
   onToggleTheme,
-  onChangeLanguage,
   onOpenReservationsModal,
   onOpenOrdersModal,
   onOpenEditInfoModal,
   onOpenPasswordModal,
   onOpenResetPasswordModal,
-  onOpenLinksModal,
 }) => {
-  const accountOptionsData = currentLanguage === 'fr' ? fr : en;
+  const { t, i18n } = useTranslation();
+  const navigation = useNavigation(); // Utilisation de la navigation
+
+  // État local pour la langue actuelle
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+
+  // Mise à jour de l'état lorsque la langue change dans i18n
+  useEffect(() => {
+    const handleLanguageChanged = (lng: string) => {
+      setCurrentLanguage(lng);
+    };
+    i18n.on('languageChanged', handleLanguageChanged);
+
+    // Nettoyage de l'écouteur d'événements
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, [i18n]);
 
   // Détermine l'image du drapeau en fonction de la langue actuelle
   const flagImage =
@@ -45,9 +58,10 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       ? require('src/assets/Images/fr.png') // Drapeau français
       : require('src/assets/Images/en.png'); // Drapeau anglais
 
+  // Fonction de basculement de la langue
   const toggleLanguage = () => {
     const newLang = currentLanguage === 'fr' ? 'en' : 'fr';
-    onChangeLanguage(newLang);
+    i18n.changeLanguage(newLang); // Met à jour la langue dans i18n
   };
 
   return (
@@ -55,7 +69,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       {/* Section Réservations */}
       <View style={styles.card}>
         <Button
-          title={accountOptionsData.headers.recapReservation}
+          title={t('buttons.profile.reservations')}
           icon={{ name: 'BookMark', color: colors.white }}
           variant="icon"
           color={colors.resolutionBlue}
@@ -67,7 +81,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       {/* Section Commandes */}
       <View style={styles.card}>
         <Button
-          title={accountOptionsData.headers.recapCommands}
+          title={t('buttons.profile.commands')}
           icon={{ name: 'Hamburger', color: colors.white }}
           variant="icon"
           color={colors.resolutionBlue}
@@ -79,7 +93,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       {/* Section Informations */}
       <View style={styles.card}>
         <Button
-          title={accountOptionsData.modals.infoChange}
+          title={t('buttons.profile.changeInfo')}
           icon={{ name: 'Following', color: colors.white }}
           variant="icon"
           color={colors.resolutionBlue}
@@ -91,7 +105,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       {/* Section Modification */}
       <View style={styles.card}>
         <Button
-          title={accountOptionsData.modals.pwdChange}
+          title={t('modals.pwdChange')}
           icon={{ name: 'Lock', color: colors.white }}
           variant="icon"
           color={colors.resolutionBlue}
@@ -99,12 +113,13 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           onPress={onOpenPasswordModal}
         />
         <Button
-          title={accountOptionsData.buttons.auth.resetPwd}
+          title={t('buttons.auth.resetPwd')}
           icon={{ name: 'Refresh', color: colors.white }}
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
           onPress={onOpenResetPasswordModal}
+          style={styles.resetPasswordButton} // Appliquer un style spécifique ici
         />
       </View>
 
@@ -115,29 +130,28 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           <Button
             title={
               isDarkTheme
-                ? accountOptionsData.buttons.profile.lightTheme
-                : accountOptionsData.buttons.profile.darkTheme
+                ? t('buttons.profile.lightTheme')
+                : t('buttons.profile.darkTheme')
             }
             icon={{ name: 'Fill', color: colors.white }}
             variant="icon"
             color={colors.resolutionBlue}
             textColor={colors.white}
-            //il manque le onpress c'est pour ça qu'il y'a une erreur rouge
           />
           {/* ToggleSwitch */}
           <ToggleSwitch value={isDarkTheme} onChange={onToggleTheme} />
         </View>
+
         {/* Bouton Langue */}
         <TouchableOpacity style={styles.languageRow} onPress={toggleLanguage}>
           <View style={styles.languageContent}>
             <View style={styles.languageIconWrapper}>
               <Button
-                title={accountOptionsData.buttons.profile.changelng}
+                title={t('buttons.profile.changelng')}
                 icon={{ name: 'Setting', color: colors.white }}
                 variant="icon"
-                color="transparent"
+                color={colors.resolutionBlue}
                 textColor={colors.white}
-                //il manque le onpress c'est pour ça qu'il y'a une erreur rouge
               />
             </View>
           </View>

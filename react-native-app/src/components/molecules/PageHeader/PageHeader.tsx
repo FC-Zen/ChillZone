@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { Icon, IconProps } from '@components/atoms';
+import { View, Text, Alert } from 'react-native';
+import { IconProps } from '@components/atoms';
+import { BackArrow } from '@components/atoms/Icons/'; // Import du composant BackArrow
 import { styles } from './style';
-import { useHeaderHeight } from '@react-navigation/elements';
+import { useNavigation } from '@hooks'; // Votre custom hook pour la navigation
+import { ROUTE } from '@enums';
 
 export type PageHeaderProps = {
   title: string;
@@ -19,7 +21,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   onBackPress,
   noMargin,
 }) => {
-  const headerHeight = useHeaderHeight();
+  const navigation = useNavigation(); // Utilisation de votre hook personnalisé pour la navigation
 
   return (
     <View
@@ -29,19 +31,23 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         variant === 'back' && !noMargin && { top: headerHeight > 0 ? headerHeight : '5%' },
       ]}
     >
-      {variant === 'back' && icon && (
-        <Icon
-          name={icon.name}
+      {/* Bouton de retour si "variant" est "back" */}
+      {variant === 'back' && (
+        <BackArrow
           color={icon.color}
-          onPress={onBackPress}
-          width={16}
-          height={16}
+          width={24}
+          height={24}
+          onPress={onBackPress ? onBackPress : () => navigation.goBack()} // Action par défaut ou personnalisée
         />
       )}
+
+      {/* Titre de la page */}
       <Text style={[styles.title, variant === 'back' && styles.titleWithBack]}>
         {title}
       </Text>
-      {variant === 'back' && <View style={styles.spacer} />}{' '}
+
+      {/* Spacer pour équilibrer l'espace */}
+      {variant === 'back' && <View style={styles.spacer} />}
     </View>
   );
 };

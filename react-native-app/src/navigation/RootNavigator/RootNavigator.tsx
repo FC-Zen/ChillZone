@@ -17,6 +17,7 @@ import {
   FinalPaymentScreen,
   ReservationScreen,
   AccountScreen,
+  LinksScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';

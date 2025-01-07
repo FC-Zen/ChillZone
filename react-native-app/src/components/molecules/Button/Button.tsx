@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { ButtonWrapper } from './style';
 import { IconProps } from '@components/atoms';
 import { colors, typography } from '@theme';
@@ -9,6 +9,7 @@ export type ButtonProps = {
   onPress?: () => void | false;
   variant?: 'primary' | 'secondary' | 'icon';
   style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>; // Nouvelle propriété
   icon?: IconProps;
   color?: string;
   textColor?: string;
@@ -21,6 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
   onPress,
   variant = 'primary',
   style,
+  textStyle,
   icon,
   color,
   textColor = colors.white,
@@ -33,6 +35,7 @@ export const Button: React.FC<ButtonProps> = ({
       onPress={onPress}
       variant={variant}
       style={style}
+      textStyle={textStyle}
       icon={icon}
       color={color}
       textColor={textColor}

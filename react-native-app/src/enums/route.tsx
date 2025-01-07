@@ -13,4 +13,5 @@ export enum ROUTE {
   FINAL_PAYMENT = 'FinalPaymentScreen',
   RESERVATION = 'ReservationScreen',
   ACCOUNT = 'AccountScreen',
+  LINKS = 'LinksScreen',
 }

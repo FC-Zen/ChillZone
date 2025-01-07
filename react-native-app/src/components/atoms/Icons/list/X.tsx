@@ -2,8 +2,8 @@ import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
 
 export const X = ({
-  width = 42,
-  height = 42,
+  width = 24,
+  height = 24,
   circleColor = '#000000', // Couleur du cercle (noir par défaut)
   pathColor = '#FFFFFF', // Couleur du X (blanc par défaut)
 }) => (

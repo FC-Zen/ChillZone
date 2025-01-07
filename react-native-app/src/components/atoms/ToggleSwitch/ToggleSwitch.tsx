@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Switch } from 'react-native';
-import { styles } from './style';
 import { colors } from '@theme';
+import { styles } from './style';
 
 export type ToggleSwitchProps = {
   value: boolean;

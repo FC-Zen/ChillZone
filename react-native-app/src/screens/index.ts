@@ -11,3 +11,4 @@ export { FinalPaymentScreen } from './FinalPaymentScreen';
 export { ReservationScreen } from './ReservationScreen';
 export { PaymentScreen } from './PaymentScreen'
 export { AccountScreen } from './AccountScreen';
+export {LinksScreen} from './LinksScreen';

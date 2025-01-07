@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: typography.h3.fontSize,
     fontFamily: fonts.semiBold,
+    flexWrap: 'wrap', // Autorise le retour à la ligne
+    fontWeight: '600', // Poids de la police
   },
   iconVariant: {
     flexDirection: 'row',
