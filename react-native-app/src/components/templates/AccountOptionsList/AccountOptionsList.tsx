@@ -7,10 +7,8 @@ import { SelectorPolygon } from '@components/atoms/Icons';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
-
 import { styles } from './style';
 import { translationService } from '@services';
-import { useTranslation } from 'react-i18next';
 
 export type AccountOptionsListProps = {
   isDarkTheme: boolean;
@@ -163,7 +161,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       </View>
 
       {/* Section Actualités */}
-      <TouchableOpacity style={styles.newsButton} onPress={onOpenLinksModal}>
+      <TouchableOpacity style={styles.newsButton}>
         <Text style={styles.newsText}>{t('buttons.profile.actus')}</Text>
       </TouchableOpacity>
     </View>
