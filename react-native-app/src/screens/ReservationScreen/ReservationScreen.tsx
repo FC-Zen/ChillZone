@@ -6,12 +6,14 @@ import { ReservationTemplateProps } from '@components/templates/ReservationTempl
 import { BottomNavbar, TopBar } from '@components';
 import { styles } from './style';
 import { getReservations } from '@services';
+import { getRooms, Room } from '@services/RoomServices';
 
 export const ReservationScreen = () => {
   const { t } = useTranslation();
   const [dayReservations, setDayReservations] = useState<string[]>([]);
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [durations, setDurations] = useState<string[]>([]);
+  const [rooms, setRooms] = useState<Room[]>([]);
 
   const calculateDuration = (startTime: string, endTime: string): string => {
     const [startHours, startMinutes] = startTime.split('h').map(Number);
@@ -26,8 +28,9 @@ export const ReservationScreen = () => {
   };
 
   useEffect(() => {
-    const fetchReservations = async () => {
+    const fetchData = async () => {
       const reservations = await getReservations();
+      const roomsData = await getRooms();
 
       const dates = reservations.map(
         (reservation) => reservation.day_reservation
@@ -43,9 +46,10 @@ export const ReservationScreen = () => {
         calculateDuration(reservation.start_time, reservation.end_time)
       );
       setDurations(calculatedDurations);
+      setRooms(roomsData);
     };
 
-    fetchReservations();
+    fetchData();
   }, []);
 
   const inputs: ReservationTemplateProps['inputs'] = [
@@ -87,40 +91,15 @@ export const ReservationScreen = () => {
 
   const roomSelectorProps = {
     title: t('filters.roomsOpen'),
-    rooms: [
-      {
-        label: 'N°1',
-        info: {
-          name: 'Salle N°1',
-          level: '1',
-          capacity: '50',
-        },
-      },
-      {
-        label: 'N°2',
-        info: {
-          name: 'Salle N°2',
-          level: '2',
-          capacity: '52',
-        },
-      },
-      {
-        label: 'Salle 102',
-        info: {
-          name: 'Salle 102',
-          level: '1',
-          capacity: '24',
-        },
-      },
-      {
-        label: 'Salle 201',
-        info: {
-          name: 'Salle 201',
-          level: '2',
-          capacity: '28',
-        },
-      },
-    ],
+    rooms:
+      rooms
+        ?.filter((room) => room)
+        .map((room) => ({
+          name: room?.name || '',
+          floor: room?.floor || 0,
+          capacity: room?.capacity || 0,
+          photo_link: room?.photo_link || '',
+        })) || [],
   };
 
   return (

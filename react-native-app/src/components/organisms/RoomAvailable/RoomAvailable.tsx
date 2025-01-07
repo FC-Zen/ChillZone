@@ -1,31 +1,49 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { Icon } from '@components/atoms';
 import { colors } from '@theme';
 import { map } from '@assets/Images';
 import { styles } from './style';
 
-type RoomInfo = {
-  name: string;
-  level: string;
-  capacity: string;
-  image?: any;
+export type Room = {
+  id?: number;
+  name?: string;
+  description?: string;
+  capacity?: number;
+  status?: boolean;
+  position_x?: number;
+  position_y?: number;
+  floor?: number;
+  photo_link?: any;
+  tag_label?: string;
 };
 
 export type RoomSelectorProps = {
   title: string;
-  rooms: {
-    label: string;
-    info: RoomInfo;
-  }[];
+  rooms: Room[];
 };
 
 export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
-  const [selectedRoom, setSelectedRoom] = useState<RoomInfo>(rooms[0].info);
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
 
-  const handleRoomSelect = (roomInfo: RoomInfo) => {
-    setSelectedRoom(roomInfo);
+  useEffect(() => {
+    if (rooms && rooms.length > 0) {
+      setSelectedRoom(rooms[0]);
+    }
+  }, [rooms]);
+
+  const handleRoomSelect = (room: Room) => {
+    setSelectedRoom(room);
   };
+
+  if (!selectedRoom) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>{title}</Text>
+        <Text>Aucune salle disponible</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -41,14 +59,14 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
             key={index}
             style={[
               styles.button,
-              selectedRoom.name === room.info.name && styles.buttonActive,
+              selectedRoom?.name === room.name && styles.buttonActive,
             ]}
-            onPress={() => handleRoomSelect(room.info)}
+            onPress={() => handleRoomSelect(room)}
           >
             <Icon
               name="Cube"
               color={
-                selectedRoom.name === room.info.name
+                selectedRoom?.name === room.name
                   ? colors.white
                   : colors.darkCyan
               }
@@ -56,10 +74,10 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
             <Text
               style={[
                 styles.buttonText,
-                selectedRoom.name === room.info.name && styles.buttonTextActive,
+                selectedRoom?.name === room.name && styles.buttonTextActive,
               ]}
             >
-              {room.label}
+              {room.name || ''}
             </Text>
           </TouchableOpacity>
         ))}
@@ -69,12 +87,10 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
 
       <View style={styles.contentContainer}>
         <Image source={map} style={styles.roomImage} />
-
-        {/* Room Details */}
         <View style={styles.infoContainer}>
           <View style={styles.infoRow}>
             <Icon name="School" width={16} height={16} color={colors.white} />
-            <Text style={styles.infoText}>{selectedRoom.name}</Text>
+            <Text style={styles.infoText}>{selectedRoom.name || ''}</Text>
           </View>
           <View style={styles.infoRow}>
             <Icon
@@ -83,11 +99,15 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
               height={16}
               color={colors.white}
             />
-            <Text style={styles.infoText}>Étage {selectedRoom.level}</Text>
+            <Text style={styles.infoText}>
+              Étage {selectedRoom.floor || '?'}
+            </Text>
           </View>
           <View style={styles.infoRow}>
             <Icon name="List" width={16} height={16} color={colors.white} />
-            <Text style={styles.infoText}>{selectedRoom.capacity} places</Text>
+            <Text style={styles.infoText}>
+              {selectedRoom.capacity || 0} places
+            </Text>
           </View>
         </View>
       </View>

@@ -9,7 +9,7 @@ export type Room = {
   position_x: number;
   position_y: number;
   floor: number;
-  photo_link: string;
+  photo_link: any;
   tag_label: string;
 };
 
