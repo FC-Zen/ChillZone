@@ -137,7 +137,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
             textColor={colors.white}
           />
           {/* ToggleSwitch */}
-          <ToggleSwitch value={isDarkTheme} onChange={onToggleTheme} />
+          <ToggleSwitch value={isDarkTheme} onToggle={onToggleTheme} />
         </View>
 
         {/* Bouton Langue */}
@@ -161,7 +161,10 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       </View>
 
       {/* Section Actualités */}
-      <TouchableOpacity style={styles.newsButton}>
+      <TouchableOpacity
+        style={styles.newsButton}
+        onPress={() => navigation.navigate(ROUTE.LINKS)}
+      >
         <Text style={styles.newsText}>{t('buttons.profile.actus')}</Text>
       </TouchableOpacity>
     </View>
