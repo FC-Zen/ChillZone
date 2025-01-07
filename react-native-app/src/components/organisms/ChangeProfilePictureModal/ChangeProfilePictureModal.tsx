@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { styles } from './style';
-import user_profile_data from 'src/assets/fr.json';
-import { User, Cross } from '@components/atoms/Icons';
+import user_profile_data from '@assets/fr.json';
+import { Icon, IconProps } from '@components/atoms/Icons';
 import { colors } from '@theme';
 export type ChangeProfilePictureModalProps = {
   isOpen: boolean;
@@ -23,13 +23,24 @@ export const ChangeProfilePictureModal = ({
       <View style={styles.overlay}>
         <View style={styles.modal}>
           {/* Bouton Fermer */}
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Cross width={15} height={15} color={colors.white} />
+          <TouchableOpacity style={styles.closeButton}>
+            <Icon
+              name="Cross"
+              width={15}
+              height={15}
+              color={colors.white}
+              onPress={onClose}
+            />
           </TouchableOpacity>
 
           {/* Avatar ou icône */}
           <View style={styles.avatarContainer}>
-            <User width={60} height={60} color={colors.resolutionBlue} />
+            <Icon
+              name="User"
+              width={60}
+              height={60}
+              color={colors.resolutionBlue}
+            />
           </View>
 
           {/* Bouton pour changer la photo */}

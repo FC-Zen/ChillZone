@@ -1,21 +1,36 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { ProfileHeader } from '@components/molecules/ProfileHeader';
 import { ChangeProfilePictureModal } from '@components/organisms/ChangeProfilePictureModal';
 import { styles } from './style';
-import user_data from 'src/assets/fr.json';
+import user_data from '@assets/fr.json';
 
-export const ProfileHeaderWithModal: React.FC = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+// Hook pour gérer l'état de la modale
+const useProfileHeaderModalLogic = () => {
+  const [isModalOpen, setModalOpen] = React.useState(false);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
+  return {
+    isModalOpen,
+    openModal,
+    closeModal,
+  };
+};
+
+export const ProfileHeaderWithModal: React.FC = () => {
+  const { isModalOpen, openModal, closeModal } = useProfileHeaderModalLogic();
+
   return (
     <View style={styles.container}>
-      {/* Passer la logique via des props */}
+      {/* Header du profil */}
       <ProfileHeader
-        name={user_data.fields.common.first_name + ' ' + user_data.fields.common.last_name}
+        name={
+          user_data.fields.common.first_name +
+          ' ' +
+          user_data.fields.common.last_name
+        }
         onOpenModal={openModal}
       />
 
@@ -24,4 +39,3 @@ export const ProfileHeaderWithModal: React.FC = () => {
     </View>
   );
 };
-

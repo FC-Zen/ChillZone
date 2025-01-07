@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@components/atoms';
-import { Profile, User } from '@components/atoms/Icons'; // Remplacez par l'import correct de votre bibliothèque d'icônes
+import { Icon, IconProps } from '@components/atoms/Icons'; // Remplacez par l'import correct de votre bibliothèque d'icônes
 import { styles } from './style';
 
 export type ProfileHeaderProps = {
@@ -16,8 +16,8 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   return (
     <View style={styles.container}>
       {/* Icône cliquable */}
-      <TouchableOpacity onPress={onOpenModal}>
-        <Profile />
+      <TouchableOpacity>
+        <Icon name="Profile" width={42} height={42} onPress={onOpenModal} />
       </TouchableOpacity>
       <Text style={styles.name}>{name}</Text>
     </View>

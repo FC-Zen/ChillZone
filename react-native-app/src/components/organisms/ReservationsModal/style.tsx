@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colors } from '@theme';
 
 export const styles = StyleSheet.create({
   overlay: {
@@ -9,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   modal: {
     width: '90%',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderRadius: 10,
     padding: 20,
     maxHeight: '80%',
@@ -25,13 +26,13 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
   },
   reservationCard: {
-    backgroundColor: '#F7F7F7',
+    backgroundColor: colors.white,
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
   },
   expandedCard: {
-    backgroundColor: '#e0e7ff',
+    backgroundColor: colors.silver,
   },
   room: {
     fontSize: 16,
@@ -52,20 +53,20 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     paddingTop: 10,
     borderTopWidth: 1,
-    borderTopColor: '#ccc',
+    borderTopColor: colors.darkCyan,
   },
   cancelButton: {
-    backgroundColor: '#fff0f0',
+    backgroundColor: colors.white,
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 12,
     alignSelf: 'flex-start',
-    borderColor: '#ff5a5a',
+    borderColor: colors.warn,
     borderWidth: 1,
     marginTop: 10,
   },
   cancelButtonText: {
-    color: '#ff5a5a',
+    color: colors.warn,
     fontWeight: 'bold',
   },
 });

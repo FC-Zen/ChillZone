@@ -1,45 +1,51 @@
 import React from 'react';
-import { View, Text, Alert } from 'react-native';
-import { IconProps } from '@components/atoms';
-import { BackArrow } from '@components/atoms/Icons/'; // Import du composant BackArrow
+import { View, Text } from 'react-native';
+import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { useNavigation } from '@hooks'; // Votre custom hook pour la navigation
 import { ROUTE } from '@enums';
 
 export type PageHeaderProps = {
   title: string;
-  variant: 'default' | 'back' | 'cross';
-  icon?: IconProps; // Rendre icon optionnel
-  onBackPress?: () => void;
-  noMargin?: boolean;
+  variant: 'default' | 'back' | 'cross'; // Ajout de la variante "cross"
+  icon?: IconProps; // Icône personnalisée (optionnel)
+  onBackPress?: () => void; // Fonction personnalisée pour le clic
+  noMargin?: boolean; // Suppression des marges (optionnel)
 };
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
   title,
   variant,
-  icon = { name: 'Cross', color: 'black' },
+  icon = { name: 'BackArrow', color: 'black' }, // Icône par défaut
   onBackPress,
   noMargin,
 }) => {
-  const navigation = useNavigation(); // Utilisation de votre hook personnalisé pour la navigation
-  const headerHeight = 60; // Définir une valeur pour headerHeight
+  const navigation = useNavigation();
+  const headerHeight = 60;
 
   return (
     <View
       style={[
         styles.container,
         variant === 'back' ? styles.back : styles.default,
-        variant === 'back' && !noMargin && { top: headerHeight > 0 ? headerHeight : '5%' },
+        variant === 'back' &&
+          !noMargin && { top: headerHeight > 0 ? headerHeight : '5%' },
       ]}
     >
-      {/* Bouton de retour si "variant" est "back" */}
-      {variant === 'back' && (
-        <BackArrow
+      {/* Icône personnalisée en fonction de la variante */}
+      {variant !== 'default' && (
+        <Icon
+          name={icon.name || (variant === 'back' ? 'BackArrow' : 'Cross')} // Choix de l'icône
           color={icon.color}
           width={24}
           height={24}
           onPress={
-            onBackPress ? onBackPress : () => navigation.navigate(ROUTE.HOME)
+            onBackPress
+              ? onBackPress
+              : () =>
+                  navigation.navigate(
+                    variant === 'back' ? ROUTE.HOME : ROUTE.ACCOUNT
+                  )
           } // Action par défaut ou personnalisée
         />
       )}
@@ -50,7 +56,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
       </Text>
 
       {/* Spacer pour équilibrer l'espace */}
-      {variant === 'back' && <View style={styles.spacer} />}
+      {variant !== 'default' && <View style={styles.spacer} />}
     </View>
   );
 };

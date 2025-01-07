@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal } from 'react-native';
 import { styles } from './style';
-import { Cross } from '@components/atoms/Icons';
+import { Icon, IconProps } from '@components/atoms/Icons';
 import { colors } from '@theme';
 import user_data from 'src/assets/fr.json';
+import { Input } from '@components/molecules';
 
 // Déclaration des props juste au-dessus du composant
 export type EditInfoModalProps = {
@@ -33,41 +34,45 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({
       <View style={styles.overlay}>
         <View style={styles.modal}>
           {/* Bouton de fermeture */}
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Cross width={15} height={15} color={colors.white} />
+          <TouchableOpacity style={styles.closeButton}>
+            <Icon
+              name="Cross"
+              width={15}
+              height={15}
+              color={colors.white}
+              onPress={onClose}
+            />
           </TouchableOpacity>
 
           {/* Titre */}
           <Text style={styles.title}>{user_data.modals.infoChange}</Text>
 
           {/* Inputs */}
-          <TextInput
+          <Input
             style={styles.input}
             placeholder={user_data.fields.common.first_name}
-            placeholderTextColor="#ccc"
+            icon="User"
             value={data.firstName}
             onChangeText={(text) => onChange('firstName', text)}
           />
-          <TextInput
+          <Input
             style={styles.input}
             placeholder={user_data.fields.common.last_name}
-            placeholderTextColor="#ccc"
+            icon="User"
             value={data.lastName}
             onChangeText={(text) => onChange('lastName', text)}
           />
-          <TextInput
+          <Input
             style={styles.input}
             placeholder={user_data.fields.common.phone}
-            placeholderTextColor="#ccc"
-            keyboardType="phone-pad"
+            icon="User"
             value={data.phone}
             onChangeText={(text) => onChange('phone', text)}
           />
-          <TextInput
+          <Input
             style={styles.input}
             placeholder={user_data.fields.common.mail}
-            placeholderTextColor="#ccc"
-            keyboardType="email-address"
+            icon="User"
             value={data.email}
             onChangeText={(text) => onChange('email', text)}
           />

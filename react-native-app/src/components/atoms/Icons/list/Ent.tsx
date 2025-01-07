@@ -1,11 +1,11 @@
 import React from 'react';
 import Svg, { Circle, Path, G, Defs, ClipPath, Rect } from 'react-native-svg';
-
+import { colors } from '@theme';
 const Ent = ({
-  width = 42,
-  height = 42,
-  backgroundColor = '#005745', // Couleur du fond (vert)
-  iconColor = '#FFFFFF', // Couleur des détails de l'icône (blanc)
+  width = 24,
+  height = 24,
+  backgroundColor = colors.aquaDeep, // Couleur du fond (vert)
+  iconColor = colors.white, // Couleur des détails de l'icône (blanc)
 }: {
   width?: number;
   height?: number;

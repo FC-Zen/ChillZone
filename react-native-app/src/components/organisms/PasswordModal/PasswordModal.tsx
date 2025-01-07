@@ -10,13 +10,15 @@ import {
 import { styles } from './style'; // Import des styles
 import { Cross } from '@components/atoms/Icons';
 import { colors } from '@theme';
-import data_from_fr_json from 'src/assets/fr.json';
+import data_from_fr_json from '@assets/fr.json';
+
 export type PasswordModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
+// Hook pour gérer la logique du PasswordModal
+const usePasswordModalLogic = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -29,7 +31,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
     hasSpecialChar: /[@$!%*?&]/.test(newPassword),
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (onClose: () => void) => {
     if (newPassword !== confirmPassword) {
       Alert.alert('Erreur', 'Les mots de passe ne correspondent pas.');
       return;
@@ -52,6 +54,30 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
     Alert.alert('Succès', 'Mot de passe modifié avec succès.');
     onClose(); // Fermer la modale après soumission
   };
+
+  return {
+    oldPassword,
+    setOldPassword,
+    newPassword,
+    setNewPassword,
+    confirmPassword,
+    setConfirmPassword,
+    newPasswordValidation,
+    handleSubmit,
+  };
+};
+
+export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
+  const {
+    oldPassword,
+    setOldPassword,
+    newPassword,
+    setNewPassword,
+    confirmPassword,
+    setConfirmPassword,
+    newPasswordValidation,
+    handleSubmit,
+  } = usePasswordModalLogic();
 
   const renderValidationTag = (text: string, isValid: boolean) => (
     <View
@@ -85,7 +111,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
             <Cross width={15} height={15} color={colors.white} />
           </TouchableOpacity>
 
-          <Text style={styles.title}>Modifier mon mot de passe</Text>
+          <Text style={styles.title}>{data_from_fr_json.modals.pwdChange}</Text>
 
           {/* Champ pour l'ancien mot de passe */}
           <TextInput
@@ -136,7 +162,10 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
           />
 
           {/* Bouton Confirmer */}
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => handleSubmit(onClose)}
+          >
             <Text style={styles.buttonText}>
               {data_from_fr_json.buttons.actions.confirm}
             </Text>

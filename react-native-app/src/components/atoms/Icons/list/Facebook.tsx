@@ -5,8 +5,8 @@ import { colors } from '@theme';
 const Facebook = ({
   width = 24,
   height = 24,
-  backgroundColor = '#3B5998', // Couleur du cercle de fond
-  iconColor = '#3B5998', // Couleur du "f" (fond bleu par défaut)
+  backgroundColor = '#3B5998', // Couleur du cercle de fond de Facebook
+  iconColor = '#3B5998', // Couleur du "f" de Facebook(fond bleu par défaut)
   borderColor = colors.white, // Couleur de la bordure blanche
 }: {
   width?: number;

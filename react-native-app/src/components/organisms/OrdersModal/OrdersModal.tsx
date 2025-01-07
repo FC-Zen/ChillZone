@@ -8,16 +8,11 @@ import {
   Modal,
   ScrollView,
 } from 'react-native';
-import {
-  Calendar,
-  Clock,
-  Money,
-  Marker,
-  BackArrow,
-} from '@components/atoms/Icons';
-import ordersData from 'src/assets/data/commands.json';
+import { Icon, IconProps } from '@components/atoms/Icons';
+
+import ordersData from '@assets/data/commands.json';
 import { colors } from '@theme';
-import title_data from 'src/assets/fr.json';
+import title_data from '@assets/fr.json';
 import { styles } from './style';
 
 export type Order = {
@@ -78,8 +73,14 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({
         <View style={styles.modal}>
           {/* Header avec flèche */}
           <View style={styles.header}>
-            <TouchableOpacity onPress={onClose}>
-              <BackArrow width={20} height={20} color={colors.black} />
+            <TouchableOpacity>
+              <Icon
+                name="BackArrow"
+                color={colors.black}
+                width={20}
+                height={20}
+                onPress={onClose}
+              />
             </TouchableOpacity>
             <Text style={styles.title}>{title_data.headers.recapCommands}</Text>
           </View>
@@ -105,7 +106,8 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({
                     >
                       <Text style={styles.orderText}>N° {item.command_id}</Text>
                       <View style={styles.row}>
-                        <Calendar
+                        <Icon
+                          name="Calendar"
                           color={colors.resolutionBlue}
                           width={20}
                           height={20}
@@ -113,7 +115,8 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({
                         <Text>{formatDate(item.creation_date)}</Text>
                       </View>
                       <View style={styles.row}>
-                        <Clock
+                        <Icon
+                          name="Clock"
                           color={colors.resolutionBlue}
                           width={20}
                           height={20}
@@ -127,7 +130,8 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({
                       {expandedCommandId === item.command_id && (
                         <View style={styles.expandedContent}>
                           <View style={styles.row}>
-                            <Marker
+                            <Icon
+                              name="Marker"
                               color={colors.resolutionBlue}
                               width={20}
                               height={20}
@@ -135,7 +139,8 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({
                             <Text>{item.restauration_place_name}</Text>
                           </View>
                           <View style={styles.row}>
-                            <Money
+                            <Icon
+                              name="Money"
                               color={colors.resolutionBlue}
                               width={20}
                               height={20}
@@ -173,7 +178,8 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({
                     >
                       <Text style={styles.orderText}>N° {item.command_id}</Text>
                       <View style={styles.row}>
-                        <Calendar
+                        <Icon
+                          name="Calendar"
                           color={colors.resolutionBlue}
                           width={20}
                           height={20}
@@ -181,7 +187,8 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({
                         <Text>{formatDate(item.creation_date)}</Text>
                       </View>
                       <View style={styles.row}>
-                        <Clock
+                        <Icon
+                          name="Clock"
                           color={colors.resolutionBlue}
                           width={20}
                           height={20}
@@ -195,7 +202,8 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({
                       {expandedCommandId === item.command_id && (
                         <View style={styles.expandedContent}>
                           <View style={styles.row}>
-                            <Marker
+                            <Icon
+                              name="Marker"
                               color={colors.resolutionBlue}
                               width={20}
                               height={20}
@@ -203,7 +211,8 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({
                             <Text>{item.restauration_place_name}</Text>
                           </View>
                           <View style={styles.row}>
-                            <Money
+                            <Icon
+                              name="Money"
                               color={colors.resolutionBlue}
                               width={20}
                               height={20}

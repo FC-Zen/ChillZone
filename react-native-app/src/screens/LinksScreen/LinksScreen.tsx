@@ -55,8 +55,7 @@ export const LinksScreen: React.FC = () => {
       {/* En-tête de la page */}
       <PageHeader
         title={t('headers.links')} // Titre traduit
-        variant="back"
-        icon={{ name: 'BackArrow', color: colors.black }} // Icône de retour
+        variant="back" // Variante avec flèche de retour
         onBackPress={() => navigation.navigate(ROUTE.ACCOUNT)} // Action de retour
       />
 

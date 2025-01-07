@@ -1,10 +1,10 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-
+import { colors } from '@theme';
 const ArrowRight = ({
-  color = '#2E2A85', // Couleur par défaut (bleu)
-  width = 29,
-  height = 14,
+  color = colors.resolutionBlue, // Couleur par défaut (bleu)
+  width = 16,
+  height = 16,
 }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 29 14" fill="none">

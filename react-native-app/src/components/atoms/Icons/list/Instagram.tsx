@@ -7,7 +7,7 @@ import Svg, {
   Stop,
 } from 'react-native-svg';
 
-export const Instagram = ({ width = 24, height = 24 }) => (
+const Instagram = ({ width = 24, height = 24 }) => (
   <Svg width={width} height={height} viewBox="0 0 42 42" fill="none">
     {/* Cercle de fond avec dégradé */}
     <Defs>

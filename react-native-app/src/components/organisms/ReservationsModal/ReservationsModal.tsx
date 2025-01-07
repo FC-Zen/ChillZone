@@ -1,46 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
   Modal,
   FlatList,
   Alert,
 } from 'react-native';
-import { Calendar, Clock, Marker, BackArrow } from '@components/atoms/Icons';
-import reservationsData from 'src/assets/data/reservations.json';
-import title_data from 'src/assets/fr.json';
-
+import { Icon } from '@components/atoms/Icons';
+import reservationsData from '@assets/data/reservations.json';
+import title_data from '@assets/fr.json';
 import { colors } from '@theme';
 import { styles } from './style';
 
-export type ReservationsModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
-
-export const ReservationsModal: React.FC<ReservationsModalProps> = ({
-  isOpen,
-  onClose,
-}) => {
-  const [expandedReservationId, setExpandedReservationId] = useState<
+// Hook pour gérer les réservations
+const useReservationsLogic = () => {
+  const [expandedReservationId, setExpandedReservationId] = React.useState<
     number | null
   >(null);
-
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    return new Date(dateString).toLocaleDateString('fr-FR', options);
-  };
-
-  const formatTime = (timeString: string) => {
-    const [hours, minutes] = timeString.split(':');
-    return `${hours}H${minutes}`;
-  };
 
   const toggleExpand = (reservationId: number) => {
     setExpandedReservationId((prevId) =>
@@ -65,6 +42,41 @@ export const ReservationsModal: React.FC<ReservationsModalProps> = ({
     );
   };
 
+  return { expandedReservationId, toggleExpand, cancelReservation };
+};
+
+// Hook pour formater les dates et heures
+const useFormatLogic = () => {
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    return new Date(dateString).toLocaleDateString('fr-FR', options);
+  };
+
+  const formatTime = (timeString: string) => {
+    const [hours, minutes] = timeString.split(':');
+    return `${hours}H${minutes}`;
+  };
+
+  return { formatDate, formatTime };
+};
+
+export type ReservationsModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export const ReservationsModal: React.FC<ReservationsModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
+  const { expandedReservationId, toggleExpand, cancelReservation } =
+    useReservationsLogic();
+  const { formatDate, formatTime } = useFormatLogic();
+
   const renderReservation = ({ item }: any) => (
     <TouchableOpacity
       style={[
@@ -75,13 +87,23 @@ export const ReservationsModal: React.FC<ReservationsModalProps> = ({
     >
       <Text style={styles.room}>{item.location.location_name}</Text>
       <View style={styles.detailsRow}>
-        <Calendar color={colors.resolutionBlue} width={20} height={20} />
+        <Icon
+          name="Calendar"
+          color={colors.resolutionBlue}
+          width={20}
+          height={20}
+        />
         <Text style={styles.detailText}>
           {formatDate(item.day_reservation)}
         </Text>
       </View>
       <View style={styles.detailsRow}>
-        <Clock color={colors.resolutionBlue} width={20} height={20} />
+        <Icon
+          name="Clock"
+          color={colors.resolutionBlue}
+          width={20}
+          height={20}
+        />
         <Text style={styles.detailText}>
           {formatTime(item.start_time)} - {formatTime(item.end_time)}
         </Text>
@@ -90,7 +112,12 @@ export const ReservationsModal: React.FC<ReservationsModalProps> = ({
       {expandedReservationId === item.reservation_id && (
         <View style={styles.expandedContent}>
           <View style={styles.detailsRow}>
-            <Marker color={colors.resolutionBlue} width={20} height={20} />
+            <Icon
+              name="Marker"
+              color={colors.resolutionBlue}
+              width={20}
+              height={20}
+            />
             <Text style={styles.detailText}>
               {item.establishment.establishment_name}
             </Text>
@@ -104,7 +131,9 @@ export const ReservationsModal: React.FC<ReservationsModalProps> = ({
             style={styles.cancelButton}
             onPress={() => cancelReservation(item.reservation_id)}
           >
-            <Text style={styles.cancelButtonText}>{title_data.buttons.actions.cancelReservation}</Text>
+            <Text style={styles.cancelButtonText}>
+              {title_data.buttons.actions.cancelReservation}
+            </Text>
           </TouchableOpacity>
         </View>
       )}
@@ -118,9 +147,16 @@ export const ReservationsModal: React.FC<ReservationsModalProps> = ({
           {/* Header avec flèche */}
           <View style={styles.header}>
             <TouchableOpacity onPress={onClose}>
-              <BackArrow width={20} height={20} color={colors.black} />
+              <Icon
+                name="BackArrow"
+                color={colors.black}
+                width={20}
+                height={20}
+              />
             </TouchableOpacity>
-            <Text style={styles.title}>{title_data.headers.recapReservation}</Text>
+            <Text style={styles.title}>
+              {title_data.headers.recapReservation}
+            </Text>
           </View>
 
           {/* Liste des réservations */}
