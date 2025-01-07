@@ -7,6 +7,7 @@ import { BottomNavbar, TopBar } from '@components';
 import { styles } from './style';
 import { getReservations } from '@services';
 import { getRooms, Room } from '@services/RoomServices';
+import { ReservationModal } from './Modal';
 
 export const ReservationScreen = () => {
   const { t } = useTranslation();
@@ -14,6 +15,11 @@ export const ReservationScreen = () => {
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [durations, setDurations] = useState<string[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('');
+  const [selectedFloor, setSelectedFloor] = useState<string>('');
 
   const calculateDuration = (startTime: string, endTime: string): string => {
     const [startHours, startMinutes] = startTime.split('h').map(Number);
@@ -60,22 +66,21 @@ export const ReservationScreen = () => {
         subIcon: 'School',
         variant: 'select',
         data: [t('filters.acoustic'), t('filters.classroom')],
-        onSelect: (selected: string) => console.log('Selected:', selected),
+        onSelect: (selected: string) => setSelectedRoom(selected),
       },
       {
         placeholder: t('fields.common.date'),
         icon: 'Calendar',
         variant: 'select',
         data: dayReservations,
-        onSelect: (selected: string) => console.log('Selected date:', selected),
+        onSelect: (selected: string) => setSelectedDate(selected),
       },
       {
         placeholder: t('fields.room.hours'),
         icon: 'Clock',
         variant: 'select',
         data: durations,
-        onSelect: (selected: string) =>
-          console.log('Selected time slot:', selected),
+        onSelect: (selected: string) => setSelectedTimeSlot(selected),
       },
     ],
     [
@@ -84,10 +89,17 @@ export const ReservationScreen = () => {
         icon: 'Calendar',
         variant: 'select',
         data: timeSlots,
-        onSelect: (selected: string) => console.log('Selected:', selected),
+        onSelect: (selected: string) => setSelectedTimeSlot(selected),
       },
     ],
   ];
+
+  const modalData = {
+    roomName: selectedRoom,
+    date: selectedDate,
+    timeSlot: selectedTimeSlot,
+    floor: selectedFloor,
+  };
 
   const roomSelectorProps = {
     title: t('filters.roomsOpen'),
@@ -113,10 +125,15 @@ export const ReservationScreen = () => {
         roomSelectorProps={roomSelectorProps}
         buttonProps={{
           title: t('headers.reservation'),
-          onPress: () => console.log('Reserve button pressed'),
+          onPress: () => setIsModalVisible(true),
         }}
       />
       <BottomNavbar activeIcon="Reserve" />
+      <ReservationModal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        data={modalData}
+      />
     </View>
   );
 };

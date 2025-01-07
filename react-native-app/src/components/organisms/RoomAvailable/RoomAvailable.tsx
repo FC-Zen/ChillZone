@@ -40,7 +40,6 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
-        <Text>Aucune salle disponible</Text>
       </View>
     );
   }
