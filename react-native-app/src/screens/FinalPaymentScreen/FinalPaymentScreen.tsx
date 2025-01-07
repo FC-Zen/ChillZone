@@ -85,7 +85,8 @@ export const FinalPaymentScreen = () => {
                 headerTitle={t('headers.finalCommand')}
                 navigateToHome={() => navigation.navigate(ROUTE.HOME)} 
                 qrImagelink={image} 
-                commandConfirmation={t('cart.confirmText', { id: id })}
+                commandConfirmation={t('cart.confirmText')}
+                commandId={id}
                 downloadButtonTitle={t('buttons.actions.qrCode')}
                 onDownloadPress={onDownloadPress} 
                 bottomCommandInfo={t('cart.readyText')}
