@@ -11,12 +11,27 @@ import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
+import { Room } from '@services/RoomServices';
+import { NavItem } from '@components/molecules/BookingInfo';
 
-export const HomeScreen = () => {
+type HomeScreenProps = {
+  route: {
+    params: {
+      data: NavItem[];
+    };
+  };
+};
+
+export const HomeScreen: React.FC<HomeScreenProps> = ({ route }) => {
   const { userName } = useUser();
-  const items = transformBookings();
+  let items = transformBookings();
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const nextBooking = route?.params?.data;
+
+  if (nextBooking) {
+    items = nextBooking;
+  }
 
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
@@ -63,14 +78,14 @@ export const HomeScreen = () => {
     photo_link: any;
     status: 'Ouvert' | 'Fermé';
   }) => {
-    console.log(`Le restaurant a été cliqué.`,selectedRestaurant.name);
+    console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
     if (selectedRestaurant.status == 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER);
     } else {
       setSnackbar({
         open: true,
-        severity: "error",
-        message: "Le restaurant est fermé en ce moment",
+        severity: 'error',
+        message: 'Le restaurant est fermé en ce moment',
       });
     }
   };
@@ -83,7 +98,7 @@ export const HomeScreen = () => {
         onDismiss={() => setSnackbar({ ...snackbar, open: false })}
         severity={snackbar.severity}
       />
-      
+
       <TopBar />
       <HomeScreenTemplate
         welcomeMessage={restaurantWords}

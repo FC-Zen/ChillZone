@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '@theme';
+import { colors, typography } from '@theme';
 
 export const styles = StyleSheet.create({
   modalOverlay: {
@@ -13,23 +13,20 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 20,
     width: '90%',
-    maxWidth: 400,
   },
   modalTitle: {
     color: colors.white,
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: typography.h2.fontSize,
+    fontFamily: typography.h2.fontFamily,
     textAlign: 'center',
-    marginBottom: 20,
   },
   roomInfo: {
-    borderRadius: 12,
     padding: 15,
   },
-  roomName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
+  textStyle: {
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h3.fontFamily,
+    color: colors.white,
   },
   mapContainer: {
     width: 125,
@@ -37,9 +34,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     display: 'flex',
     alignSelf: 'center',
-  },
-  reservationDetails: {
-    gap: 10,
+    marginVertical: 15,
   },
   detailRow: {
     flexDirection: 'row',
@@ -47,5 +42,19 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 15,
     gap: 10,
+  },
+  flexContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    gap: 10,
+  },
+
+  flexItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 10,
   },
 });

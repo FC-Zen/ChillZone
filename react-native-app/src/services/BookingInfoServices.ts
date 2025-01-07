@@ -3,13 +3,28 @@ import { IconProps } from '@components/atoms';
 import { NavItem } from '@components/molecules/BookingInfo';
 // import axios from 'axios';
 
+export type Booking = {
+  id: number;
+  location: {
+    location_name: string;
+    floor_name: string;
+  };
+  day_reservation: string;
+  start_time: string;
+  establishment: {
+    establishment_name: string;
+  };
+};
+
 // Mappage des icônes pour chaque propriété
 const iconMapping: Record<string, IconProps['name']> = {
-  room: 'Cube',
+  roomName: 'School',
   date: 'Calendar',
-  time: 'Clock',
+  timeSlot: 'Clock',
+  duration: 'Calendar',
   establishment: 'Home',
-  floor: 'Marker',
+  floor: 'HomeLocation',
+  capacity: 'List',
 };
 
 const formatTime = (time: string): string => {
@@ -17,31 +32,45 @@ const formatTime = (time: string): string => {
   return `${hour}h${minute}`;
 };
 
-// Transformation des données de réservation en ne prenant que la première réservation
 export const transformBookings = (): NavItem[] => {
-  // Récupère uniquement la première réservation
   const booking = reservations[0];
 
-  return [
-    {
-      icon: iconMapping['room'],
+  const navItems: NavItem[] = [];
+
+  if (booking.location.location_name) {
+    navItems.push({
+      icon: iconMapping['roomName'],
       label: booking.location.location_name,
-    },
-    {
+    });
+  }
+
+  if (booking.day_reservation) {
+    navItems.push({
       icon: iconMapping['date'],
       label: booking.day_reservation,
-    },
-    {
-      icon: iconMapping['time'],
+    });
+  }
+
+  if (booking.start_time) {
+    navItems.push({
+      icon: iconMapping['timeSlot'],
       label: formatTime(booking.start_time),
-    },
-    {
+    });
+  }
+
+  if (booking.establishment.establishment_name) {
+    navItems.push({
       icon: iconMapping['establishment'],
       label: booking.establishment.establishment_name,
-    },
-    {
+    });
+  }
+
+  if (booking.location.floor_name) {
+    navItems.push({
       icon: iconMapping['floor'],
       label: booking.location.floor_name,
-    },
-  ];
+    });
+  }
+
+  return navItems;
 };

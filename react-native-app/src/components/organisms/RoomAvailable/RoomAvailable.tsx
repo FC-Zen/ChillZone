@@ -21,29 +21,16 @@ export type Room = {
 export type RoomSelectorProps = {
   title: string;
   rooms: Room[];
+  handlePress: (room: Room) => void;
+  selectedRoom?: Room | null;
 };
 
-export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
-  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
-
-  useEffect(() => {
-    if (rooms && rooms.length > 0) {
-      setSelectedRoom(rooms[0]);
-    }
-  }, [rooms]);
-
-  const handleRoomSelect = (room: Room) => {
-    setSelectedRoom(room);
-  };
-
-  if (!selectedRoom) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
-    );
-  }
-
+export const RoomAvailable: FC<RoomSelectorProps> = ({
+  title,
+  rooms,
+  selectedRoom,
+  handlePress,
+}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
@@ -60,7 +47,7 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
               styles.button,
               selectedRoom?.name === room.name && styles.buttonActive,
             ]}
-            onPress={() => handleRoomSelect(room)}
+            onPress={() => handlePress(room)}
           >
             <Icon
               name="Cube"
@@ -89,7 +76,7 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
         <View style={styles.infoContainer}>
           <View style={styles.infoRow}>
             <Icon name="School" width={16} height={16} color={colors.white} />
-            <Text style={styles.infoText}>{selectedRoom.name || ''}</Text>
+            <Text style={styles.infoText}>{selectedRoom?.name || ''}</Text>
           </View>
           <View style={styles.infoRow}>
             <Icon
@@ -99,13 +86,13 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({ title, rooms }) => {
               color={colors.white}
             />
             <Text style={styles.infoText}>
-              Étage {selectedRoom.floor || '?'}
+              Étage {selectedRoom?.floor || '?'}
             </Text>
           </View>
           <View style={styles.infoRow}>
             <Icon name="List" width={16} height={16} color={colors.white} />
             <Text style={styles.infoText}>
-              {selectedRoom.capacity || 0} places
+              {selectedRoom?.capacity || 0} places
             </Text>
           </View>
         </View>

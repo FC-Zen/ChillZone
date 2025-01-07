@@ -2,6 +2,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { ROUTE } from '@enums';
 import { MealProps } from '@services/DispenserServices';
+import { NavItem } from '@components/molecules/BookingInfo';
 
 export type RootStackParamList = {
   [ROUTE.HOME]: { userName: string };
@@ -19,7 +20,9 @@ export type RootStackParamList = {
 
 // Définition des routes et de leurs paramètres
 export type RouteParamList = {
-  HomeScreen: undefined;
+  HomeScreen: {
+    data: NavItem[];
+  };
   LoginScreen: undefined; // Correspond à ROUTE.LOGIN_SCREEN
   ForgotPasswordScreen: undefined;
   ForgotMdpScreen: undefined;

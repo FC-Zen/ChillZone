@@ -19,7 +19,7 @@ import {
 } from '@screens';
 import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { UserProvider } from '@contexts/AppContrext';
+import { NextBookingProvider, UserProvider } from '@contexts/AppContrext';
 import { colors } from '@theme';
 import { Bounce } from 'react-native-animated-spinkit';
 

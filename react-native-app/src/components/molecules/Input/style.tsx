@@ -2,15 +2,19 @@ import { StyleSheet, View, ViewStyle } from 'react-native';
 import { FC, ReactNode } from 'react';
 import { InputProps } from './Input';
 import { colors, typography } from '@theme';
-interface InputWrapperProps extends InputProps {
+
+type InputWrapperProps = InputProps & {
   children: ReactNode;
-}
+};
+
 export const InputWrapper: FC<InputWrapperProps> = ({ style, children }) => {
   return <View style={[InputStyles.wrapper, style]}>{children}</View>;
 };
+
 export const InputIcon = ({ children }: { children: ReactNode }) => {
   return <View style={InputStyles.icon}>{children}</View>;
 };
+
 export const InputStyles = StyleSheet.create({
   container: {
     width: '100%',

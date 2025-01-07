@@ -25,6 +25,7 @@ export type InputProps = {
   data?: string[];
   onFilter?: (filteredData: string) => void;
   onSelect?: (selected: string) => void;
+  disabled?: boolean;
 };
 
 export const Input: FC<InputProps> = ({
@@ -41,6 +42,7 @@ export const Input: FC<InputProps> = ({
   onFilter,
   data = [],
   onSelect,
+  disabled = false,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(
     variant === 'password'
@@ -93,6 +95,7 @@ export const Input: FC<InputProps> = ({
           <TouchableOpacity
             style={[InputStyles.input, InputStyles.selectInput]}
             onPress={toggleDropdown}
+            disabled={disabled}
           >
             <Text
               style={{
@@ -119,6 +122,9 @@ export const Input: FC<InputProps> = ({
             value={value}
             secureTextEntry={isPasswordVisible}
             placeholderTextColor={colors.silver}
+            pointerEvents={disabled ? 'none' : 'auto'}
+            editable={!disabled}
+            focusable={!disabled}
           />
         )}
       </InputWrapper>
