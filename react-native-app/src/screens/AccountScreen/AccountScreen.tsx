@@ -39,8 +39,6 @@ export const AccountScreen: React.FC = () => {
   // Gestion du thème sombre
   const toggleTheme = () => setIsDarkTheme((prev) => !prev);
 
-
-
   return (
     <SafeAreaView
       style={[styles.container, isDarkTheme && styles.darkContainer]}

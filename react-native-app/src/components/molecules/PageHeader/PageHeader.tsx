@@ -38,7 +38,9 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           color={icon.color}
           width={24}
           height={24}
-          onPress={onBackPress ? onBackPress : () => navigation.goBack()} // Action par défaut ou personnalisée
+          onPress={
+            onBackPress ? onBackPress : () => navigation.navigate(ROUTE.HOME)
+          } // Action par défaut ou personnalisée
         />
       )}
 
