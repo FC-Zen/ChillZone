@@ -172,7 +172,9 @@
   "filters": {
     "filterTitle": "Filters",
     "hoursOpen": "Available hours",
-    "roomsOpen": "Available rooms"
+    "roomsOpen": "Available rooms",
+    "acoustic": "Acoustic Box",
+    "classroom": "Classroom"
   },
 
   "reservationConflicts": {
