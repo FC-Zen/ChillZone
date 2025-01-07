@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     height: 'auto',
     width: layout.screen.width,
     textAlign: 'left',
-    paddingVertical: 35,
+    paddingVertical: 12,
     paddingHorizontal: 30,
     gap: 20,
   },

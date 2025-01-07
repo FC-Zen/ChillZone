@@ -37,4 +37,6 @@ export {
   HomeScreenTemplate,
   HomeScreenTemplateProps,
   RestaurationTemplate,
+  PaymentTemplate,
+  FinalPaymentTemplate,
 } from './templates';

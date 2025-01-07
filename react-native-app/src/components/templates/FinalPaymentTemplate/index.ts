@@ -1,0 +1,1 @@
+export { FinalPaymentTemplate } from './FinalPaymentTemplate';

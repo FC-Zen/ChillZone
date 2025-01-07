@@ -22,3 +22,4 @@ export { default as Add } from './Add';
 export { default as Hamburger } from './Hamburger';
 export { default as Less } from './Less';
 export { default as More } from './More';
+export { default as Download } from './Download';

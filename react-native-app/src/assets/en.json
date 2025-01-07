@@ -58,7 +58,7 @@
       "cart": "View cart",
       "payNow": "Pay now",
       "pay": "Pay",
-      "qrCode": "Download QR CODE"
+      "qrCode": "DOWNLOAD QR CODE"
     },
     "add": {
       "generic": "Add {{ x }} item(s) to the cart"
