@@ -3,15 +3,11 @@ import { FC, ReactNode } from 'react';
 import { InputProps } from './Input';
 import { colors, typography } from '@theme';
 
-interface InputWrapperProps extends InputProps {
+type InputWrapperProps = InputProps & {
   children: ReactNode;
-}
+};
 
-export const InputWrapper: FC<InputWrapperProps> = ({
-  style,
-  children,
-  ...rest
-}) => {
+export const InputWrapper: FC<InputWrapperProps> = ({ style, children }) => {
   return <View style={[InputStyles.wrapper, style]}>{children}</View>;
 };
 
@@ -20,6 +16,9 @@ export const InputIcon = ({ children }: { children: ReactNode }) => {
 };
 
 export const InputStyles = StyleSheet.create({
+  container: {
+    width: '100%',
+  },
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
@@ -41,17 +40,52 @@ export const InputStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  subIcon: {
+    width: 16,
+    height: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   input: {
     flex: 1,
     height: '100%',
-    fontSize: typography.h4.fontSize,
+    fontSize: typography.h3.fontSize,
     fontWeight: '400',
-    fontFamily: typography.h4.fontFamily,
+    fontFamily: typography.h3.fontFamily,
+  },
+  selectInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   subtitledContainer: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
+  },
+  dropdown: {
+    marginTop: 10,
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.silver,
+    borderRadius: 10,
+    zIndex: 1000,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  dropdownRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  dropdownItem: {
+    paddingVertical: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dropdownText: {
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h3.fontFamily,
+    color: colors.resolutionBlue,
   },
 });

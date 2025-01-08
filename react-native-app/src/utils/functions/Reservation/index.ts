@@ -1,2 +1,1 @@
-export * as NotificationFunctions from './Notification';
 export { formatDate, formatReservation, formatTime } from './Reservation';

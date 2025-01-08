@@ -13,6 +13,7 @@ type RootStackParamList = {
   CalendarScreen: undefined;
   NavigationScreen: undefined;
   RestaurationScreen: undefined;
+  ReservationScreen: undefined;
 };
 
 export type NavItem = {
@@ -47,7 +48,7 @@ export const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeIcon }) => {
         break;
       case 'Reserve':
         console.log('Reserve');
-        // navigation.navigate(ROUTE.RESERVE);
+        navigation.navigate(ROUTE.RESERVATION);
         break;
       case 'Lunch':
         console.log('Lunch');

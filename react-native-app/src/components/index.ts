@@ -27,6 +27,7 @@ export {
   Map,
   ResetPassword,
   RestaurantSlider,
+  RoomAvailable,
 } from './organisms';
 export {
   ConnectionTemplate,
@@ -39,4 +40,5 @@ export {
   RestaurationTemplate,
   PaymentTemplate,
   FinalPaymentTemplate,
+  ReservationTemplate,
 } from './templates';

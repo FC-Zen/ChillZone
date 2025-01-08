@@ -1,3 +1,5 @@
+import { Booking } from '@services/BookingInfoServices';
+import { Room } from '@services/RoomServices';
 import React, { createContext, useContext, useState } from 'react';
 
 // CONTEXTE POUR LE USER
@@ -40,7 +42,9 @@ export type CommandContextType = {
   setTotalAmount: (amount: number) => void;
 };
 
-export const CommandContext = createContext<CommandContextType | undefined>(undefined);
+export const CommandContext = createContext<CommandContextType | undefined>(
+  undefined
+);
 
 export const CommandProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -50,11 +54,20 @@ export const CommandProvider: React.FC<{ children: React.ReactNode }> = ({
   const [totalAmount, setTotalAmount] = useState<number>(0);
 
   return (
-    <CommandContext.Provider value={{ commandId, listItems, totalAmount, setCommandId, setListItems, setTotalAmount }}>
+    <CommandContext.Provider
+      value={{
+        commandId,
+        listItems,
+        totalAmount,
+        setCommandId,
+        setListItems,
+        setTotalAmount,
+      }}
+    >
       {children}
     </CommandContext.Provider>
   );
-}
+};
 
 export const useCommand = () => {
   const context = useContext(CommandContext);
@@ -63,4 +76,3 @@ export const useCommand = () => {
   }
   return context;
 };
-

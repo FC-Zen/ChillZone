@@ -6,3 +6,10 @@ export { getFaq } from './FaqServices';
 export { getAllMeals } from './DispenserServices';
 export { getTotalAmount } from './PaymentServices';
 export { getPaymentId } from './PaymentServices';
+export {
+  getReservations,
+  getReservationById,
+  Establishment,
+  FormattedReservation,
+  Location,
+} from './Reservation';

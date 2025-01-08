@@ -171,8 +171,11 @@
   },
 
   "filters": {
+    "filterTitle": "Filtres",
     "hoursOpen": "Horaires disponibles",
-    "roomsOpen": "Salles disponibles"
+    "roomsOpen": "Salles disponibles",
+    "acoustic": "Box Acoustique",
+    "classroom": "Salle de classe"
   },
 
   "reservationConflicts": {
