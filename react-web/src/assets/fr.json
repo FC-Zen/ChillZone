@@ -240,7 +240,7 @@
     "owner": {
       "products": "Stock",
       "menus": "Menus",
-      "commands": "Commandes / Box"
+      "commands": "Commandes"
     }
   },
 
@@ -391,7 +391,8 @@
         "price": "Prix",
         "quantity": "Quantité",
         "category": "Catégorie",
-        "tag": "Tags"
+        "tag": "Tags",
+        "modifyQuantity" : "Modifier la quantité"
       },
       "menu": {
         "name": "Nom du menu",
@@ -426,7 +427,13 @@
 
   "categories": {
     "restaurant": "Restaurants",
-    "fridge": "Frigos"
+    "fridge": "Frigos",
+    "Starter": "Entrées",
+    "Main": "Plats",
+    "Drink": "Boissons",
+    "Dessert": "Desserts",
+    "Side": "Accompagnements",
+    "Other": "Autres"
   },
 
   "command": {

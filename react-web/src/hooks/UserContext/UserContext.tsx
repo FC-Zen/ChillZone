@@ -4,6 +4,7 @@ type User = {
     userEmail: string;
     username: string;
     organization: string;
+    role: string;
 }
 
 type UserContextType = {

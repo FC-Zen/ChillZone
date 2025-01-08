@@ -48,6 +48,7 @@ export const LoginPage: React.FC = () => {
         userEmail: validEmail,
         username: validName,
         organization: validOrganization,
+        role : "Administrateur"
       });
       navigation.navigate(ROUTE.ADMIN_DASHBOARD);
     } catch (error) {

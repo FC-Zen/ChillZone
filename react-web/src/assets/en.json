@@ -296,7 +296,8 @@
         "price": "Price",
         "quantity": "Quantity",
         "category": "Category",
-        "tag": "Tags"
+        "tag": "Tags",
+        "modifyQuantity" : "Update the quantity"
       },
       "menu": {
         "name": "Menu name",
@@ -328,7 +329,13 @@
 
   "categories": {
     "restaurant": "Restaurants",
-    "fridge": "Fridges"
+    "fridge": "Fridges",
+    "Starter": "Starter",
+    "Main": "Main Dish",
+    "Drink": "Drink",
+    "Dessert": "Dessert",
+    "Side": "Side",
+    "Other": "Other"
   },
 
   "command": {

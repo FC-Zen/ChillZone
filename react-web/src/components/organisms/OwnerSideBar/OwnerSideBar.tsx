@@ -34,7 +34,7 @@ export const OwnerSidebar = () => {
       {/* Profil du propriétaire */}
       <NavigationButton
         icon={<Pizza color={colors.white} />}
-        onClick={() => handleIconClick('/owner-profile')} // Ajuster cette route si nécessaire
+        onClick={() =>  handleIconClick(ROUTE.OWNER_MEALS)} // Ajuster cette route si nécessaire
       />
 
       {/* Commandes */}
