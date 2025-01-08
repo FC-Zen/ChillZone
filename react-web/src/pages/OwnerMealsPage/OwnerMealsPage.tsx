@@ -3,10 +3,27 @@ import { OwnerMealsTemplate } from '@components/templates';
 import { useUser } from '@hooks';
 import { useTranslation } from 'react-i18next';
 import meals from '@assets/data/meals.json';
+import { AccountModal } from '@components/organisms';
+import { Input } from '@components';
+import { AutoCompleteInput } from '@components/molecules';
 
 export const OwnerMealsPage: React.FC = () => {
   const { user } = useUser();
   const { t } = useTranslation();
+
+  const mealTags = [
+    { tag: "Vegan" },
+    { tag: "Vegetarian" },
+    { tag: "Gluten-Free" },
+    { tag: "Dairy-Free" },
+    { tag: "Spicy" },
+    { tag: "Low-Carb" },
+    { tag: "High-Protein" },
+    { tag: "Organic" },
+    { tag: "Halal" },
+    { tag: "Kosher" },
+    { tag: "Seafood" }
+  ]; 
   
   const [mealsData, setMealsData] = useState(meals);
 
@@ -86,6 +103,10 @@ export const OwnerMealsPage: React.FC = () => {
     handleOpenModal();
   };
 
+  const handleAddMealBtn = () => {
+    handleCloseModal();
+  };
+
   return (
   <>
     <OwnerMealsTemplate
@@ -99,6 +120,20 @@ export const OwnerMealsPage: React.FC = () => {
       handleClickQuantity={handleUpdateMealQuantity}
       addMealBtn={addMealBtn}
     />
+
+    <AccountModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            title="Création d’un compte"
+          >
+            <form className="flex flex-col space-y-4" onSubmit={handleAddMealBtn}>
+              <AutoCompleteInput name={'tagoptions'} label={'Tags'} options={mealTags} />
+
+              <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+                {t('buttons.add.user')}
+              </button>
+            </form>
+    </AccountModal>
 
   </>
   );

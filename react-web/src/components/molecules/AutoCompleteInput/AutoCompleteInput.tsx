@@ -1,0 +1,84 @@
+import TextField from "@mui/material/TextField";
+import React, { useState } from "react";
+import Box from "@mui/material/Box";
+import { colors } from "@theme";
+import { Autocomplete } from "@mui/material";
+
+export type InputProps = {
+    name: string;
+    value?: string[];
+    label: string;
+    options: { tag: string }[];
+    onInputChange?: (name: string, value: any) => void;
+    onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+};
+
+export const AutoCompleteInput = ({ name, value = [], label, options, onInputChange, onKeyDown }: InputProps) => {
+    const [selectedValues, setSelectedValues] = useState<string[]>(value);
+
+    const handleChange = (event: any, newValue: string[]) => {
+        setSelectedValues(newValue);
+        if (onInputChange) {
+        onInputChange(name, newValue);
+        }
+    };
+
+    return (
+        <Box
+        style={{
+            width: "100%",
+        }}
+        >
+        <Autocomplete
+            multiple
+            options={options.map((option) => option.tag)}
+            value={selectedValues}
+            onChange={handleChange}
+            isOptionEqualToValue={(option, value) => option === value}
+            getOptionLabel={(option) => option || ""}
+            sx={{
+                "& .MuiAutocomplete-inputRoot": {
+                    padding: "0px 25px",
+                    backgroundColor: colors.white,
+                    border: "2px solid",
+                    borderRadius: "10px",
+                    borderColor: colors.silver,
+                },
+                "& .Mui-focused": {
+                    color: "initial",
+                    backgroundColor: "white!important",
+                },
+                "& .MuiAutocomplete-inputRoot::after": {
+                    borderBottom: "none",
+                },
+                "& .MuiAutocomplete-inputRoot::before": {
+                    borderBottom: "none",
+                },
+                "& .MuiAutocomplete-inputRoot:hover": {
+                    border: "2px solid",
+                    borderRadius: "10px",
+                    borderColor: colors.silver,
+                    backgroundColor: colors.white,
+                },
+                "& .MuiAutocomplete-inputRoot:hover::before": {
+                    borderBottom: "none!important",
+                },
+                "& .MuiAutocomplete-inputRoot:hover::after": {
+                    borderBottom: "none",
+                },
+                "& .MuiInputAdornment-root": {
+                    padding: "1px",
+                },
+                "& input:-webkit-autofill": {
+                    backgroundColor: colors.white,
+                    boxShadow: "0 0 0 30px white inset",
+                },
+                width: "100%",
+                }}
+                renderInput={(params) => (
+                <TextField {...params} variant="standard" label={label} />
+                )}
+            />
+        </Box>
+    );
+};
