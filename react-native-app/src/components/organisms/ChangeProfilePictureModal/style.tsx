@@ -1,4 +1,4 @@
-import { colors } from '@theme';
+import { colors, typography } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -22,13 +22,6 @@ export const styles = StyleSheet.create({
     right: 15,
     zIndex: 10,
   },
-  closeButtonText: {
-    fontSize: 16,
-    fontFamily: 'Montserrat',
-    fontWeight: '600', // Semi-bold
-    lineHeight: 16, // Line height exact de 100%
-    color: colors.white,
-  },
   avatarContainer: {
     backgroundColor: colors.white,
     borderRadius: 50,
@@ -44,7 +37,7 @@ export const styles = StyleSheet.create({
   },
   primaryButton: {
     backgroundColor: colors.white,
-    borderRadius: 8,
+    borderRadius: 50,
     paddingVertical: 12,
     paddingHorizontal: 20,
     alignItems: 'center',
@@ -52,25 +45,23 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   primaryButtonText: {
-    fontSize: 16,
-    fontFamily: 'Montserrat',
-    fontWeight: '600', // Semi-bold
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h2.fontFamily,
     lineHeight: 16, // 100% de la taille de la police
     color: colors.resolutionBlue,
     textAlign: 'center',
   },
   secondaryButton: {
     backgroundColor: colors.warn,
-    borderRadius: 8,
+    borderRadius: 50,
     paddingVertical: 12,
     paddingHorizontal: 20,
     alignItems: 'center',
     width: '100%',
   },
   secondaryButtonText: {
-    fontSize: 16,
-    fontFamily: 'Montserrat',
-    fontWeight: '600', // Semi-bold
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h2.fontFamily,
     lineHeight: 16, // 100% de la taille de la police
     color: colors.white,
     textAlign: 'center',

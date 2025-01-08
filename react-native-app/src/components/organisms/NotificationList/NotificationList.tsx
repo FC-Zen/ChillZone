@@ -5,7 +5,10 @@ import { NotificationItem } from '@components/molecules';
 import { styles } from './style';
 import { NotificationPopup } from '@components/molecules';
 import { useState } from 'react';
-import { NotificationPopupProps, PopupProps } from '@components/molecules/NotificationPopup';
+import {
+  NotificationPopupProps,
+  PopupProps,
+} from '@components/molecules/NotificationPopup';
 import { NotificationProps } from '@components/molecules/Notification';
 
 export type NotificationListProps = {

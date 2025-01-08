@@ -11,7 +11,6 @@ export type AccountTemplateProps = {
   onToggleTheme: () => void;
   currentLanguage: string;
   onChangeLanguage: () => void;
-  onOpenLinksModal: () => void;
   onOpenPasswordModal: () => void;
   onOpenResetPasswordModal: () => void;
   onOpenEditInfoModal: () => void;
@@ -24,7 +23,6 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
   onToggleTheme,
   currentLanguage,
   onChangeLanguage,
-  onOpenLinksModal,
   onOpenPasswordModal,
   onOpenResetPasswordModal,
   onOpenEditInfoModal,
@@ -44,7 +42,6 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
       onToggleTheme={onToggleTheme}
       currentLanguage={currentLanguage}
       onChangeLanguage={onChangeLanguage}
-      onOpenLinksModal={onOpenLinksModal}
       onOpenPasswordModal={onOpenPasswordModal}
       onOpenResetPasswordModal={onOpenResetPasswordModal}
       onOpenEditInfoModal={onOpenEditInfoModal}

@@ -46,3 +46,4 @@ export { default as Profile } from './Profile';
 export { default as SelectorPolygon } from './SelectorPolygon';
 export { default as Phone } from './Phone';
 export { default as Mail } from './Mail';
+export { default as CrossCircle } from './CrossCircle';

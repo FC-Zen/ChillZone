@@ -1,4 +1,4 @@
-import { colors } from '@theme';
+import { colors, typography } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -32,7 +32,6 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 8,
     paddingHorizontal: 15,
-    paddingVertical: 10,
     marginBottom: 15,
     fontSize: 16,
   },

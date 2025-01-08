@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { Input } from '@components/molecules';
 
 import data_from_fr_json from 'src/assets/fr.json';
-import { Cross } from '@components/atoms/Icons';
+import { Icon, IconProps } from '@components/atoms/Icons';
 import { colors } from '@theme';
 import styles from './style';
 
@@ -37,15 +31,22 @@ export const ResetPasswordModal = ({
     >
       <View style={styles.overlay}>
         <View style={styles.modal}>
+          {/* Titre */}
           <Text style={styles.title}>
             {data_from_fr_json.headers.pwdChange}
           </Text>
 
+          {/* Sous-titre */}
+          {/* ce n'est pas le bon sous titre mais dans le json il ne figure pas "Renseignez votre adresse mail" */}
+          <Text style={styles.subtitle}>
+            {data_from_fr_json.questions.infoPwd}
+          </Text>
+
           {/* Champ pour entrer l'email */}
-          <TextInput
+
+          <Input
             style={styles.input}
             placeholder={data_from_fr_json.fields.common.mail}
-            keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
           />
@@ -58,8 +59,14 @@ export const ResetPasswordModal = ({
           </TouchableOpacity>
 
           {/* Bouton Fermer */}
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Cross width={15} height={15} color={colors.white} />
+          <TouchableOpacity style={styles.closeButton}>
+            <Icon
+              name="Cross"
+              width={15}
+              height={15}
+              color={colors.white}
+              onPress={onClose}
+            />
           </TouchableOpacity>
         </View>
       </View>

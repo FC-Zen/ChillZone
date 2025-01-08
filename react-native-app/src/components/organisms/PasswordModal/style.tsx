@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colors, typography } from '@theme';
 
 export const styles = StyleSheet.create({
   overlay: {
@@ -22,16 +23,15 @@ export const styles = StyleSheet.create({
     zIndex: 10,
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFF',
+    fontSize: typography.h2.fontSize,
+    fontFamily: typography.h2.fontFamily,
+    color: colors.white,
     marginBottom: 20,
     textAlign: 'center',
   },
   input: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 8,
-    padding: 10,
     marginBottom: 15,
   },
   validationTagsContainer: {
@@ -41,6 +41,8 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   validationTag: {
+    flexDirection: 'row', // Alignement horizontal
+    alignItems: 'center', // Centrer verticalement
     borderRadius: 16,
     paddingHorizontal: 12,
     paddingVertical: 4,
@@ -53,7 +55,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
   },
   invalidTag: {
-    backgroundColor: '#FFE6E6',
+    backgroundColor: colors.warn,
     borderColor: '#FF5A5A',
     borderWidth: 1,
   },
@@ -65,18 +67,21 @@ export const styles = StyleSheet.create({
     color: '#00A859',
   },
   invalidText: {
-    color: '#FF5A5A',
+    color: colors.white,
   },
   button: {
-    backgroundColor: '#005745',
+    backgroundColor: colors.aquaDeep,
     borderRadius: 50,
     padding: 12,
     alignItems: 'center',
     marginBottom: 10,
+    width: '60%',
+    alignSelf: 'center',
   },
   buttonText: {
-    color: '#FFF',
+    color: colors.white,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: typography.h4.fontSize,
+    fontFamily: typography.h4.fontFamily,
   },
 });

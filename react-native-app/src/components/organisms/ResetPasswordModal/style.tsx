@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colors, typography } from '@theme';
 
 export default StyleSheet.create({
   overlay: {
@@ -8,7 +9,7 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modal: {
-    backgroundColor: '#2E2A85',
+    backgroundColor: colors.resolutionBlue,
     borderRadius: 10,
     padding: 20,
     width: '90%',
@@ -16,29 +17,40 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFF',
-    marginBottom: 20,
+    color: colors.white,
+    fontSize: typography.h2.fontSize,
+    fontFamily: typography.h2.fontFamily,
+    display: 'flex',
+    padding: 20,
+    justifyContent: 'center',
+  },
+  subtitle: {
+    color: colors.white,
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h3.fontFamily,
+    display: 'flex',
+    justifyContent: 'center',
   },
   input: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 8,
-    padding: 10,
     marginBottom: 15,
     width: '100%',
   },
   button: {
-    backgroundColor: '#005745',
-    borderRadius: 8,
+    backgroundColor: colors.aquaDeep,
+    borderRadius: 50,
     padding: 12,
     alignItems: 'center',
-    width: '100%',
+    justifyContent: 'center',
+    width: '60%',
+    gap: 10,
   },
   buttonText: {
-    color: '#FFF',
+    color: colors.white,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h3.fontFamily,
   },
   closeButton: {
     position: 'absolute',

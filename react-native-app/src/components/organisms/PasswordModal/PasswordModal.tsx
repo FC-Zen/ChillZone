@@ -8,9 +8,11 @@ import {
   Alert,
 } from 'react-native';
 import { styles } from './style'; // Import des styles
-import { Cross } from '@components/atoms/Icons';
 import { colors } from '@theme';
 import data_from_fr_json from '@assets/fr.json';
+import { Input } from '@components/molecules';
+import { Icon, IconProps } from '@components/atoms/Icons';
+import { useTranslation } from 'react-i18next';
 
 export type PasswordModalProps = {
   isOpen: boolean;
@@ -86,6 +88,12 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
         isValid ? styles.validTag : styles.invalidTag,
       ]}
     >
+      <Icon
+        name={isValid ? 'Clock' : 'CrossCircle'} // Utilisation d'une icône conditionnelle
+        color={isValid ? colors.darkCyan : colors.white}
+        width={12}
+        height={12}
+      />
       <Text
         style={[
           styles.validationTagText,
@@ -97,6 +105,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
     </View>
   );
 
+  const { t } = useTranslation();
   return (
     <Modal
       animationType="slide"
@@ -107,26 +116,30 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
       <View style={styles.overlay}>
         <View style={styles.modal}>
           {/* Croix pour fermer la modale */}
-          <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
-            <Cross width={15} height={15} color={colors.white} />
+          <TouchableOpacity style={styles.closeIcon}>
+            <Icon
+              name="Cross"
+              color={colors.white}
+              width={15}
+              height={15}
+              onPress={onClose}
+            />
           </TouchableOpacity>
 
-          <Text style={styles.title}>{data_from_fr_json.modals.pwdChange}</Text>
+          <Text style={styles.title}>{t('modals.pwdChange')}</Text>
 
           {/* Champ pour l'ancien mot de passe */}
-          <TextInput
+          <Input
             style={styles.input}
-            placeholder={data_from_fr_json.fields.auth.lastPassword}
-            secureTextEntry
+            placeholder={t('fields.auth.lastPassword')}
             value={oldPassword}
             onChangeText={setOldPassword}
           />
 
           {/* Champ pour le nouveau mot de passe */}
-          <TextInput
+          <Input
             style={styles.input}
-            placeholder={data_from_fr_json.fields.auth.newPassword}
-            secureTextEntry
+            placeholder={t('fields.auth.newPassword')}
             value={newPassword}
             onChangeText={setNewPassword}
           />
@@ -134,29 +147,31 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
           {/* Tags de validation */}
           <View style={styles.validationTagsContainer}>
             {renderValidationTag(
-              '12+ caractères',
+              t('checks.characters'),
               newPasswordValidation.minLength
             )}
             {renderValidationTag(
-              '1+ majuscule',
+              t('checks.maj'),
               newPasswordValidation.hasUppercase
             )}
             {renderValidationTag(
-              '1+ minuscule',
+              t('checks.minus'),
               newPasswordValidation.hasLowercase
             )}
-            {renderValidationTag('1+ chiffre', newPasswordValidation.hasNumber)}
             {renderValidationTag(
-              '1+ caractère spécial',
+              t('checks.number'),
+              newPasswordValidation.hasNumber
+            )}
+            {renderValidationTag(
+              t('checks.special'),
               newPasswordValidation.hasSpecialChar
             )}
           </View>
 
           {/* Champ pour confirmer le mot de passe */}
-          <TextInput
+          <Input
             style={styles.input}
             placeholder={data_from_fr_json.fields.auth.verifyNewPassword}
-            secureTextEntry
             value={confirmPassword}
             onChangeText={setConfirmPassword}
           />

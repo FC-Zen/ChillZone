@@ -4,6 +4,8 @@ import { styles } from './style';
 import user_profile_data from '@assets/fr.json';
 import { Icon, IconProps } from '@components/atoms/Icons';
 import { colors } from '@theme';
+import { useTranslation } from 'react-i18next';
+
 export type ChangeProfilePictureModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -13,6 +15,7 @@ export const ChangeProfilePictureModal = ({
   isOpen,
   onClose,
 }: ChangeProfilePictureModalProps) => {
+  const { t } = useTranslation();
   return (
     <Modal
       animationType="slide"
@@ -46,14 +49,14 @@ export const ChangeProfilePictureModal = ({
           {/* Bouton pour changer la photo */}
           <TouchableOpacity style={styles.primaryButton}>
             <Text style={styles.primaryButtonText}>
-              {user_profile_data.buttons.profile.changePp}
+              {t('buttons.profile.changePp')}
             </Text>
           </TouchableOpacity>
 
           {/* Bouton pour supprimer */}
           <TouchableOpacity style={styles.secondaryButton}>
             <Text style={styles.secondaryButtonText}>
-              {user_profile_data.buttons.profile.deletePp}
+              {t('buttons.profile.deletePp')}
             </Text>
           </TouchableOpacity>
         </View>
