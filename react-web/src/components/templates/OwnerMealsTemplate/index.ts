@@ -1,0 +1,1 @@
+export { OwnerMealsTemplate } from './OwnerMealsTemplate';

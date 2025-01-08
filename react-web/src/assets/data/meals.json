@@ -1,6 +1,6 @@
 [
     {
-        "meal_id": 1,
+        "id": 1,
         "meal_name": "Salade César",
         "meal_description": "Une délicieuse salade avec de la laitue, du poulet grillé, du fromage parmesan, et une vinaigrette césar.",
         "meal_type": "Starter",
@@ -19,7 +19,7 @@
         ]
     },
     {
-        "meal_id": 2,
+        "id": 2,
         "meal_name": "Pizza Margherita",
         "meal_description": "Pizza classique avec sauce tomate, mozzarella, et basilic frais.",
         "meal_type": "Main",
@@ -34,7 +34,7 @@
         ]
     },
     {
-        "meal_id": 3,
+        "id": 3,
         "meal_name": "Tiramisu chocolat",
         "meal_description": "Dessert italien à base de mascarpone, café, et cacao.",
         "meal_type": "Dessert",
@@ -49,7 +49,7 @@
         ]
     },
     {
-        "meal_id": 3,
+        "id": 4,
         "meal_name": "Tiramisu fraise",
         "meal_description": "Dessert italien à base de mascarpone, café, et fraise.",
         "meal_type": "Dessert",
