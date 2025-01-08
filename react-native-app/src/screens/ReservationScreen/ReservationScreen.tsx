@@ -129,14 +129,16 @@ export const ReservationScreen = () => {
   const roomSelectorProps = {
     title: t('filters.roomsOpen'),
     rooms:
-      rooms
-        ?.filter((room) => room)
-        .map((room) => ({
-          name: room?.name || '',
-          floor: room?.floor || 0,
-          capacity: room?.capacity || 0,
-          photo_link: room?.photo_link || '',
-        })) || [],
+      selectedRoom && selectedDate && selectedDuration && selectedTimeSlot
+        ? rooms
+            ?.filter((room) => room)
+            .map((room) => ({
+              name: room?.name || '',
+              floor: room?.floor || 0,
+              capacity: room?.capacity || 0,
+              photo_link: room?.photo_link || '',
+            }))
+        : [],
     onRoomSelect: handleRoomSelect,
     handlePress: setRoom,
     selectedRoom: room,

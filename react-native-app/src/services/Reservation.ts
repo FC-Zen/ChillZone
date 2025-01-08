@@ -1,4 +1,5 @@
 import reservationsData from '@assets/data/reservations.json';
+import { formatReservation } from '@utils/functions';
 
 export type Location = {
   location_id: number;
@@ -31,31 +32,6 @@ export type FormattedReservation = Omit<
   end_time: string; // on formate
   day_reservation: string; // on formate
 };
-
-// Fonction utilitaire pour reformater l'heure
-const formatTime = (time: string): string => {
-  const [hours, minutes] = time.split(':');
-  return `${hours}h${minutes}`;
-};
-
-// Fonction utilitaire pour reformater la date
-const formatDate = (date: string): string => {
-  const [year, month, day] = date.split('-');
-  const dateObj = new Date(Number(year), Number(month) - 1, Number(day));
-  return new Intl.DateTimeFormat('fr-FR', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  }).format(dateObj);
-};
-
-// Fonction pour reformater une réservation
-const formatReservation = (reservation: Reservation): FormattedReservation => ({
-  ...reservation,
-  start_time: formatTime(reservation.start_time),
-  end_time: formatTime(reservation.end_time),
-  day_reservation: formatDate(reservation.day_reservation),
-});
 
 // Fonction pour récupérer toutes les réservations avec formatage
 export const getReservations = async (): Promise<FormattedReservation[]> => {
