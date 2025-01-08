@@ -5,8 +5,6 @@ import {
   PasswordModal,
   ResetPasswordModal,
   EditInfoModal,
-  OrdersModal,
-  ReservationsModal,
 } from '@components/organisms';
 import ordersData from 'src/assets/data/commands.json';
 import { styles } from './style';
@@ -51,8 +49,6 @@ export const AccountScreen: React.FC = () => {
         onOpenPasswordModal={() => setPasswordModalOpen(true)}
         onOpenResetPasswordModal={() => setResetModalOpen(true)}
         onOpenEditInfoModal={() => setEditInfoModalOpen(true)}
-        onOpenOrdersModal={() => setOrderModalOpen(true)}
-        onOpenReservationsModal={() => setReservationsModalOpen(true)}
       />
 
       {/* Modales */}
@@ -63,18 +59,16 @@ export const AccountScreen: React.FC = () => {
       <ResetPasswordModal
         isOpen={isResetModalOpen}
         onClose={() => setResetModalOpen(false)}
+        email={''} // Provide the appropriate email state
+        setEmail={() => {}} // Provide the appropriate setEmail function
+        handleResetPassword={() => {}} // Provide the appropriate handleResetPassword function
       />
       <EditInfoModal
         isOpen={isEditInfoModalOpen}
         onClose={() => setEditInfoModalOpen(false)}
-      />
-      <OrdersModal
-        isOpen={isOrderModalOpen}
-        onClose={() => setOrderModalOpen(false)}
-      />
-      <ReservationsModal
-        isOpen={isReservationsModalOpen}
-        onClose={() => setReservationsModalOpen(false)}
+        data={{}} // Provide the appropriate data object
+        onChange={() => {}} // Provide the appropriate onChange function
+        onConfirm={() => {}} // Provide the appropriate onConfirm function
       />
     </SafeAreaView>
   );

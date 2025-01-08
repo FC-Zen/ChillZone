@@ -21,7 +21,7 @@ import {
 } from '@screens';
 import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NextBookingProvider, UserProvider } from '@contexts/AppContrext';
+import { UserProvider } from '@contexts/AppContrext';
 import { colors } from '@theme';
 import { Bounce } from 'react-native-animated-spinkit';
 
@@ -123,13 +123,18 @@ export const RootNavigator = () => {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name={ROUTE.LINKS}
-              component={LinksScreen}
+              name={ROUTE.RESERVATION}
+              component={ReservationScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name={ROUTE.RESERVATION}
-              component={ReservationScreen}
+              name={ROUTE.ACCOUNT}
+              component={AccountScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={ROUTE.LINKS}
+              component={LinksScreen}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

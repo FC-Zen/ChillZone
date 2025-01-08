@@ -45,8 +45,8 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
       onOpenPasswordModal={onOpenPasswordModal}
       onOpenResetPasswordModal={onOpenResetPasswordModal}
       onOpenEditInfoModal={onOpenEditInfoModal}
-      onOpenOrdersModal={onOpenOrdersModal}
-      onOpenReservationsModal={onOpenReservationsModal}
+      // onOpenOrdersModal={onOpenOrdersModal}
+      // onOpenReservationsModal={onOpenReservationsModal}
     />
   </ScrollView>
 );

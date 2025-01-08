@@ -1,1 +1,0 @@
-export {ReservationsModal } from './ReservationsModal';

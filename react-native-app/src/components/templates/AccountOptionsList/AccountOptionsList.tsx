@@ -15,8 +15,8 @@ export type AccountOptionsListProps = {
   currentLanguage: string;
   onToggleTheme: () => void;
   onChangeLanguage: () => void;
-  onOpenReservationsModal: () => void;
-  onOpenOrdersModal: () => void;
+  // onOpenReservationsModal: () => void;
+  // onOpenOrdersModal: () => void;
   onOpenEditInfoModal: () => void;
   onOpenPasswordModal: () => void;
   onOpenResetPasswordModal: () => void;
@@ -25,8 +25,8 @@ export type AccountOptionsListProps = {
 export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
   isDarkTheme,
   onToggleTheme,
-  onOpenReservationsModal,
-  onOpenOrdersModal,
+  // onOpenReservationsModal,
+  // onOpenOrdersModal,
   onOpenEditInfoModal,
   onOpenPasswordModal,
   onOpenResetPasswordModal,
@@ -72,7 +72,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
-          onPress={onOpenReservationsModal}
+          //onPress={}
         />
       </View>
 
@@ -84,7 +84,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
-          onPress={onOpenOrdersModal}
+          //onPress={}
         />
       </View>
 

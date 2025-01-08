@@ -22,8 +22,8 @@ export const styles = StyleSheet.create({
     color: colors.white,
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: typography.h2.fontSize,
+    fontFamily: typography.h2.fontFamily,
     color: colors.white,
     marginBottom: 20,
     textAlign: 'center',

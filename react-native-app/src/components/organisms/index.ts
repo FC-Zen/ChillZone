@@ -12,6 +12,4 @@ export { NotificationPopup } from './NotificationPopup';
 export {PasswordModal } from './PasswordModal';
 export {ResetPasswordModal } from './ResetPasswordModal';
 export {EditInfoModal} from './EditInfoModal';
-export {OrdersModal} from './OrdersModal';
-export {ReservationsModal} from './ReservationsModal';
 export {ProfileHeaderWithModal} from './ProfileHeaderWithModal';
