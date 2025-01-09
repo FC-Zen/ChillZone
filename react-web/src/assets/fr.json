@@ -32,6 +32,7 @@
     },
     "create": {
       "account": "Création d’un compte de test étudiant",
+      "addaccount": "Création",
       "room": "Créer une salle",
       "floor": "Créer un étage",
       "product": "Créer un produit",
@@ -39,7 +40,12 @@
     },
     "info": {
       "command": "Détails de la commande {{ command }}",
-      "establishment": "Informations de l’établissement"
+      "establishment": "Informations de l’établissement",
+      "infoSignIn": "Votre demande a été bien envoyée à l’administrateur de l’établissement concerné par votre demande. Vous recevrez un mail d’ici peu",
+      "infoPwd": "Si le compte existe, vous receverez un mail sous peu",
+      "recoverPwd": "J’ai oublié mon mot de passe",
+      "singin": "Je veux m’inscrire en tant que restaurateur",
+      "rememberMe": "Se souvenir de moi"
     },
 
     "navbar": {
@@ -123,14 +129,6 @@
             "now" : "actuellement",
             "today" : "aujourd'hui"
         }
-    },
-
-    "info": {
-      "infoSignIn": "Votre demande a été bien envoyée à l’administrateur de l’établissement concerné par votre demande. Vous recevrez un mail d’ici peu",
-      "infoPwd": "Si le compte existe, vous receverez un mail sous peu",
-      "recoverPwd": "J’ai oublié mon mot de passe",
-      "singin": "Je veux m’inscrire en tant que restaurateur",
-      "rememberMe": "Se souvenir de moi"
     },
 
     "rooms": {
