@@ -1,12 +1,13 @@
 import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
+import { colors } from '@theme';
 
 export const LinkedIn = ({
   width = 24,
   height = 24,
   backgroundColor = '#007BB5', // Couleur du cercle de fond (bleu LinkedIn)
-  iconColor = '#007BB5', // Couleur du "in" identique à la couleur de fond
-  strokeColor = '#FFFFFF', // Bordure blanche autour du "in"
+  iconColor = '#007BB5', // Couleur du "in" identique à la couleur de fond LinkedIn
+  strokeColor = colors.white, // Bordure blanche autour du "in"
 }) => (
   <Svg width={width} height={height} viewBox="0 0 42 42" fill="none">
     {/* Cercle de fond */}

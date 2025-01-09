@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import { styles } from './style'; // Import des styles
 import { colors } from '@theme';
-import data_from_fr_json from '@assets/fr.json';
 import { Input } from '@components/molecules';
 import { Icon, IconProps } from '@components/atoms/Icons';
 import { useTranslation } from 'react-i18next';
+import { accountServices } from '@services/AccountServices'; // Import du service
 
 export type PasswordModalProps = {
   isOpen: boolean;
@@ -33,19 +33,13 @@ const usePasswordModalLogic = () => {
     hasSpecialChar: /[@$!%*?&]/.test(newPassword),
   };
 
-  const handleSubmit = (onClose: () => void) => {
+  const handleSubmit = async (onClose: () => void) => {
     if (newPassword !== confirmPassword) {
       Alert.alert('Erreur', 'Les mots de passe ne correspondent pas.');
       return;
     }
 
-    if (
-      !newPasswordValidation.minLength ||
-      !newPasswordValidation.hasUppercase ||
-      !newPasswordValidation.hasLowercase ||
-      !newPasswordValidation.hasNumber ||
-      !newPasswordValidation.hasSpecialChar
-    ) {
+    if (!accountServices.validatePassword(newPassword)) {
       Alert.alert(
         'Erreur',
         'Le nouveau mot de passe ne respecte pas les critères requis.'
@@ -53,8 +47,14 @@ const usePasswordModalLogic = () => {
       return;
     }
 
-    Alert.alert('Succès', 'Mot de passe modifié avec succès.');
-    onClose(); // Fermer la modale après soumission
+    try {
+      // Appel au service pour mettre à jour le mot de passe
+      await accountServices.updatePassword(oldPassword, newPassword);
+      Alert.alert('Succès', 'Mot de passe modifié avec succès.');
+      onClose(); // Fermer la modale après soumission
+    } catch (error) {
+      Alert.alert('Erreur', 'La mise à jour du mot de passe a échoué.');
+    }
   };
 
   return {
@@ -171,7 +171,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
           {/* Champ pour confirmer le mot de passe */}
           <Input
             style={styles.input}
-            placeholder={data_from_fr_json.fields.auth.verifyNewPassword}
+            placeholder={t('fields.auth.verifyNewPassword')}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
           />
@@ -182,7 +182,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
             onPress={() => handleSubmit(onClose)}
           >
             <Text style={styles.buttonText}>
-              {data_from_fr_json.buttons.actions.confirm}
+              {t('buttons.actions.confirm')}
             </Text>
           </TouchableOpacity>
         </View>

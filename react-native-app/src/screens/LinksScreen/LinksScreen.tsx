@@ -6,6 +6,7 @@ import { colors } from '@theme';
 import { styles } from './style';
 import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
+import { Icon, IconProps } from '@components/atoms/Icons';
 
 import {
   Facebook,
@@ -76,7 +77,12 @@ export const LinksScreen: React.FC = () => {
               <Text style={styles.linkText}>{link.type}</Text>
             </View>
             {/* Flèche à droite */}
-            <ArrowRight color={colors.resolutionBlue} />
+            <Icon
+              name="ArrowRight"
+              width={24}
+              height={24}
+              color={colors.resolutionBlue}
+            />
           </TouchableOpacity>
         ))}
       </View>

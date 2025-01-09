@@ -27,7 +27,8 @@
 
   "modals": {
     "pwdChange": "Modifier mon mot de passe",
-    "infoChange": "Modifier mes informations"
+    "infoChange": "Modifier mes informations",
+    "mail": "Renseignez votre adresse mail"
   },
 
   "navbar": {

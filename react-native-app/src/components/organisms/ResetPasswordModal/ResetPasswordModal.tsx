@@ -1,11 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  Alert,
+} from 'react-native';
 import { Input } from '@components/molecules';
-
-import data_from_fr_json from 'src/assets/fr.json';
-import { Icon, IconProps } from '@components/atoms/Icons';
+import { Icon } from '@components/atoms/Icons';
 import { colors } from '@theme';
 import styles from './style';
+import { useTranslation } from 'react-i18next';
+import { accountServices } from '@services/AccountServices'; // Import du service
+import { Button } from 'react-native-paper';
 
 export type ResetPasswordModalProps = {
   isOpen: boolean;
@@ -22,6 +30,34 @@ export const ResetPasswordModal = ({
   setEmail,
   handleResetPassword,
 }: ResetPasswordModalProps) => {
+  const { t } = useTranslation();
+
+  // Composant principal qui utilise la modale
+  const ResetPassword = () => {
+    const [isModalOpen, setModalOpen] = React.useState(false);
+
+    // Méthode pour gérer la réinitialisation
+    const handleResetPassword = async () => {
+      if (!email) {
+        Alert.alert('Erreur', 'Veuillez entrer une adresse e-mail.');
+        return;
+      }
+
+      try {
+        // Appel au service de réinitialisation
+        await accountServices.resetPassword(email, ''); // Utilisez un mot de passe vide ou passez l'email uniquement
+
+        Alert.alert(
+          'Succès',
+          `Un e-mail de réinitialisation a été envoyé à ${email}.`
+        );
+        setModalOpen(false); // Ferme la modale après succès
+      } catch (error: any) {
+        Alert.alert('Erreur', error.message || 'Une erreur est survenue.');
+      }
+    };
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -32,30 +68,21 @@ export const ResetPasswordModal = ({
       <View style={styles.overlay}>
         <View style={styles.modal}>
           {/* Titre */}
-          <Text style={styles.title}>
-            {data_from_fr_json.headers.pwdChange}
-          </Text>
+          <Text style={styles.title}>{t('headers.pwdChange')}</Text>
 
           {/* Sous-titre */}
-          {/* ce n'est pas le bon sous titre mais dans le json il ne figure pas "Renseignez votre adresse mail" */}
-          <Text style={styles.subtitle}>
-            {data_from_fr_json.questions.infoPwd}
-          </Text>
+          <Text style={styles.subtitle}>{t('modals.mail')}</Text>
 
           {/* Champ pour entrer l'email */}
-
           <Input
             style={styles.input}
-            placeholder={data_from_fr_json.fields.common.mail}
-            value={email}
+            placeholder={t('fields.common.mail')}
             onChangeText={setEmail}
           />
 
           {/* Bouton Réinitialiser */}
           <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-            <Text style={styles.buttonText}>
-              {data_from_fr_json.buttons.actions.reset}
-            </Text>
+            <Text style={styles.buttonText}>{t('buttons.actions.reset')}</Text>
           </TouchableOpacity>
 
           {/* Bouton Fermer */}
@@ -73,39 +100,3 @@ export const ResetPasswordModal = ({
     </Modal>
   );
 };
-
-// Composant principal qui utilise la modale
-const ResetPassword = () => {
-  const [isModalOpen, setModalOpen] = React.useState(false);
-  const [email, setEmail] = React.useState('');
-
-  const handleResetPassword = () => {
-    if (!email) {
-      alert('Erreur: Veuillez entrer une adresse e-mail.');
-      return;
-    }
-    alert(`Succès: Un e-mail de réinitialisation a été envoyé à ${email}.`);
-    setModalOpen(false);
-  };
-
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TouchableOpacity
-        onPress={() => setModalOpen(true)}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Ouvrir la modale</Text>
-      </TouchableOpacity>
-
-      <ResetPasswordModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        email={email}
-        setEmail={setEmail}
-        handleResetPassword={handleResetPassword}
-      />
-    </View>
-  );
-};
-
-export default ResetPassword;

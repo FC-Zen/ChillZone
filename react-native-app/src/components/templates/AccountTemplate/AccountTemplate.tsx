@@ -5,6 +5,7 @@ import { ProfileHeader } from '@components/molecules/ProfileHeader';
 import { AccountOptionsList } from '@components/templates/AccountOptionsList';
 import { styles } from './style';
 import { ProfileHeaderWithModal } from '@components/organisms';
+
 import user_data from 'src/assets/fr.json';
 export type AccountTemplateProps = {
   isDarkTheme: boolean;

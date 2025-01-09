@@ -1,11 +1,11 @@
 import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
-
+import { colors } from '@theme';
 const Web = ({
   width = 42,
   height = 42,
-  backgroundColor = '#005745', // Fond vert par défaut
-  iconColor = '#FFFFFF', // Couleur de l'icône (blanc)
+  backgroundColor = colors.aquaDeep, // Fond vert par défaut
+  iconColor = colors.white, // Couleur de l'icône (blanc)
 }: {
   width?: number;
   height?: number;

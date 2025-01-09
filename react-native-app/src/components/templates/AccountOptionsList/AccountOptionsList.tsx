@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import { styles } from './style';
-import { translationService } from '@services';
+import { translationService } from '@services/translationService';
 
 export type AccountOptionsListProps = {
   isDarkTheme: boolean;
@@ -34,8 +34,9 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
   const { t, i18n } = useTranslation();
   const navigation = useNavigation(); // Utilisation de la navigation
 
-  // État local pour la langue actuelle
-  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+  const [currentLanguage, setCurrentLanguage] = useState(
+    translationService.getCurrentLanguage() // Utilise le service pour récupérer la langue actuelle
+  );
 
   // Mise à jour de l'état lorsque la langue change dans i18n
   useEffect(() => {
@@ -48,7 +49,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
     return () => {
       i18n.off('languageChanged', handleLanguageChanged);
     };
-  }, [i18n]);
+  }, []);
 
   // Détermine l'image du drapeau en fonction de la langue actuelle
   const flagImage =

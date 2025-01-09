@@ -1,11 +1,12 @@
 import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
+import { colors } from '@theme';
 
 const YouTube = ({
   width = 24,
   height = 24,
-  backgroundColor = '#FF0000', // Fond rouge YouTube
-  playColor = '#FFFFFF', // Couleur blanche pour le symbole "play"
+  backgroundColor = colors.warn, // Fond rouge YouTube
+  playColor = colors.white, // Couleur blanche pour le symbole "play"
 }: {
   width?: number;
   height?: number;

@@ -27,9 +27,10 @@ export default StyleSheet.create({
   subtitle: {
     color: colors.white,
     fontSize: typography.h3.fontSize,
-    fontFamily: typography.h3.fontFamily,
+    fontFamily: typography.h2.fontFamily,
     display: 'flex',
     justifyContent: 'center',
+    marginBottom: 15,
   },
   input: {
     backgroundColor: colors.white,
