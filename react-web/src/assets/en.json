@@ -39,7 +39,12 @@
     },
     "info": {
       "command": "Order details {{ command }}",
-      "establishment": "Establishment information"
+      "establishment": "Establishment information",
+      "infoSignIn": "Your request has been successfully sent to the administrator of the establishment concerned by your request. You will receive an email shortly.",
+      "infoPwd": "If the account exists, you will receive an email shortly.",
+      "recoverPwd": "I forgot my password.",
+      "signIn": "I want to register as a restaurateur.",
+      "rememberMe": "Remember me."
     },
 
     "rooms": {
