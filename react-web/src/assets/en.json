@@ -166,7 +166,9 @@
       "capacity": "Capacity",
       "location": "Location",
       "price": "Price",
-      "quantity": "Quantity"
+      "quantity": "Quantité",
+      "tag": "Tags",
+      "file": "File"
     },
     "auth": {
       "password": "Password",

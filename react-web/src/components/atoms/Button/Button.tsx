@@ -43,12 +43,13 @@ export const Button: FC<ButtonProps> = ({
             multiple
           />
         </MuiButton>
+      ) : type === 'submit' ? (
+        <input value={title} type="submit" style={{ ...linkStyle, fontSize: "14px", width: "40%"}} />
       ) : (
         <MuiButton
           onClick={onclick}
           variant={variant === 'primary' ? 'contained' : 'outlined'}
           style={{ ...linkStyle, fontSize: "14px", width: "40%"}}
-          type={type}
         >
           {title}
         </MuiButton>

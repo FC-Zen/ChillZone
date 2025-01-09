@@ -81,7 +81,9 @@
         "capacity": "Capacité",
         "location": "Emplacement",
         "price": "Prix",
-        "quantity": "Quantité"
+        "quantity": "Quantité",
+        "tag": "Tags",
+        "file": "Fichier"
       },
       "auth": {
         "password": "Mot de passe",
