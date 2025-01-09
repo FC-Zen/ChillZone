@@ -15,8 +15,6 @@ export type AccountOptionsListProps = {
   currentLanguage: string;
   onToggleTheme: () => void;
   onChangeLanguage: () => void;
-  // onOpenReservationsModal: () => void;
-  // onOpenOrdersModal: () => void;
   onOpenEditInfoModal: () => void;
   onOpenPasswordModal: () => void;
   onOpenResetPasswordModal: () => void;
@@ -25,14 +23,12 @@ export type AccountOptionsListProps = {
 export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
   isDarkTheme,
   onToggleTheme,
-  // onOpenReservationsModal,
-  // onOpenOrdersModal,
   onOpenEditInfoModal,
   onOpenPasswordModal,
   onOpenResetPasswordModal,
 }) => {
   const { t, i18n } = useTranslation();
-  const navigation = useNavigation(); // Utilisation de la navigation
+  const navigation = useNavigation();
 
   const [currentLanguage, setCurrentLanguage] = useState(
     translationService.getCurrentLanguage() // Utilise le service pour récupérer la langue actuelle
@@ -73,7 +69,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
-          //onPress={}
+          onPress={() => console.log('Réservations')} // Remplacer par le screen
         />
       </View>
 
@@ -85,12 +81,12 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
-          //onPress={}
+          onPress={() => console.log('Commandes')} // Remplacer par le screen
         />
       </View>
 
       {/* Section Informations */}
-      <View style={styles.card}>
+      <View style={styles.card2}>
         <Button
           title={t('buttons.profile.changeInfo')}
           icon={{ name: 'Following', color: colors.white }}
@@ -102,28 +98,29 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       </View>
 
       {/* Section Modification */}
-      <View style={styles.card}>
-        <Button
-          title={t('modals.pwdChange')}
-          icon={{ name: 'Lock', color: colors.white }}
-          variant="icon"
-          color={colors.resolutionBlue}
-          textColor={colors.white}
-          onPress={onOpenPasswordModal}
-        />
-        <Button
-          title={t('buttons.auth.resetPwd')}
-          icon={{ name: 'Refresh', color: colors.white }}
-          variant="icon"
-          color={colors.resolutionBlue}
-          textColor={colors.white}
-          onPress={onOpenResetPasswordModal}
-          style={styles.resetPasswordButton} // Appliquer un style spécifique ici
-        />
+      <View style={styles.card2}>
+        <View style={styles.col}>
+          <Button
+            title={t('modals.pwdChange')}
+            icon={{ name: 'Lock', color: colors.white }}
+            variant="icon"
+            color={colors.resolutionBlue}
+            textColor={colors.white}
+            onPress={onOpenPasswordModal}
+          />
+          <Button
+            title={t('buttons.auth.resetPwd')}
+            icon={{ name: 'Refresh', color: colors.white }}
+            variant="icon"
+            color={colors.resolutionBlue}
+            textColor={colors.white}
+            onPress={onOpenResetPasswordModal}
+          />
+        </View>
       </View>
 
       {/* Section Thème et Langue */}
-      <View style={styles.card}>
+      <View style={styles.card2}>
         <View style={styles.row}>
           {/* Bouton Thème */}
           <Button
@@ -144,7 +141,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
         {/* Bouton Langue */}
         <TouchableOpacity style={styles.languageRow} onPress={toggleLanguage}>
           <View style={styles.languageContent}>
-            <View style={styles.languageIconWrapper}>
+            <View>
               <Button
                 title={t('buttons.profile.changelng')}
                 icon={{ name: 'Setting', color: colors.white }}
@@ -161,7 +158,6 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
         </TouchableOpacity>
       </View>
 
-      {/* Section Actualités */}
       <TouchableOpacity
         style={styles.newsButton}
         onPress={() => navigation.navigate(ROUTE.LINKS)}

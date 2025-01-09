@@ -8,7 +8,7 @@ export { RestaurationScreen } from './RestaurationScreen';
 export { FaqScreen } from './FaqScreen';
 export { DispenserScreen, DispenserModal } from './DispenserScreen';
 export { ReservationScreen } from './ReservationScreen';
-export { PaymentScreen } from './PaymentScreen'
+export { PaymentScreen } from './PaymentScreen';
 export { AccountScreen } from './AccountScreen';
-export {LinksScreen} from './LinksScreen';
+export { LinksScreen } from './LinksScreen';
 export { FinalPaymentScreen } from './FinalPaymentScreen';

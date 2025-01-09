@@ -17,7 +17,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     <View style={styles.container}>
       {/* Icône cliquable */}
       <TouchableOpacity>
-        <Icon name="Profile" width={79} height={79} onPress={onOpenModal} />
+        <Icon name="Profile" width={80} height={80} onPress={onOpenModal} />
       </TouchableOpacity>
       <Text style={styles.name}>{name}</Text>
     </View>

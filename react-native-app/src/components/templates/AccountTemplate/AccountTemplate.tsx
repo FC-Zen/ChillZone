@@ -5,8 +5,8 @@ import { ProfileHeader } from '@components/molecules/ProfileHeader';
 import { AccountOptionsList } from '@components/templates/AccountOptionsList';
 import { styles } from './style';
 import { ProfileHeaderWithModal } from '@components/organisms';
+import { useTranslation } from 'react-i18next';
 
-import user_data from 'src/assets/fr.json';
 export type AccountTemplateProps = {
   isDarkTheme: boolean;
   onToggleTheme: () => void;
@@ -15,9 +15,8 @@ export type AccountTemplateProps = {
   onOpenPasswordModal: () => void;
   onOpenResetPasswordModal: () => void;
   onOpenEditInfoModal: () => void;
-  onOpenOrdersModal: () => void;
-  onOpenReservationsModal: () => void;
 };
+const { t } = useTranslation();
 
 export const AccountTemplate: React.FC<AccountTemplateProps> = ({
   isDarkTheme,
@@ -27,8 +26,6 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
   onOpenPasswordModal,
   onOpenResetPasswordModal,
   onOpenEditInfoModal,
-  onOpenOrdersModal,
-  onOpenReservationsModal,
 }) => (
   <ScrollView
     contentContainerStyle={[
@@ -36,7 +33,7 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
       isDarkTheme && styles.darkContainer,
     ]}
   >
-    <PageHeader title={user_data.headers.account} variant="back" />
+    <PageHeader title={t('headers.account')} variant="back" />
     <ProfileHeaderWithModal />
     <AccountOptionsList
       isDarkTheme={isDarkTheme}
@@ -46,8 +43,6 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
       onOpenPasswordModal={onOpenPasswordModal}
       onOpenResetPasswordModal={onOpenResetPasswordModal}
       onOpenEditInfoModal={onOpenEditInfoModal}
-      // onOpenOrdersModal={onOpenOrdersModal}
-      // onOpenReservationsModal={onOpenReservationsModal}
     />
   </ScrollView>
 );

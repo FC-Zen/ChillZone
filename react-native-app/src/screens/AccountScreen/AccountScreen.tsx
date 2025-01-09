@@ -1,26 +1,19 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { AccountTemplate } from '@components/templates/AccountTemplate';
+import { AccountTemplate } from '@components/templates';
 import {
   PasswordModal,
   ResetPasswordModal,
   EditInfoModal,
 } from '@components/organisms';
-import ordersData from 'src/assets/data/commands.json';
 import { styles } from './style';
 import { translationService } from '@services';
-import { useNavigation } from '@react-navigation/native'; // Import pour la navigation
-import { ROUTE } from '@enums'; // Enum pour gérer les routes
 
 export const AccountScreen: React.FC = () => {
-  const navigation = useNavigation(); // Hook pour naviguer entre les écrans
-
   // États pour les modales
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
   const [isResetModalOpen, setResetModalOpen] = useState(false);
   const [isEditInfoModalOpen, setEditInfoModalOpen] = useState(false);
-  const [isOrderModalOpen, setOrderModalOpen] = useState(false);
-  const [isReservationsModalOpen, setReservationsModalOpen] = useState(false);
 
   // États pour le thème sombre et la langue
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -66,9 +59,14 @@ export const AccountScreen: React.FC = () => {
       <EditInfoModal
         isOpen={isEditInfoModalOpen}
         onClose={() => setEditInfoModalOpen(false)}
-        data={{}} // Provide the appropriate data object
         onChange={() => {}} // Provide the appropriate onChange function
         onConfirm={() => {}} // Provide the appropriate onConfirm function
+        data={{
+          firstName: '',
+          lastName: '',
+          phone: '',
+          email: '',
+        }}
       />
     </SafeAreaView>
   );

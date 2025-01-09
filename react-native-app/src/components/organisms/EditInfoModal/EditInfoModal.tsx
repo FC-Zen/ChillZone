@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Modal,
-  Alert,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Modal, Alert } from 'react-native';
 import { styles } from './style';
-import { Icon, IconProps } from '@components/atoms/Icons';
+import { Icon } from '@components/atoms/Icons';
 import { colors } from '@theme';
-import user_data from 'src/assets/fr.json';
 import { Input } from '@components/molecules';
 import { useTranslation } from 'react-i18next';
 import { accountServices } from '@services/AccountServices'; // Import du service

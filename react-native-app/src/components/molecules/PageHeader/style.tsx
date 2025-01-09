@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     height: 'auto',
     width: layout.screen.width,
-    textAlign: 'left',
     paddingVertical: 50,
     paddingHorizontal: 30,
     gap: 20,

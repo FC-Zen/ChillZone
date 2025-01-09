@@ -3,7 +3,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ROUTE } from '@enums';
 import { RouteParamList } from '@types';
 
-type UseNavigation = () => StackNavigationProp<RouteParamList, ROUTE.ACCOUNT>;
+type UseNavigation = () => StackNavigationProp<
+  RouteParamList,
+  ROUTE.LOGIN_SCREEN
+>;
 
 export const useNavigation: UseNavigation = () => {
   return useNavigationRN();

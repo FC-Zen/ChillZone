@@ -11,3 +11,4 @@ export { PaymentTemplate } from './PaymentTemplate';
 export { DispenserTemplate } from './DispenserTemplate';
 export { FinalPaymentTemplate } from './FinalPaymentTemplate';
 export { ReservationTemplate } from './ReservationTemplate';
+export { AccountTemplate } from './AccountTemplate';

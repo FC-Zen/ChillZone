@@ -1,1 +1,1 @@
-export {AccountScreen} from './AccountScreen';
+export { AccountScreen } from './AccountScreen';

@@ -1,12 +1,11 @@
+import { colors, typography } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: { alignItems: 'center', marginVertical: 20 },
+  container: { alignItems: 'center', marginTop: 20 },
   avatar: {
-    width: 80,
-    height: 80,
     borderRadius: 40,
-    backgroundColor: '#512D6D',
+    backgroundColor: colors.resolutionBlue,
   },
-  name: { fontSize: 18, fontWeight: 'bold', marginTop: 10 },
+  name: { fontSize: 20, fontFamily: typography.h2.fontFamily },
 });

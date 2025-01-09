@@ -32,21 +32,13 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           !noMargin && { top: headerHeight > 0 ? headerHeight : '5%' },
       ]}
     >
-      {/* Icône personnalisée en fonction de la variante */}
-      {variant !== 'default' && (
+      {variant === 'back' && icon && (
         <Icon
-          name={icon.name || (variant === 'back' ? 'BackArrow' : 'Cross')} // Choix de l'icône
+          name={icon.name}
           color={icon.color}
-          width={24}
-          height={24}
-          onPress={
-            onBackPress
-              ? onBackPress
-              : () =>
-                  navigation.navigate(
-                    variant === 'back' ? ROUTE.HOME : ROUTE.ACCOUNT
-                  )
-          } // Action par défaut ou personnalisée
+          onPress={onBackPress}
+          width={16}
+          height={16}
         />
       )}
 
