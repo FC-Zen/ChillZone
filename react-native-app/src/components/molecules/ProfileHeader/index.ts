@@ -1,0 +1,1 @@
+export {ProfileHeader, ProfileHeaderProps} from './ProfileHeader';

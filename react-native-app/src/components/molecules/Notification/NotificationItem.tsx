@@ -1,9 +1,9 @@
-// src/components/molecules/NotificationItem.tsx
-import { View, Text, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { colors } from '@theme';
 import { diff_time } from '@utils/functions/Notification';
+import React from 'react';
 
 export type NotificationProps = {
   id: number;
@@ -13,7 +13,7 @@ export type NotificationProps = {
   icon: {
     name: IconProps['name'];
     color: string;
-  }
+  };
   handlePress?: () => void;
 };
 
@@ -24,6 +24,7 @@ export const NotificationItem: React.FC<NotificationProps> = ({
   icon,
   handlePress,
 }) => {
+  const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <View>
       <TouchableOpacity

@@ -5,9 +5,14 @@
             "link_network": "https://www.facebook.com/universite.gustave.eiffel"
         },
         {
+            "type": "X",
+            "link_network": "https://twitter.com/UnivGustaveEiff"
+        },
+        {
             "type": "Instagram",
             "link_network": "https://www.instagram.com/universite.gustave.eiffel"
         },
+
         {
             "type": "Youtube",
             "link_network": "https://www.youtube.com/c/UniversiteGustaveEiffel"
@@ -17,11 +22,11 @@
             "link_network": "https://www.linkedin.com/company/universite-gustave-eiffel"
         },
         {
-            "type": "Workspace",
+            "type": "ENT",
             "link_network": "https://workspace.google.com/universite.gustave.eiffel"
         },
         {
-            "type": "Website",
+            "type": "Site de l'université",
             "link_network": "https://www.univ-eiffel.fr"
         }
     ]

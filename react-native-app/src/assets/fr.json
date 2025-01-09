@@ -27,7 +27,8 @@
 
   "modals": {
     "pwdChange": "Modifier mon mot de passe",
-    "infoChange": "Modifier mes informations"
+    "infoChange": "Modifier mes informations",
+    "mail": "Renseignez votre adresse mail"
   },
 
   "navbar": {
@@ -69,7 +70,10 @@
       "changePp": "Changer la photo de profil",
       "deletePp": "Supprimer la photo de profil",
       "darkTheme": "Thème sombre",
+      "lightTheme": "Thème clair",
       "changelng": "Changer de langue",
+      "fr": "FR",
+      "en": "EN",
       "actus": "Actualités de l’université",
       "commands": "Mes commandes",
       "reservations": "Mes réservations"

@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, { Path, G, Defs, ClipPath, Rect } from 'react-native-svg';
 import { colors } from '@theme';
 
-const CrossIcon = ({ width = 24, height = 24, color = colors.white }) => {
+const Cross = ({ width = 24, height = 24, color = colors.white }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 16 16" fill="none">
       <G id="fi-sr-cross" clipPath="url(#clip0_2106_2118)">
@@ -21,4 +21,4 @@ const CrossIcon = ({ width = 24, height = 24, color = colors.white }) => {
   );
 };
 
-export default CrossIcon;
+export default Cross;

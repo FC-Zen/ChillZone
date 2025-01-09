@@ -27,7 +27,9 @@
 
   "modals": {
     "pwdChange": "Change my password",
-    "infoChange": "Change my information"
+    "infoChange": "Change my information",
+    "mail": "Please insert your email address"
+
   },
 
   "navbar": {
@@ -67,8 +69,11 @@
       "changeInfo": "Change my information",
       "changePp": "Change profile picture",
       "deletePp": "Delete profile picture",
-      "darkTheme": "Dark theme",
-      "changelng": "Change language",
+      "lightTheme": "Disable Dark Theme",
+      "darkTheme": "Enable Dark Theme",
+      "changelng": "Change Language",
+      "fr": "FR",
+      "en": "EN",
       "actus": "University news",
       "commands": "My orders",
       "reservations": "My reservations"

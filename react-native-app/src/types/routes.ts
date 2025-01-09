@@ -16,6 +16,8 @@ export type RootStackParamList = {
   [ROUTE.DISPENSER]: undefined;
   [ROUTE.FINAL_PAYMENT]: undefined;
   [ROUTE.RESERVATION]: undefined;
+  [ROUTE.ACCOUNT]: undefined;
+  [ROUTE.LINKS]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
@@ -35,6 +37,8 @@ export type RouteParamList = {
   DispenserModal: { meal: MealProps };
   FinalPaymentScreen: undefined;
   ReservationScreen: undefined;
+  AccountScreen: undefined;
+  LinksScreen: undefined;
 };
 
 // Typage des propriétés des écrans

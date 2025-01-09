@@ -8,3 +8,8 @@ export { NotificationList } from './NotificationList';
 export { CreditInput } from './CreditInput';
 export { FoodCardList, FoodCardListProps } from './FoodCardList';
 export { RoomAvailable, RoomSelectorProps } from './RoomAvailable';
+export { NotificationPopup } from './NotificationPopup';
+export {PasswordModal } from './PasswordModal';
+export {ResetPasswordModal } from './ResetPasswordModal';
+export {EditInfoModal} from './EditInfoModal';
+export {ProfileHeaderWithModal} from './ProfileHeaderWithModal';

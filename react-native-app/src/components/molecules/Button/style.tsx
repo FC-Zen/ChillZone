@@ -28,10 +28,15 @@ export const ButtonWrapper: FC<ButtonProps> = ({
         style,
       ]}
     >
-      {variant === 'icon' && icon && (
-        <Icon {...icon}/>
-      )}
-      <Text style={[styles.text, { color: textColor, fontFamily: textFont, fontSize: textSize }]}>{title}</Text>{' '}
+      {variant === 'icon' && icon && <Icon {...icon} />}
+      <Text
+        style={[
+          styles.text,
+          { color: textColor, fontFamily: textFont, fontSize: textSize },
+        ]}
+      >
+        {title}
+      </Text>{' '}
     </TouchableOpacity>
   );
 };
@@ -52,7 +57,9 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'center',
     fontSize: typography.h3.fontSize,
-    fontFamily: fonts.semiBold,
+    fontFamily: typography.h3.fontFamily,
+    flexWrap: 'wrap',
+    fontWeight: '600',
   },
   iconVariant: {
     flexDirection: 'row',

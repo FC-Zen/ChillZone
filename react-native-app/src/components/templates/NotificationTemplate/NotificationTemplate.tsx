@@ -14,18 +14,23 @@ export type NotificationTemplateProps = {
   pageHeaderProps: PageHeaderProps;
 };
 
-export const NotificationTemplate : React.FC<NotificationTemplateProps> = ({
+export const NotificationTemplate: React.FC<NotificationTemplateProps> = ({
   notificationsData,
   popupProps,
   pageHeaderProps,
 }) => {
-    return (
-      <View style={styles.container}>
-        <PageHeader title={pageHeaderProps.title} variant={pageHeaderProps.variant} icon={pageHeaderProps.icon} onBackPress={pageHeaderProps.onBackPress} />
-        <NotificationList 
-          notifications={notificationsData} 
-          popupProps={popupProps}
-        />
-      </View>
-    );
+  return (
+    <View style={styles.container}>
+      <PageHeader
+        title={pageHeaderProps.title}
+        variant={pageHeaderProps.variant}
+        icon={pageHeaderProps.icon}
+        onBackPress={pageHeaderProps.onBackPress}
+      />
+      <NotificationList
+        notifications={notificationsData}
+        popupProps={popupProps}
+      />
+    </View>
+  );
 };
