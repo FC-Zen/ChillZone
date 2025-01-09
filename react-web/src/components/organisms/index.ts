@@ -9,3 +9,4 @@ export { OwnerSidebar } from './OwnerSideBar';
 export { AccountModal } from './AccountModal';
 export { AdminDashboardGraphs } from './AdminDashboardGraphs';
 export { OwnerDashboardGraphs } from './OwnerDashboardGraphs';
+export { ModalForm } from '../organisms/ModalForm';
