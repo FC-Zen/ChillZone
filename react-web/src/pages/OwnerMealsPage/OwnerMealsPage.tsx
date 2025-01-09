@@ -29,14 +29,14 @@ export const OwnerMealsPage: React.FC = () => {
         name: "meal_name",
         label: t('fields.common.last_name'),
         type: "text",
-        icon: "User",
+        icon: "Browser",
         required: true,
       },
       {
         name: "meal_description",
         label: t('fields.common.description'),
         type: "text",
-        icon: "User",
+        icon: "Browser",
         required: true,
       },
       {
@@ -50,28 +50,29 @@ export const OwnerMealsPage: React.FC = () => {
         name: "meal_category",
         label: t('fields.common.category'),
         type: "text", // SELECT 
-        icon: "Envelope",
+        icon: "Box",
         required: true,
       },
       {
         name: "meal_price",
         label: t('fields.common.price'),
         type: "number",
-        icon: "Envelope",
+        step: "0.01",
+        icon: "Box",
         required: true,
       },
       {
         name: "meal_stock",
         label: t('fields.common.quantity'),
         type: "number",
-        icon: "Envelope",
+        icon: "Box",
         required: true,
       },
       {
         name: "tags",
-        label: t('fields.common.tags'),
+        label: t('fields.common.tag'),
         type: "autocomplete",
-        icon: "Envelope",
+        icon: "Box",
         options: mealTags,
         required: true,
       },
@@ -79,7 +80,7 @@ export const OwnerMealsPage: React.FC = () => {
         name: "meal_photo",
         label: t('fields.common.file'),
         type: "file",
-        icon: "Envelope",
+        icon: "Box",
         required: true,
       },
     ] as InputField[];
@@ -245,7 +246,7 @@ export const OwnerMealsPage: React.FC = () => {
     /> 
     */}
 
-    {/* Modale d'édition du stock */}
+    {/* Modale d'édition du stock 
     <AccountModal
       isOpen={openModal === 'editStock'}
       onClose={handleCloseModal}
@@ -253,6 +254,7 @@ export const OwnerMealsPage: React.FC = () => {
       addAccount={handleAddMealBtn}
       listInputs={listInputsStock}
     />
+    */}
   </>
   );
 };

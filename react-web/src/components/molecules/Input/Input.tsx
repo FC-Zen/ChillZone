@@ -19,6 +19,7 @@ export type InputProps = {
   type?: string;
   min?: number;
   max?: number;
+  step?: string;
   defaultvalue?: string;
   onInputChange?: (name: string, value: any) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
@@ -33,6 +34,7 @@ export const Input = ({
   type,
   min,
   max,
+  step,
   disabled,
   defaultvalue,
   onInputChange,
@@ -146,7 +148,7 @@ export const Input = ({
             className="input-form"
             label={required ? `${label}*` : label}
             type={type}
-            inputProps={{ min, max }} // Ajout de min et max ici
+            inputProps={{ min, max, step }} // Ajout de min et max ici
             onChange={handleChange}
             onKeyDown={onKeyDown}
             disabled={disabled}
