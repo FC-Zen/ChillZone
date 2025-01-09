@@ -9,7 +9,7 @@ export type FoodItemProps = {
   id: number;
   title: string;
   meal_type: string;
-  price: string;
+  price?: string;
   subTitle: string;
   imageUrl: any;
   iconName: IconProps['name'];

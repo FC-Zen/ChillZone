@@ -9,6 +9,7 @@ type ModalScreenProps = {
   route: {
     params: {
       meal: {
+        id: number;
         title: string;
         subTitle: string;
         price: number;
@@ -39,7 +40,7 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
     console.log(
       `Ajouté au panier: ${meal.title}, Quantité: ${quantity}, Total : ${(price * quantity).toFixed(2)} €`
     );
-    // navigation.goBack();
+    navigation.goBack();
   };
 
   return (

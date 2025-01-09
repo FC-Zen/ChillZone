@@ -10,9 +10,10 @@ import { ModalScreenProps } from '@services';
 export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
   const { menu } = route.params;
   const [quantity, setQuantity] = useState(0);
-  const [selectedMeals, setSelectedMeals] = useState<{
-    [key: number]: boolean;
-  }>({});
+  const [selectedMeals, setSelectedMeals] = useState<
+    Record<string, number | null>
+  >({});
+
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -28,25 +29,31 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
 
   const handleAddToCart = () => {
     const selectedMealsList = transformedMeals.filter(
-      (meal) => selectedMeals[meal.id]
+      (meal) => selectedMeals[meal.meal_type] === meal.id
     );
     console.log(
       `Ajouté au panier: ${menu.name}, Quantité: ${quantity}, Total : ${menu.price}`,
       'Repas sélectionnés:',
       selectedMealsList
     );
+    navigation.goBack();
   };
 
   const handleMealSelect = (item: FoodItemProps) => {
-    setSelectedMeals((prev) => ({
-      ...prev,
-      [item.id]: !prev[item.id],
-    }));
+    setSelectedMeals((prev) => {
+      const category = item.meal_type;
+      const isSelected = prev[category] === item.id;
 
-    if (!selectedMeals[item.id]) {
-      handleIncrement();
-    } else {
+      return {
+        ...prev,
+        [category]: isSelected ? null : item.id,
+      };
+    });
+
+    if (selectedMeals[item.meal_type] === item.id) {
       handleDecrement();
+    } else {
+      handleIncrement();
     }
   };
 
@@ -54,10 +61,9 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     id: meal.id,
     title: meal.title,
     subTitle: meal.description,
-    price: meal.price,
     imageUrl: meal.photoUrl,
     meal_type: meal.category.label,
-    iconName: selectedMeals[meal.id] ? 'Check' : 'Add',
+    iconName: selectedMeals[meal.category.label] === meal.id ? 'Check' : 'Add',
     isSelected: selectedMeals[meal.id],
   }));
 
@@ -85,10 +91,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
       </ScrollView>
 
       <View style={styles.btnContainer2}>
-        <Button
-          title={t('buttons.add.generic', { x: quantity })}
-          onPress={handleAddToCart}
-        />
+        <Button title={t('buttons.add.add')} onPress={handleAddToCart} />
       </View>
     </View>
   );

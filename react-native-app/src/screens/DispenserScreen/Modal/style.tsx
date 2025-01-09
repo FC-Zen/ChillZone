@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     justifyContent: 'space-between',
     paddingTop: 30,
+    gap: 20,
   },
   cont3: {
     paddingHorizontal: 16,
@@ -61,6 +62,5 @@ export const styles = StyleSheet.create({
   },
   pageHeader: {
     width: '100%',
-    paddingTop: 30,
   },
 });

@@ -85,9 +85,12 @@ export const DispenserScreen: React.FC = () => {
       )
   );
 
-  const handleItemSelect = (item: MealProps) => {
-    console.log('Item sélectionné:', item);
-    navigation.navigate(ROUTE.DISPENSER_MODAL, { meal: item });
+  const handleItemSelect = (item: FoodItemProps) => {
+    const selectedMeal = meals.find((meal) => meal.id === item.id);
+    if (selectedMeal) {
+      console.log('Item sélectionné:', selectedMeal);
+      navigation.navigate(ROUTE.DISPENSER_MODAL, { meal: selectedMeal });
+    }
   };
 
   const handleItemSelectMenu = (item: FoodItemProps) => {
@@ -125,7 +128,7 @@ export const DispenserScreen: React.FC = () => {
               id: meal.id,
               title: meal.title,
               meal_type: meal.meal_type,
-              price: meal.price,
+              price: `${meal.price} €`,
               subTitle: meal.subTitle,
               imageUrl: meal.imageUrl,
               iconName: meal.iconName,

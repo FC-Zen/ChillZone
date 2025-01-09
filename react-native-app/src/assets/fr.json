@@ -63,7 +63,8 @@
       "qrCode": "TÉLÉCHARGER QR CODE"
     },
     "add": {
-      "generic": "Ajouter {{ x }} article(s) au panier"
+      "generic": "Ajouter {{ x }} article(s) au panier",
+      "add": "Ajouter au panier"
     },
     "profile": {
       "changeInfo": "Modifier mes informations",

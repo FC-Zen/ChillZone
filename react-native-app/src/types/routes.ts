@@ -36,8 +36,8 @@ export type RouteParamList = {
   FaqScreen: undefined;
   PaymentScreen: undefined;
   DispenserScreen: undefined;
-  DispenserModal: { meal?: MealProps };
-  MenuModal: { menu?: MenuProps };
+  DispenserModal: { meal: MealProps };
+  MenuModal: { menu: MenuProps };
   FinalPaymentScreen: undefined;
   ReservationScreen: undefined;
   AccountScreen: undefined;

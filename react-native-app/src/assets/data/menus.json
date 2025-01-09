@@ -54,6 +54,17 @@
           "category_id": 3,
           "category_label": "Dessert"
         }
+      },
+      {
+        "meal_id": 4,
+        "meal_name": "Glace",
+        "meal_description": "Une boule de glace au choix parmi nos parfums.",
+        "meal_price": 4.99,
+        "meal_photo": "meal.png",
+        "category": {
+          "category_id": 3,
+          "category_label": "Dessert"
+        }
       }
     ]
   },
