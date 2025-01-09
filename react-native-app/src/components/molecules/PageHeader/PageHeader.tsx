@@ -2,8 +2,6 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
-import { useNavigation } from '@hooks'; // Votre custom hook pour la navigation
-import { ROUTE } from '@enums';
 
 export type PageHeaderProps = {
   title: string;
@@ -20,7 +18,6 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   onBackPress,
   noMargin,
 }) => {
-  const navigation = useNavigation();
   const headerHeight = 60;
 
   return (

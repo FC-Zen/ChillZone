@@ -16,7 +16,6 @@ export type AccountTemplateProps = {
   onOpenResetPasswordModal: () => void;
   onOpenEditInfoModal: () => void;
 };
-const { t } = useTranslation();
 
 export const AccountTemplate: React.FC<AccountTemplateProps> = ({
   isDarkTheme,
@@ -26,23 +25,27 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
   onOpenPasswordModal,
   onOpenResetPasswordModal,
   onOpenEditInfoModal,
-}) => (
-  <ScrollView
-    contentContainerStyle={[
-      styles.container,
-      isDarkTheme && styles.darkContainer,
-    ]}
-  >
-    <PageHeader title={t('headers.account')} variant="back" />
-    <ProfileHeaderWithModal />
-    <AccountOptionsList
-      isDarkTheme={isDarkTheme}
-      onToggleTheme={onToggleTheme}
-      currentLanguage={currentLanguage}
-      onChangeLanguage={onChangeLanguage}
-      onOpenPasswordModal={onOpenPasswordModal}
-      onOpenResetPasswordModal={onOpenResetPasswordModal}
-      onOpenEditInfoModal={onOpenEditInfoModal}
-    />
-  </ScrollView>
-);
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <ScrollView
+      contentContainerStyle={[
+        styles.container,
+        isDarkTheme && styles.darkContainer,
+      ]}
+    >
+      <PageHeader title={t('headers.account')} variant="back" />
+      <ProfileHeaderWithModal />
+      <AccountOptionsList
+        isDarkTheme={isDarkTheme}
+        onToggleTheme={onToggleTheme}
+        currentLanguage={currentLanguage}
+        onChangeLanguage={onChangeLanguage}
+        onOpenPasswordModal={onOpenPasswordModal}
+        onOpenResetPasswordModal={onOpenResetPasswordModal}
+        onOpenEditInfoModal={onOpenEditInfoModal}
+      />
+    </ScrollView>
+  );
+};
