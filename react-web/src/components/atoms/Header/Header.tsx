@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 export type HeaderProps = {
     title: string;
@@ -7,9 +7,11 @@ export type HeaderProps = {
 export const Header: React.FC<HeaderProps> = ({ title }) => {
     return (
         <Typography
-        fontSize="24px"
-        fontWeight="bolder"
+        fontSize="22px"
+        fontWeight="600"
         textAlign="center"
+        width={"100%"}
+        padding={"0 30px"}
         >
         {title}
         </Typography>

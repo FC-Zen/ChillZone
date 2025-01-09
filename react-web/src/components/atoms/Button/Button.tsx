@@ -47,7 +47,8 @@ export const Button: FC<ButtonProps> = ({
         <MuiButton
           onClick={onclick}
           variant={variant === 'primary' ? 'contained' : 'outlined'}
-          style={linkStyle}
+          style={{ ...linkStyle, fontSize: "14px", width: "40%"}}
+          type={type}
         >
           {title}
         </MuiButton>
