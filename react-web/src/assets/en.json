@@ -32,6 +32,7 @@
     },
     "create": {
       "account": "Create a student test account",
+      "addaccount": "Create",
       "room": "Create a room",
       "floor": "Create a floor",
       "product": "Create a product",

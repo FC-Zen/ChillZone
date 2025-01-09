@@ -12,25 +12,25 @@ export const AdminAccountPage: React.FC = () => {
 
   const listInputs = [
     {
-      name: "Prénom",
+      name: t('fields.common.first_name'),
       type: "text",
       icon: "User",
       required: true,
     },
     {
-      name: "Nom",
+      name: t('fields.common.last_name'),
       type: "text",
       icon: "User",
       required: true,
     },
     {
-      name: "Rôle",
+      name: t('fields.common.type_role'),
       type: "text",
       icon: "Box",
       required: true,
     },
     {
-      name: "Adresse mail",
+      name: t('fields.common.mail'),
       type: "text",
       icon: "Envelope",
       required: true,
