@@ -4,8 +4,7 @@ import { useUser } from '@hooks';
 import { useTranslation } from 'react-i18next';
 import meals from '@assets/data/meals.json';
 import { AccountModal } from '@components/organisms';
-import { Input } from '@components';
-import { AutoCompleteInput } from '@components/molecules';
+import { InputField } from '@components/organisms/ModalForm/ModalForm';
 
 export const OwnerMealsPage: React.FC = () => {
   const { user } = useUser();
@@ -24,7 +23,82 @@ export const OwnerMealsPage: React.FC = () => {
     { tag: "Kosher" },
     { tag: "Seafood" }
   ]; 
+
+    const listInputs = [
+      {
+        name: "meal_name",
+        label: t('fields.common.last_name'),
+        type: "text",
+        icon: "User",
+        required: true,
+      },
+      {
+        name: "meal_description",
+        label: t('fields.common.description'),
+        type: "text",
+        icon: "User",
+        required: true,
+      },
+      {
+        name: "meal_type",
+        label: t('fields.common.type'),
+        type: "text", // SELECT 
+        icon: "Box",
+        required: true,
+      },
+      {
+        name: "meal_category",
+        label: t('fields.common.category'),
+        type: "text", // SELECT 
+        icon: "Envelope",
+        required: true,
+      },
+      {
+        name: "meal_price",
+        label: t('fields.common.price'),
+        type: "number",
+        icon: "Envelope",
+        required: true,
+      },
+      {
+        name: "meal_stock",
+        label: t('fields.common.quantity'),
+        type: "number",
+        icon: "Envelope",
+        required: true,
+      },
+      {
+        name: "tags",
+        label: t('fields.common.tags'),
+        type: "autocomplete",
+        icon: "Envelope",
+        options: mealTags,
+        required: true,
+      },
+      {
+        name: "meal_photo",
+        label: t('fields.common.file'),
+        type: "file",
+        icon: "Envelope",
+        required: true,
+      },
+    ] as InputField[];
   
+    const listInputsStock = [
+      {
+        name: t('fields.common.last_name'),
+        type: "text",
+        icon: "User",
+        disabled: true
+      },
+      {
+        name: t('fields.common.quantity'),
+        type: "number",
+        icon: "User",
+        required: true,
+      }
+    ] as InputField[];
+
   const [mealsData, setMealsData] = useState(meals);
 
   useEffect(() => {
@@ -66,7 +140,8 @@ export const OwnerMealsPage: React.FC = () => {
     }
   }, [mealsData, t]);
 
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [openModal, setOpenModal] = useState<string | null>(null);
+
   const [selectedMeal, setSelectedMeal] = useState<null | {
     id : number;
     meal_name: string;
@@ -78,33 +153,63 @@ export const OwnerMealsPage: React.FC = () => {
     tags: { tag_id: number; tag_label: string }[];
   }>(null);
 
-  const handleOpenModal = () => setModalOpen(true);
+  const handleOpenModal = (modalType: string) => {
+    setOpenModal(modalType);
+  };
 
+  // Fonction pour fermer la modale
   const handleCloseModal = () => {
-    setModalOpen(false);
+    setOpenModal(null);
     setSelectedMeal(null);
   };
 
   const handleUpdateMeal = (id: number) => {
     const mealToView = mealsData.find((command) => command.id === id);
     if (mealToView) {
-      handleOpenModal();
+      handleOpenModal("editProduct");
     }
   };
 
   const handleUpdateMealQuantity = (id: number) => {
     const mealToView = mealsData.find((command) => command.id === id);
     if (mealToView) {
-      handleOpenModal();
+      handleOpenModal('editStock');
     }
   };
 
   const addMealBtn = () => {
-    handleOpenModal();
+    handleOpenModal('createProduct');
   };
 
-  const handleAddMealBtn = () => {
+  const handleAddMealBtn = (formData: FormData) => {
+    console.log(Array.from(formData.entries()));
+
+    const tagsString = formData.get("tags") as string; 
+    const tagsArray = tagsString ? tagsString.split(",") : []; 
+    const selectedTags = tagsArray.map((tag: string) => {
+    const matchedTag = mealTags.find((mealTag) => mealTag.tag === tag);
+      return {
+        tag_id: matchedTag ? mealTags.indexOf(matchedTag) + 1 : 0,
+        tag_label: tag,
+      };
+    });
+
+    // Création d'un nouveau repas
+    const newMeal = {
+      id: Math.max(...mealsData.map((m) => m.id), 0) + 1, // Assure un nouvel ID unique
+      meal_name: formData.get('meal_name') as string,
+      meal_description: formData.get('meal_description') as string,
+      meal_type: formData.get('meal_type') as string,
+      meal_photo: formData.get('meal_photo') as string || '', 
+      meal_price: parseFloat(formData.get('meal_price') as string) || 0,
+      meal_stock: parseInt(formData.get('meal_stock') as string, 10) || 0,
+      tags: selectedTags,
+    };
+
+    // Ajout du nouveau repas aux données
+    setMealsData((prevData) => [...prevData, newMeal]);
     handleCloseModal();
+    console.log('Nouveau repas ajouté :', newMeal);
   };
 
   return (
@@ -120,21 +225,34 @@ export const OwnerMealsPage: React.FC = () => {
       handleClickQuantity={handleUpdateMealQuantity}
       addMealBtn={addMealBtn}
     />
-
+  
+    {/* Modale de création de produit */}
     <AccountModal
-            isOpen={isModalOpen}
-            onClose={handleCloseModal}
-            title="Création d’un compte"
-          >
-            <form className="flex flex-col space-y-4" onSubmit={handleAddMealBtn}>
-              <AutoCompleteInput name={'tagoptions'} label={'Tags'} options={mealTags} />
+      isOpen={openModal === 'createProduct'}
+      onClose={handleCloseModal}
+      title={t('modals.create.product')}
+      addAccount={handleAddMealBtn}
+      listInputs={listInputs}
+    />
 
-              <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-                {t('buttons.add.user')}
-              </button>
-            </form>
-    </AccountModal>
+    {/*    
+    <AccountModal
+      isOpen={openModal === 'editProduct'}
+      onClose={handleCloseModal}
+      title={t('modals.edit.product')}
+      addAccount={handleAddMealBtn}
+      listInputs={listInputs}
+    /> 
+    */}
 
+    {/* Modale d'édition du stock */}
+    <AccountModal
+      isOpen={openModal === 'editStock'}
+      onClose={handleCloseModal}
+      title={t('modals.edit.stock')}
+      addAccount={handleAddMealBtn}
+      listInputs={listInputsStock}
+    />
   </>
   );
 };

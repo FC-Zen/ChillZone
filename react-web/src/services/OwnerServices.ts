@@ -49,3 +49,17 @@ export const updateCommandStatus = async (id: number, status: string) => {
     }
   };
   
+/**
+ * Récupère la liste des plats depuis l'API.
+ * 
+ * @throws {Error} Si la requête échoue.
+ * @returns {Promise<Array>} Liste des commandes.
+ */
+export const fetchMeals = async () => {
+  try {
+    //AXIOS
+  } catch (error: any) {
+    console.error('Erreur lors de la récupération des commandes:', error.message);
+    throw new Error(error.message);
+  }
+};

@@ -15,6 +15,7 @@ export type InputProps = {
   value?: string;
   label: string;
   required?: boolean;
+  disabled?: boolean
   type?: string;
   min?: number;
   max?: number;
@@ -32,6 +33,7 @@ export const Input = ({
   type,
   min,
   max,
+  disabled,
   defaultvalue,
   onInputChange,
   onKeyDown,
@@ -147,6 +149,7 @@ export const Input = ({
             inputProps={{ min, max }} // Ajout de min et max ici
             onChange={handleChange}
             onKeyDown={onKeyDown}
+            disabled={disabled}
             value={value}
             name={name}
             defaultValue={defaultvalue}
