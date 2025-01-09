@@ -11,6 +11,7 @@ export type InputField = {
   icon: IconProps['name'];
   required?: boolean;
   disabled?: boolean;
+  step? : string;
   options?: { tag: string }[];
 };
 
@@ -70,6 +71,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 label={input.label.toLowerCase()}
                 required={input.required ?? false}
                 type={input.type}
+                step={input.step}
                 disabled={input.disabled ?? false}
                 onInputChange={(name, value) => console.log(`${name}: ${value}`)}
               />

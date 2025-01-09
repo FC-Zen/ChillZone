@@ -64,51 +64,6 @@
       }
     },
 
-    "fields": {
-      "common": {
-        "mail": "Adresse mail",
-        "commentary": "Commentaire",
-        "first_name": "Prénom",
-        "last_name": "Nom",
-        "phone": "Téléphone",
-        "date": "Date",
-        "establishment": "Etablissement",
-        "label": "Libellé",
-        "description": "Description",
-        "type": "Type",
-        "type_role": "Rôle",
-        "category": "Catégorie",
-        "capacity": "Capacité",
-        "location": "Emplacement",
-        "price": "Prix",
-        "quantity": "Quantité",
-        "tag": "Tags",
-        "file": "Fichier"
-      },
-      "auth": {
-        "password": "Mot de passe",
-        "newPassword": "Nouveau mot de passe",
-        "verifyNewPassword": "Confirmez le mot de passe",
-        "lastPassword": "Entrez votre ancien mot de passe"
-      },
-      "map_floor": {
-        "display": "Etage {{ floor }}",
-        "number": "Nombre de l’étage",
-        "name": "Nom de l’étage"
-      },
-      "hours": {
-        "opening_time": "Heure d'ouverture",
-        "closing_time": "Heure de fermeture",
-        "schedules": "Horaires"
-      },
-      "address": {
-        "city": "Ville",
-        "postal_code": "Code Postal",
-        "address": "Adresse"
-      },
-      "search": "Chercher dans la table"
-    },
-
     "dashboard": {
         "graph" : {
             "reservation" : "Nombre de réservation par mois",
@@ -263,7 +218,9 @@
       "capacity": "Capacité",
       "location": "Emplacement",
       "price": "Prix",
-      "quantity": "Quantité"
+      "quantity": "Quantité",
+      "tag": "Tags",
+      "file": "Fichier"
     },
     "auth": {
       "password": "Mot de passe",

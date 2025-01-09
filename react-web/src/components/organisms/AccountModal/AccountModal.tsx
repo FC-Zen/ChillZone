@@ -6,7 +6,7 @@ import { ModalForm } from '@components/organisms';
 type AccountModalprops = {
   isOpen: boolean;
   onClose: () => void;
-  addAccount: (event: React.FormEvent<HTMLFormElement>) => void;
+  addAccount: (formData: FormData) => void;
   title: string;
   listInputs: InputField[];
 };
