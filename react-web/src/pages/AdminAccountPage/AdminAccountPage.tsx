@@ -12,25 +12,29 @@ export const AdminAccountPage: React.FC = () => {
 
   const listInputs = [
     {
-      name: t('fields.common.first_name'),
+      name: "first_name",
+      label: t('fields.common.first_name'),
       type: "text",
       icon: "User",
       required: true,
     },
     {
-      name: t('fields.common.last_name'),
+      name: "last_name",
+      label: t('fields.common.last_name'),
       type: "text",
       icon: "User",
       required: true,
     },
     {
-      name: t('fields.common.type_role'),
+      name: "role",
+      label: t('fields.common.type_role'),
       type: "text",
       icon: "Box",
       required: true,
     },
     {
-      name: t('fields.common.mail'),
+      name: "mail",
+      label: t('fields.common.mail'),
       type: "text",
       icon: "Envelope",
       required: true,
@@ -66,10 +70,10 @@ export const AdminAccountPage: React.FC = () => {
     // Simulation à la place
     const newAccount = {
       id: Math.max(...userData.map((u) => u.id)) + 1,
-      first_name: formData.get('first_name') as string,
-      last_name: formData.get('last_name') as string,
-      role: formData.get('role') as string,
-      email: formData.get('email') as string,
+      first_name: formData.get("first_name") as string,
+      last_name: formData.get("last_name") as string,
+      role: formData.get("role") as string,
+      email: formData.get("mail") as string,
       establishment: formData.get('establishment') as string,
       reservation_count: 0,
       status: 'Unverified',
