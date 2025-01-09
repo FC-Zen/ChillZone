@@ -29,7 +29,6 @@
     "pwdChange": "Change my password",
     "infoChange": "Change my information",
     "mail": "Please insert your email address"
-
   },
 
   "navbar": {
@@ -63,7 +62,8 @@
       "qrCode": "DOWNLOAD QR CODE"
     },
     "add": {
-      "generic": "Add {{ x }} item(s) to the cart"
+      "generic": "Add {{ x }} item(s) to the cart",
+      "add": "Add to cart"
     },
     "profile": {
       "changeInfo": "Change my information",

@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
   title: {
     color: colors.resolutionBlue,
     fontFamily: typography.h2.fontFamily,
-    paddingVertical: 2,
+    paddingVertical: 5,
     fontSize: 20,
     fontWeight: '600',
     lineHeight: 18,

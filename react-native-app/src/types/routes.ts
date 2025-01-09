@@ -2,6 +2,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { ROUTE } from '@enums';
 import { MealProps } from '@services/DispenserServices';
+import { MenuProps } from '@services/MenusServices';
 import { NavItem } from '@components/molecules/BookingInfo';
 
 export type RootStackParamList = {
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   [ROUTE.RESERVATION]: undefined;
   [ROUTE.ACCOUNT]: undefined;
   [ROUTE.LINKS]: undefined;
+  [ROUTE.DISPENSER_MODAL]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
@@ -35,6 +37,7 @@ export type RouteParamList = {
   PaymentScreen: undefined;
   DispenserScreen: undefined;
   DispenserModal: { meal: MealProps };
+  MenuModal: { menu: MenuProps };
   FinalPaymentScreen: undefined;
   ReservationScreen: undefined;
   AccountScreen: undefined;

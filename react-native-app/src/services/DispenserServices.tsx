@@ -6,7 +6,7 @@ export type MealProps = {
   id: number;
   title: string;
   meal_type: string;
-  price: string;
+  price: number;
   subTitle: string;
   imageUrl: any;
   iconName: IconProps['name'];
@@ -19,7 +19,7 @@ export const getAllMeals = (): MealProps[] => {
       id: meal.meal_id,
       title: meal.meal_name,
       meal_type: meal.meal_type,
-      price: `${meal.meal_price} €`,
+      price: meal.meal_price,
       subTitle: meal.meal_description,
       imageUrl: image,
       iconName: 'Add',

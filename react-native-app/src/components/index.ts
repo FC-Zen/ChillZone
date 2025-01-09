@@ -42,4 +42,5 @@ export {
   FinalPaymentTemplate,
   ReservationTemplate,
   AccountTemplate,
+  MenuTemplate,
 } from './templates';

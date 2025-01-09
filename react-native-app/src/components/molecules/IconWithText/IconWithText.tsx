@@ -4,7 +4,7 @@ import { styles } from './style';
 
 export type IconWithTextProps = {
   icon: IconProps['name'];
-  iconColor : string;
+  iconColor?: string;
   text: string;
   textColor?: string;
   variant: 'vertical' | 'horizontal';
@@ -27,7 +27,12 @@ export const IconWithText: React.FC<IconWithTextProps> = ({
 }) => {
   return (
     <View style={[styles.container, styles[variant], style]}>
-      <Icon name={icon} width={iconWidth} height={iconHeight} color={iconColor} />{' '}
+      <Icon
+        name={icon}
+        width={iconWidth}
+        height={iconHeight}
+        color={iconColor}
+      />{' '}
       <Text style={[styles.text, { color: textColor }, textStyle]}>{text}</Text>{' '}
     </View>
   );

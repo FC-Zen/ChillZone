@@ -1,0 +1,1 @@
+export { MenuTemplate } from './MenuTemplate';

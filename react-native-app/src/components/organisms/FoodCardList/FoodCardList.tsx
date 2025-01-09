@@ -9,7 +9,7 @@ export type FoodItemProps = {
   id: number;
   title: string;
   meal_type: string;
-  price: string;
+  price?: string;
   subTitle: string;
   imageUrl: any;
   iconName: IconProps['name'];
@@ -18,11 +18,13 @@ export type FoodItemProps = {
 export type FoodCardListProps = {
   foodItems: FoodItemProps[];
   onItemSelect?: (item: FoodItemProps) => void;
+  showTitle?: boolean;
 };
 
 export const FoodCardList: React.FC<FoodCardListProps> = ({
   foodItems,
   onItemSelect,
+  showTitle = true,
 }) => {
   const { t } = useTranslation();
 
@@ -63,15 +65,17 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
     >
       {Object.entries(groupedItems).map(([mealType, items]) => (
         <View key={mealType}>
-          <IconWithText
-            icon="Hamburger"
-            iconWidth={24}
-            iconHeight={24}
-            textStyle={styles.text}
-            style={styles.text2}
-            variant="horizontal"
-            text={getMealTypeLabel(mealType)}
-          />
+          {showTitle && ( // Condition pour afficher le titre
+            <IconWithText
+              icon="Hamburger"
+              iconWidth={24}
+              iconHeight={24}
+              textStyle={styles.text}
+              style={styles.text2}
+              variant="horizontal"
+              text={getMealTypeLabel(mealType)}
+            />
+          )}
           {items.map((foodItem) => (
             <View key={foodItem.id}>
               <FoodCard
