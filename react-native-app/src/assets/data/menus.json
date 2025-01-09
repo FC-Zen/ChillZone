@@ -1,114 +1,114 @@
 [
-    {
+  {
     "menu_id": 1,
     "menu_name": "Menu Spécial",
     "menu_description": "Un menu complet avec entrée, plat principal et dessert.",
-    "menu_photo": "~/assets/data/Images_test/meal.png",
+    "menu_photo": "meal.png",
     "menu_price": 25.99,
     "menu_creation_date": "2024-12-01T14:30:00",
     "menu_modification_date": "2024-12-01T14:30:00",
     "categories": [
-        {
-            "category_id": 1,
-            "category_label": "Entrée"
-        },
-        {
-            "category_id": 2,
-            "category_label": "Plat principal"
-        },
-        {
-            "category_id": 3,
-            "category_label": "Dessert"
-        }
+      {
+        "category_id": 1,
+        "category_label": "Entrée"
+      },
+      {
+        "category_id": 2,
+        "category_label": "Plat principal"
+      },
+      {
+        "category_id": 3,
+        "category_label": "Dessert"
+      }
     ],
-    "meals" : [
-        {
-            "meal_id": 1,
-            "meal_name": "Salade César",
-            "meal_description": "Une salade croquante avec du poulet grillé, des croûtons et du parmesan.",
-            "meal_price": 8.99,
-            "meal_photo": "https://example.com/photos/salade_cesar.jpg",
-            "category": {
-                "category_id": 1,
-                "category_label": "Entrée"
-            }
-        },
-        {
-            "meal_id": 2,
-            "meal_name": "Steak Frites",
-            "meal_description": "Un steak tendre accompagné de frites maison.",
-            "meal_price": 15.50,
-            "meal_photo": "https://example.com/photos/steak_frites.jpg",
-            "category": {
-                "category_id": 2,
-                "category_label": "Plat principal"
-            }
-        },
-        {
-            "meal_id": 3,
-            "meal_name": "Tiramisu",
-            "meal_description": "Un dessert italien traditionnel à base de mascarpone et de café.",
-            "meal_price": 5.99,
-            "meal_photo": "https://example.com/photos/tiramisu.jpg",
-            "category": {
-                "category_id": 3,
-                "category_label": "Dessert"
-            }
+    "meals": [
+      {
+        "meal_id": 1,
+        "meal_name": "Salade César",
+        "meal_description": "Une salade croquante avec du poulet grillé, des croûtons et du parmesan.",
+        "meal_price": 8.99,
+        "meal_photo": "meal.png",
+        "category": {
+          "category_id": 1,
+          "category_label": "Entrée"
         }
-        ]  
-    },
-    {
+      },
+      {
+        "meal_id": 2,
+        "meal_name": "Steak Frites",
+        "meal_description": "Un steak tendre accompagné de frites maison.",
+        "meal_price": 15.5,
+        "meal_photo": "meal.png",
+        "category": {
+          "category_id": 2,
+          "category_label": "Plat principal"
+        }
+      },
+      {
+        "meal_id": 3,
+        "meal_name": "Tiramisu",
+        "meal_description": "Un dessert italien traditionnel à base de mascarpone et de café.",
+        "meal_price": 5.99,
+        "meal_photo": "meal.png",
+        "category": {
+          "category_id": 3,
+          "category_label": "Dessert"
+        }
+      }
+    ]
+  },
+  {
     "menu_id": 2,
     "menu_name": "Menu Végétarien",
     "menu_description": "Un menu 100% végétarien avec des options saines.",
-    "menu_photo": "~/assets/data/Images_test/meal.png",
-    "menu_price": 22.50,
+    "menu_photo": "meal.png",
+    "menu_price": 22.5,
     "menu_creation_date": "2024-11-20T10:00:00",
     "menu_modification_date": "2024-11-20T10:00:00",
     "categories": [
-        {
-            "category_id": 1,
-            "category_label": "Entrée"
-        },
-        {
-            "category_id": 2,
-            "category_label": "Plat principal"
-        }
+      {
+        "category_id": 1,
+        "category_label": "Entrée"
+      },
+      {
+        "category_id": 2,
+        "category_label": "Plat principal"
+      }
     ],
-    "meals" : [
-        {
-            "meal_id": 1,
-            "meal_name": "Salade César",
-            "meal_description": "Une salade croquante avec du poulet grillé, des croûtons et du parmesan.",
-            "meal_price": 8.99,
-            "meal_photo": "https://example.com/photos/salade_cesar.jpg",
-            "category": {
-                "category_id": 1,
-                "category_label": "Entrée"
-            }
-        },
-        {
-            "meal_id": 2,
-            "meal_name": "Steak Frites",
-            "meal_description": "Un steak tendre accompagné de frites maison.",
-            "meal_price": 15.50,
-            "meal_photo": "https://example.com/photos/steak_frites.jpg",
-            "category": {
-                "category_id": 2,
-                "category_label": "Plat principal"
-            }
-        },
-        {
-            "meal_id": 3,
-            "meal_name": "Tiramisu",
-            "meal_description": "Un dessert italien traditionnel à base de mascarpone et de café.",
-            "meal_price": 5.99,
-            "meal_photo": "https://example.com/photos/tiramisu.jpg",
-            "category": {
-                "category_id": 3,
-                "category_label": "Dessert"
-            }
+    "meals": [
+      {
+        "meal_id": 1,
+        "meal_name": "Salade César",
+        "meal_description": "Une salade croquante avec du poulet grillé, des croûtons et du parmesan.",
+        "meal_price": 8.99,
+        "meal_photo": "meal.png",
+        "category": {
+          "category_id": 1,
+          "category_label": "Entrée"
         }
-        ]      
-    }
-]  
+      },
+      {
+        "meal_id": 2,
+        "meal_name": "Steak Frites",
+        "meal_description": "Un steak tendre accompagné de frites maison.",
+        "meal_price": 15.5,
+        "meal_photo": "meal.png",
+        "category": {
+          "category_id": 2,
+          "category_label": "Plat principal"
+        }
+      },
+      {
+        "meal_id": 3,
+        "meal_name": "Tiramisu",
+        "meal_description": "Un dessert italien traditionnel à base de mascarpone et de café.",
+        "meal_price": 5.99,
+        "meal_photo": "meal.png",
+        "category": {
+          "category_id": 3,
+          "category_label": "Dessert"
+        }
+      }
+    ]
+  }
+]

@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
     paddingBottom: 24,
-    paddingTop: 1,
+    paddingTop: 30,
   },
   row: {
     flexDirection: 'row',
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   container: {
     height: '100%',
     position: 'relative',
-    top: -80,
+    top: -60,
   },
   selectedButtonMeal: {
     display: 'flex',
@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     alignItems: 'center',
-    paddingBottom: 24,
+    paddingBottom: 10,
     paddingTop: 31,
   },
   search: {

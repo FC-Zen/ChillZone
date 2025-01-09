@@ -7,6 +7,16 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     paddingHorizontal: 16,
     justifyContent: 'space-between',
+    paddingTop: 30,
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: colors.white,
+    justifyContent: 'space-between',
+    paddingTop: 30,
+  },
+  cont3: {
+    paddingHorizontal: 16,
   },
   image: {
     width: '100%',
@@ -39,5 +49,18 @@ export const styles = StyleSheet.create({
   btnContainer: {
     paddingBottom: 30,
     alignItems: 'center',
+  },
+  btnContainer2: {
+    paddingHorizontal: 16,
+    paddingVertical: 30,
+    alignItems: 'center',
+  },
+  scrollContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  pageHeader: {
+    width: '100%',
+    paddingTop: 30,
   },
 });

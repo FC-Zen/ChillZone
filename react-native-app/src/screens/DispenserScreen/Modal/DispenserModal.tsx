@@ -35,8 +35,10 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
   };
 
   const handleAddToCart = () => {
-    const price = parseFloat(meal.price);
-    console.log(`Ajouté au panier: ${meal.title}, Quantité: ${quantity}, Total : ${(price * quantity).toFixed(2)} €`);
+    const price = meal.price;
+    console.log(
+      `Ajouté au panier: ${meal.title}, Quantité: ${quantity}, Total : ${(price * quantity).toFixed(2)} €`
+    );
     // navigation.goBack();
   };
 

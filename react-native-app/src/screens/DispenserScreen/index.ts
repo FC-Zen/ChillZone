@@ -1,2 +1,2 @@
 export { DispenserScreen } from './DispenserScreen';
-export { DispenserModal } from './Modal';
+export { DispenserModal, MenuModal } from './Modal';
