@@ -8,6 +8,7 @@ type AdminBookingLayoutProps = {
   userEmail: string;
   organization: string;
   part: string;
+  role: string;
   reservationsData : {
     id: number;
     day_reservation: string; 
@@ -30,6 +31,7 @@ export const AdminBookingLayout = ({
   userEmail,
   organization,
   part,
+  role,
   reservationsData,
   conflictsData,
 }: AdminBookingLayoutProps) => {
@@ -45,6 +47,7 @@ export const AdminBookingLayout = ({
           userEmail={userEmail}
           organization={organization}
           part={part} 
+          role={role}
           />
         
         <main className="mainContainerBooking">

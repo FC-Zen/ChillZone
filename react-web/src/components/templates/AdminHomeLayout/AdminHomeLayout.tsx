@@ -5,6 +5,7 @@ type AdminHomeLayoutProps = {
   userEmail: string;
   organization: string;
   part: string;
+  role: string;
   statsSection: React.ReactNode;
   mainContent: React.ReactNode;
 };
@@ -14,6 +15,7 @@ export const AdminHomeLayout: React.FC<AdminHomeLayoutProps> = ({
   userEmail,
   organization,
   part,
+  role,
   statsSection,
   mainContent,
 }) => {
@@ -29,6 +31,7 @@ export const AdminHomeLayout: React.FC<AdminHomeLayoutProps> = ({
           userEmail={userEmail}
           organization={organization}
           part={part}
+          role={role}
         />
         {/* Conteneur principal */}
         <div className="flex p-6 gap-6">

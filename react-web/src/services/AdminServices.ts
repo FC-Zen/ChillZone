@@ -1,4 +1,12 @@
 import axios from 'axios';
+import maps from '@assets/data/maps.json';
+
+export type Floor = {
+    floor_id: number;
+    floor_number: number;
+    floor_name: string;
+    floor_plan: string;
+}
 
 /**
  * Supprime un utilisateur en envoyant une requête DELETE à l'API.
@@ -178,6 +186,54 @@ export const getReservations = async () => {
         return;
     } catch (error: any) {
         console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+/**
+ * Récupère la liste des plans de l'établissement depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getFloors = async (): Promise<Floor[]> => {
+    try {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(maps);
+            }, 500); // Simule un délai pour une API
+        });
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des plans:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+
+/**
+ * Récupère la liste des plans de l'établissement depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getListInputsValues = async () : Promise<Record<string, string>> => {
+    try {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({
+                    name: "Établissement Central",
+                    address: "10 rue des Technologies",
+                    city: "Paris",
+                    postal_code: "75001",
+                    phone: "+33 1 23 45 67 89",
+                    email: "contact@etablissement.fr"
+                });
+            }, 500); // Simule un délai pour une API
+        });
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des plans:", error.message);
         throw new Error(error.message);
     }
 };

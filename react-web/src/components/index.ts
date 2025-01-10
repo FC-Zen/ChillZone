@@ -1,6 +1,6 @@
 export { Button, Checkbox, Icon,  } from './atoms';
 export type { IconProps } from './atoms';
-export { Input, SnackBar, VectorHeader, VectorBottom } from './molecules';
+export { Input, SnackBar, VectorHeader, VectorBottom, Map } from './molecules';
 export {
   Connection,
   ForgotMdp,
@@ -19,5 +19,6 @@ export {
   AdminRoomLayout,
   OwnerHomeLayout,
   AdminHomeLayout,
-  AdminOwnerLayout
+  AdminOwnerLayout,
+  AdminEstablishmentLayout
 } from './templates';

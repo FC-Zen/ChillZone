@@ -220,7 +220,7 @@ export const OwnerMealsPage: React.FC = () => {
       username={user?.username ?? ""}
       organization={user?.organization ?? ""}
       part={t('headers.products')}
-
+      role={user?.role ?? ""}
       data={mealsData}
       handleClickMeal={handleUpdateMeal}
       handleClickQuantity={handleUpdateMealQuantity}

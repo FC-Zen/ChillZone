@@ -115,6 +115,7 @@ export const AdminRoomsPage: React.FC = () => {
         username={user?.username ?? ""}
         organization={user?.organization ?? ""}
         part={t('navbar.admin.rooms')}
+        role={user?.role ?? ""}
         addBtn={handleOpenModal}
         deleteBtn={handleEditRoom}
         toggleBtn={handleToggleRoomStatus}

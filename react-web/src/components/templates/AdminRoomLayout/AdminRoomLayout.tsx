@@ -6,6 +6,7 @@ type AdminRoomLayoutProps = {
   userEmail: string;
   organization: string;
   part: string;
+  role: string;
   addBtn: () => void;
   deleteBtn: (id: number) => void;
   toggleBtn: (id: number, isActive: boolean) => void;
@@ -25,6 +26,7 @@ export const AdminRoomLayout = ({
   userEmail,
   organization,
   part,
+  role,
   addBtn,
   deleteBtn,
   toggleBtn,
@@ -40,6 +42,7 @@ export const AdminRoomLayout = ({
           userEmail={userEmail}
           organization={organization}
           part={part} 
+          role={role}
           />
 
         <main className="p-6">

@@ -8,6 +8,7 @@ type OwnerMealsLayoutProps = {
   userEmail: string;
   organization: string;
   part: string;
+  role: string;
   data: any;
   addMealBtn: () => void;
   handleClickMeal : (id: number) => void;
@@ -19,6 +20,7 @@ export const OwnerMealsTemplate: React.FC<OwnerMealsLayoutProps> = ({
   userEmail,
   organization,
   part,
+  role,
   data,
   handleClickMeal,
   handleClickQuantity,
@@ -33,6 +35,7 @@ export const OwnerMealsTemplate: React.FC<OwnerMealsLayoutProps> = ({
         userEmail={userEmail}
         organization={organization}
         part={part}
+        role={role}
       />
 
       <div className="main-content">

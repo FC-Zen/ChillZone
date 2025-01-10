@@ -13,6 +13,7 @@ type HeaderProps = {
   userEmail: string;
   organization: string;
   part: string;
+  role: string;
 };
 
 export const Header: React.FC<HeaderProps> = ({
@@ -20,6 +21,7 @@ export const Header: React.FC<HeaderProps> = ({
   userEmail,
   organization,
   part,
+  role
 }) => {
   const navigate = useNavigate();
 
@@ -57,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({
           <Avatar alt={userName} size="lg" />
           <div style={styles.profileInfo}>
             <p style={styles.userName}>
-              {userName} <span style={styles.role}>(Admin)</span>
+              {userName} <span style={styles.role}>({role})</span>
             </p>
             <p style={styles.email}>{userEmail}</p>
             <p style={styles.organizationRight}>{organization}</p>

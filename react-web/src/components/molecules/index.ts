@@ -8,3 +8,6 @@ export { CustomSwitch } from './Switch';
 export { StatCard } from './StatCard';
 export { NavigationButton } from './NavigationButton';
 export { ModalHeader } from './ModalHeader';
+
+export { Map } from './Map';
+

@@ -20,6 +20,7 @@ export const AdminBookingPage: React.FC = () => {
         username={user?.username ?? ""}
         organization={user?.organization ?? ""}
         part={t('navbar.admin.reservation')}
+        role={user?.role ?? ""}
         reservationsData={reservationsData}
         conflictsData={conflictsData}
       />
