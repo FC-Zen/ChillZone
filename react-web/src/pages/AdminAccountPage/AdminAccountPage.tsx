@@ -108,7 +108,7 @@ export const AdminAccountPage: React.FC = () => {
         onClose={handleCloseModal}
         addAccount={handleAddAccount}
         listInputs={listInputs}
-        title="Création d’un compte de test étudiant"
+        title={t("modals.create.account")}
       />
     </>
   );

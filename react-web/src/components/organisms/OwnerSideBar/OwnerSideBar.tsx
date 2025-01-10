@@ -1,6 +1,5 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Utilisation de React Router
-import { Home, Pizza, Document, Package } from '@components/atoms/Icons';
+import { Home, Pizza, Package } from '@components/atoms/Icons';
 import { NavigationButton } from '@components/molecules';
 import { colors } from '@theme';
 import { ROUTE } from '@enums'; // Import de vos routes

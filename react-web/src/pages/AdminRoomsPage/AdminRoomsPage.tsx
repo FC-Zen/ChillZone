@@ -131,9 +131,7 @@ export const AdminRoomsPage: React.FC = () => {
     console.log('Salle mise à jour :', updatedRoom);
   };
 
-  const handleAddRoom = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  const handleAddRoom = (formData: FormData) => {
     const newRoom = {
       id: Math.max(...roomsData.map((r) => r.id)) + 1,
       name: formData.get('name') as string,
@@ -169,63 +167,13 @@ export const AdminRoomsPage: React.FC = () => {
         data={roomsData}
       />
 
-      <RoomModal
+      <RoomModal 
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        title={
-          selectedRoom ? 'Modification d’une salle' : 'Création d’une salle'
-        }
-      >
-        <form
-          className="flex flex-col space-y-4"
-          onSubmit={selectedRoom ? handleUpdateRoom : handleAddRoom}
-        >
-          <input
-            className="p-2 border rounded"
-            type="text"
-            name="name"
-            placeholder="Nom de la salle"
-            defaultValue={selectedRoom?.name || ''}
-            required
-          />
-          <textarea
-            className="p-2 border rounded"
-            name="description"
-            placeholder="Description"
-            defaultValue={selectedRoom?.description || ''}
-            required
-          />
-          <input
-            className="p-2 border rounded"
-            type="number"
-            name="capacity"
-            placeholder="Capacité"
-            defaultValue={selectedRoom?.capacity || ''}
-            required
-          />
-          <input
-            className="p-2 border rounded"
-            type="text"
-            name="floor"
-            placeholder="Étage"
-            defaultValue={selectedRoom?.floor || ''}
-            required
-          />
-          <select
-            className="p-2 border rounded"
-            name="establishment"
-            defaultValue={selectedRoom?.establishment || ''}
-            required
-          >
-            <option value="">Établissement</option>
-            <option value="Établissement Alpha">Établissement Alpha</option>
-            <option value="Établissement Beta">Établissement Beta</option>
-          </select>
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-            {selectedRoom ? t('buttons.actions.save') : t('buttons.add.room')}
-          </button>
-        </form>
-      </RoomModal>
+        addRoom={handleAddRoom}
+        listInputs={listInputs}
+        title={t("modals.create.room")}
+      />
     </div>
   );
 };
