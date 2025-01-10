@@ -27,7 +27,6 @@ export {
   ForgotPassword,
   Map,
   OverlayList,
-  ReservationItemProps,
   ResetPassword,
   RestaurantSlider,
   RoomAvailable,

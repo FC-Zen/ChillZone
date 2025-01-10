@@ -3,26 +3,13 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Button } from '../Button';
 import { styles } from './style';
 import { map } from '@assets/Images';
-import { colors } from '@theme';
+import { colors, typography } from '@theme';
+import { BookingOverlay } from '@services';
+import { IconWithText } from '../IconWithText';
 
-type ReservationOverlayProps = {
-  title: string;
-  salle: string;
-  date: string;
-  horaire: string;
-  location: string;
-  etage: string;
-  titleBtn: string;
-  cancelReservation?: () => void;
-};
-
-export const Overlay: React.FC<ReservationOverlayProps> = ({
+export const Overlay: React.FC<BookingOverlay> = ({
+  data,
   title,
-  salle,
-  date,
-  horaire,
-  location,
-  etage,
   titleBtn,
   cancelReservation,
 }) => {
@@ -37,10 +24,46 @@ export const Overlay: React.FC<ReservationOverlayProps> = ({
       <View style={[styles.overlayBox, isExpanded && styles.expandedContainer]}>
         {!isExpanded && (
           <View style={styles.headerRow}>
-            <Text style={styles.previewText}>{salle}</Text>
+            <IconWithText
+              icon="Cube"
+              variant="horizontal"
+              text={data.location.location_name}
+              iconColor={colors.resolutionBlue}
+              iconWidth={16}
+              iconHeight={16}
+              textStyle={{ fontSize: 14, fontFamily: typography.h3.fontFamily }}
+              textColor={colors.resolutionBlue}
+              style={styles.previewText}
+            />
             <View style={styles.rightColumn}>
-              <Text style={styles.previewText}>{date}</Text>
-              <Text style={styles.previewText}>{horaire}</Text>
+              <IconWithText
+                icon="Calendar"
+                variant="horizontal"
+                text={data.day_reservation}
+                iconColor={colors.resolutionBlue}
+                iconWidth={16}
+                iconHeight={16}
+                textStyle={{
+                  fontSize: 14,
+                  fontFamily: typography.h3.fontFamily,
+                }}
+                textColor={colors.resolutionBlue}
+                style={styles.previewText}
+              />
+              <IconWithText
+                icon="Clock"
+                variant="horizontal"
+                text={`${data.start_time}-${data.end_time}`}
+                iconColor={colors.resolutionBlue}
+                iconWidth={16}
+                iconHeight={16}
+                textStyle={{
+                  fontSize: 14,
+                  fontFamily: typography.h3.fontFamily,
+                }}
+                textColor={colors.resolutionBlue}
+                style={styles.previewText}
+              />
             </View>
           </View>
         )}
@@ -48,18 +71,64 @@ export const Overlay: React.FC<ReservationOverlayProps> = ({
         {isExpanded && (
           <View style={styles.expandedContent}>
             <Text style={styles.titleText}>{title}</Text>
-            <Text style={styles.previewText}>{salle}</Text>
+            <IconWithText
+              icon="Cube"
+              variant="horizontal"
+              text={data.location.location_name}
+              iconColor={colors.resolutionBlue}
+              iconWidth={16}
+              iconHeight={16}
+              textColor={colors.resolutionBlue}
+              style={styles.previewText}
+            />
             <Image source={map} style={styles.image} />
 
             <View style={styles.detailsContainer}>
-              <Text style={styles.previewText}>{date}</Text>
-              <Text style={styles.previewText}>{horaire}</Text>
-              <Text style={styles.previewText}>{location}</Text>
-              <Text style={styles.previewText}>{etage}</Text>
+              <IconWithText
+                icon="Calendar"
+                variant="horizontal"
+                text={data.day_reservation}
+                iconColor={colors.resolutionBlue}
+                iconWidth={16}
+                iconHeight={16}
+                textColor={colors.resolutionBlue}
+                style={styles.previewText}
+              />
+              <IconWithText
+                icon="Clock"
+                variant="horizontal"
+                text={`${data.start_time}-${data.end_time}`}
+                iconColor={colors.resolutionBlue}
+                iconWidth={16}
+                iconHeight={16}
+                textColor={colors.resolutionBlue}
+                style={styles.previewText}
+              />
+              <IconWithText
+                icon="Marker"
+                variant="horizontal"
+                text={data.establishment.establishment_name}
+                iconColor={colors.resolutionBlue}
+                iconWidth={16}
+                iconHeight={16}
+                textColor={colors.resolutionBlue}
+                style={styles.previewText}
+              />
+
+              <IconWithText
+                icon="HomeLocation"
+                variant="horizontal"
+                text={data.location.floor_name}
+                iconColor={colors.resolutionBlue}
+                iconWidth={16}
+                iconHeight={16}
+                textColor={colors.resolutionBlue}
+                style={styles.previewText}
+              />
             </View>
 
             <Button
-              title={titleBtn}
+              title={titleBtn || ''}
               onPress={cancelReservation}
               style={styles.closeButton}
               textColor={colors.warn}

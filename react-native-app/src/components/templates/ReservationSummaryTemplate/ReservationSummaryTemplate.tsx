@@ -3,23 +3,14 @@ import { ScrollView, View } from 'react-native';
 import { OverlayList } from '@components/organisms/OverlayList';
 import { PageHeader } from '@components/molecules/PageHeader';
 import { styles } from './style';
-
-export type ReservationItemProps = {
-  title: string;
-  salle: string;
-  date: string;
-  horaire: string;
-  location: string;
-  etage: string;
-  titleBtn: string;
-  cancelReservation?: () => void;
-};
+import { BookingOverlay } from '@services';
 
 export type ReservationSummaryTemplateProps = {
   headerTitle: string;
-  todaysReservations: ReservationItemProps[];
-  upcomingReservations: ReservationItemProps[];
+  todaysReservations: BookingOverlay[];
+  upcomingReservations: BookingOverlay[];
   onCancelReservation?: (index: number) => void;
+  onBackPress?: () => void;
 };
 
 export const ReservationSummaryTemplate: React.FC<
@@ -29,10 +20,15 @@ export const ReservationSummaryTemplate: React.FC<
   todaysReservations,
   upcomingReservations,
   onCancelReservation,
+  onBackPress,
 }) => {
   return (
     <View style={styles.container}>
-      <PageHeader title={headerTitle} variant="back" />
+      <PageHeader
+        title={headerTitle}
+        variant="back"
+        onBackPress={onBackPress}
+      />
 
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.marginTop}>
