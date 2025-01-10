@@ -273,9 +273,8 @@
         "location": "Dining location address",
         "email": "Dining location email",
         "isCurrentlyOpen": "Currently open",
-        "unlinkRestaurant": "Unlink dining location from the establishment",
-        "declineAffiliation": "Decline affiliation",
-        "acceptAffiliation": "Accept affiliation"
+        "unlinkRestaurant": "Unlink dining location",
+        "actionAffiliation": "Accept or Decline affiliation"
       },
       "command": {
         "id": "Order ID",

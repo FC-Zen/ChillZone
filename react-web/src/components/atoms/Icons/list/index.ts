@@ -31,3 +31,5 @@ export { default as Tablet } from './Tablet';
 export { default as Cross } from './Cross';
 export { default as Box } from './Box';
 export { default as ShoppingBag } from './ShoppingBag';
+export { default as AddCircle } from './AddCircle';
+export { default as CrossCircle } from './CrossCircle';

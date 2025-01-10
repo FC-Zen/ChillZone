@@ -325,9 +325,8 @@
         "location": "Emplacement du lieu de restauration",
         "email": "Adresse mail du lieu de restauration",
         "isCurrentlyOpen": "Ouvert actuellement",
-        "unlinkRestaurant": "Supprimer le lien entre le lieu et l’établissement",
-        "declineAffiliation": "Refuser l’affiliation",
-        "acceptAffiliation": "Accepter l’affiliation"
+        "unlinkRestaurant": "Supprimer le lien",
+        "actionAffiliation": "Accepter ou Refuser l’affiliation"
       },
       "command": {
         "id": "ID commande",

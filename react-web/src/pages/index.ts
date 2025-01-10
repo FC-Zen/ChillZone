@@ -10,3 +10,4 @@ export { AdminAccountPage } from './AdminAccountPage';
 export { AdminBookingPage } from './AdminBookingPage';
 export { OwnerOrdersPage } from './OwnerOrdersPage';
 export { OwnerMealsPage } from './OwnerMealsPage';
+export { AdminOwnerPage } from './AdminOwnerPage';

@@ -18,5 +18,6 @@ export {
   AdminAccountLayout,
   AdminRoomLayout,
   OwnerHomeLayout,
-  AdminHomeLayout
+  AdminHomeLayout,
+  AdminOwnerLayout
 } from './templates';

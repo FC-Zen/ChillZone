@@ -22,11 +22,13 @@ type ConclictDataTableProps = {
 };
 
 function CustomToolbar() {  
+  const { t } = useTranslation();
+  
   return (
     <GridToolbarContainer className="custom-tool-bar">
       <GridToolbarQuickFilter
         className="custom-quick-filter"
-        placeholder="Chercher dans la table"
+        placeholder={t('fields.search')}
       />
 
       <GridToolbarColumnsButton />

@@ -24,7 +24,7 @@ export const AdminSideBar = () => {
     <div
       style={{
         background: '#2E2A85',
-        height: '100vh',
+        height: 'auto',
         width: '4rem',
         display: 'flex',
         flexDirection: 'column',
@@ -66,7 +66,7 @@ export const AdminSideBar = () => {
       {/* Boutique */}
       <NavigationButton
         icon={<Shop color={colors.white} />}
-        onClick={() => handleIconClick('/admin-shop')} // Ajustez cette route si nécessaire
+        onClick={() => handleIconClick(ROUTE.ADMIN_OWNERS)} // Ajustez cette route si nécessaire
       />
     </div>
   );

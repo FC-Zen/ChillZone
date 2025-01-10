@@ -11,4 +11,5 @@ export { OwnerHomeLayout } from './OwnerAccountLayout';
 export { AdminHomeLayout } from './AdminHomeLayout';
 export { OwnerOrdersTemplate } from './OwnerOrdersTemplate';
 export { OwnerMealsTemplate } from './OwnerMealsTemplate';
+export { AdminOwnerLayout } from './AdminOwnerLayout';
 
