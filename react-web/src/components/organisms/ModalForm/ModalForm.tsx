@@ -44,7 +44,12 @@ export const ModalForm: React.FC<ModalFormProps> = ({
 
 
   return (
-    <form className="flex flex-col space-y-4 justify-center items-center" onSubmit={handleSubmit} id="AccountForm" style={{ paddingLeft: "40px", paddingRight: "40px" }}>
+    <form className="flex flex-col space-y-4 justify-center items-center" 
+      onSubmit={handleSubmit} 
+      id="AccountForm" 
+      style={{ 
+        padding: "20px 40px",
+      }}>
       {listInputs.map((input, index) => {
         switch (input.type) {
           case 'autocomplete':
