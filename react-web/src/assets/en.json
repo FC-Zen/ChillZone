@@ -168,7 +168,10 @@
       "price": "Price",
       "quantity": "Quantité",
       "tag": "Tags",
-      "file": "File"
+      "file": "File",
+      "room": "Room Name",
+      "floor": "Floor",
+      "roomtype": "RoomType"
     },
     "auth": {
       "password": "Password",
