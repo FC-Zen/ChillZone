@@ -18,6 +18,7 @@ export type AccountOptionsListProps = {
   onOpenEditInfoModal: () => void;
   onOpenPasswordModal: () => void;
   onOpenResetPasswordModal: () => void;
+  onNavigateToReservations: () => void;
 };
 
 export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
@@ -26,6 +27,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
   onOpenEditInfoModal,
   onOpenPasswordModal,
   onOpenResetPasswordModal,
+  onNavigateToReservations,
 }) => {
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();
@@ -69,7 +71,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
-          onPress={() => console.log('Réservations')} // Remplacer par le screen
+          onPress={onNavigateToReservations}
         />
       </View>
 

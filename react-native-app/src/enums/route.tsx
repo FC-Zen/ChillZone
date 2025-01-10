@@ -15,4 +15,5 @@ export enum ROUTE {
   ACCOUNT = 'AccountScreen',
   LINKS = 'LinksScreen',
   MENU_MODAL = 'MenuModal',
+  RESERVATION_SUMMARY = 'ReservationSummaryScreen',
 }

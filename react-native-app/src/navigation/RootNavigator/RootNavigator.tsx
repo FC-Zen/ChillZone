@@ -19,6 +19,7 @@ import {
   AccountScreen,
   LinksScreen,
   MenuModal,
+  ReservationSummaryScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -141,6 +142,11 @@ export const RootNavigator = () => {
             <Stack.Screen
               name={ROUTE.LINKS}
               component={LinksScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={ROUTE.RESERVATION_SUMMARY}
+              component={ReservationSummaryScreen}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
