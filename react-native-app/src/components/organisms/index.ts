@@ -13,4 +13,4 @@ export { PasswordModal } from './PasswordModal';
 export { ResetPasswordModal } from './ResetPasswordModal';
 export { EditInfoModal } from './EditInfoModal';
 export { ProfileHeaderWithModal } from './ProfileHeaderWithModal';
-export { OverlayList } from './OverlayList';
+export { OverlayList, ReservationItemProps } from './OverlayList';
