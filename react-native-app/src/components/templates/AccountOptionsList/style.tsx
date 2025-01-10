@@ -57,17 +57,6 @@ export const styles = StyleSheet.create({
     marginRight: 5,
   },
 
-  newsButton: {
-    display: 'flex',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: colors.resolutionBlue,
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-
   newsText: {
     color: colors.resolutionBlue,
     fontFamily: typography.h3.fontFamily,

@@ -24,6 +24,7 @@ export const ButtonWrapper: FC<ButtonProps> = ({
         variant === 'primary' && { backgroundColor: colors.resolutionBlue },
         variant === 'secondary' && { backgroundColor: colors.white },
         variant === 'icon' && styles.iconVariant,
+        variant === 'news' && styles.newsVariant,
         color && { backgroundColor: color },
         style,
       ]}
@@ -33,10 +34,11 @@ export const ButtonWrapper: FC<ButtonProps> = ({
         style={[
           styles.text,
           { color: textColor, fontFamily: textFont, fontSize: textSize },
+          variant === 'news' && styles.newsText, // Style spécifique au texte du variant "news"
         ]}
       >
         {title}
-      </Text>{' '}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -66,5 +68,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
+  },
+  newsVariant: {
+    display: 'flex',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: colors.resolutionBlue,
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  newsText: {
+    color: colors.resolutionBlue, // Couleur spécifique pour le texte du bouton "news"
+    fontSize: typography.h4.fontSize, // Taille personnalisée si nécessaire
+    fontFamily: typography.h2.fontFamily, // Famille de police personnalisée si nécessaire
+    textAlign: 'center',
   },
 });

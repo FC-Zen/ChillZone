@@ -32,32 +32,6 @@ export const ResetPasswordModal = ({
 }: ResetPasswordModalProps) => {
   const { t } = useTranslation();
 
-  // Composant principal qui utilise la modale
-  const ResetPassword = () => {
-    const [isModalOpen, setModalOpen] = React.useState(false);
-
-    // Méthode pour gérer la réinitialisation
-    const handleResetPassword = async () => {
-      if (!email) {
-        Alert.alert('Erreur', 'Veuillez entrer une adresse e-mail.');
-        return;
-      }
-
-      try {
-        // Appel au service de réinitialisation
-        await accountServices.resetPassword(email, ''); // Utilisez un mot de passe vide ou passez l'email uniquement
-
-        Alert.alert(
-          'Succès',
-          `Un e-mail de réinitialisation a été envoyé à ${email}.`
-        );
-        setModalOpen(false); // Ferme la modale après succès
-      } catch (error: any) {
-        Alert.alert('Erreur', error.message || 'Une erreur est survenue.');
-      }
-    };
-  };
-
   return (
     <Modal
       animationType="slide"
@@ -77,7 +51,8 @@ export const ResetPasswordModal = ({
           <Input
             style={styles.input}
             placeholder={t('fields.common.mail')}
-            onChangeText={setEmail}
+            value={email} // Utiliser la valeur de l'email provenant des props
+            onChangeText={setEmail} // Met à jour l'état avec setEmail
           />
 
           {/* Bouton Réinitialiser */}

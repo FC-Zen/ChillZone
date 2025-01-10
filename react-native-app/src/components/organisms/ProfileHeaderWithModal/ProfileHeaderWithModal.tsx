@@ -3,39 +3,35 @@ import { View } from 'react-native';
 import { ProfileHeader } from '@components/molecules/ProfileHeader';
 import { ChangeProfilePictureModal } from '@components/organisms/ChangeProfilePictureModal';
 import { styles } from './style';
-import user_data from '@assets/fr.json';
+import { useTranslation } from 'react-i18next';
+import { useUser } from '@contexts/AppContrext';
 
-// Hook pour gérer l'état de la modale
-const useProfileHeaderModalLogic = () => {
+export const ProfileHeaderWithModal: React.FC<{
+  onChangePicture: () => Promise<void>; // Gestion du changement de photo
+  onDeletePicture: () => Promise<void>; // Gestion de la suppression de photo
+}> = ({ onChangePicture, onDeletePicture }) => {
   const [isModalOpen, setModalOpen] = React.useState(false);
+  const { t } = useTranslation();
+  const { userName } = useUser(); // Récupération du nom d'utilisateur depuis le contexte
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
-
-  return {
-    isModalOpen,
-    openModal,
-    closeModal,
-  };
-};
-
-export const ProfileHeaderWithModal: React.FC = () => {
-  const { isModalOpen, openModal, closeModal } = useProfileHeaderModalLogic();
 
   return (
     <View style={styles.container}>
       {/* Header du profil */}
       <ProfileHeader
-        name={
-          user_data.fields.common.first_name +
-          ' ' +
-          user_data.fields.common.last_name
-        }
+        name={userName || t('fields.common.default_username')}
         onOpenModal={openModal}
       />
 
       {/* Modale */}
-      <ChangeProfilePictureModal isOpen={isModalOpen} onClose={closeModal} />
+      <ChangeProfilePictureModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onChangePicture={onChangePicture} // Passer la logique via les props
+        onDeletePicture={onDeletePicture} // Passer la logique via les props
+      />
     </View>
   );
 };

@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     padding: 16,
   },
   linksContainer: {
-    marginTop: 20,
+    marginTop: 40,
   },
   linkContainer: {
     flexDirection: 'row',
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: colors.white,
     borderRadius: 12,
-    paddingVertical: 16,
+    paddingVertical: 10,
     paddingHorizontal: 12,
     marginBottom: 10,
     borderWidth: 1,

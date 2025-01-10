@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
+import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
 
 export type PageHeaderProps = {

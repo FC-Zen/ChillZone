@@ -7,7 +7,7 @@ import { colors, typography } from '@theme';
 export type ButtonProps = {
   title: string;
   onPress?: () => void | false;
-  variant?: 'primary' | 'secondary' | 'icon';
+  variant?: 'primary' | 'secondary' | 'icon' | 'news'; // Ajout du variant news
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>; // Nouvelle propriété
   icon?: IconProps;

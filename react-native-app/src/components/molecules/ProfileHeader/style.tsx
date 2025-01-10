@@ -8,4 +8,9 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.resolutionBlue,
   },
   name: { fontSize: 20, fontFamily: typography.h2.fontFamily },
+
+  icon: {
+    width: 80,
+    height: 80,
+  },
 });

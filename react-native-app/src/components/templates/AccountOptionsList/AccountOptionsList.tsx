@@ -165,11 +165,12 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        style={styles.newsButton}
-        onPress={() => navigation.navigate(ROUTE.LINKS)}
-      >
-        <Text style={styles.newsText}>{t('buttons.profile.actus')}</Text>
+      <TouchableOpacity>
+        <Button
+          title={t('buttons.profile.actus')}
+          onPress={() => navigation.navigate(ROUTE.LINKS)}
+          variant="news"
+        />
       </TouchableOpacity>
     </View>
   );

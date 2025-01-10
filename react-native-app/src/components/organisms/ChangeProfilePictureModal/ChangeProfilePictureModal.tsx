@@ -1,48 +1,21 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Modal, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { styles } from './style';
-import user_profile_data from '@assets/fr.json';
-import { Icon, IconProps } from '@components/atoms/Icons';
+import { Icon } from '@components/atoms/Icons';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
-import { accountServices } from '@services/AccountServices'; // Import des services
 
 export type ChangeProfilePictureModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  onChangePicture: () => void; // Passé par le parent
+  onDeletePicture: () => void; // Passé par le parent
 };
 
-export const ChangeProfilePictureModal = ({
-  isOpen,
-  onClose,
-}: ChangeProfilePictureModalProps) => {
+export const ChangeProfilePictureModal: React.FC<
+  ChangeProfilePictureModalProps
+> = ({ isOpen, onClose, onChangePicture, onDeletePicture }) => {
   const { t } = useTranslation();
-
-  // Gestion du changement de la photo de profil
-  const handleChangePicture = async () => {
-    try {
-      // Vous pouvez ici ouvrir un sélecteur de fichiers ou de photos
-      const mockFile = 'file://example-path/profile-picture.png'; // Remplacez par un vrai fichier ou chemin
-      await accountServices.changeProfilePicture(mockFile);
-
-      Alert.alert('Succès', 'Votre photo de profil a été mise à jour.');
-      onClose();
-    } catch (error: any) {
-      Alert.alert('Erreur', error.message || 'Une erreur est survenue.');
-    }
-  };
-
-  // Gestion de la suppression de la photo de profil
-  const handleDeletePicture = async () => {
-    try {
-      await accountServices.deleteProfilePicture();
-
-      Alert.alert('Succès', 'Votre photo de profil a été supprimée.');
-      onClose();
-    } catch (error: any) {
-      Alert.alert('Erreur', error.message || 'Une erreur est survenue.');
-    }
-  };
 
   return (
     <Modal
@@ -77,7 +50,7 @@ export const ChangeProfilePictureModal = ({
           {/* Bouton pour changer la photo */}
           <TouchableOpacity
             style={styles.primaryButton}
-            onPress={handleChangePicture} // Appel de la méthode
+            onPress={onChangePicture} // Appel de la fonction parent
           >
             <Text style={styles.primaryButtonText}>
               {t('buttons.profile.changePp')}
@@ -87,7 +60,7 @@ export const ChangeProfilePictureModal = ({
           {/* Bouton pour supprimer */}
           <TouchableOpacity
             style={styles.secondaryButton}
-            onPress={handleDeletePicture} // Appel de la méthode
+            onPress={onDeletePicture} // Appel de la fonction parent
           >
             <Text style={styles.secondaryButtonText}>
               {t('buttons.profile.deletePp')}

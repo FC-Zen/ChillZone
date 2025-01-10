@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Alert } from 'react-native';
 import { AccountTemplate } from '@components/templates';
 import {
   PasswordModal,
@@ -10,6 +10,7 @@ import { styles } from './style';
 import { translationService } from '@services';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
+import { accountServices } from '@services/AccountServices';
 
 export const AccountScreen: React.FC = () => {
   // États pour les modales
@@ -21,6 +22,60 @@ export const AccountScreen: React.FC = () => {
 
   // États pour le thème sombre et la langue
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  // Données utilisateur pour la modalité EditInfoModal
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+  });
+
+  // État pour l'email dans ResetPasswordModal
+  const [email, setEmail] = useState('');
+
+  // Gestion des champs d'input
+  const handleInputChange = (field: keyof typeof userData, value: string) => {
+    setUserData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  // Gestion de la confirmation pour EditInfoModal
+  const handleConfirmEditInfo = async () => {
+    if (!accountServices.validateUserInfo(userData)) {
+      Alert.alert('Erreur', 'Veuillez vérifier les informations saisies.');
+      return;
+    }
+
+    try {
+      await accountServices.updateUserInfo(userData);
+      Alert.alert('Succès', 'Vos informations ont été mises à jour.');
+      setEditInfoModalOpen(false); // Fermer la modale après succès
+    } catch (error) {
+      Alert.alert('Erreur', 'Une erreur est survenue lors de la mise à jour.');
+    }
+  };
+
+  // Gestion de la réinitialisation de mot de passe
+  const handleResetPassword = async () => {
+    if (!email) {
+      Alert.alert('Erreur', 'Veuillez entrer une adresse e-mail.');
+      return;
+    }
+
+    try {
+      await accountServices.resetPassword(email);
+      Alert.alert(
+        'Succès',
+        `Un e-mail de réinitialisation a été envoyé à ${email}.`
+      );
+      setResetModalOpen(false); // Fermer la modale après succès
+    } catch (error: any) {
+      Alert.alert('Erreur', error.message || 'Une erreur est survenue.');
+    }
+  };
 
   // Gestion du changement de langue
   const [currentLanguage, setCurrentLanguage] = useState(
@@ -62,21 +117,16 @@ export const AccountScreen: React.FC = () => {
       <ResetPasswordModal
         isOpen={isResetModalOpen}
         onClose={() => setResetModalOpen(false)}
-        email={''} // Provide the appropriate email state
-        setEmail={() => {}} // Provide the appropriate setEmail function
-        handleResetPassword={() => {}} // Provide the appropriate handleResetPassword function
+        email={email} // Passe l'état email
+        setEmail={setEmail} // Passe le setter pour l'email
+        handleResetPassword={handleResetPassword} // Passe la fonction de réinitialisation
       />
       <EditInfoModal
         isOpen={isEditInfoModalOpen}
         onClose={() => setEditInfoModalOpen(false)}
-        onChange={() => {}} // Provide the appropriate onChange function
-        onConfirm={() => {}} // Provide the appropriate onConfirm function
-        data={{
-          firstName: '',
-          lastName: '',
-          phone: '',
-          email: '',
-        }}
+        onChange={handleInputChange}
+        onConfirm={handleConfirmEditInfo}
+        data={userData}
       />
     </SafeAreaView>
   );
