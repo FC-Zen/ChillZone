@@ -1,3 +1,4 @@
+import { colors } from '@theme';
 import React, { useState, useRef, useEffect } from 'react';
 
 type MapProps = {
@@ -109,6 +110,9 @@ export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
             overflow: 'hidden',
             cursor: 'grab',
             background: '#f0f0f0',
+            borderRadius : "20px",
+            border : "solid 3px",
+            borderColor : colors.resolutionBlue
         }}
         >
         <div

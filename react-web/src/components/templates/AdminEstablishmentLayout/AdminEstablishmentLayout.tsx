@@ -89,7 +89,7 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
                       className="customAddBtnEsta"
                       onClick={() => (console.log("charger le fichier en intégration"))} 
                       style={{
-                          width: '33%',
+                          width: '22%',
                           padding: '7px 12px',
                           backgroundColor: '#005745',
                           cursor: 'pointer',
