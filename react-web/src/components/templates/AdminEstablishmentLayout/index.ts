@@ -1,0 +1,1 @@
+export { AdminEstablishmentLayout } from './AdminEstablishmentLayout';

@@ -70,6 +70,7 @@ export const OwnerHomePage: React.FC = () => {
       username={user?.username ?? ""}
       organization={user?.organization ?? ""}
       part={t('navbar.home')}
+      role={user?.role ?? ""}
       statsSection={statsSection}
       mainContent={mainContent}
     />

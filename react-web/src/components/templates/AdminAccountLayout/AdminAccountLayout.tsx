@@ -6,6 +6,7 @@ type AdminAccountLayoutProps = {
   userEmail: string;
   organization: string;
   part: string;
+  role: string;
   addAccountBtn: () => void;
   deleteBtn: (id: number) => void;
   toggleBtn: (id: number, isActive: string) => void;
@@ -26,6 +27,7 @@ export const AdminAccountLayout: React.FC<AdminAccountLayoutProps> = ({
   userEmail,
   organization,
   part,
+  role,
   addAccountBtn,
   deleteBtn,
   toggleBtn,
@@ -42,7 +44,8 @@ export const AdminAccountLayout: React.FC<AdminAccountLayoutProps> = ({
           userName={username}
           userEmail={userEmail}
           organization={organization}
-          part={part}        
+          part={part}   
+          role={role}     
         />
 
         <main className="p-6">

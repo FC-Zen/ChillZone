@@ -88,7 +88,7 @@ export const OwnerOrdersPage: React.FC = () => {
       username={user?.username ?? ""}
       organization={user?.organization ?? ""}
       part={t('navbar.owner.commands')}
-
+      role={user?.role ?? ""}
       statsSection={stats}
       data={commandsData}
       handleClick={handleViewCommand}

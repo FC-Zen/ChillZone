@@ -10,6 +10,7 @@ type OwnerHomeLayoutProps = {
   userEmail: string;
   organization: string;
   part: string;
+  role: string;
   statsSection: {
     commandsNow: { name: string; value: string | number };
     commandsToday: { name: string; value: string | number };
@@ -24,6 +25,7 @@ export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
   userEmail,
   organization,
   part,
+  role,
   statsSection,
   data,
   handleClick
@@ -37,6 +39,7 @@ export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
         userEmail={userEmail}
         organization={organization}
         part={part}
+        role={role}
       />
 
       <div className="main-content">

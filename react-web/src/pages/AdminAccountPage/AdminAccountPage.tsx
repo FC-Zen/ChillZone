@@ -91,6 +91,7 @@ export const AdminAccountPage: React.FC = () => {
         username={user?.username ?? ""}
         organization={user?.organization ?? ""}
         part={t('navbar.admin.users')}
+        role={user?.role ?? ""}
         addAccountBtn={handleOpenModal}
         deleteBtn={handleDeleteAccount}
         toggleBtn={handleToggleAccount}

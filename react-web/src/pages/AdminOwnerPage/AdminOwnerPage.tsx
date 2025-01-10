@@ -48,6 +48,7 @@ export const AdminOwnerPage: React.FC = () => {
         username={user?.username ?? ""}
         organization={user?.organization ?? ""}
         part={t('headers.affiliates')}
+        role={user?.role ?? ""}
         restaurationPlacesAcceptedData={restaurationPlacesAcceptedData}
         restaurationPlacespendingData={restaurationPlacespendingData}
         handleClickDelete={handleClickDelete}

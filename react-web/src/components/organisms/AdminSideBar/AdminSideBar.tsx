@@ -60,7 +60,7 @@ export const AdminSideBar = () => {
       {/* Bâtiments */}
       <NavigationButton
         icon={<Building color={colors.white} />}
-        onClick={() => handleIconClick('/admin-buildings')} // Ajustez cette route si nécessaire
+        onClick={() => handleIconClick(ROUTE.ADMIN_ESTABLISHMENT)} // Ajustez cette route si nécessaire
       />
 
       {/* Boutique */}

@@ -6,6 +6,7 @@ type OwnerHomeLayoutProps = {
   userEmail: string;
   organization: string;
   part: string;
+  role: string;
   statsSection: React.ReactNode;
   mainContent: React.ReactNode;
 };
@@ -15,6 +16,7 @@ export const OwnerHomeLayout: React.FC<OwnerHomeLayoutProps> = ({
   userEmail,
   organization,
   part,
+  role,
   statsSection,
   mainContent,
 }) => (
@@ -28,6 +30,7 @@ export const OwnerHomeLayout: React.FC<OwnerHomeLayoutProps> = ({
         userEmail={userEmail}
         organization={organization}
         part={part}
+        role={role}
       />
       {/* Contenu principal */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">

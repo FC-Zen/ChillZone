@@ -8,6 +8,7 @@ type AdminOwnerLayoutProps = {
   userEmail: string;
   organization: string;
   part: string;
+  role: string;
   restaurationPlacespendingData : {
     id: number;
     name : string; 
@@ -33,6 +34,7 @@ export const AdminOwnerLayout = ({
   userEmail,
   organization,
   part,
+  role,
   restaurationPlacesAcceptedData,
   restaurationPlacespendingData,
   handleClickDelete,
@@ -51,6 +53,7 @@ export const AdminOwnerLayout = ({
           userEmail={userEmail}
           organization={organization}
           part={part} 
+          role={role}
           />
         
         <main className="mainContainerRestaurants">
