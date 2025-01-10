@@ -25,7 +25,7 @@ export const AccountModal = ({
         <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">
           <ModalHeader title={title} onClose={onClose} />
         <div style={styles.body}>
-          <ModalForm addAccount={addAccount} listInputs={listInputs} />
+          <ModalForm onSubmit={addAccount} listInputs={listInputs} />
         </div>
       </div>
     </div>

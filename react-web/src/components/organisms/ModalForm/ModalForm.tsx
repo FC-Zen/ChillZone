@@ -21,7 +21,7 @@ type ModalFormProps = {
 };
 
 export const ModalForm: React.FC<ModalFormProps> = ({
-  addAccount,
+  onSubmit,
   listInputs
 }) => {
   const { t } = useTranslation();
