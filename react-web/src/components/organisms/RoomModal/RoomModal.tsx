@@ -6,7 +6,7 @@ import { ModalForm } from '@components/organisms';
 type RoomModalprops = {
   isOpen: boolean;
   onClose: () => void;
-  addRoom: (event: React.FormEvent<HTMLFormElement>) => void;
+  addRoom: (formData: FormData) => void;
   title: string;
   listInputs: InputField[];
 };

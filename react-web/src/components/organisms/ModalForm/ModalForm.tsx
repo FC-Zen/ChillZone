@@ -16,12 +16,12 @@ export type InputField = {
 };
 
 type ModalFormProps = {
-  addAccount: (formData: FormData) => void;
+  onSubmit: (formData: FormData) => void;
   listInputs: InputField[];
 };
 
 export const ModalForm: React.FC<ModalFormProps> = ({
-  addAccount,
+  onSubmit,
   listInputs
 }) => {
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
       formData.append('tags', tagsString);
     }
     console.log("FormData avant soumission : ", Array.from(formData.entries()));
-    addAccount(formData);
+    onSubmit(formData);
   };
 
 

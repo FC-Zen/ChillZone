@@ -1,13 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { AccountModal } from '@components/organisms'; // Composant de modale
 import { AdminRoomLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import rooms from '@assets/data/rooms.json'; // Données des salles
 import { useUser } from '@hooks';
+import { RoomModal } from '@components/organisms/RoomModal';
+import { InputField } from '@components/organisms/ModalForm/ModalForm';
 
 export const AdminRoomsPage: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useUser();
+  
+  const listInputs = [
+    {
+      name: "name",
+      label: t("fields.room.name"), // Traduction pour "Nom de la salle"
+      type: "text",
+      icon: "User", // Exemple d'icône qui correspondrait au contexte
+      placeholder: "Nom de la salle",
+      required: true,
+    },
+    {
+      name: "description",
+      label: t("fields.room.description"), 
+      type: "textarea",
+      icon: "User", 
+      placeholder: "Description",
+      required: true,
+    },
+    {
+      name: "capacity",
+      label: t("fields.room.capacity"),
+      type: "number",
+      icon: "Users", 
+      placeholder: "Capacité",
+      required: true,
+    },
+    {
+      name: "floor",
+      label: t("fields.room.floor"), // Traduction pour "Étage"
+      type: "text",
+      icon: "User", // Icône associée à un étage
+      placeholder: "Étage",
+      required: true,
+    },
+    {
+      name: "establishment",
+      label: t("fields.room.establishment"), 
+      type: "select",
+      icon: "User",
+      options: [
+        { tag: "Établissement Alpha" },
+        { tag: "Établissement Beta" },
+      ], //TODO: Prendre les établissements
+      required: true,
+    },
+  ] as InputField[];
   
   const [isModalOpen, setModalOpen] = useState(false);
   const [roomsData, setRoomsData] = useState(rooms);
@@ -122,7 +169,7 @@ export const AdminRoomsPage: React.FC = () => {
         data={roomsData}
       />
 
-      <AccountModal
+      <RoomModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title={
@@ -178,7 +225,7 @@ export const AdminRoomsPage: React.FC = () => {
             {selectedRoom ? t('buttons.actions.save') : t('buttons.add.room')}
           </button>
         </form>
-      </AccountModal>
+      </RoomModal>
     </div>
   );
 };
