@@ -12,5 +12,12 @@
         "type": "Restaurant",
         "location": "1er étage, vue sur le jardin",
         "email": "info@restaurantlegourmet.fr"
+    },
+    {
+        "id": 3,
+        "name": "Restaurant Le Chausson",
+        "type": "Restaurant",
+        "location": "IUT - Marne la wallou",
+        "email": "info@restaurantlechausson.fr"
     }
 ]

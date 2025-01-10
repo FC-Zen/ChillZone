@@ -61,11 +61,9 @@ export const AdminAccountPage: React.FC = () => {
     console.log(`Utilisateur avec ID ${id} mis à jour : ${isActive}.`);
   };
 
-  const handleAddAccount = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleAddAccount = (formData: FormData) => {
     // Service à mettre ici
     // Simulation à la place
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
     const newAccount = {
       id: Math.max(...userData.map((u) => u.id)) + 1,
       first_name: formData.get('first_name') as string,

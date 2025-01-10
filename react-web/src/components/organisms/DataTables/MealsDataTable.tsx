@@ -40,7 +40,7 @@ function CustomToolbar({ onActionClick }: { onActionClick: () => void }) {
     <GridToolbarContainer className="custom-tool-bar">
       <GridToolbarQuickFilter
         className="custom-quick-filter"
-        placeholder="Chercher dans la table"
+        placeholder={t('fields.search')}
       />
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />

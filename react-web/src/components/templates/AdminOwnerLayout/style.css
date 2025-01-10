@@ -1,0 +1,13 @@
+.mainContainerRestaurants {
+    display: flex;
+    margin: auto;
+    padding: 1.5rem;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.table-layout-restaurant {
+    width: 100%;
+}

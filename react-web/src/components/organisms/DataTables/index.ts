@@ -5,3 +5,5 @@ export { BookingDataTable } from './BookingDataTable';
 export { ConflictDataTable } from './ConflictDataTable';
 export { OrdersDataTable } from './OrdersDataTable';
 export { MealsDataTable } from './MealsDataTable';
+export { OwnersAcceptedDataTable } from './OwnersAcceptedDataTable';
+export { OwnersPendingDataTable } from './OwnersPendingDataTable';
