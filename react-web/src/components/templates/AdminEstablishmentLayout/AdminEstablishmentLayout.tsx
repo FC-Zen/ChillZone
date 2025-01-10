@@ -1,5 +1,17 @@
-import { Header, AdminSideBar } from '@components/organisms';
-import { AccountDataTable } from '@components/organisms/DataTables';
+import { Header, AdminSideBar, ModalForm, FloorSelection } from '@components/organisms';
+import { Map } from '@components/molecules';
+import { InputField } from '@components/organisms/ModalForm/ModalForm';
+import './style.css';
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { Button, HeaderIcon } from '@components/atoms';
+
+type Floor = {
+  floor_id: number;
+  floor_number: number;
+  floor_name: string;
+  floor_plan: string;
+};
 
 type AdminEstablishmentLayoutProps = {
   username: string;
@@ -7,6 +19,20 @@ type AdminEstablishmentLayoutProps = {
   organization: string;
   part: string;
   role: string;
+  form: InputField[];
+  addAccount: (formData: FormData) => void;
+  mapName: string;
+  mapImageSrc: string;
+  onMapClick: (x: number, y: number) => void; 
+  floors: {
+    floor_id: number;
+    floor_number: number;
+    floor_name: string;
+    floor_plan: string;
+  }[];
+  selectedFloor: Floor | null;
+  handleFloorClick: (id : number) => void;
+  handleAddFloorClick: () => void;
 };
 
 export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> = ({
@@ -15,7 +41,18 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
   role,
   organization,
   part,
+  form,
+  addAccount,
+  mapName,
+  mapImageSrc,
+  onMapClick,
+  floors,
+  selectedFloor,
+  handleFloorClick,
+  handleAddFloorClick
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       <AdminSideBar />
@@ -31,7 +68,42 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
           role={role}      
         />
 
-        <main className="p-6">
+        <main className="p-6 flex main-map">
+
+          <div className="modale-info-floors">
+            <FloorSelection 
+              selectedFloor={selectedFloor} 
+              floors={floors} 
+              handleFloorClick={handleFloorClick} 
+              handleAddFloorClick={handleAddFloorClick} 
+            />
+          </div>
+
+          {/* Ajout de la carte interactive */}
+          <div className="map-container">
+            <HeaderIcon title={mapName} icon={'Location'} />
+            <Map imageSrc={mapImageSrc} onClick={onMapClick} />
+          </div>
+
+
+
+          <div className="modale-info-establisment">
+            <Typography
+              fontSize="22px"
+              fontWeight="600"
+              textAlign="center"
+              width={"100%"}
+              padding={"1% 2%"}
+              marginBottom={"5%"}
+            >
+              {t('modals.info.establishment')}
+            </Typography>
+
+            <ModalForm 
+            addAccount={addAccount} 
+            listInputs={form} />
+          </div>
+
         </main>
       </div>
     </div>

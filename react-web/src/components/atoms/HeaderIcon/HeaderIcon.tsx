@@ -15,6 +15,8 @@ export const HeaderIcon: React.FC<HeaderIconProps> = ({ title,icon }) => {
         <Icon 
             name={icon}
             color={colors.black}
+            width={24}
+            height={24}
         />
         <Typography
         fontSize="24px"

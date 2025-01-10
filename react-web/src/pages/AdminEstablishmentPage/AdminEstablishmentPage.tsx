@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { AccountModal } from '@components/organisms'; // Composant de modale
-import { AdminAccountLayout, AdminEstablishmentLayout } from '@components/templates';
+import { AdminEstablishmentLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
-import users from '@assets/data/users.json';
+import maps from '@assets/data/maps.json';
 import { useUser } from '@hooks';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
+import mapImage from '@assets/data/Images_test/planlarge.png';
+
+export type Floor = {
+    floor_id: number;
+    floor_number: number;
+    floor_name: string;
+    floor_plan: string;
+}
 
 export const AdminEstablishmentPage: React.FC = () => {
   const { t } = useTranslation();
@@ -12,38 +20,106 @@ export const AdminEstablishmentPage: React.FC = () => {
 
   const listInputs = [
     {
-      name: t('fields.common.first_name'),
+      name: "name",
+      label: t('fields.common.last_name'),
       type: "text",
       icon: "User",
       required: true,
     },
     {
-      name: t('fields.common.last_name'),
+      name: "address",
+      label: t('fields.address.address'),
       type: "text",
       icon: "User",
       required: true,
     },
     {
-      name: t('fields.common.type_role'),
+      name: "city",
+      label: t('fields.address.city'),
+      type: "text",
+      icon: "User",
+      required: true,
+    },
+    {
+      name: "postal_code",
+      label: t('fields.address.postal_code'),
+      type: "text",
+      icon: "User",
+      required: true,
+    },
+    {
+      name: "phone",
+      label: t('fields.common.phone'),
+      type: "phone",
+      icon: "User",
+      required: true,
+    },
+    {
+      name: "email",
+      label: t('fields.common.mail'),
+      type: "text",
+      icon: "User",
+      required: true,
+    },
+  ] as InputField[];
+
+  const modalInputs = [
+    {
+      name: "number",
+      label: t('fields.map_floor.number'),
       type: "text",
       icon: "Box",
       required: true,
     },
     {
-      name: t('fields.common.mail'),
+      name: "name",
+      label: t('fields.map_floor.name'),
       type: "text",
-      icon: "Envelope",
+      icon: "Box",
       required: true,
     },
+    {
+      name: "file",
+      label: t('fields.common.file'),
+      type: "file",
+      icon: "User",
+      required: true,
+    }
   ] as InputField[];
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [userData, setUserData] = useState(users);
 
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
+  const handleSaveForm = (formData: FormData) => {
+    console.log(formData);
+  };
 
+  const [floors, setFloors] = useState<Floor[]>(maps);
+  const [selectedFloor, setSelectedFloor] = useState<Floor>(maps[0]);
+
+  const handleFloorClick = (id: number) => {
+    const floor = floors.find(f => f.floor_id === id);
+    if (floor) {
+      setSelectedFloor(floor);
+      console.log('Floor selected:', floor);
+    }
+  };
+
+  const handleAddFloorClick = () => {
+    console.log("Add");
+    handleOpenModal();
+  };
+
+  const map = mapImage;
+  const [selectedFloorPlan, setSelectedFloorPlan] = useState<string | null>(null);
+  const [selectedCoords, setSelectedCoords] = useState<{ x: number, y: number } | null>(null);
+
+  const handleMapClick = (x: number, y: number) => {
+    setSelectedCoords({ x, y });
+    console.log(`Coordonnées sélectionnées: X=${x}, Y=${y}`);
+  };
 
   return (
     <>
@@ -54,15 +130,26 @@ export const AdminEstablishmentPage: React.FC = () => {
         organization={user?.organization ?? ""}
         part={t('headers.map')}
         role={user?.role ?? ""}
-      />
+        form={listInputs}
+        addAccount={handleSaveForm}
+
+        mapName={selectedFloor?.floor_name}
+        mapImageSrc={map} 
+        onMapClick={handleMapClick} 
+
+        floors={floors}
+        selectedFloor={selectedFloor}
+        handleFloorClick={handleFloorClick}
+        handleAddFloorClick={handleAddFloorClick}
+        />
 
       {/* Modale pour la création d’un étage */}
       <AccountModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         addAccount={handleCloseModal}
-        listInputs={listInputs}
-        title="Création d’un compte de test étudiant"
+        listInputs={modalInputs}
+        title={t('modals.create.floor')}
       />
     </>
   );
