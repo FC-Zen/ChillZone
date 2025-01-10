@@ -220,7 +220,10 @@
       "price": "Prix",
       "quantity": "Quantité",
       "tag": "Tags",
-      "file": "Fichier"
+      "file": "Fichier",
+      "room": "Nom de la salle",
+      "floor": "Etage",
+      "roomtype": "Type de salle"
     },
     "auth": {
       "password": "Mot de passe",
