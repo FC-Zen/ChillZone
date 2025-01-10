@@ -1,4 +1,4 @@
-import { Icon } from '@components/atoms';
+import { HeaderIcon, Icon } from '@components/atoms';
 import { Button } from '@mui/material';
 import { colors } from '@theme';
 import React from 'react';
@@ -28,6 +28,7 @@ export const FloorSelection: React.FC<FloorSelectionProps> = ({
     
     return (
         <>
+            <HeaderIcon title={t('modals.info.establishment')} icon={'AddIcon'} fontsize='16px'/>
             {floors.map((floor) => (
                 <div key={floor.floor_id} style={{ margin: '10px', width: '80%' }}>
                     <Button

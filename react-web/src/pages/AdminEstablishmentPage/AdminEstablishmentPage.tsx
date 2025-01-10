@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import maps from '@assets/data/maps.json';
 import { useUser } from '@hooks';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import mapImage from '@assets/data/Images_test/planlarge.png';
+import { getListInputsValues } from '@services/AdminServices';
 
 export type Floor = {
     floor_id: number;
@@ -17,6 +17,8 @@ export type Floor = {
 export const AdminEstablishmentPage: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useUser();
+
+  const [listInputsValues, setListInputsValues] = useState<Record<string, string>>({});
 
   const listInputs = [
     {
@@ -112,14 +114,20 @@ export const AdminEstablishmentPage: React.FC = () => {
     handleOpenModal();
   };
 
-  const map = mapImage;
-  const [selectedFloorPlan, setSelectedFloorPlan] = useState<string | null>(null);
   const [selectedCoords, setSelectedCoords] = useState<{ x: number, y: number } | null>(null);
 
   const handleMapClick = (x: number, y: number) => {
     setSelectedCoords({ x, y });
     console.log(`Coordonnées sélectionnées: X=${x}, Y=${y}`);
   };
+
+  useEffect(() => {
+    const fetchListInputsValues = async () => {
+        const values = await getListInputsValues();
+        setListInputsValues(values);
+    };
+    fetchListInputsValues();
+}, []);
 
   return (
     <>
@@ -130,11 +138,13 @@ export const AdminEstablishmentPage: React.FC = () => {
         organization={user?.organization ?? ""}
         part={t('headers.map')}
         role={user?.role ?? ""}
+
         form={listInputs}
         addAccount={handleSaveForm}
+        formvalues={listInputsValues}
 
         mapName={selectedFloor?.floor_name}
-        mapImageSrc={map} 
+        mapImageSrc={selectedFloor?.floor_plan}  
         onMapClick={handleMapClick} 
 
         floors={floors}
@@ -149,7 +159,8 @@ export const AdminEstablishmentPage: React.FC = () => {
         onClose={handleCloseModal}
         addAccount={handleCloseModal}
         listInputs={modalInputs}
-        title={t('modals.create.floor')}
+        title={t('modals.create.floor')
+        }
       />
     </>
   );

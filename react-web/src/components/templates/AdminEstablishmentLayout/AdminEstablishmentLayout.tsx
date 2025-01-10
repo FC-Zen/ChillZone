@@ -2,9 +2,9 @@ import { Header, AdminSideBar, ModalForm, FloorSelection } from '@components/org
 import { Map } from '@components/molecules';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
 import './style.css';
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Button, HeaderIcon } from '@components/atoms';
+import { HeaderIcon, Icon } from '@components/atoms';
 
 type Floor = {
   floor_id: number;
@@ -20,6 +20,7 @@ type AdminEstablishmentLayoutProps = {
   part: string;
   role: string;
   form: InputField[];
+  formvalues : Record<string, string>;
   addAccount: (formData: FormData) => void;
   mapName: string;
   mapImageSrc: string;
@@ -81,8 +82,25 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
 
           {/* Ajout de la carte interactive */}
           <div className="map-container">
-            <HeaderIcon title={mapName} icon={'Location'} />
-            <Map imageSrc={mapImageSrc} onClick={onMapClick} />
+            <div className="map-header">
+              <HeaderIcon title={mapName} icon={'Location'} />
+              <Button
+                      variant="contained"
+                      className="customAddBtnEsta"
+                      onClick={() => (console.log("charger le fichier en intégration"))} 
+                      style={{
+                          width: '33%',
+                          padding: '7px 12px',
+                          backgroundColor: '#005745',
+                          cursor: 'pointer',
+                          gap: "5px"
+                      }}
+                  >
+                      <Icon name="Download" />
+                      {t('buttons.actions.changeMap')}
+              </Button>
+            </div>
+            <Map imageSrc={mapImageSrc} onClick={(onMapClick)} />
           </div>
 
 
