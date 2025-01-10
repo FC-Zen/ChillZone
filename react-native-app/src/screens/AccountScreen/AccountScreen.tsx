@@ -8,12 +8,16 @@ import {
 } from '@components/organisms';
 import { styles } from './style';
 import { translationService } from '@services';
+import { useNavigation } from '@hooks';
+import { ROUTE } from '@enums';
 
 export const AccountScreen: React.FC = () => {
   // États pour les modales
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
   const [isResetModalOpen, setResetModalOpen] = useState(false);
   const [isEditInfoModalOpen, setEditInfoModalOpen] = useState(false);
+
+  const navigation = useNavigation();
 
   // États pour le thème sombre et la langue
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -42,6 +46,9 @@ export const AccountScreen: React.FC = () => {
         onOpenPasswordModal={() => setPasswordModalOpen(true)}
         onOpenResetPasswordModal={() => setResetModalOpen(true)}
         onOpenEditInfoModal={() => setEditInfoModalOpen(true)}
+        onNavigateToReservations={() =>
+          navigation.navigate(ROUTE.RESERVATION_SUMMARY)
+        }
       />
 
       {/* Modales */}
