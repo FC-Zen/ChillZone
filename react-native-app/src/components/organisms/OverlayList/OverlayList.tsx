@@ -1,25 +1,15 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Overlay } from '@components/molecules/Overlay';
-import { IconWithText } from '@components'; // Assurez-vous que IconWithText est bien importé
+import { IconWithText } from '@components';
 import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
-
-export type ReservationItemProps = {
-  title: string;
-  salle: string;
-  date: string;
-  horaire: string;
-  location: string;
-  etage: string;
-  titleBtn: string;
-  cancelReservation?: () => void;
-};
+import { BookingOverlay } from '@services';
 
 export type OverlayListProps = {
-  todaysReservations: ReservationItemProps[];
-  upcomingReservations: ReservationItemProps[];
+  todaysReservations: BookingOverlay[];
+  upcomingReservations: BookingOverlay[];
   onCancelReservation?: (index: number) => void;
 };
 
@@ -40,6 +30,7 @@ export const OverlayList: React.FC<OverlayListProps> = ({
             text={t('recap.today.reservations')}
             textColor={colors.resolutionBlue}
             variant="horizontal"
+            textStyle={{ marginBottom: 9 }}
             style={{ marginBottom: 9 }}
           />
 
@@ -48,11 +39,7 @@ export const OverlayList: React.FC<OverlayListProps> = ({
             <View key={index} style={styles.reservationContainer}>
               <Overlay
                 title={reservation.title}
-                salle={reservation.salle}
-                date={reservation.date}
-                horaire={reservation.horaire}
-                location={reservation.location}
-                etage={reservation.etage}
+                data={reservation.data}
                 titleBtn={reservation.titleBtn}
                 cancelReservation={() => onCancelReservation?.(index)}
               />
@@ -70,6 +57,7 @@ export const OverlayList: React.FC<OverlayListProps> = ({
             text={t('recap.previous.reservations')}
             textColor={colors.resolutionBlue}
             variant="horizontal"
+            textStyle={{ marginBottom: 9 }}
             style={{ marginVertical: 9 }}
           />
 
@@ -78,11 +66,7 @@ export const OverlayList: React.FC<OverlayListProps> = ({
             <View key={index} style={styles.reservationContainer}>
               <Overlay
                 title={reservation.title}
-                salle={reservation.salle}
-                date={reservation.date}
-                horaire={reservation.horaire}
-                location={reservation.location}
-                etage={reservation.etage}
+                data={reservation.data}
                 titleBtn={reservation.titleBtn}
                 cancelReservation={() => onCancelReservation?.(index)}
               />

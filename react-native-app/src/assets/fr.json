@@ -200,7 +200,8 @@
     "previous": {
       "commands": "Commandes passées",
       "reservations": "Réservations à venir"
-    }
+    },
+    "reservationTitle": "Réservation"
   },
 
   "months": {

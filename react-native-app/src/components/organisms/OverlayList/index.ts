@@ -1,1 +1,1 @@
-export { OverlayList, ReservationItemProps } from './OverlayList';
+export { OverlayList } from './OverlayList';

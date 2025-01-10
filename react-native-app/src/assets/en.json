@@ -199,7 +199,8 @@
     "previous": {
       "commands": "Past orders",
       "reservations": "Upcoming reservations"
-    }
+    },
+    "reservationTitle": "Reservation"
   },
 
   "months": {
