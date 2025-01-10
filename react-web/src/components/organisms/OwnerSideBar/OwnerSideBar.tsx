@@ -31,22 +31,23 @@ export const OwnerSidebar = () => {
         onClick={() => handleIconClick(ROUTE.OWNER_DASHBOARD)}
       />
 
-      {/* Profil du propriétaire */}
+      {/* Produits */}
       <NavigationButton
         icon={<Pizza color={colors.white} />}
-        onClick={() =>  handleIconClick(ROUTE.OWNER_MEALS)} // Ajuster cette route si nécessaire
+        onClick={() =>  handleIconClick(ROUTE.OWNER_MEALS)}
       />
+
+      {/* Menus SEMESTRE 2 
+      <NavigationButton
+        icon={<Document color={colors.white} />}
+        onClick={() => handleIconClick('/owner-orders')} 
+      />
+      */}
 
       {/* Commandes */}
       <NavigationButton
-        icon={<Document color={colors.white} />}
-        onClick={() => handleIconClick('/owner-orders')} // Ajuster cette route si nécessaire
-      />
-
-      {/* Produits */}
-      <NavigationButton
         icon={<Package color={colors.white} />}
-        onClick={() => handleIconClick(ROUTE.OWNER_ORDERS)} // Ajuster cette route si nécessaire
+        onClick={() => handleIconClick(ROUTE.OWNER_ORDERS)} 
       />
     </div>
   );
