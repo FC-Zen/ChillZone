@@ -30,7 +30,6 @@ export const OverlayList: React.FC<OverlayListProps> = ({
             text={t('recap.today.reservations')}
             textColor={colors.resolutionBlue}
             variant="horizontal"
-            textStyle={{ marginBottom: 9 }}
             style={{ marginBottom: 9 }}
           />
 
@@ -57,7 +56,6 @@ export const OverlayList: React.FC<OverlayListProps> = ({
             text={t('recap.previous.reservations')}
             textColor={colors.resolutionBlue}
             variant="horizontal"
-            textStyle={{ marginBottom: 9 }}
             style={{ marginVertical: 9 }}
           />
 
