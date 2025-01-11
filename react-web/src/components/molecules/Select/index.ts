@@ -1,0 +1,1 @@
+export { StyledSelect } from './Select';
