@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from chillzone.models import Establishment
 
-class EstablishmentSerializer(serializers.ModelSerializer) :
+class AdminEstablishmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Establishment
-        fields = ['pk', 'name', 'address', 'city', 'postalCode', 'phone', 'mail']
+        fields = ['id', 'name', 'address', 'city', 'postalCode', 'phone', 'mail']

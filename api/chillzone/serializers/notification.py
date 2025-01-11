@@ -4,4 +4,4 @@ from chillzone.models import Notification
 class NotificationSerializer(serializers.ModelSerializer) :
     class Meta:
         model = Notification
-        fields = ['pk' , 'title' , 'description']
+        fields = ['title' , 'description', 'date_notification']

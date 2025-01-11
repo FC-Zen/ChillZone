@@ -139,7 +139,7 @@ Quand vous modifier un fichier (surtout les models) pour appliquer les modificat
 #### A - Créer la migration
 
 ```bash
-python manage.py makemigration
+python manage.py makemigrations
 ```
 
 La migration sera enregistrée dans le dossier `migrations/` dans un fichier `.py`. Ca permet d'avoir une trace des modifications apportées à la base de données.
