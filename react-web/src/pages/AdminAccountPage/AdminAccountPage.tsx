@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import users from '@assets/data/users.json';
 import { useUser } from '@hooks';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
+import { getAccounts } from '@services/AdminServices';
 
 export const AdminAccountPage: React.FC = () => {
   const { t } = useTranslation();
@@ -39,6 +40,21 @@ export const AdminAccountPage: React.FC = () => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [userData, setUserData] = useState(users);
+
+  const fetchUserData = async () => {
+    try {
+      const usersData = await getAccounts(); // SERVICES
+      if (usersData && usersData.data) {
+        setUserData(usersData.data); 
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des données utilisateurs:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);

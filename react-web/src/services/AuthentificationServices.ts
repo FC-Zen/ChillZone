@@ -1,3 +1,4 @@
+import { getCSRFToken } from '@utils';
 import axios from 'axios';
 import { z } from 'zod';
 
@@ -16,16 +17,17 @@ const validEmails = ['user@example.com', 'admin@example.com'];
  */
 export const authenticateUser = async (formData: { login: string; password: string }) => {
   try {
-    /* Envoi des données d'authentification à l'API
-    const response = await axios.post( URL , {
+    const response = await axios.post( 'http://localhost:3000/login/' , {
       login: formData.login,
       password: formData.password,
+    },
+    {
+      withCredentials: true,
     });
-    */
     // Vérifie si la réponse indique une réussite - SIMULATION
-    if (formData.login == validEmail && formData.password == validPassword) {
+    if (response.status == 200) {
       console.log('Authentification réussie pour:', formData.login);
-      return { success: true, message: 'Connexion réussie !'};
+      return { success: true, message: 'Connexion réussie !', data: response.data };
     } else {
       throw new Error('Email ou mot de passe incorrect');
     }
@@ -124,14 +126,23 @@ export const changePassword = async (
  */
 export const logoutUser = async () => {
   try {
-    // Appel à l'API de déconnexion (remplacez `URL` par l'endpoint réel)
-    /*
-    const response = await axios.post('URL/logout');
-    */
-    console.log('Utilisateur déconnecté avec succès.');
-    // Simule une réponse réussie
-    return { success: true, message: 'Déconnexion réussie.' };
+    console.log("Cookies avant la requête DELETE:", document);
+    const response = await axios.delete('http://localhost:3000/login/', 
+    { withCredentials: true,
+      headers: {
+        'X-CSRFToken': getCSRFToken(),
+      },
+    } 
+    );
+    if (response.status === 204) {
+      console.log('Utilisateur déconnecté avec succès.');
+      localStorage.removeItem('user');
+      return { success: true, message: 'Déconnexion réussie.' };
+    } else {
+      throw new Error('Échec de la déconnexion.');
+    }
   } catch (error: any) {
     console.error('Erreur lors de la déconnexion :', error.message);
+    throw new Error(error.message);
   }
 };

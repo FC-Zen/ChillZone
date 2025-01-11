@@ -55,6 +55,7 @@ INSTALLED_APPS += [
     'rest_framework',
     'chillzone',
     'drf_spectacular',
+    'corsheaders', 
 ]
 
 # ----------------------------- Pour drf-spectacular ---------------------------------------------
@@ -84,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # CORS
 ]
 
 if DEBUG:
@@ -99,6 +101,32 @@ if DEBUG:
     }
 
 ROOT_URLCONF = 'chillzone.urls'
+
+# ----------------------------- Pour CORS ET SESSIONS  ---------------------------------------------
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_NAME = 'sessionid'  # Le nom du cookie de session
+SESSION_COOKIE_AGE = 3600  # Durée de vie du cookie (1h)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_HTTPONLY = False  # Empêche l'accès au cookie via JavaScript
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = False
+
+CORS_ALLOW_ALL_ORIGINS = False # Sécuriser l'accès  
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+]
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+]
+CSRF_COOKIE_NAME = 'csrftoken'  # Assurez-vous que le nom du cookie est le même
+CSRF_COOKIE_HTTPONLY = False  # Cela doit être False pour que le cookie soit accessible côté client
+CSRF_COOKIE_SECURE = False  # Si tu n'utilises pas HTTPS
+
+# FIN PASSAGE CORS et SESSIONS
 
 TEMPLATES = [
     {
