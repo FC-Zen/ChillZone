@@ -1,0 +1,76 @@
+Requetes
+
+mdp oublié / reinitialisation (Client) :
+
+Recois :
+first_name, last_name, phone, email
+
+Fais : 
+crée un token avec comme date d'expiration 15 min
+envoie un mail avec le lien de stucture https://127.0.0.1:5000/reset-password/{token} (faire la class mail à part)
+
+Renvoie :
+code 200, avec message de confirmation
+
+class User(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+    )
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    email = models.EmailField(max_length=254, unique=True)
+    is_staff = models.BooleanField(
+        default=False,
+        help_text=_('Designates whether the user can log into this admin site.'),
+    )
+    is_active = models.BooleanField(
+        default=True,
+        help_text=_('Designates whether this user should be treated as active. ' 
+                    'Unselect this instead of deleting accounts.'),
+    )
+    date_joined = models.DateTimeField(default=timezone.now)
+
+    objects = models.Manager()
+
+    USERNAME_FIELD = 'username'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+
+    class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+
+    def __str__(self):
+        return self.username
+
+class UserMeta(models.Model):
+
+    class Meta:
+        db_table = "auth_user_meta"
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+
+    STATUS_CHOICES = [
+        ('validated', 'Validé'),
+        ('blocked', 'Bloqué'),
+        ('banned', 'Banni')
+    ]
+
+    status = models.CharField(max_length=24, choices=STATUS_CHOICES)
+    
+    verified = models.BooleanField(default=False)
+
+    role = models.CharField(max_length=254, blank=False, default="Etudiant")
+
+    phone = models.CharField(max_length=10, blank=True)
+
+    photo_link = models.ImageField(blank=True)
+
+    establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, blank=True, null=True)
+
+    notification = models.ManyToManyField('Notification',through='NotificationCenter', related_name='notifications')
+
+Permission :
+il faut que l'email d'un compte associé
