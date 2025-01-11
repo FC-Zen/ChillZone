@@ -30,7 +30,7 @@ export const AdminRoomsPage: React.FC = () => {
     {
       name: "type_room",
       label: t("fields.common.roomtype"), 
-      type: "autocomplete",
+      type: "select",
       icon: "Browser", 
       placeholder: "Description",
       options: [
@@ -50,7 +50,7 @@ export const AdminRoomsPage: React.FC = () => {
     {
       name: "floor",
       label: t("fields.common.floor"), 
-      type: "autocomplete",
+      type: "select",
       icon: "User", 
       options: [
         { tag: "RDC" },

@@ -11,5 +11,4 @@ export { AdminDashboardGraphs } from './AdminDashboardGraphs';
 export { OwnerDashboardGraphs } from './OwnerDashboardGraphs';
 export { ModalForm } from './ModalForm';
 export { FloorSelection } from './FloorSelection';
-
-
+export {CommandModal} from './CommandModal';
