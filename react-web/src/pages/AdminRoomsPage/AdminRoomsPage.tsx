@@ -144,9 +144,8 @@ export const AdminRoomsPage: React.FC = () => {
       name: formData.get('name') as string,
       description: formData.get('description') as string,
       capacity: parseInt(formData.get('capacity') as string, 10),
-      establishment: "Établissement Alpha",
-      //type_room: formData.get('type_room') as string,
       floor_name: formData.get('floor') as string,
+      establishment: formData.get('establishment') as string,
       status: selectedRoom.status,
     };
 
@@ -167,9 +166,8 @@ export const AdminRoomsPage: React.FC = () => {
       name: formData.get('name') as string,
       description: formData.get('description') as string,
       capacity: parseInt(formData.get('capacity') as string, 10),
-      //type_room: formData.get('type_room') as string,
-      establishment: "Établissement Alpha", //On prend l'établissement pris en charge par l'administrateur
       floor_name: formData.get('floor') as string,
+      establishment: formData.get('establishment') as string,
       status: true, // Statut par défaut 'Disponible'
     };
     // Service à mettre ici
