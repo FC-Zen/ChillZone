@@ -2,7 +2,7 @@ import { Input } from '@components';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconProps } from '@components/atoms';
-import { AutoCompleteInput, FileInput } from '@components/molecules';
+import { AutoCompleteInput, FileInput, StyledSelect } from '@components/molecules';
 
 export type InputField = {
   name: string;
@@ -60,6 +60,16 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 label={input.label.toLowerCase()}
                 options={input.options ?? []}
                 onInputChange={(name, value) => handleTagChange(name, value)}
+              />
+            );
+          case 'select':
+            return (
+              <StyledSelect
+                key={index}
+                name={input.name.toLowerCase()}
+                label={input.label.toLowerCase()}
+                options={input.options ?? []}
+                icon={input.icon}
               />
             );
           case 'file':
