@@ -1,5 +1,6 @@
 from django.db import models 
-from chillzone.models import UserMeta, RestaurationPlace
+from django.contrib.auth.models import User
+from chillzone.models import RestaurationPlace
 
 class Command(models.Model):
 
@@ -21,6 +22,6 @@ class Command(models.Model):
 
     creation_date = models.DateTimeField(auto_now_add=True)
 
-    user = models.ForeignKey(UserMeta, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     restauration_place = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)

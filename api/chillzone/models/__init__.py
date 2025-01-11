@@ -31,4 +31,5 @@ from .network import Network
 from .notification import Notification
 from .notification_center import NotificationCenter
 from .tagging import Tagging
+from .token import Token
 from .work_in import WorkIn

@@ -15,6 +15,8 @@ class UserMeta(models.Model):
         ('banned', 'Banni')
     ]
 
+    is_owner =  models.BooleanField(default=False)
+
     status = models.CharField(max_length=24, choices=STATUS_CHOICES)
     
     verified = models.BooleanField(default=False)

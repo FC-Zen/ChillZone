@@ -7,11 +7,11 @@ class LocationReservation(models.Model):
 
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
-    start_time = models.TimeField
+    start_time = models.TimeField()
 
-    end_time = models.TimeField
+    end_time = models.TimeField()
 
-    day_reservation = models.DateField
+    day_reservation = models.DateField()
 
     class Meta:
         constraints = [

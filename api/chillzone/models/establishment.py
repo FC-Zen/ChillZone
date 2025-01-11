@@ -6,7 +6,7 @@ class Establishment(models.Model) :
     
     name = models.CharField(max_length= 254)
 
-    address = models.TextField
+    address = models.TextField()
 
     city = models.CharField(max_length= 254)
 

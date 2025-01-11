@@ -5,3 +5,11 @@ class NetworkSerializer(serializers.ModelSerializer) :
     class Meta:
         model = Network
         fields = ['pk', 'type', 'link_network']
+
+class AdminNetworkSerializer(serializers.ModelSerializer):
+    type = serializers.CharField(max_length=30)
+    link_network = serializers.URLField()
+
+    class Meta:
+        model = Network
+        fields = ['pk', 'type', 'link_network']
