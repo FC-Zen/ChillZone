@@ -67,7 +67,10 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       <View style={styles.card}>
         <Button
           title={t('buttons.profile.reservations')}
-          icon={{ name: 'BookMark', color: colors.white }}
+          icon={{
+            name: 'BookMark',
+            color: colors.white,
+          }}
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
