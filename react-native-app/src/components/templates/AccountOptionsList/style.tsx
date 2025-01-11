@@ -64,4 +64,19 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 16,
   },
+
+  resetButton: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingHorizontal: 20, // Ajuste l'espacement
+    paddingVertical: 10,
+  },
+  resetButtonText: {
+    textAlign: 'left', // Alignement du texte à gauche
+    marginLeft: 10, // Espace entre l'icône et le texte
+    color: colors.white,
+    fontFamily: typography.h3.fontFamily,
+    fontSize: typography.h3.fontSize,
+  },
 });

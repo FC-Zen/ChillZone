@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { ToggleSwitch } from '@components/atoms/ToggleSwitch';
 import { Button } from '@components/molecules';
-import { colors } from '@theme';
+import { colors, typography } from '@theme';
 import { SelectorPolygon } from '@components/atoms/Icons';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
@@ -72,6 +72,8 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           icon={{
             name: 'BookMark',
             color: colors.white,
+            width: 24,
+            height: 24,
           }}
           variant="icon"
           color={colors.resolutionBlue}
@@ -84,7 +86,12 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       <View style={styles.card}>
         <Button
           title={t('buttons.profile.commands')}
-          icon={{ name: 'Hamburger', color: colors.white }}
+          icon={{
+            name: 'Hamburger',
+            color: colors.white,
+            width: 20,
+            height: 20,
+          }}
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
@@ -111,6 +118,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
             title={t('modals.pwdChange')}
             icon={{ name: 'Lock', color: colors.white }}
             variant="icon"
+            style={styles.resetButton}
             color={colors.resolutionBlue}
             textColor={colors.white}
             onPress={onOpenPasswordModal}
@@ -119,6 +127,8 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
             title={t('buttons.auth.resetPwd')}
             icon={{ name: 'Refresh', color: colors.white }}
             variant="icon"
+            style={styles.resetButton}
+            textStyle={styles.resetButtonText} // Ajoute le style spécifique au texte
             color={colors.resolutionBlue}
             textColor={colors.white}
             onPress={onOpenResetPasswordModal}
@@ -170,6 +180,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           title={t('buttons.profile.actus')}
           onPress={() => navigation.navigate(ROUTE.LINKS)}
           variant="news"
+          textColor={colors.resolutionBlue}
         />
       </TouchableOpacity>
     </View>

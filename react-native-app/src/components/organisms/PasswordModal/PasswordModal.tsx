@@ -1,85 +1,43 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Modal,
-  Alert,
-} from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { styles } from './style'; // Import des styles
 import { colors } from '@theme';
 import { Input } from '@components/molecules';
-import { Icon, IconProps } from '@components/atoms/Icons';
+import { Icon } from '@components/atoms/Icons';
 import { useTranslation } from 'react-i18next';
-import { accountServices } from '@services/AccountServices'; // Import du service
 
 export type PasswordModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+  setOldPassword: (value: string) => void;
+  setNewPassword: (value: string) => void;
+  setConfirmPassword: (value: string) => void;
+  newPasswordValidation: {
+    minLength: boolean;
+    hasUppercase: boolean;
+    hasLowercase: boolean;
+    hasNumber: boolean;
+    hasSpecialChar: boolean;
+  };
+  onSubmit: () => void;
 };
 
-// Hook pour gérer la logique du PasswordModal
-const usePasswordModalLogic = () => {
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  const newPasswordValidation = {
-    minLength: newPassword.length >= 12,
-    hasUppercase: /[A-Z]/.test(newPassword),
-    hasLowercase: /[a-z]/.test(newPassword),
-    hasNumber: /\d/.test(newPassword),
-    hasSpecialChar: /[@$!%*?&]/.test(newPassword),
-  };
-
-  const handleSubmit = async (onClose: () => void) => {
-    if (newPassword !== confirmPassword) {
-      Alert.alert('Erreur', 'Les mots de passe ne correspondent pas.');
-      return;
-    }
-
-    if (!accountServices.validatePassword(newPassword)) {
-      Alert.alert(
-        'Erreur',
-        'Le nouveau mot de passe ne respecte pas les critères requis.'
-      );
-      return;
-    }
-
-    try {
-      // Appel au service pour mettre à jour le mot de passe
-      await accountServices.updatePassword(oldPassword, newPassword);
-      Alert.alert('Succès', 'Mot de passe modifié avec succès.');
-      onClose(); // Fermer la modale après soumission
-    } catch (error) {
-      Alert.alert('Erreur', 'La mise à jour du mot de passe a échoué.');
-    }
-  };
-
-  return {
-    oldPassword,
-    setOldPassword,
-    newPassword,
-    setNewPassword,
-    confirmPassword,
-    setConfirmPassword,
-    newPasswordValidation,
-    handleSubmit,
-  };
-};
-
-export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
-  const {
-    oldPassword,
-    setOldPassword,
-    newPassword,
-    setNewPassword,
-    confirmPassword,
-    setConfirmPassword,
-    newPasswordValidation,
-    handleSubmit,
-  } = usePasswordModalLogic();
+export const PasswordModal: React.FC<PasswordModalProps> = ({
+  isOpen,
+  onClose,
+  oldPassword,
+  newPassword,
+  confirmPassword,
+  setOldPassword,
+  setNewPassword,
+  setConfirmPassword,
+  newPasswordValidation,
+  onSubmit,
+}) => {
+  const { t } = useTranslation();
 
   const renderValidationTag = (text: string, isValid: boolean) => (
     <View
@@ -89,7 +47,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
       ]}
     >
       <Icon
-        name={isValid ? 'Clock' : 'CrossCircle'} // Utilisation d'une icône conditionnelle
+        name={isValid ? 'Clock' : 'CrossCircle'}
         color={isValid ? colors.darkCyan : colors.white}
         width={12}
         height={12}
@@ -105,7 +63,6 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
     </View>
   );
 
-  const { t } = useTranslation();
   return (
     <Modal
       animationType="slide"
@@ -115,7 +72,6 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
     >
       <View style={styles.overlay}>
         <View style={styles.modal}>
-          {/* Croix pour fermer la modale */}
           <TouchableOpacity style={styles.closeIcon}>
             <Icon
               name="Cross"
@@ -128,7 +84,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
 
           <Text style={styles.title}>{t('modals.pwdChange')}</Text>
 
-          {/* Champ pour l'ancien mot de passe */}
+          {/* Input pour l'ancien mot de passe */}
           <Input
             style={styles.input}
             placeholder={t('fields.auth.lastPassword')}
@@ -136,7 +92,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
             onChangeText={setOldPassword}
           />
 
-          {/* Champ pour le nouveau mot de passe */}
+          {/* Input pour le nouveau mot de passe */}
           <Input
             style={styles.input}
             placeholder={t('fields.auth.newPassword')}
@@ -168,7 +124,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
             )}
           </View>
 
-          {/* Champ pour confirmer le mot de passe */}
+          {/* Input pour confirmer le mot de passe */}
           <Input
             style={styles.input}
             placeholder={t('fields.auth.verifyNewPassword')}
@@ -177,10 +133,7 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
           />
 
           {/* Bouton Confirmer */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleSubmit(onClose)}
-          >
+          <TouchableOpacity style={styles.button} onPress={onSubmit}>
             <Text style={styles.buttonText}>
               {t('buttons.actions.confirm')}
             </Text>
@@ -190,5 +143,3 @@ export const PasswordModal = ({ isOpen, onClose }: PasswordModalProps) => {
     </Modal>
   );
 };
-
-export default PasswordModal;

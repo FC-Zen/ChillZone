@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { colors, layout, typography } from '@theme/index';
+import { colors, layout, typography } from '@theme';
 import { ButtonProps } from './Button';
-import { fonts } from '@theme/typography';
 import { Icon } from '@components/atoms';
 
 export const ButtonWrapper: FC<ButtonProps> = ({
@@ -34,7 +33,7 @@ export const ButtonWrapper: FC<ButtonProps> = ({
         style={[
           styles.text,
           { color: textColor, fontFamily: textFont, fontSize: textSize },
-          variant === 'news' && styles.newsText, // Style spécifique au texte du variant "news"
+          variant === 'icon' && styles.iconText, // Style spécifique pour le texte avec icône
         ]}
       >
         {title}
@@ -65,9 +64,13 @@ const styles = StyleSheet.create({
   },
   iconVariant: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'center', // Contenu aligné à gauche
     alignItems: 'center',
-    gap: 10,
+    paddingHorizontal: 10, // Espace intérieur horizontal
+  },
+  iconText: {
+    textAlign: 'left', // Alignement du texte à gauche
+    marginLeft: 10, // Espacement entre l'icône et le texte
   },
   newsVariant: {
     display: 'flex',
@@ -81,9 +84,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   newsText: {
-    color: colors.resolutionBlue, // Couleur spécifique pour le texte du bouton "news"
-    fontSize: typography.h4.fontSize, // Taille personnalisée si nécessaire
-    fontFamily: typography.h2.fontFamily, // Famille de police personnalisée si nécessaire
+    color: colors.resolutionBlue,
+    fontSize: typography.h4.fontSize,
+    fontFamily: typography.h2.fontFamily,
     textAlign: 'center',
   },
 });
