@@ -6,9 +6,9 @@ class EmailService:
 
         try:
             send_mail(
-                subject="Password Reset Request",
-                message=f"Click the link to reset your password: {reset_link}",
-                from_email="no-reply@example.com",
+                subject="Demande de réinitialisation de mot de passe",
+                message=f"Cliquer sur le lien pour réinitialiser votre mot de passe : {reset_link} \n Si cela ne vient pas de votre initiative, veuillez ignorer ce mail",
+                from_email="but3.chillzone@gmail.com",
                 recipient_list=[user_email],
                 fail_silently=False,
             )
@@ -26,10 +26,10 @@ class EmailService:
                 message=(
                     f"Bonjour {first_name} {last_name},\n\n"
                     f"Votre compte a été créé avec succès par l'administrateur.\n"
-                    f"Voici vos identifiants:\n"
-                    f"Email: identique à celle sur laquelle vous recevez ce mail\n"
-                    f"Nom d'utilisateur: {username}\n"
-                    f"Mot de passe: {password}\n\n"
+                    f"Voici vos identifiants :\n"
+                    f"Email : identique à celle sur laquelle vous recevez ce mail\n"
+                    f"Nom d'utilisateur : {username}\n"
+                    f"Mot de passe : {password}\n\n"
                     "Veuillez vous connecter et modifier votre mot de passe immédiatement."
                 ),
                 from_email="but3.chillzone@gmail.com",

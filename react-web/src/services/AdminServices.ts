@@ -71,6 +71,31 @@ export const addAccount = async (formData: {
 };
 
 
+/**
+ * Récupère la liste des salles depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getRooms = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/admin-rooms/', 
+        { 
+            withCredentials: true,
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+            },
+        } 
+        );
+        if (response.status == 200) {
+            return response.data.locations;
+        }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
+    }
+};
 
 /**
  * Ajoute une salle en envoyant une requête POST à l'API.
@@ -119,23 +144,6 @@ export const updateRoom = async (id: number, roomData: {
         return { success: true };
     } catch (error: any) {
         console.error('Erreur lors de la mise à jour de la salle:', error.message);
-        throw new Error(error.message);
-    }
-};
-
-/**
- * Récupère la liste des salles depuis l'API.
- *
- * @throws {Error} Si la requête échoue.
- * 
- * @returns {Promise<Array>} Liste des salles.
- */
-export const getRooms = async () => {
-    try {
-        // Simule une réponse API
-        return;
-    } catch (error: any) {
-        console.error("Erreur lors de la récupération des salles:", error.message);
         throw new Error(error.message);
     }
 };

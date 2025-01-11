@@ -1,27 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { AdminRoomLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
-import rooms from '@assets/data/rooms.json'; // Données des salles
 import { useUser } from '@hooks';
 import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
+import { getRooms } from '@services/AdminServices';
+
+type Room = {
+  id: number;
+  name: string;
+  description: string | null;
+  capacity: number;
+  floor_name: string;
+  establishment: string;
+  status: boolean;
+}
 
 export const AdminRoomsPage: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useUser();
   
   const [isModalOpen, setModalOpen] = useState(false);
-  const [roomsData, setRoomsData] = useState(rooms);
-  const [selectedRoom, setSelectedRoom] = useState<null | {
-    id: number;
-    name: string;
-    description: string;
-    capacity: number;
-    floor: string;
-    establishment: string;
-    type_room?: string;
-    status: boolean;
-  }>(null);
+  const [roomsData, setRoomsData] = useState<Room[]>([]);
+
+    useEffect(() => {
+    const fetchData = async () => {
+      const data = await getRooms();
+      setRoomsData(data);
+    };
+
+    fetchData();
+  }, []);
+
+  const [selectedRoom, setSelectedRoom] = useState<null | Room>(null);
 
   const listInputs = [
     {
@@ -42,7 +53,7 @@ export const AdminRoomsPage: React.FC = () => {
       value: selectedRoom?.description,
       required: true,
     },
-    {
+/*     {
       name: "type_room",
       label: t("fields.common.roomtype"), 
       type: "select",
@@ -54,7 +65,7 @@ export const AdminRoomsPage: React.FC = () => {
       ], //TODO: Service pour prendre les tag categorie de room
       value: selectedRoom?.type_room,
       required: true,
-    },
+    }, */
     {
       name: "capacity",
       label: t("fields.common.capacity"),
@@ -74,7 +85,7 @@ export const AdminRoomsPage: React.FC = () => {
         { tag: "1er étage" },
         { tag: "2ème étage" },
       ], //TODO: Service pour prendre les étages
-      value: selectedRoom?.floor,
+      value: selectedRoom?.floor_name,
       placeholder: "Étage",
       required: true,
     },
@@ -133,9 +144,9 @@ export const AdminRoomsPage: React.FC = () => {
       name: formData.get('name') as string,
       description: formData.get('description') as string,
       capacity: parseInt(formData.get('capacity') as string, 10),
-      floor: formData.get('floor')?.toString() as string,
       establishment: "Établissement Alpha",
-      type_room: formData.get('type_room') as string,
+      //type_room: formData.get('type_room') as string,
+      floor_name: formData.get('floor') as string,
       status: selectedRoom.status,
     };
 
@@ -156,9 +167,9 @@ export const AdminRoomsPage: React.FC = () => {
       name: formData.get('name') as string,
       description: formData.get('description') as string,
       capacity: parseInt(formData.get('capacity') as string, 10),
-      floor: formData.get('floor') as string,
-      type_room: formData.get('type_room') as string,
+      //type_room: formData.get('type_room') as string,
       establishment: "Établissement Alpha", //On prend l'établissement pris en charge par l'administrateur
+      floor_name: formData.get('floor') as string,
       status: true, // Statut par défaut 'Disponible'
     };
     // Service à mettre ici
