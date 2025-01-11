@@ -18,7 +18,7 @@ export const PaymentScreen = () => {
     return (
         <PaymentTemplate
             headerTitle={t("headers.pay")}
-            navigateToCart={() => {}}
+            navigateToCart={() => navigation.goBack()}
             formTitleIcon="Bell"
             formTitleIconColor={colors.white}
             formTitle={t("cart.creditCard")}
