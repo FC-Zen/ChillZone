@@ -13,3 +13,4 @@ export { PaymentScreen } from './PaymentScreen';
 export { AccountScreen } from './AccountScreen';
 export { LinksScreen } from './LinksScreen';
 export { ReservationSummaryScreen } from './ReservationSummaryScreen';
+export { CartScreen } from './CartScreen';

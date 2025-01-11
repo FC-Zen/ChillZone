@@ -14,3 +14,4 @@ export { ReservationTemplate } from './ReservationTemplate';
 export { AccountTemplate } from './AccountTemplate';
 export { MenuTemplate } from './MenusTemplate';
 export { ReservationSummaryTemplate } from './ReservationSummaryTemplate';
+export { CartTemplate } from './CartTemplate';

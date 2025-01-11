@@ -19,3 +19,4 @@ export { SearchItem, SearchItemProps } from './SearchItem';
 export { FoodCard } from './FoodCard';
 export { Counter } from './Counter';
 export { Overlay } from './Overlay';
+export { PickupSlot, PickupSlotProps } from './PickupSlot';

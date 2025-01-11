@@ -14,3 +14,4 @@ export { ResetPasswordModal } from './ResetPasswordModal';
 export { EditInfoModal } from './EditInfoModal';
 export { ProfileHeaderWithModal } from './ProfileHeaderWithModal';
 export { OverlayList } from './OverlayList';
+export { CommandList, ItemProps } from './CommandList';

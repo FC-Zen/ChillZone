@@ -19,6 +19,8 @@ export {
   VectorHeader,
   VectorBottom,
   Button,
+  PickupSlot,
+  PickupSlotProps,
 } from './molecules';
 export {
   Connection,
@@ -30,6 +32,7 @@ export {
   ResetPassword,
   RestaurantSlider,
   RoomAvailable,
+  CommandList,
 } from './organisms';
 export {
   ConnectionTemplate,
@@ -46,4 +49,5 @@ export {
   ReservationTemplate,
   AccountTemplate,
   MenuTemplate,
+  CartTemplate,
 } from './templates';
