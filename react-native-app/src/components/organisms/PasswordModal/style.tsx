@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginBottom: 15,
-    gap: 8,
+    gap: 4,
   },
   validationTag: {
     flexDirection: 'row', // Alignement horizontal
@@ -46,8 +46,8 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     paddingHorizontal: 12,
     paddingVertical: 4,
-    marginRight: 8,
-    marginBottom: 8,
+    marginRight: 4,
+    marginBottom: 4,
   },
   validTag: {
     backgroundColor: '#DFF2E0',
