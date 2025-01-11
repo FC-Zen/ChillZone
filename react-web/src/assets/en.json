@@ -39,7 +39,7 @@
       "menu": "Create a menu"
     },
     "info": {
-      "command": "Order details {{ command }}",
+      "command": "Order details",
       "establishment": "Establishment information",
       "infoSignIn": "Your request has been successfully sent to the administrator of the establishment concerned by your request. You will receive an email shortly.",
       "infoPwd": "If the account exists, you will receive an email shortly.",
@@ -287,6 +287,8 @@
         "collectionStartTime": "Collection start time",
         "client": "Client name",
         "creation_date": "Creation date",
+        "meal_name": "Commande name",
+        "quantity": "Quantity",
         "actions": {
           "viewcommand": "View order",
           "actionDetails": "Order details",
