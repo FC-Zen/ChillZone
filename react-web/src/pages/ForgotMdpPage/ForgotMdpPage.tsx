@@ -10,7 +10,7 @@ export const ForgotMdpPage: React.FC = () => {
   const { t } = useTranslation();
 
   const handleButtonClick = () => {
-    navigation.navigate(ROUTE.RESET_PASSWORD);
+    navigation.navigate(ROUTE.LOGIN);
   };
 
   return (

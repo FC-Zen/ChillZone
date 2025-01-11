@@ -2,11 +2,6 @@ import { getCSRFToken } from '@utils';
 import axios from 'axios';
 import { z } from 'zod';
 
-// Exemples d'authentification
-const validEmail = 'user@example.com';
-const validPassword = 'password123'; // Exemple de mot de passe
-const validEmails = ['user@example.com', 'admin@example.com'];
-
 /**
  * Authentifie un utilisateur en vérifiant ses informations de connexion.
  *
@@ -26,10 +21,21 @@ export const authenticateUser = async (formData: { login: string; password: stri
     });
     // Vérifie si la réponse indique une réussite - SIMULATION
     if (response.status == 200) {
-      console.log('Authentification réussie pour:', formData.login);
-      return { success: true, message: 'Connexion réussie !', data: response.data };
+      if (response.data.type == "user") {
+        // Suppression session
+        document.cookie = "sessionid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        return { success: false, message: 'Connexion non autorisée', data: null};
+      } else {
+        //console.log('Authentification réussie pour:', formData.login);
+        return { success: true, message: 'Connexion réussie !', data: response.data};
+      }
+    } else if (response.status == 403) {
+      return { success: false, message: 'Vous êtes déjà connectés', data: null };
+    } else if (response.status == 404) {
+      return { success: false, message: 'Identifiants incorrects', data: null };
     } else {
-      throw new Error('Email ou mot de passe incorrect');
+      throw new Error('Erreur de connexion');
     }
   } catch (error: any) {
     console.error('Erreur lors de l\'authentification:', error.message);
@@ -48,13 +54,14 @@ export const authenticateUser = async (formData: { login: string; password: stri
 export const sendPasswordRecoveryEmail = async (formData: { email: string }) => {
   // Exemple d'une liste d'emails valides pour la simulation
   try {
-    /* Envoi des données à l'API
-    const response = await axios.post( URL , {
-      email,
+    const response = await axios.post( 'http://localhost:3000/forget-password/' , {
+      email: formData.email
+    },
+    {
+      withCredentials: true,
     });
-    */
     // Vérifie si l'email est valide - SIMULATION
-    if (validEmails.includes(formData.email)) {
+    if (response.status == 200) {
       return { success: true, message: 'Email de récupération envoyé avec succès !' };
     } else {
       throw new Error("L'email n'existe pas");
@@ -85,7 +92,7 @@ const passwordSchema = (t: Function) =>
  * @returns {Promise<Object>} Résultat de l'envoi de l'email.
  */
 export const changePassword = async (
-  formData: { email: string; inputPassword: string; inputVerifyPassword: string },
+  formData: { uuid: string; inputPassword: string; inputVerifyPassword: string },
   t: Function
 ) => {
   try {
@@ -93,21 +100,20 @@ export const changePassword = async (
     if (formData.inputPassword !== formData.inputVerifyPassword) {
       throw new Error(t('zod.passwordMismatch'));
     }
-
     // Validation des mots de passe via Zod
     passwordSchema(t).parse(formData.inputPassword);
-
-    // Simule l'envoi de la demande de changement de mot de passe - ATTENTION A VOIR AVEC LE BACK LA DEMARCHE
-    /*
-    const response = await axios.post(URL, {
-      newPassword: formData.inputPassword,
+    const response = await axios.put( 'http://localhost:3000/reset-password/' + formData.uuid , {
+      password: formData.inputPassword,
+      password_verified: formData.inputVerifyPassword,
+    },
+    {
+      withCredentials: true,
     });
-    */
-
-    console.log('Mot de passe changé avec succès pour l’utilisateur.');
-
-    // Simule une réponse réussie
-    return { success: true, message: t('passwordChange.success') };
+    if (response.status == 200) {
+      return { success: true, message: 'Mot de passe changé avec succès pour l’utilisateur.' };
+    } else if (response.status == 404) {
+      return { success: false, message: 'Problème de token' };
+    }
   } catch (error: any) {
     if (error instanceof z.ZodError) {
       console.error('Erreur de validation :', error.errors);
@@ -128,7 +134,8 @@ export const logoutUser = async () => {
   try {
     console.log("Cookies avant la requête DELETE:", document);
     const response = await axios.delete('http://localhost:3000/login/', 
-    { withCredentials: true,
+    { 
+      withCredentials: true,
       headers: {
         'X-CSRFToken': getCSRFToken(),
       },

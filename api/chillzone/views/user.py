@@ -38,9 +38,9 @@ class UserLogin(APIView) :
                 request.session.set_expiry(0)
                 if user.is_superuser :
                     type = 'superadmin'
-                elif user.is_superuser :
+                elif user.is_staff :
                     type = 'admin'
-                elif user.is_superuser :
+                elif user_meta.is_owner :
                     type = 'owner'
                 else :
                     type = 'user'
@@ -107,7 +107,7 @@ class PasswordForgetView(APIView):
                     }
                 )
 
-                reset_link = f"https://127.0.0.1:5000/reset-password/{token.token}"
+                reset_link = f"http://localhost:5173/reset-password?token={token.token}"
 
                 if not EmailService.send_reset_email(user.email, reset_link):
                     return Response({"error": "Failed to send email."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -137,7 +137,7 @@ class PasswordResetView(APIView):
             try:
                 token = Token.objects.get(token=uuid)
                 if token.expiration_date < now():
-                    return Response({"error": "Token has expired."}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response({"error": "Token has expired."}, status=status.HTTP_404_NOT_FOUND)
 
                 user = token.user
                 user.set_password(new_password)
@@ -148,7 +148,7 @@ class PasswordResetView(APIView):
                 return Response({"message": "Password changed successfully."}, status=status.HTTP_200_OK)
 
             except Token.DoesNotExist:
-                return Response({"error": "Invalid token."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "Invalid token."}, status=status.HTTP_404_NOT_FOUND)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

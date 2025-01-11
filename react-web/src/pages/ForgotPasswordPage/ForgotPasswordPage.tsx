@@ -28,7 +28,7 @@ export const ForgotPasswordPage: React.FC = () => {
 
   const handleSendClick = async () => {
     try {
-      let formData = { email : inputEmail};
+      let formData = { email : inputEmail };
       await sendPasswordRecoveryEmail(formData);
       navigation.navigate(ROUTE.FORGOT_MDP);
     } catch (error) {

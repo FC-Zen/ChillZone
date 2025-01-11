@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.models import User
 from chillzone.services import EmailService
 from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo
-from chillzone.serializers import AdminUserSerializer, AdminLocationSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
+from chillzone.serializers import AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
 
 import random
 import string
@@ -186,13 +186,21 @@ class AdminUserView(generics.ListAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class AdminLocationView(generics.ListAPIView):
-    serializer_class = AdminLocationSerializer
     permission_classes = [IsAuthenticated & IsAdminUser]
 
-    def get_queryset(self):
-        return Location.objects.filter(
-            islocated__establishment=self.request.user.usermeta.establishment
-        )
+    def get(self, request):
+            establishment = request.user.usermeta.establishment
+
+            locations = Location.objects.filter(islocated__establishment=establishment)
+            location_serializer = AdminLocationSerializer(locations, many=True)
+
+            floors = MapFloor.objects.filter(map__establishment=establishment)
+            floor_serializer = AdminAvailableFloorsSerializer(floors, many=True)
+
+            return Response({
+                "locations": location_serializer.data,
+                "available_floors": floor_serializer.data
+            })
 
     
 class AdminReservationConflictView(APIView):

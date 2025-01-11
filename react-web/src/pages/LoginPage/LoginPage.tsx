@@ -35,34 +35,54 @@ export const LoginPage: React.FC = () => {
   const handleLogin = async () => {
     try {
       const res = await authenticateUser(formData);
-      setSnackbar({
-        open: true,
-        severity: 'success',
-        message: 'Connexion réussie !',
-      });
-      setUser({
-        userEmail: res.data.email,
-        username: res.data.first_name + " " + res.data.last_name,
-        organization: res.data.establishment,
-        role : res.data.type
-      });
-      switch (res?.data.type) {
-        case 'admin':
-          navigation.navigate(ROUTE.ADMIN_DASHBOARD);
-          break;
-        case 'owner':
-          navigation.navigate(ROUTE.OWNER_DASHBOARD);
-          break;
-        case 'superadmin':
-          navigation.navigate(ROUTE.ADMIN_DASHBOARD);
-          break;
-        default:
-          setSnackbar({
-            open: true,
-            severity: 'error',
-            message: 'Vous ne devriez pas être ici',
-          });
-      }
+      if (res?.success && res.data != null) {
+        setSnackbar({
+          open: true,
+          severity: 'success',
+          message: res.message,
+        });
+        setUser({
+          userEmail: res.data.email,
+          username: res.data.first_name + " " + res.data.last_name,
+          organization: res.data.establishment,
+          role : res.data.type
+        });
+        switch (res?.data.type) {
+          case 'admin':
+            setUser(prevUser => ({
+              ...prevUser ?? { userEmail: '', username: '', organization: '', role: '' },
+              role: 'Administrateur'
+            }));
+            navigation.navigate(ROUTE.ADMIN_DASHBOARD);
+            break;
+          case 'owner':
+            setUser(prevUser => ({
+              ...prevUser ?? { userEmail: '', username: '', organization: '', role: '' },
+              role: 'Restaurateur'
+            }));
+            navigation.navigate(ROUTE.OWNER_DASHBOARD);
+            break;
+          case 'superadmin':
+            setUser(prevUser => ({
+              ...prevUser ?? { userEmail: '', username: '', organization: '', role: '' },
+              role: 'Super Administrateur'
+            }));
+            navigation.navigate(ROUTE.ADMIN_DASHBOARD);
+            break;
+          default:
+            setSnackbar({
+              open: true,
+              severity: 'error',
+              message: 'Erreur de redirection',
+            });
+        };
+      } else {
+        setSnackbar({
+          open: true,
+          severity: 'error',
+          message: res?.message || "Erreur",
+        });
+      };
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Une erreur est survenue.';
