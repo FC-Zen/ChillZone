@@ -7,3 +7,4 @@ mysqlclient
 pillow
 python-decouple
 drf-spectacular
+django-cors-headers

@@ -35,6 +35,7 @@ class UserLogin(APIView) :
             if user is not None :
                 auth.login(request, user)
                 user_meta = request.user.usermeta
+                request.session.set_expiry(0)
                 if user.is_superuser :
                     type = 'superadmin'
                 elif user.is_superuser :
@@ -53,14 +54,17 @@ class UserLogin(APIView) :
                     'photo_link': user_meta.photo_link.url if user_meta and user_meta.photo_link else '/default',
                     'type': type
                 }
-                return Response(response_data, status=status.HTTP_200_OK)
+                
+                res = Response(response_data, status=status.HTTP_200_OK)
+                res.set_cookie('sessionid', request.session.session_key, httponly=False, samesite='Lax', secure=False)  # test sans secure
+                return res
     
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self, request):
         if request.user is None or not request.user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        
+
         auth.logout(request)
         return Response(status=status.HTTP_204_NO_CONTENT)
     

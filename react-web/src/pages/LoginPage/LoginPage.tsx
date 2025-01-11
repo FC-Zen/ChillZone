@@ -9,11 +9,7 @@ import { ROUTE } from '@enums';
 export const LoginPage: React.FC = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { setUser } = useUser();
-
-  const validEmail = 'user@example.com';
-  const validName = 'Personne Réelle';
-  const validOrganization = 'Université Gustave Eiffel';
+  const { user, setUser } = useUser();
 
   const [formData, setFormData] = useState({
     login : "",
@@ -38,19 +34,35 @@ export const LoginPage: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      await authenticateUser(formData);
+      const res = await authenticateUser(formData);
       setSnackbar({
         open: true,
         severity: 'success',
         message: 'Connexion réussie !',
       });
       setUser({
-        userEmail: validEmail,
-        username: validName,
-        organization: validOrganization,
-        role : "Administrateur"
+        userEmail: res.data.email,
+        username: res.data.first_name + " " + res.data.last_name,
+        organization: res.data.establishment,
+        role : res.data.type
       });
-      navigation.navigate(ROUTE.ADMIN_DASHBOARD);
+      switch (res?.data.type) {
+        case 'admin':
+          navigation.navigate(ROUTE.ADMIN_DASHBOARD);
+          break;
+        case 'owner':
+          navigation.navigate(ROUTE.OWNER_DASHBOARD);
+          break;
+        case 'superadmin':
+          navigation.navigate(ROUTE.ADMIN_DASHBOARD);
+          break;
+        default:
+          setSnackbar({
+            open: true,
+            severity: 'error',
+            message: 'Vous ne devriez pas être ici',
+          });
+      }
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Une erreur est survenue.';

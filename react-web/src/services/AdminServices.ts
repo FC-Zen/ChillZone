@@ -1,5 +1,6 @@
 import axios from 'axios';
 import maps from '@assets/data/maps.json';
+import { getCSRFToken } from '@utils';
 
 export type Floor = {
     floor_id: number;
@@ -148,8 +149,18 @@ export const getRooms = async () => {
  */
 export const getAccounts = async () => {
     try {
-        // Simule une réponse API
-        return;
+        const response = await axios.get('http://localhost:3000/admin-accounts/', 
+            { withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+        );        
+        if (response.status == 200) {
+            return { data : response.data };
+        } else {
+            throw new Error('Erreur lors de la récupération des comptes');
+        }
     } catch (error: any) {
         console.error("Erreur lors de la récupération des salles:", error.message);
         throw new Error(error.message);
