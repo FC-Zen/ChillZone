@@ -7,3 +7,4 @@ export { OrdersDataTable } from './OrdersDataTable';
 export { MealsDataTable } from './MealsDataTable';
 export { OwnersAcceptedDataTable } from './OwnersAcceptedDataTable';
 export { OwnersPendingDataTable } from './OwnersPendingDataTable';
+export { DetailsOrdersDataTable } from './DetailsOrdersDataTable';
