@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
+import { useNavigation } from '@hooks';
 
 export type PageHeaderProps = {
   title: string;
@@ -19,6 +20,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   noMargin,
 }) => {
   const headerHeight = 60;
+  const navigation = useNavigation();
 
   return (
     <View
@@ -33,7 +35,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         <Icon
           name={icon.name}
           color={icon.color}
-          onPress={onBackPress}
+          onPress={onBackPress || navigation.goBack}
           width={16}
           height={16}
         />
