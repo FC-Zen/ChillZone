@@ -137,7 +137,7 @@ export const DispenserScreen: React.FC = () => {
           }}
           buttonProps={{
             title: t('buttons.actions.cart'),
-            onPress: () => console.log('Go panier'),
+            onPress: () => navigation.navigate(ROUTE.CART),
           }}
           pageHeaderProps={{
             title: t('categories.restaurants'),
@@ -205,7 +205,7 @@ export const DispenserScreen: React.FC = () => {
           }}
           buttonProps={{
             title: t('buttons.actions.cart'),
-            onPress: () => console.log('Go panier'),
+            onPress: () => navigation.navigate(ROUTE.CART),
           }}
           pageHeaderProps={{
             title: t('categories.restaurants'),
