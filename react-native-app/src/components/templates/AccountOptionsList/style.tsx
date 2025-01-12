@@ -20,6 +20,9 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 10,
   },
+  commandsButton: {
+    marginVertical: 3
+  },
   card2: {
     backgroundColor: colors.resolutionBlue,
     borderRadius: 20,

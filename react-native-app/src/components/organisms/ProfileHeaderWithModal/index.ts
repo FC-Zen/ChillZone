@@ -1,1 +1,0 @@
-export {ProfileHeaderWithModal} from './ProfileHeaderWithModal';

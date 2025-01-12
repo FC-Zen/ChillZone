@@ -89,13 +89,14 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           icon={{
             name: 'Hamburger',
             color: colors.white,
-            width: 20,
+            width: 24,
             height: 20,
           }}
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
           onPress={onNavigateToCommand} // Remplacer par le screen
+          style={styles.commandsButton}
         />
       </View>
 

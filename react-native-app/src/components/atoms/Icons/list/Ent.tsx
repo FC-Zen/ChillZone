@@ -2,8 +2,8 @@ import React from 'react';
 import Svg, { Circle, Path, G, Defs, ClipPath, Rect } from 'react-native-svg';
 import { colors } from '@theme';
 const Ent = ({
-  width = 24,
-  height = 24,
+  width = 16,
+  height = 16,
   backgroundColor = colors.aquaDeep, // Couleur du fond (vert)
   iconColor = colors.white, // Couleur des détails de l'icône (blanc)
 }: {

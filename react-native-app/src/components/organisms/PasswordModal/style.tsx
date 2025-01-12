@@ -39,6 +39,8 @@ export const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginBottom: 15,
     gap: 4,
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   validationTag: {
     flexDirection: 'row', // Alignement horizontal
@@ -79,9 +81,9 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   buttonText: {
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h2.fontFamily,
     color: colors.white,
     fontWeight: 'bold',
-    fontSize: typography.h4.fontSize,
-    fontFamily: typography.h4.fontFamily,
   },
 });

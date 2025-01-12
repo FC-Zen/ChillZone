@@ -1,14 +1,14 @@
-import React from 'react';
-import { ScrollView, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, View } from 'react-native';
 import { PageHeader } from '@components/molecules/PageHeader';
 import { ProfileHeader } from '@components/molecules/ProfileHeader';
 import { AccountOptionsList } from '@components/templates/AccountOptionsList';
+import { ChangeProfilePictureModal } from '@components/organisms';
 import { styles } from './style';
-import { ProfileHeaderWithModal } from '@components/organisms';
 import { useTranslation } from 'react-i18next';
-import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
-import { accountServices } from '@services/AccountServices';
+import { useUser } from '@contexts/AppContrext';
+import { ROUTE } from '@enums';
 
 export type AccountTemplateProps = {
   isDarkTheme: boolean;
@@ -39,6 +39,13 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
 }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const { userName } = useUser(); // Récupération du nom d'utilisateur depuis le contexte
+
+  // États pour la modale de changement de photo
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
 
   return (
     <ScrollView
@@ -47,15 +54,26 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
         isDarkTheme && styles.darkContainer,
       ]}
     >
+      {/* Header de la page */}
       <PageHeader
         title={t('headers.account')}
         variant="back"
         onBackPress={() => navigation.navigate(ROUTE.HOME)}
       />
-      <ProfileHeaderWithModal
-        onChangePicture={onChangePicture}
-        onDeletePicture={onDeletePicture}
-      />{' '}
+
+      {/* Section du profil avec modale */}
+      <View style={styles.container}>
+        <ProfileHeader name={userName ?? ''} onOpenModal={openModal} />
+
+        <ChangeProfilePictureModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onChangePicture={onChangePicture}
+          onDeletePicture={onDeletePicture}
+        />
+      </View>
+
+      {/* Liste des options */}
       <AccountOptionsList
         isDarkTheme={isDarkTheme}
         onToggleTheme={onToggleTheme}
