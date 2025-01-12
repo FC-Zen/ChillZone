@@ -235,5 +235,10 @@
     "second": "second",
     "now": "now",
     "day": "day"
+  },
+
+  "notification": {
+    "title": "Chillzone",
+    "reservation": "Your reservation has been confirmed."
   }
 }
