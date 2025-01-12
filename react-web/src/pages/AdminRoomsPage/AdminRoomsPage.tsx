@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
 import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import { getRooms } from '@services/AdminServices';
+import { getRooms, toggleAccount } from '@services/AdminServices';
 
 type Room = {
   id: number;
@@ -105,27 +105,9 @@ export const AdminRoomsPage: React.FC = () => {
     setSelectedRoom(null); // Réinitialisation de la salle sélectionnée lors de la fermeture de la modale
   };
 
-  const handleToggleRoomStatus = (id: number, status: boolean) => {
-    // Mise à jour du statut de la salle
-    const roomToEdit = roomsData.find((room) => room.id === id);
-    if (roomToEdit) {
-      /*       const updatedRoom = {
-        id: roomToEdit.id,
-        name: roomToEdit.name,
-        description: roomToEdit.description,
-        capacity: roomToEdit.capacity,
-        floor: roomToEdit.floor,
-        establishment: roomToEdit.establishment,
-        status: status
-      }; */
-      // Service à mettre ici
-      setRoomsData((prevData) =>
-        prevData.map((room) =>
-          room.id === id ? { ...room, status: status } : room
-        )
-      );
-      console.log(`Salle avec ID ${id} mise à jour : ${status}.`);
-    }
+  const handleToggleRoomStatus = async (id: number, status: boolean) => {
+    const res = toggleAccount(id,status);
+    setRoomsData(await res);
   };
 
   const handleEditRoom = (id: number) => {

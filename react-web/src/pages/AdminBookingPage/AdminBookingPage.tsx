@@ -4,6 +4,7 @@ import reservations from '@assets/data/reservations.json';
 import conflicts from '@assets/data/conflicts.json';
 import { useUser } from '@hooks';
 import { AdminBookingLayout } from '@components/templates/AdminBookingLayout';
+import { getConflictsaAndReservations } from '@services/AdminServices';
 
 export const AdminBookingPage: React.FC = () => {
   const { t } = useTranslation();
@@ -11,6 +12,22 @@ export const AdminBookingPage: React.FC = () => {
   
   const [reservationsData, setReservationsData] = useState(reservations);
   const [conflictsData, setConflictsData] = useState(conflicts);
+
+    const fetchUserData = async () => {
+      try {
+        const res = await getConflictsaAndReservations(); // SERVICES
+        if (res) {
+          setConflictsData(res.conflicts); 
+          setReservationsData(res.reservations); 
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données utilisateurs:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchUserData();
+    }, []);
 
   return (
     <div>

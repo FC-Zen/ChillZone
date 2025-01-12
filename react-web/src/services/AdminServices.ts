@@ -36,10 +36,23 @@ export const deleteAccount = async (id: number) => {
  * 
  * @returns {Promise<Object>} Réponse de l'API.
  */
-export const toggleAccount = async (id: number, status: string) => {
+export const toggleAccount = async (id: number, status: boolean) => {
     try {
-        // AXIOS
-        return { success: true };
+        const response = await axios.put('http://localhost:3000/admin-rooms/', 
+            {
+                id : id,
+                status : status,
+            },
+            { 
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data.locations;
+            }
     } catch (error: any) {
         console.error('Erreur lors de la mise à jour du statut de l\'utilisateur:', error.message);
         throw new Error(error.message);
@@ -182,77 +195,74 @@ export const getAccounts = async () => {
  * 
  * @returns {Promise<Array>} Liste des salles.
  */
-export const getConflicts = async () => {
+export const getConflictsaAndReservations = async () => {
     try {
-        // Simule une réponse API
-        return;
+        const response = await axios.get('http://localhost:3000/admin-booking/', 
+            { 
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
     } catch (error: any) {
         console.error("Erreur lors de la récupération des salles:", error.message);
         throw new Error(error.message);
     }
 };
 
-/**
- * Récupère la liste des réservations depuis l'API.
- *
- * @throws {Error} Si la requête échoue.
- * 
- * @returns {Promise<Array>} Liste des salles.
- */
-export const getReservations = async () => {
-    try {
-        // Simule une réponse API
-        return;
-    } catch (error: any) {
-        console.error("Erreur lors de la récupération des salles:", error.message);
-        throw new Error(error.message);
-    }
-};
 
 /**
- * Récupère la liste des plans de l'établissement depuis l'API.
+ * Récupère la liste des plans de l'établissement depuis l'API. ET FLOORS
  *
  * @throws {Error} Si la requête échoue.
  * 
  * @returns {Promise<Array>} Liste des salles.
  */
-export const getFloors = async (): Promise<Floor[]> => {
+export const getListInputsValues = async () => {
     try {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(maps);
-            }, 500); // Simule un délai pour une API
-        });
+        const response = await axios.get('http://localhost:3000/admin-map/', 
+            { 
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
     } catch (error: any) {
         console.error("Erreur lors de la récupération des plans:", error.message);
         throw new Error(error.message);
     }
 };
 
-
 /**
- * Récupère la liste des plans de l'établissement depuis l'API.
+ * Récupère la liste des restaurants affiliés
  *
  * @throws {Error} Si la requête échoue.
  * 
- * @returns {Promise<Array>} Liste des salles.
+ * @returns {Promise<Array>} Liste des affiliations.
  */
-export const getListInputsValues = async () : Promise<Record<string, string>> => {
+export const getAffiliations = async () => {
     try {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve({
-                    name: "Établissement Central",
-                    address: "10 rue des Technologies",
-                    city: "Paris",
-                    postal_code: "75001",
-                    phone: "+33 1 23 45 67 89",
-                    email: "contact@etablissement.fr"
-                });
-            }, 500); // Simule un délai pour une API
-        });
+        const response = await axios.get('http://localhost:3000/admin-restaurants/', 
+            { 
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
     } catch (error: any) {
-        console.error("Erreur lors de la récupération des plans:", error.message);
+        console.error("Erreur lors de la récupération des affiliations:", error.message);
         throw new Error(error.message);
     }
 };
