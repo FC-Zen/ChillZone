@@ -12,9 +12,17 @@ export type Booking = {
   };
   day_reservation: string;
   start_time: string;
+  end_time?: string;
   establishment: {
     establishment_name: string;
   };
+};
+
+export type BookingOverlay = {
+  data: Booking;
+  title?: string;
+  titleBtn?: string;
+  cancelReservation?: () => void;
 };
 
 // Mappage des icônes pour chaque propriété
@@ -115,6 +123,35 @@ export const transformBookings = (): NavItem[] => {
   return navItems;
 };
 
+export const transformReservations = (): BookingOverlay[] => {
+  // const bookings = await fetchBookings(); Récupération des réservations
+  // const bookingOverlays: BookingOverlay[] = [];
+
+  // const booking = bookings[0];
+  // if (!booking) return bookingOverlays
+
+  const bookingOverlays: BookingOverlay[] = [];
+
+  reservations.forEach((booking) => {
+    bookingOverlays.push({
+      data: {
+        id: booking.reservation_id,
+        location: {
+          location_name: booking.location.location_name,
+          floor_name: booking.location.floor_name,
+        },
+        day_reservation: booking.day_reservation,
+        start_time: booking.start_time.substring(0, 5).replace(':', 'H'),
+        end_time: booking.end_time.substring(0, 5).replace(':', 'H'),
+        establishment: {
+          establishment_name: booking.establishment.establishment_name,
+        },
+      },
+    });
+  });
+
+  return bookingOverlays;
+};
 /**
  * Récupère les salles disponibles depuis l'API
  * @returns {Promise<any[]>} Liste des salles dispo

@@ -1,6 +1,5 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Utilisation de React Router
-import { Home, Pizza, Document, Package } from '@components/atoms/Icons';
+import { Home, Pizza, Package } from '@components/atoms/Icons';
 import { NavigationButton } from '@components/molecules';
 import { colors } from '@theme';
 import { ROUTE } from '@enums'; // Import de vos routes
@@ -31,22 +30,23 @@ export const OwnerSidebar = () => {
         onClick={() => handleIconClick(ROUTE.OWNER_DASHBOARD)}
       />
 
-      {/* Profil du propriétaire */}
+      {/* Produits */}
       <NavigationButton
         icon={<Pizza color={colors.white} />}
-        onClick={() =>  handleIconClick(ROUTE.OWNER_MEALS)} // Ajuster cette route si nécessaire
+        onClick={() =>  handleIconClick(ROUTE.OWNER_MEALS)}
       />
+
+      {/* Menus SEMESTRE 2 
+      <NavigationButton
+        icon={<Document color={colors.white} />}
+        onClick={() => handleIconClick('/owner-orders')} 
+      />
+      */}
 
       {/* Commandes */}
       <NavigationButton
-        icon={<Document color={colors.white} />}
-        onClick={() => handleIconClick('/owner-orders')} // Ajuster cette route si nécessaire
-      />
-
-      {/* Produits */}
-      <NavigationButton
         icon={<Package color={colors.white} />}
-        onClick={() => handleIconClick(ROUTE.OWNER_ORDERS)} // Ajuster cette route si nécessaire
+        onClick={() => handleIconClick(ROUTE.OWNER_ORDERS)} 
       />
     </div>
   );

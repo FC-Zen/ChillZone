@@ -1,4 +1,4 @@
-export { Checkbox } from './atoms';
+export { Checkbox, Icon, IconProps } from './atoms';
 export {
   BookingInfo,
   BottomNavbar,
@@ -8,6 +8,7 @@ export {
   IconWithText,
   NotificationItem,
   NotificationPopup,
+  Overlay,
   PageHeader,
   ReservationButton,
   RestaurantCard,
@@ -25,6 +26,7 @@ export {
   ForgotMdp,
   ForgotPassword,
   Map,
+  OverlayList,
   ResetPassword,
   RestaurantSlider,
   RoomAvailable,
@@ -40,6 +42,7 @@ export {
   RestaurationTemplate,
   PaymentTemplate,
   FinalPaymentTemplate,
+  ReservationSummaryTemplate,
   ReservationTemplate,
   AccountTemplate,
   MenuTemplate,

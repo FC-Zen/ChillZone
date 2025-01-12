@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AccountModal } from '@components/organisms'; // Composant de modale
+import { Modal } from '@components/organisms'; // Composant de modale
 import { AdminAccountLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import users from '@assets/data/users.json';
@@ -13,25 +13,29 @@ export const AdminAccountPage: React.FC = () => {
 
   const listInputs = [
     {
-      name: t('fields.common.first_name'),
+      name: "first_name",
+      label: t('fields.common.first_name'),
       type: "text",
       icon: "User",
       required: true,
     },
     {
-      name: t('fields.common.last_name'),
+      name: "last_name",
+      label: t('fields.common.last_name'),
       type: "text",
       icon: "User",
       required: true,
     },
     {
-      name: t('fields.common.type_role'),
+      name: "role",
+      label: t('fields.common.type_role'),
       type: "text",
       icon: "Box",
       required: true,
     },
     {
-      name: t('fields.common.mail'),
+      name: "mail",
+      label: t('fields.common.mail'),
       type: "text",
       icon: "Envelope",
       required: true,
@@ -82,10 +86,10 @@ export const AdminAccountPage: React.FC = () => {
     // Simulation à la place
     const newAccount = {
       id: Math.max(...userData.map((u) => u.id)) + 1,
-      first_name: formData.get('first_name') as string,
-      last_name: formData.get('last_name') as string,
-      role: formData.get('role') as string,
-      email: formData.get('email') as string,
+      first_name: formData.get("first_name") as string,
+      last_name: formData.get("last_name") as string,
+      role: formData.get("role") as string,
+      email: formData.get("mail") as string,
       establishment: formData.get('establishment') as string,
       reservation_count: 0,
       status: 'Unverified',
@@ -115,12 +119,12 @@ export const AdminAccountPage: React.FC = () => {
       />
 
       {/* Modale pour la création d’un compte */}
-      <AccountModal
+      <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        addAccount={handleAddAccount}
+        handleForm={handleAddAccount}
         listInputs={listInputs}
-        title="Création d’un compte de test étudiant"
+        title={t("modals.create.account")}
       />
     </>
   );

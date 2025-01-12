@@ -13,3 +13,4 @@ export { FinalPaymentTemplate } from './FinalPaymentTemplate';
 export { ReservationTemplate } from './ReservationTemplate';
 export { AccountTemplate } from './AccountTemplate';
 export { MenuTemplate } from './MenusTemplate';
+export { ReservationSummaryTemplate } from './ReservationSummaryTemplate';

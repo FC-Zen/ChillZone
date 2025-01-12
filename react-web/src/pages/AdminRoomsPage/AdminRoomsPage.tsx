@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { AccountModal } from '@components/organisms'; // Composant de modale
 import { AdminRoomLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
+import { Modal } from '@components/organisms';
+import { InputField } from '@components/organisms/ModalForm/ModalForm';
 import { getRooms } from '@services/AdminServices';
 
 type Room = {
@@ -32,6 +33,71 @@ export const AdminRoomsPage: React.FC = () => {
   }, []);
 
   const [selectedRoom, setSelectedRoom] = useState<null | Room>(null);
+
+  const listInputs = [
+    {
+      name: "name",
+      label: t("fields.common.room"),
+      type: "text",
+      icon: "User", 
+      placeholder: "Nom de la salle",
+      value: selectedRoom?.name,
+      required: true,
+    },
+    {
+      name: "description",
+      label: t("fields.common.description"), 
+      type: "textarea",
+      icon: "Browser", 
+      placeholder: "Description",
+      value: selectedRoom?.description,
+      required: true,
+    },
+/*     {
+      name: "type_room",
+      label: t("fields.common.roomtype"), 
+      type: "select",
+      icon: "Browser", 
+      placeholder: "Description",
+      options: [
+        { tag: "Box Acoustique" },
+        { tag: "Salle de classe" },
+      ], //TODO: Service pour prendre les tag categorie de room
+      value: selectedRoom?.type_room,
+      required: true,
+    }, */
+    {
+      name: "capacity",
+      label: t("fields.common.capacity"),
+      type: "number",
+      icon: "Users", 
+      placeholder: "Capacité",
+      value: selectedRoom?.capacity,
+      required: true,
+    },
+    {
+      name: "floor",
+      label: t("fields.common.floor"), 
+      type: "select",
+      icon: "User", 
+      options: [
+        { tag: "RDC" },
+        { tag: "1er étage" },
+        { tag: "2ème étage" },
+      ], //TODO: Service pour prendre les étages
+      value: selectedRoom?.floor_name,
+      placeholder: "Étage",
+      required: true,
+    },
+    {
+      name: "RoomPicture",
+      label: t("fields.common.establishment"), 
+      type: "file",
+      icon: "User",
+      value: selectedRoom?.establishment,
+      required: true,
+    },
+  ] as InputField[];
 
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => {
@@ -70,11 +136,9 @@ export const AdminRoomsPage: React.FC = () => {
     }
   };
 
-  const handleUpdateRoom = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleUpdateRoom = (formData: FormData) => {
     if (!selectedRoom) return;
 
-    const formData = new FormData(event.currentTarget);
     const updatedRoom = {
       id: selectedRoom.id,
       name: formData.get('name') as string,
@@ -96,9 +160,7 @@ export const AdminRoomsPage: React.FC = () => {
     console.log('Salle mise à jour :', updatedRoom);
   };
 
-  const handleAddRoom = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  const handleAddRoom = (formData: FormData) => {
     const newRoom = {
       id: Math.max(...roomsData.map((r) => r.id)) + 1,
       name: formData.get('name') as string,
@@ -134,6 +196,13 @@ export const AdminRoomsPage: React.FC = () => {
         data={roomsData}
       />
 
+      <Modal 
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        handleForm={selectedRoom ? handleUpdateRoom : handleAddRoom}
+        listInputs={listInputs}
+        title={selectedRoom ?  t("modals.edit.room") : t("modals.create.room")}
+      />
     </div>
   );
 };

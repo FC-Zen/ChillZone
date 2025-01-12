@@ -20,7 +20,6 @@ type AdminEstablishmentLayoutProps = {
   part: string;
   role: string;
   form: InputField[];
-  formvalues : Record<string, string>;
   addAccount: (formData: FormData) => void;
   mapName: string;
   mapImageSrc: string;
@@ -118,8 +117,9 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
             </Typography>
 
             <ModalForm 
-            addAccount={addAccount} 
-            listInputs={form} />
+              onSubmit={addAccount} 
+              listInputs={form} 
+            />
           </div>
 
         </main>

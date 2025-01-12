@@ -39,7 +39,7 @@
       "menu": "Créer un menu"
     },
     "info": {
-      "command": "Détails de la commande {{ command }}",
+      "command": "Détails de la commande",
       "establishment": "Informations de l’établissement",
       "infoSignIn": "Votre demande a été bien envoyée à l’administrateur de l’établissement concerné par votre demande. Vous recevrez un mail d’ici peu",
       "infoPwd": "Si le compte existe, vous receverez un mail sous peu",
@@ -220,7 +220,10 @@
       "price": "Prix",
       "quantity": "Quantité",
       "tag": "Tags",
-      "file": "Fichier"
+      "file": "Fichier",
+      "room": "Nom de la salle",
+      "floor": "Etage",
+      "roomtype": "Type de salle"
     },
     "auth": {
       "password": "Mot de passe",
@@ -336,6 +339,8 @@
         "collectionStartTime": "Début de l’heure de collecte",
         "client": "Nom du client",
         "creation_date": "Date de création",
+        "meal_name": "Nom de la commande",
+        "quantity": "Quantité",
         "actions": {
           "viewcommand": "Voir la commande",
           "actionDetails": "Détails de la commande",
@@ -395,11 +400,11 @@
   },
 
   "command": {
-    "status": "Statut de la commande :",
-    "user": "Nom du client :",
+    "status": "Statut de la commande",
+    "user": "Nom du client",
     "creation_date": "Date de la commande",
     "total_amount": "Prix de la commande",
-    "pickup_time": "Heure de la collecte prévu :"
+    "pickup_time": "Heure de la collecte prévu"
   },
 
   "months": {
