@@ -3,7 +3,7 @@ from chillzone.models import Map
 
 class MapFloor(models.Model):
 
-    number = models.PositiveSmallIntegerField
+    number = models.PositiveSmallIntegerField()
 
     name = models.CharField(max_length=100)
 

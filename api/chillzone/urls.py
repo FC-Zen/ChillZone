@@ -50,6 +50,9 @@ urlpatterns = [
     path('admin-dashboard/', admin_boards.AdminDashboardView.as_view(), name='Admin Dashboard'),
     path('admin-accounts/', admin_boards.AdminUserView.as_view(), name='Admin List / Create / Update User'),
     path('admin-rooms/', admin_boards.AdminLocationView.as_view(), name='Admin List / Create / Update Location'),
+    path('admin-booking/', admin_boards.AdminReservationConflictView.as_view(), name='Admin List Reservation / Conflict'),
+    path('admin-map/', admin_boards.AdminMapView.as_view(), name='Admin List / Create / Update / Delete Map'),
+    path('admin-restaurants/', admin_boards.AdminRestaurantView.as_view(), name='Admin List / Create / Update / Delete Restaurant'),
     path('admin-faq/', faq.AdminFAQView.as_view(), name='Admin List / Create / Update / Delete FAQ'),
     path('admin-network/', network.AdminNetworkView.as_view(), name='Admin List / Create / Update / Delete Network'),
 

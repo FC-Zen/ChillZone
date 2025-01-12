@@ -7,8 +7,6 @@ class MapFloorSerializer(serializers.ModelSerializer) :
         fields = ['pk', 'number', 'name', 'photo_link']
 
 class AdminMapFloorSerializer(serializers.ModelSerializer):
-    floor_id = serializers.IntegerField(source='id')
-
     class Meta:
         model = MapFloor
-        fields = ['floor_id', 'number', 'name', 'photo_link']
+        fields = ['id', 'number', 'name', 'photo_link']

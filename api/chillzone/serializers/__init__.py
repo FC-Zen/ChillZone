@@ -12,7 +12,7 @@ from .faq import FAQSerializer, AdminFAQSerializer
 from .is_located import IsLocatedSerializer
 from .line_content import LineContentSerializer
 from .link_to import LinkToSerializer
-from .location import LocationSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer
+from .location import LocationSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminCreateLocationSerializer
 from .location_reservation import LocationReservationSerializer, AdminLocationReservationSerializer
 from .log import LogSerializer
 from .map import MapSerializer
@@ -25,7 +25,7 @@ from .notification import NotificationSerializer
 from .notification_center import NotificationCenterSerializer
 from .reservation import ReservationSerializer
 from .restauration_place import OpenRestaurantSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer
-from .tag import TagSerializer
+from .tag import AdminAvailableTypeSerializer
 from .tag_category import TagCategorySerializer
 from .tagging import TaggingSerializer
 from .user import UserCreateSerializer, UserLoginSerializer, UserSerializer, AdminUserSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer

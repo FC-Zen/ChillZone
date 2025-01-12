@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from chillzone.models import Location, MapFloor, IsLocated
+from chillzone.models import Location, MapFloor, IsLocated, Tag
 
 class LocationSerializer(serializers.ModelSerializer) :
     class Meta:
@@ -22,3 +22,8 @@ class AdminAvailableFloorsSerializer(serializers.ModelSerializer):
     class Meta:
         model = MapFloor
         fields = ['id', 'name']
+
+class AdminCreateLocationSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Location
+            fields = ['id', 'name', 'photo_link', 'description', 'capacity', 'position_x', 'position_y', 'id_type', 'id_floor']

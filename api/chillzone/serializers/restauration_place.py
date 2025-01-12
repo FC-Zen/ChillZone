@@ -7,8 +7,6 @@ class OpenRestaurantSerializer(serializers.ModelSerializer):
         fields = ['name', 'description', 'location', 'restauration_type', 'opening_time', 'closing_time', 'photo_link']
 
 class AdminConfirmedRestaurantSerializer(serializers.ModelSerializer):
-    status = serializers.BooleanField(source='linkto.status')
-
     class Meta:
         model = RestaurationPlace
         fields = ['id', 'name', 'restauration_type', 'location', 'email', 'status']

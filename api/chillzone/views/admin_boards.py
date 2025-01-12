@@ -8,8 +8,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.models import User
 from chillzone.services import EmailService
-from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo
-from chillzone.serializers import AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
+from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo, Tag, TagCategory, IsLocated
+from chillzone.serializers import AdminCreateLocationSerializer, AdminAvailableTypeSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
 
 import random
 import string
@@ -186,22 +186,104 @@ class AdminUserView(generics.ListAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class AdminLocationView(generics.ListAPIView):
+    serializer_class = AdminCreateLocationSerializer
     permission_classes = [IsAuthenticated & IsAdminUser]
 
     def get(self, request):
-            establishment = request.user.usermeta.establishment
+        establishment = request.user.usermeta.establishment
 
-            locations = Location.objects.filter(islocated__establishment=establishment)
-            location_serializer = AdminLocationSerializer(locations, many=True)
+        locations = Location.objects.filter(islocated__establishment=establishment)
+        location_serializer = AdminLocationSerializer(locations, many=True)
 
-            floors = MapFloor.objects.filter(map__establishment=establishment)
-            floor_serializer = AdminAvailableFloorsSerializer(floors, many=True)
+        floors = MapFloor.objects.filter(map__establishment=establishment)
+        floor_serializer = AdminAvailableFloorsSerializer(floors, many=True)
 
-            return Response({
-                "locations": location_serializer.data,
-                "available_floors": floor_serializer.data
-            })
+        try:
+            location_category = TagCategory.objects.get(libelle="Location")
+        except TagCategory.DoesNotExist:
+            return Response({"error": "Tag category 'Location' not found."}, status=status.HTTP_404_NOT_FOUND)
 
+        tags = Tag.objects.filter(id_tag_category=location_category)
+        serializer = AdminAvailableTypeSerializer(tags, many=True)
+
+        return Response({
+            "locations": location_serializer.data,
+            "available_floors": floor_serializer.data,
+            "available_types": serializer.data
+        })
+    
+    def post(self, request) :
+        user_meta = request.user.usermeta
+        establishment = user_meta.establishment
+
+        if not establishment:
+            return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = AdminCreateLocationSerializer(data=request.data)
+        if serializer.is_valid():
+            tag = Tag.objects.filter(id=request.data.get("id_type")).first()
+            if not tag:
+                return Response({"error": f"Type '{request.data.get("id_type")}' not found."}, status=status.HTTP_404_NOT_FOUND)
+            
+            floor = MapFloor.objects.filter(id=request.data.get("id_floor")).first()
+            if not tag:
+                return Response({"error": f"Type '{request.data.get("id_floor")}' not found."}, status=status.HTTP_404_NOT_FOUND)
+
+            location = Location.objects.create(
+                name=serializer.validated_data['name'],
+                description=serializer.validated_data['description'],
+                photo_link=serializer.validated_data['photo_link'],
+                id_type=tag,
+                id_floor=floor,
+                capacity=serializer.validated_data['capacity'],
+                position_x=serializer.validated_data['position_x'],
+                position_y=serializer.validated_data['position_y']
+            )
+
+            IsLocated.objects.create(
+                establishment=establishment,
+                location=location
+            )
+
+            return self.get(request)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        user_meta = request.user.usermeta
+        establishment = user_meta.establishment
+
+        if not establishment:
+            return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
+
+        location_id = request.data.get("id")
+        new_status = request.data.get("status")
+
+        if not location_id:
+            return Response({"error": "Location ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if new_status is not None:
+            try:
+                location = Location.objects.get(id=location_id, islocated__establishment=establishment)
+            except Location.DoesNotExist:
+                return Response({"error": "Location not found or does not belong to your establishment."}, status=status.HTTP_404_NOT_FOUND)
+
+            location.status = new_status
+            location.save()
+            return self.get(request)
+   
+        else :
+            try:
+                location = Location.objects.get(id=location_id, islocated__establishment=establishment)
+            except Location.DoesNotExist:
+                return Response({"error": "Location not found or does not belong to your establishment."}, status=status.HTTP_404_NOT_FOUND)
+
+            serializer = AdminCreateLocationSerializer(location, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return self.get(request)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class AdminReservationConflictView(APIView):
     permission_classes = [IsAuthenticated & IsAdminUser]

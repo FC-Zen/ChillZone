@@ -8,6 +8,7 @@ class LocationReservationSerializer(serializers.ModelSerializer) :
 
 class AdminLocationReservationSerializer(serializers.ModelSerializer):
     location_name = serializers.CharField(source='location.name')
+    status = serializers.CharField(source='reservation.status')
 
     class Meta:
         model = LocationReservation

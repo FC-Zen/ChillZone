@@ -22,6 +22,6 @@ class Location(models.Model) :
     
     modification_date = models.DateTimeField(auto_now=True) 
 
-    id_tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    id_type = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
     id_floor = models.ForeignKey(MapFloor, on_delete=models.CASCADE)
