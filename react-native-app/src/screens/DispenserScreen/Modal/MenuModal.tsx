@@ -54,6 +54,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
           price: parseFloat(menu.price.replace('€', '')),
           type: 'meal',
           quantity: 1,
+          meals: selectedMealsList.map((meal) => (meal.title)),
           onDecrement: handleDecrement,
           onIncrement: handleIncrement,
           onDelete: () => {

@@ -34,7 +34,7 @@ export const PaymentScreen = () => {
             inputCardCVC={cardCVC}
             inputCardCVCSubtitle={t("cart.numbers")}
             setInputCardCVC={setCardCVC}
-            payButtonText={t("buttons.actions.pay") + ` ${totalAmount}€`}
+            payButtonText={t("buttons.actions.pay") + ` ${totalAmount.toFixed(2)}€`}
             payButtonIcon={{ 
                 name: "Lock",
                 color: colors.resolutionBlue,

@@ -24,7 +24,7 @@ import {
 } from '@screens';
 import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { CommandProvider, UserProvider } from '@contexts/AppContrext';
+import { CommandProvider, NextBookingContext, NextBookingProvider, UserProvider } from '@contexts/AppContrext';
 import { colors } from '@theme';
 import { Bounce } from 'react-native-animated-spinkit';
 
@@ -62,6 +62,7 @@ export const RootNavigator = () => {
 
   return (
     <SafeAreaProvider>
+      <NextBookingProvider>
       <CommandProvider>
         <UserProvider>
           <NavigationContainer>
@@ -160,6 +161,7 @@ export const RootNavigator = () => {
           </NavigationContainer>
         </UserProvider>
       </CommandProvider>
+      </NextBookingProvider>
     </SafeAreaProvider>
   );
 };

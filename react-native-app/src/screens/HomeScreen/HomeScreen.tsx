@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { TopBar } from '@components/molecules/TopBar';
 import { BottomNavbar, SnackBar } from '@components/molecules';
-import { useUser } from '@contexts/AppContrext';
+import { useNextBooking, useUser } from '@contexts';
 import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
 import { styles } from './style';
 import { transformBookings } from '@services';
@@ -26,9 +26,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ route }) => {
   let items = transformBookings();
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const [nextBooking, setNextBooking] = useState<NavItem[] | null>(
-    route?.params?.data
-  );
+  const { nextBooking, updateNextBooking } = useNextBooking();
 
   if (nextBooking) {
     items = nextBooking;
@@ -55,7 +53,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ route }) => {
   // Annuler une reservation
   const handleCancelReservation = () => {
     console.log('Annuler la réservation');
-    setNextBooking(null);
+    updateNextBooking([]);
     setSnackbar({
       open: true,
       severity: 'success',

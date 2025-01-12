@@ -1,3 +1,4 @@
+import { NavItem } from '@components/molecules/BookingInfo';
 import { ItemProps } from '@components/organisms';
 import { Booking } from '@services/BookingInfoServices';
 import { Room } from '@services/RoomServices';
@@ -74,6 +75,40 @@ export const useCommand = () => {
   const context = useContext(CommandContext);
   if (!context) {
     throw new Error('useCommand must be used within a CommandProvider');
+  }
+  return context;
+};
+
+export type NextBookingContextType = {
+  nextBooking: NavItem[];
+  updateNextBooking: (booking: NavItem[]) => void;
+};
+
+export const NextBookingContext = createContext<NextBookingContextType | undefined>(
+  undefined
+);
+
+export const NextBookingProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [nextBooking, updateNextBooking] = useState<NavItem[]>([]);
+
+  return (
+    <NextBookingContext.Provider
+      value={{
+        nextBooking,
+        updateNextBooking,
+      }}
+    >
+      {children}
+    </NextBookingContext.Provider>
+  );
+};
+
+export const useNextBooking = () => {
+  const context = useContext(NextBookingContext);
+  if (!context) {
+    throw new Error('useNextBooking must be used within a NextBookingProvider');
   }
   return context;
 };
