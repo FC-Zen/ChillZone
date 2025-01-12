@@ -80,8 +80,8 @@ export const useCommand = () => {
 };
 
 export type NextBookingContextType = {
-  nextBooking: NavItem[];
-  updateNextBooking: (booking: NavItem[]) => void;
+  nextBooking: NavItem[][];
+  updateNextBooking: (booking: NavItem[][]) => void;
 };
 
 export const NextBookingContext = createContext<NextBookingContextType | undefined>(
@@ -91,7 +91,7 @@ export const NextBookingContext = createContext<NextBookingContextType | undefin
 export const NextBookingProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [nextBooking, updateNextBooking] = useState<NavItem[]>([]);
+  const [nextBooking, updateNextBooking] = useState<NavItem[][]>([]);
 
   return (
     <NextBookingContext.Provider

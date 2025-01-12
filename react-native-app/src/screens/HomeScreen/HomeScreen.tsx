@@ -21,15 +21,21 @@ type HomeScreenProps = {
   };
 };
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({ route }) => {
+export const HomeScreen: React.FC<HomeScreenProps> = () => {
   const { userName } = useUser();
-  let items = transformBookings();
+  let items = [transformBookings()];
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { nextBooking, updateNextBooking } = useNextBooking();
 
   if (nextBooking) {
     items = nextBooking;
+  }
+
+  // Recupère la réservation à venir, la plus proche de la date actuelle
+  const getNextBooking = () => {
+    const nextBooking = items[0];
+    return nextBooking;
   }
 
   const [snackbar, setSnackbar] = useState<{
@@ -113,7 +119,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ route }) => {
       <HomeScreenTemplate
         welcomeMessage={restaurantWords}
         username={userName}
-        items={items}
+        items={getNextBooking()}
         reservationButtonProps={{
           title: t('buttons.actions.cancelReservation'),
           onPress: handleCancelReservation,

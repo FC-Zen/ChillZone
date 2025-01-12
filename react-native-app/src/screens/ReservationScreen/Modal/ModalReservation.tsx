@@ -33,10 +33,10 @@ export const ReservationModal: FC<ReservationModalProps> = ({
   const { roomName, date, duration, timeSlot, floor, capacity, room } = data;
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const { updateNextBooking } = useNextBooking();
+  const { nextBooking, updateNextBooking } = useNextBooking();
 
   const transformDataToNavItems = (): NavItem[] => {
-    const navItems: NavItem[] = [];
+  const navItems: NavItem[] = [];
 
     if (roomName || room?.name) {
       navItems.push({
@@ -85,7 +85,7 @@ export const ReservationModal: FC<ReservationModalProps> = ({
 
   const handleCloseAndNavigate = () => {
     onClose();
-    updateNextBooking(transformDataToNavItems());
+    updateNextBooking([...nextBooking, transformDataToNavItems()]);
     navigation.navigate(ROUTE.HOME);
   };
 
