@@ -235,5 +235,12 @@
     "second": "second",
     "now": "now",
     "day": "day"
+  },
+
+  "notification": {
+    "title": "New Reservation !",
+    "reservation": "Your reservation for {{roomName}} has been confirmed.",
+    "paymentSuccessTitle": "Payment Successful !",
+    "paymentSuccessBody": "Your payment with ID {{commandId}} was processed successfully."
   }
 }

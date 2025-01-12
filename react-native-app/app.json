@@ -1,7 +1,12 @@
 {
-    "expo": {
-        "name": "react-native-app",
-        "slug": "react-native-app",
-        "newArchEnabled": true
+  "expo": {
+    "name": "react-native-app",
+    "slug": "react-native-app",
+    "newArchEnabled": true,
+    "extra": {
+      "eas": {
+        "projectId": "1ecca460-79bb-413f-aac0-16dd66a71935"
+      }
     }
+  }
 }

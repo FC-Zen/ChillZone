@@ -10,6 +10,7 @@ import { ROUTE } from '@enums';
 import { Room } from '@services/RoomServices';
 import { NavItem } from '@components/molecules/BookingInfo';
 import { useNextBooking } from '@contexts';
+import { useNotifications } from '@hooks/useNotifications';
 
 type ReservationModalProps = {
   isVisible: boolean;
@@ -34,9 +35,10 @@ export const ReservationModal: FC<ReservationModalProps> = ({
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { nextBooking, updateNextBooking } = useNextBooking();
+  const { scheduleNotification } = useNotifications();
 
   const transformDataToNavItems = (): NavItem[] => {
-  const navItems: NavItem[] = [];
+    const navItems: NavItem[] = [];
 
     if (roomName || room?.name) {
       navItems.push({
@@ -83,10 +85,28 @@ export const ReservationModal: FC<ReservationModalProps> = ({
     return navItems;
   };
 
-  const handleCloseAndNavigate = () => {
-    onClose();
-    updateNextBooking([...nextBooking, transformDataToNavItems()]);
-    navigation.navigate(ROUTE.HOME);
+  const handleCloseAndNavigate = async () => {
+    // Mise à jour de la réservation
+    try {
+      onClose();
+      updateNextBooking([...nextBooking, transformDataToNavItems()]);
+
+      navigation.navigate(ROUTE.HOME);
+
+      if (roomName || room?.name) {
+        await scheduleNotification(
+          t('notification.title'),
+          t('notification.reservation', { roomName: roomName || room?.name }),
+          {
+            roomName: roomName || room?.name,
+            date: date?.[0],
+            timeSlot: timeSlot?.[0],
+          }
+        );
+      }
+    } catch (error) {
+      console.error('Error handling reservation:', error);
+    }
   };
 
   return (
