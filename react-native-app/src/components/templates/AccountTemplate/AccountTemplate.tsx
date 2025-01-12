@@ -20,6 +20,8 @@ export type AccountTemplateProps = {
   onOpenEditInfoModal: () => void;
   onNavigateToReservations: () => void;
   onNavigateToCommand: () => void;
+  onChangePicture: () => void;
+  onDeletePicture: () => void;
 };
 
 export const AccountTemplate: React.FC<AccountTemplateProps> = ({
@@ -32,34 +34,11 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
   onOpenEditInfoModal,
   onNavigateToReservations,
   onNavigateToCommand,
+  onChangePicture,
+  onDeletePicture,
 }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
-
-  const handleChangePicture = async () => {
-    try {
-      const mockFile = 'file://example-path/profile-picture.png';
-      await accountServices.changeProfilePicture(mockFile);
-      Alert.alert('Succès', 'Votre photo de profil a été mise à jour.');
-    } catch (error) {
-      Alert.alert(
-        'Erreur',
-        (error as any).message || 'Une erreur est survenue.'
-      );
-    }
-  };
-
-  const handleDeletePicture = async () => {
-    try {
-      await accountServices.deleteProfilePicture();
-      Alert.alert('Succès', 'Votre photo de profil a été supprimée.');
-    } catch (error) {
-      Alert.alert(
-        'Erreur',
-        (error as any).message || 'Une erreur est survenue.'
-      );
-    }
-  };
 
   return (
     <ScrollView
@@ -74,8 +53,8 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
         onBackPress={() => navigation.navigate(ROUTE.HOME)}
       />
       <ProfileHeaderWithModal
-        onChangePicture={handleChangePicture}
-        onDeletePicture={handleDeletePicture}
+        onChangePicture={onChangePicture}
+        onDeletePicture={onDeletePicture}
       />{' '}
       <AccountOptionsList
         isDarkTheme={isDarkTheme}

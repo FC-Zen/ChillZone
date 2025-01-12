@@ -128,7 +128,6 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
             icon={{ name: 'Refresh', color: colors.white }}
             variant="icon"
             style={styles.resetButton}
-            textStyle={styles.resetButtonText} // Ajoute le style spécifique au texte
             color={colors.resolutionBlue}
             textColor={colors.white}
             onPress={onOpenResetPasswordModal}

@@ -7,12 +7,13 @@ import { useTranslation } from 'react-i18next';
 import { useUser } from '@contexts/AppContrext';
 
 export const ProfileHeaderWithModal: React.FC<{
-  onChangePicture: () => Promise<void>; // Gestion du changement de photo
-  onDeletePicture: () => Promise<void>; // Gestion de la suppression de photo
+  onChangePicture: () => void; // Gestion du changement de photo
+  onDeletePicture: () => void; // Gestion de la suppression de photo
 }> = ({ onChangePicture, onDeletePicture }) => {
   const [isModalOpen, setModalOpen] = React.useState(false);
   const { t } = useTranslation();
-  const { userName } = useUser(); // Récupération du nom d'utilisateur depuis le contexte
+  let { userName } = useUser(); // Récupération du nom d'utilisateur depuis le contexte
+  userName = userName ?? ''; // Provide a default value if userName is null
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -20,10 +21,7 @@ export const ProfileHeaderWithModal: React.FC<{
   return (
     <View style={styles.container}>
       {/* Header du profil */}
-      <ProfileHeader
-        name={userName || t('fields.common.default_username')}
-        onOpenModal={openModal}
-      />
+      <ProfileHeader name={userName} onOpenModal={openModal} />
 
       {/* Modale */}
       <ChangeProfilePictureModal

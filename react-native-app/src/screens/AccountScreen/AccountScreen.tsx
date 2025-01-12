@@ -105,6 +105,31 @@ export const AccountScreen: React.FC = () => {
     }
   };
 
+  const handleChangePicture = async () => {
+    try {
+      const mockFile = 'file://example-path/profile-picture.png';
+      await accountServices.changeProfilePicture(mockFile);
+      Alert.alert('Succès', 'Votre photo de profil a été mise à jour.');
+    } catch (error) {
+      Alert.alert(
+        'Erreur',
+        (error as any).message || 'Une erreur est survenue.'
+      );
+    }
+  };
+
+  const handleDeletePicture = async () => {
+    try {
+      await accountServices.deleteProfilePicture();
+      Alert.alert('Succès', 'Votre photo de profil a été supprimée.');
+    } catch (error) {
+      Alert.alert(
+        'Erreur',
+        (error as any).message || 'Une erreur est survenue.'
+      );
+    }
+  };
+
   return (
     <SafeAreaView
       style={[styles.container, isDarkTheme && styles.darkContainer]}
@@ -120,9 +145,9 @@ export const AccountScreen: React.FC = () => {
         onNavigateToReservations={() =>
           navigation.navigate(ROUTE.RESERVATION_SUMMARY)
         }
-        onNavigateToCommand={() =>
-          navigation.navigate(ROUTE.COMMAND_SUMMARY)
-        }
+        onNavigateToCommand={() => navigation.navigate(ROUTE.COMMAND_SUMMARY)}
+        onChangePicture={handleChangePicture} // Ajouté ici
+        onDeletePicture={handleDeletePicture} // Ajouté ici
       />
 
       {/* Modales */}
