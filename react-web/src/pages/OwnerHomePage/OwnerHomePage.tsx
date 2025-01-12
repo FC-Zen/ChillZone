@@ -1,19 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { OwnerHomeLayout } from '@components/templates';
 import { OwnerDashboardGraphs } from '@components/organisms';
-import { StatCard } from '@components/molecules'; // Réutilisation du StatCard d'Admin
+import { CustomSwitch, StatCard } from '@components/molecules'; // Réutilisation du StatCard d'Admin
 import { User, Flag, Layers, Graduation } from '@components/atoms/Icons'; // Icônes nécessaires
 import { colors } from '@theme'; // Couleurs
 import OwnerCardData from '@assets/fr.json'; // Import des données FR (renommées)
 import OwnerCardDataValues from '@assets/data/stat_card_value.json'; // Import des données FR (renommées)
 import { useUser } from '@hooks';
+import { useTranslation } from 'react-i18next';
 
 export const OwnerHomePage: React.FC = () => {
   const { user } = useUser();
+  const { t } = useTranslation();
+  const [restaurantOpen, setRestaurantOpen] = useState<boolean>(false);
     
   // Section des statistiques
   const statsSection = (
     <div className="space-y-6">
+      <div className="p-4 bg-red rounded-lg shadow-md flex items-center space-x-4 relative" style={
+        { 
+          background: restaurantOpen ? colors.green : colors.red,
+          fontWeight: "bold",
+          color: colors.white,
+        }
+      }>
+        <CustomSwitch onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRestaurantOpen(!restaurantOpen)}/>
+        <h2>Votre restaurant est {restaurantOpen ? t('status.open') : t('status.close') }</h2>
+      </div>
       <StatCard
         icon={<User color={colors.white} />}
         title={OwnerCardData.dashboard.info.mostWantedProduct}
@@ -57,13 +70,6 @@ export const OwnerHomePage: React.FC = () => {
     </div>
   );
 
-  function t(key: string): string {
-    const translations: { [key: string]: string } = {
-      'navbar.home': 'Accueil',
-      // Ajoutez d'autres traductions ici si nécessaire
-    };
-    return translations[key] || key;
-  }
   return (
     <OwnerHomeLayout
       userEmail={user?.userEmail ?? ""}
