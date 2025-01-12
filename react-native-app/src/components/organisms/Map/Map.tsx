@@ -26,7 +26,7 @@ export const Map: React.FC<MapProps> = ({ items, reservationButtonProps }) => {
       <View>
         <BookingInfo items={items} />
       </View>
-      <ReservationButton {...reservationButtonProps} />
+      {items.length !== 0 && <ReservationButton {...reservationButtonProps} />}
     </View>
   );
 };

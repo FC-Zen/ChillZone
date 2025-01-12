@@ -171,7 +171,8 @@
 
   "info": {
     "reservation": "Find your next reservation",
-    "restaurants": "Explore nearby restaurants"
+    "restaurants": "Explore nearby restaurants",
+    "noReservations": "You have no upcoming reservations"
   },
 
   "filters": {

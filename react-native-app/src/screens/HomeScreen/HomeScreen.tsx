@@ -11,7 +11,6 @@ import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
-import { Room } from '@services/RoomServices';
 import { NavItem } from '@components/molecules/BookingInfo';
 
 type HomeScreenProps = {
@@ -27,7 +26,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ route }) => {
   let items = transformBookings();
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const nextBooking = route?.params?.data;
+  const [nextBooking, setNextBooking] = useState<NavItem[] | null>(
+    route?.params?.data
+  );
 
   if (nextBooking) {
     items = nextBooking;
@@ -50,6 +51,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ route }) => {
   const [restaurantsData, setRestaurantsData] = useState<
     HomeScreenTemplateProps['restaurantsData']
   >([]);
+
+  // Annuler une reservation
+  const handleCancelReservation = () => {
+    console.log('Annuler la réservation');
+    setNextBooking(null);
+    setSnackbar({
+      open: true,
+      severity: 'success',
+      message: 'La réservation a été annulée avec succès',
+    });
+  };
 
   // Chargement des données des restaurants au démarrage
   useEffect(() => {
@@ -106,9 +118,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ route }) => {
         items={items}
         reservationButtonProps={{
           title: t('buttons.actions.cancelReservation'),
-          onPress: () => {
-            console.log('On annule la réservation');
-          },
+          onPress: handleCancelReservation,
           iconName: 'Cross',
         }}
         restaurantsData={restaurantsData}

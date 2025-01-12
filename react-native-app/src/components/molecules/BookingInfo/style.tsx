@@ -55,4 +55,10 @@ export const styles = StyleSheet.create({
     fontSize: typography.h3.fontSize,
     marginLeft: 5,
   },
+  noReservation: {
+    fontFamily: typography.h2.fontFamily,
+    color: colors.white,
+    fontSize: typography.h3.fontSize,
+    textAlign: 'center',
+  },
 });
