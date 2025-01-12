@@ -21,13 +21,13 @@ export const fonts = {
   extraBold: 'Montserrat-ExtraBold',
 };
 
-type TypographyKey =  'h0' | 'h1' | 'h2' | 'h3' | 'h4';
+type TypographyKey =  'title1' | 'h1' | 'h2' | 'h3' | 'h4';
 
 export const typography: {
   [key in TypographyKey]: TextStyle;
 } = {
   //**   TITLE   **//
-  h0: {
+  title1: {
     fontFamily: fonts.bold,
     fontSize: 48,
     lineHeight: 56,
