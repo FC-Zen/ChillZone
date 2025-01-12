@@ -3,12 +3,15 @@ import { DetailsOrdersDataTable } from '../DataTables';
 import { CommandLine } from '../DataTables/DetailsOrdersDataTable';
 import { styles } from './style';
 import { CommandInfo, ModalHeader } from '@components/molecules';
+import { ButtonIcon } from '@components/atoms';
 
 type CommandModalprops = {
   isOpen: boolean;
   onClose: () => void;
   title: string;
+  changeState: (id: number, currentStatus: string) => void,
   selectedCommand: {
+    id: number;
     command_status: string,
     user_name: string,
     creation_date: string,
@@ -23,6 +26,7 @@ export const CommandModal = ({
   isOpen,
   onClose,
   title,
+  changeState,
   selectedCommand,
 }: CommandModalprops) => {
   if (!isOpen) return null;
@@ -43,6 +47,10 @@ export const CommandModal = ({
                 <CommandInfo title={t('command.pickup_time')} value={selectedCommand.pickup_time} />
               </div>
               <DetailsOrdersDataTable lines={selectedCommand.lines} />
+              <div className="flex flex-row justify-center" style={{paddingTop:'5px'}}>
+                {selectedCommand.command_status == t('status.in_progress') && <ButtonIcon title={t('buttons.commands.stateReady')} onclick={() => changeState(selectedCommand.id, selectedCommand.command_status)} icon={'Check'} />}
+                {selectedCommand.command_status == t('status.ready') && <ButtonIcon title={t('buttons.commands.stateFinished')} onclick={() => changeState(selectedCommand.id, selectedCommand.command_status)} icon={'Tablet'} />}
+              </div>
             </>
           }
         </div>

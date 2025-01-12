@@ -12,7 +12,7 @@ import * as IconList from '@atoms/Icons/list';
 export type InputProps = {
   icon?: keyof typeof IconList;
   name: string;
-  value?: string;
+  value?: string | number;
   label: string;
   required?: boolean;
   disabled?: boolean

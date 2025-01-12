@@ -37,7 +37,7 @@ export const DetailsOrdersDataTable = ({ lines }: DetailsOrdersDataTableProps) =
     }));
   
     return (
-      <div style={{ height: 240, width: '100%' }}>
+      <div style={{ height: 200, width: '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}

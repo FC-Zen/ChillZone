@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import { colors } from '@theme';
 import { Icon } from '@components/atoms';
 import * as IconList from '@atoms/Icons/list';
+import { useState } from 'react';
 
 export type SelectProps = {
   name: string;
@@ -21,7 +22,7 @@ export type SelectProps = {
 
 export const StyledSelect = ({
   name,
-  value,
+  value = '',
   label,
   options,
   required,
@@ -29,9 +30,13 @@ export const StyledSelect = ({
   icon = 'User', // Par défaut, une icône "User" est utilisée
   onValueChange,
 }: SelectProps) => {
-  const handleChange = (event: SelectChangeEvent<string | number>) => {
+  const [selectedValues, setSelectedValues] = useState<string | number >(value);
+  
+  const handleChange = (event: SelectChangeEvent) => {
+    const newValue = event.target.value; // Récupère la nouvelle valeur
+    setSelectedValues(newValue); // Met à jour l'état local
     if (onValueChange) {
-      onValueChange(name, event.target.value);
+      onValueChange(name, newValue); // Appelle la fonction de rappel si elle est définie
     }
   };
 
@@ -95,7 +100,7 @@ export const StyledSelect = ({
         </InputLabel>
         <Select
           name={name}
-          value={value}
+          value={selectedValues as string}
           onChange={handleChange}
           disabled={disabled}
           displayEmpty

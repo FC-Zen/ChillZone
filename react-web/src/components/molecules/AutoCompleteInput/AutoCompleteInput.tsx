@@ -6,9 +6,9 @@ import { colors } from "@theme";
 
 export type InputProps = {
   name: string;
-  value?: string[];
+  value?: { tag_id: number; tag_label: string }[];
   label: string;
-  options: { tag: string }[];
+  options: { tag_id: number; tag_label: string }[];
   onInputChange?: (name: string, value: any) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 };
@@ -21,24 +21,26 @@ export const AutoCompleteInput = ({
   onInputChange,
   onKeyDown,
 }: InputProps) => {
-  const [selectedValues, setSelectedValues] = useState<string[]>(value);
 
-  const handleChange = (event: any, newValue: string[]) => {
+  const [selectedValues, setSelectedValues] = useState<{ tag_id: number; tag_label: string }[]>(value);
+
+  const handleChange = (event: any, newValue: { tag_id: number; tag_label: string }[]) => {
     setSelectedValues(newValue);
     if (onInputChange) {
       onInputChange(name, newValue);
     }
   };
 
+
   return (
     <Box style={{ width: "100%" }}>
       <Autocomplete
         multiple
-        options={options.map((option) => option.tag)}
+        options={options}
+        getOptionLabel={(option) => option.tag_label}
         value={selectedValues}
         onChange={handleChange}
         isOptionEqualToValue={(option, value) => option === value}
-        getOptionLabel={(option) => option || ""}
         sx={{
           "& .MuiAutocomplete-inputRoot": {
             padding: "0px 25px",
