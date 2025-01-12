@@ -94,6 +94,7 @@ export const OwnerOrdersPage: React.FC = () => {
       isOpen={isModalOpen}
       onClose={handleCloseModal}
       title={selectedCommand ? `${t('modals.info.command')} n°${selectedCommand.id}` : 'None'}
+      changeState={changeState}
       selectedCommand={selectedCommand ? selectedCommand : false}
     />
   </>

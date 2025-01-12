@@ -10,6 +10,19 @@ export const AdminRoomsPage: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useUser();
   
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [roomsData, setRoomsData] = useState(rooms);
+  const [selectedRoom, setSelectedRoom] = useState<null | {
+    id: number;
+    name: string;
+    description: string;
+    capacity: number;
+    floor: string;
+    establishment: string;
+    type_room?: string;
+    status: boolean;
+  }>(null);
+
   const listInputs = [
     {
       name: "name",
@@ -17,6 +30,7 @@ export const AdminRoomsPage: React.FC = () => {
       type: "text",
       icon: "User", 
       placeholder: "Nom de la salle",
+      value: selectedRoom?.name,
       required: true,
     },
     {
@@ -25,6 +39,7 @@ export const AdminRoomsPage: React.FC = () => {
       type: "textarea",
       icon: "Browser", 
       placeholder: "Description",
+      value: selectedRoom?.description,
       required: true,
     },
     {
@@ -37,6 +52,7 @@ export const AdminRoomsPage: React.FC = () => {
         { tag: "Box Acoustique" },
         { tag: "Salle de classe" },
       ], //TODO: Service pour prendre les tag categorie de room
+      value: selectedRoom?.type_room,
       required: true,
     },
     {
@@ -45,6 +61,7 @@ export const AdminRoomsPage: React.FC = () => {
       type: "number",
       icon: "Users", 
       placeholder: "Capacité",
+      value: selectedRoom?.capacity,
       required: true,
     },
     {
@@ -57,6 +74,7 @@ export const AdminRoomsPage: React.FC = () => {
         { tag: "1er étage" },
         { tag: "2ème étage" },
       ], //TODO: Service pour prendre les étages
+      value: selectedRoom?.floor,
       placeholder: "Étage",
       required: true,
     },
@@ -65,21 +83,10 @@ export const AdminRoomsPage: React.FC = () => {
       label: t("fields.common.establishment"), 
       type: "file",
       icon: "User",
+      value: selectedRoom?.establishment,
       required: true,
     },
   ] as InputField[];
-  
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [roomsData, setRoomsData] = useState(rooms);
-  const [selectedRoom, setSelectedRoom] = useState<null | {
-    id: number;
-    name: string;
-    description: string;
-    capacity: number;
-    floor: string;
-    establishment: string;
-    status: boolean;
-  }>(null);
 
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => {
@@ -126,8 +133,9 @@ export const AdminRoomsPage: React.FC = () => {
       name: formData.get('name') as string,
       description: formData.get('description') as string,
       capacity: parseInt(formData.get('capacity') as string, 10),
-      floor: formData.get('floor')?.slice(0,1).toString() as string,
+      floor: formData.get('floor')?.toString() as string,
       establishment: "Établissement Alpha",
+      type_room: formData.get('type_room') as string,
       status: selectedRoom.status,
     };
 
@@ -149,6 +157,7 @@ export const AdminRoomsPage: React.FC = () => {
       description: formData.get('description') as string,
       capacity: parseInt(formData.get('capacity') as string, 10),
       floor: formData.get('floor') as string,
+      type_room: formData.get('type_room') as string,
       establishment: "Établissement Alpha", //On prend l'établissement pris en charge par l'administrateur
       status: true, // Statut par défaut 'Disponible'
     };

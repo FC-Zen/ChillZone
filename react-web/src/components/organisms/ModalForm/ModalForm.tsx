@@ -1,5 +1,5 @@
 import { Input } from '@components';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconProps } from '@components/atoms';
 import { AutoCompleteInput, FileInput, StyledSelect } from '@components/molecules';
@@ -9,10 +9,12 @@ export type InputField = {
   label: string;
   type: string;
   icon: IconProps['name'];
+  value?: any | string[];
   required?: boolean;
   disabled?: boolean;
   step? : string;
   options?: { tag: string }[];
+  optionsTags? : { tag_id: number; tag_label: string }[];
 };
 
 type ModalFormProps = {
@@ -26,22 +28,27 @@ export const ModalForm: React.FC<ModalFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
-  const handleTagChange = (name: string, value: string[]) => {
+  const [selectedTags, setSelectedTags] = React.useState<{ tag_id: number; tag_label: string }[]>([]);
+  const handleTagChange = (name: string, value: { tag_id: number; tag_label: string }[]) => {
     setSelectedTags(value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     const formData = new FormData(event.currentTarget);
-    const tagsString = selectedTags.join(',');
-    if (tagsString) {
+    if (selectedTags.length > 0) {
       formData.delete('tags');
-      formData.append('tags', tagsString);
-    }
+      formData.append('tags', JSON.stringify(selectedTags));
+    }  
     console.log("FormData avant soumission : ", Array.from(formData.entries()));
     onSubmit(formData);
   };
 
+  useEffect(() => {
+    const inputField = listInputs.find(input => input.type === 'autocomplete');
+    if (inputField?.value) {
+      setSelectedTags(inputField.value);
+    }
+  }, [listInputs]); 
 
   return (
     <form className="flex flex-col space-y-4 justify-center items-center" 
@@ -58,7 +65,8 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 key={index}
                 name={input.name.toLowerCase()}
                 label={input.label.toLowerCase()}
-                options={input.options ?? []}
+                {...(input.value && { value: input.value})}
+                options={input.optionsTags ?? []}
                 onInputChange={(name, value) => handleTagChange(name, value)}
               />
             );
@@ -68,6 +76,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 key={index}
                 name={input.name.toLowerCase()}
                 label={input.label.toLowerCase()}
+                {...(input.value && { value: input.value})}
                 options={input.options ?? []}
                 icon={input.icon}
               />
@@ -86,6 +95,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 label={input.label.toLowerCase()}
                 required={input.required ?? false}
                 type={input.type}
+                {...(input.value && { defaultvalue: input.value })}
                 step={input.step}
                 disabled={input.disabled ?? false}
                 onInputChange={(name, value) => console.log(`${name}: ${value}`)}

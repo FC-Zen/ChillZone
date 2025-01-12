@@ -25,7 +25,7 @@ export const Modal = ({
         <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">
           <ModalHeader title={title} onClose={onClose} />
         <div style={styles.body} >
-          <ModalForm onSubmit={handleForm} listInputs={listInputs} />
+          <ModalForm  onSubmit={handleForm} listInputs={listInputs}  />
         </div>
       </div>
     </div>
