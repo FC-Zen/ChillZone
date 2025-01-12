@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal } from '@components/organisms'; // Composant de modale
+import { Modal } from '@components/organisms';
 import { AdminEstablishmentLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import maps from '@assets/data/maps.json';
@@ -19,51 +19,14 @@ export const AdminEstablishmentPage: React.FC = () => {
   const { user } = useUser();
 
   const [listInputsValues, setListInputsValues] = useState<Record<string, string>>({});
+  const [listInputs, setListInputs] = useState<InputField[]>([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [floors, setFloors] = useState<Floor[]>(maps);
+  const [selectedFloor, setSelectedFloor] = useState<Floor>(maps[0]);
+  const [selectedCoords, setSelectedCoords] = useState<{ x: number, y: number } | null>(null);
 
-  const listInputs = [
-    {
-      name: "name",
-      label: t('fields.common.last_name'),
-      type: "text",
-      icon: "User",
-      required: true,
-    },
-    {
-      name: "address",
-      label: t('fields.address.address'),
-      type: "text",
-      icon: "User",
-      required: true,
-    },
-    {
-      name: "city",
-      label: t('fields.address.city'),
-      type: "text",
-      icon: "User",
-      required: true,
-    },
-    {
-      name: "postal_code",
-      label: t('fields.address.postal_code'),
-      type: "text",
-      icon: "User",
-      required: true,
-    },
-    {
-      name: "phone",
-      label: t('fields.common.phone'),
-      type: "phone",
-      icon: "User",
-      required: true,
-    },
-    {
-      name: "email",
-      label: t('fields.common.mail'),
-      type: "text",
-      icon: "User",
-      required: true,
-    },
-  ] as InputField[];
+  // Ajoutez un état pour forcer le re-rendu lors du fetch
+  const [refreshKey, setRefreshKey] = useState<number>(0);
 
   const modalInputs = [
     {
@@ -89,17 +52,12 @@ export const AdminEstablishmentPage: React.FC = () => {
     }
   ] as InputField[];
 
-  const [isModalOpen, setModalOpen] = useState(false);
-
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
   const handleSaveForm = (formData: FormData) => {
     console.log(formData);
   };
-
-  const [floors, setFloors] = useState<Floor[]>(maps);
-  const [selectedFloor, setSelectedFloor] = useState<Floor>(maps[0]);
 
   const handleFloorClick = (id: number) => {
     const floor = floors.find(f => f.floor_id === id);
@@ -114,8 +72,6 @@ export const AdminEstablishmentPage: React.FC = () => {
     handleOpenModal();
   };
 
-  const [selectedCoords, setSelectedCoords] = useState<{ x: number, y: number } | null>(null);
-
   const handleMapClick = (x: number, y: number) => {
     setSelectedCoords({ x, y });
     console.log(`Coordonnées sélectionnées: X=${x}, Y=${y}`);
@@ -125,14 +81,71 @@ export const AdminEstablishmentPage: React.FC = () => {
     const fetchListInputsValues = async () => {
         const values = await getListInputsValues();
         setListInputsValues(values);
+        setRefreshKey(prevKey => prevKey + 1);  // Force le re-rendu
     };
     fetchListInputsValues();
-}, []);
+
+  }, []);
+
+  useEffect(() => {
+    console.log(listInputsValues);
+    setListInputs([
+      {
+        name: "name",
+        label: t('fields.common.last_name'),
+        type: "text",
+        icon: "User",
+        required: true,
+        value: listInputsValues?.name,
+      },
+      {
+        name: "address",
+        label: t('fields.address.address'),
+        type: "text",
+        icon: "User",
+        required: true,
+        value: listInputsValues?.address,
+      },
+      {
+        name: "city",
+        label: t('fields.address.city'),
+        type: "text",
+        icon: "User",
+        required: true,
+        value: listInputsValues?.city,
+      },
+      {
+        name: "postal_code",
+        label: t('fields.address.postal_code'),
+        type: "text",
+        icon: "User",
+        required: true,
+        value: listInputsValues?.postal_code,
+      },
+      {
+        name: "phone",
+        label: t('fields.common.phone'),
+        type: "phone",
+        icon: "User",
+        required: true,
+        value: listInputsValues?.phone,
+      },
+      {
+        name: "email",
+        label: t('fields.common.mail'),
+        type: "text",
+        icon: "User",
+        required: true,
+        value: listInputsValues?.email,
+      },
+    ]);
+  }, [listInputsValues]);
 
   return (
     <>
       {/* Layout principal contenant le tableau */}
       <AdminEstablishmentLayout
+        key={refreshKey}
         userEmail={user?.userEmail ?? ""}
         username={user?.username ?? ""}
         organization={user?.organization ?? ""}
@@ -141,7 +154,6 @@ export const AdminEstablishmentPage: React.FC = () => {
 
         form={listInputs}
         addAccount={handleSaveForm}
-        formvalues={listInputsValues}
 
         mapName={selectedFloor?.floor_name}
         mapImageSrc={selectedFloor?.floor_plan}  
@@ -151,7 +163,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         selectedFloor={selectedFloor}
         handleFloorClick={handleFloorClick}
         handleAddFloorClick={handleAddFloorClick}
-        />
+      />
 
       {/* Modale pour la création d’un étage */}
       <Modal
@@ -159,8 +171,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         onClose={handleCloseModal}
         handleForm={handleCloseModal}
         listInputs={modalInputs}
-        title={t('modals.create.floor')
-        }
+        title={t('modals.create.floor')}
       />
     </>
   );
