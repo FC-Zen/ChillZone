@@ -7,6 +7,7 @@ export const loadFonts = async () => {
     'Montserrat-Bold': require('../assets/fonts/Montserrat-Bold.ttf'),
     'Montserrat-SemiBold': require('../assets/fonts/Montserrat-SemiBold.ttf'),
     'Montserrat-Medium': require('../assets/fonts/Montserrat-Medium.ttf'),
+    'Montserrat-ExtraBold': require('../assets/fonts/Montserrat-ExtraBold.ttf'),
   });
 };
 
@@ -17,14 +18,20 @@ export const fonts = {
   bold: 'Montserrat-Bold',
   semiBold: 'Montserrat-SemiBold',
   medium: 'Montserrat-Medium',
+  extraBold: 'Montserrat-ExtraBold',
 };
 
-type TypographyKey = 'h1' | 'h2' | 'h3' | 'h4';
+type TypographyKey =  'title1' | 'h1' | 'h2' | 'h3' | 'h4';
 
 export const typography: {
   [key in TypographyKey]: TextStyle;
 } = {
   //**   TITLE   **//
+  title1: {
+    fontFamily: fonts.bold,
+    fontSize: 48,
+    lineHeight: 56,
+  },
   h1: {
     fontFamily: fonts.bold,
     fontSize: 32,
@@ -36,7 +43,7 @@ export const typography: {
     lineHeight: 28,
   },
   h3: {
-    fontFamily: fonts.regular,
+    fontFamily: fonts.medium,
     fontSize: 16,
     lineHeight: 24,
   },

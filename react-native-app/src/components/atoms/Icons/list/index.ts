@@ -48,3 +48,4 @@ export { default as Phone } from './Phone';
 export { default as Mail } from './Mail';
 export { default as CrossCircle } from './CrossCircle';
 export { default as Check } from './Check';
+export { default as Trash } from './Trash';

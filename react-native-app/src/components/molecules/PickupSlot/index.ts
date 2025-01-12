@@ -1,0 +1,1 @@
+export { PickupSlot, PickupSlotProps } from './PickupSlot';

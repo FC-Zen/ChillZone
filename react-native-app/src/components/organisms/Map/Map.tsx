@@ -16,6 +16,9 @@ export const Map: React.FC<MapProps> = ({ items, reservationButtonProps }) => {
   const { t } = useTranslation();
   const reservationText = t('info.reservation');
   const reservationWords = reservationText.split(' ');
+  if (items === undefined) {
+    items = [];
+  }
 
   return (
     <View style={styles.container}>

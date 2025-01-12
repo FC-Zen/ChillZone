@@ -21,13 +21,12 @@ export type RootStackParamList = {
   [ROUTE.LINKS]: undefined;
   [ROUTE.DISPENSER_MODAL]: undefined;
   [ROUTE.RESERVATION_SUMMARY]: undefined;
+  [ROUTE.CART]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
 export type RouteParamList = {
-  HomeScreen: {
-    data: NavItem[];
-  };
+  HomeScreen: undefined;
   LoginScreen: undefined; // Correspond à ROUTE.LOGIN_SCREEN
   ForgotPasswordScreen: undefined;
   ForgotMdpScreen: undefined;
@@ -44,6 +43,7 @@ export type RouteParamList = {
   AccountScreen: undefined;
   LinksScreen: undefined;
   ReservationSummaryScreen: undefined;
+  CartScreen: undefined;
 };
 
 // Typage des propriétés des écrans

@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import { colors } from "@theme";
 import { useNavigation } from "@hooks";
 import { ROUTE } from "@enums";
+import { useCommand } from "@contexts";
 
 
 export const PaymentScreen = () => {
     const { t } = useTranslation();
-    const [totalAmount, setTotalAmount] = useState(0);
+    const {totalAmount} = useCommand();
     const [credit, setCredit] = useState("");
     const [cardName, setCardName] = useState("");
     const [cardExpiration, setCardExpiration] = useState("");
@@ -18,7 +19,7 @@ export const PaymentScreen = () => {
     return (
         <PaymentTemplate
             headerTitle={t("headers.pay")}
-            navigateToCart={() => {}}
+            navigateToCart={() => navigation.goBack()}
             formTitleIcon="Bell"
             formTitleIconColor={colors.white}
             formTitle={t("cart.creditCard")}
@@ -33,7 +34,7 @@ export const PaymentScreen = () => {
             inputCardCVC={cardCVC}
             inputCardCVCSubtitle={t("cart.numbers")}
             setInputCardCVC={setCardCVC}
-            payButtonText={t("buttons.actions.pay") + ` ${totalAmount}€`}
+            payButtonText={t("buttons.actions.pay") + ` ${totalAmount.toFixed(2)}€`}
             payButtonIcon={{ 
                 name: "Lock",
                 color: colors.resolutionBlue,

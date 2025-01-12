@@ -6,6 +6,7 @@ import { styles } from './style';
 import { useTranslation } from 'react-i18next';
 import { FoodItemProps } from '@components/organisms/FoodCardList';
 import { ModalScreenProps } from '@services';
+import { useCommand } from '@contexts';
 
 export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
   const { menu } = route.params;
@@ -13,6 +14,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
   const [selectedMeals, setSelectedMeals] = useState<
     Record<string, number | null>
   >({});
+  const { listItems, updateListItems } = useCommand();
 
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -36,6 +38,31 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
       'Repas sélectionnés:',
       selectedMealsList
     );
+    if (listItems.find((item) => item.name === menu.name)) {
+      listItems.map((item) => {
+        if (item.name === menu.name) {
+          item.quantity += 1;
+        }
+      });
+    }
+    else {
+      updateListItems([
+        ...listItems,
+        {
+          id: menu.id,
+          name: menu.name,
+          price: parseFloat(menu.price.replace('€', '')),
+          type: 'meal',
+          quantity: 1,
+          meals: selectedMealsList.map((meal) => (meal.title)),
+          onDecrement: handleDecrement,
+          onIncrement: handleIncrement,
+          onDelete: () => {
+            listItems.filter((item) => item.name !== menu.name);
+          },
+        },
+      ]);
+    }
     navigation.goBack();
   };
 
@@ -51,8 +78,10 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     });
 
     if (selectedMeals[item.meal_type] === item.id) {
+      console.log('Decrement');
       handleDecrement();
     } else {
+      console.log('Increment');
       handleIncrement();
     }
   };

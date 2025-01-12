@@ -9,6 +9,7 @@ import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import { Room } from '@services/RoomServices';
 import { NavItem } from '@components/molecules/BookingInfo';
+import { useNextBooking } from '@contexts';
 
 type ReservationModalProps = {
   isVisible: boolean;
@@ -32,9 +33,10 @@ export const ReservationModal: FC<ReservationModalProps> = ({
   const { roomName, date, duration, timeSlot, floor, capacity, room } = data;
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const { nextBooking, updateNextBooking } = useNextBooking();
 
   const transformDataToNavItems = (): NavItem[] => {
-    const navItems: NavItem[] = [];
+  const navItems: NavItem[] = [];
 
     if (roomName || room?.name) {
       navItems.push({
@@ -83,7 +85,8 @@ export const ReservationModal: FC<ReservationModalProps> = ({
 
   const handleCloseAndNavigate = () => {
     onClose();
-    navigation.navigate(ROUTE.HOME, { data: transformDataToNavItems() });
+    updateNextBooking([...nextBooking, transformDataToNavItems()]);
+    navigation.navigate(ROUTE.HOME);
   };
 
   return (

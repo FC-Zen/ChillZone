@@ -27,6 +27,7 @@ export const FinalPaymentTemplate: React.FC<FinalPaymentTemplateProps> = ({
     bottomCommandInfo,
 }) => {
     const commandSplit = commandConfirmation.split('{{id}}');
+    
     return (
         <View style={styles.container}>
 
