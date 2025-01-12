@@ -1,9 +1,10 @@
 from django.db import models
-from chillzone.models import UserMeta, Reservation
+from django.contrib.auth.models import User
+from chillzone.models import Reservation
 
 class Conflict(models.Model):
 
-    user = models.ForeignKey(UserMeta, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
     

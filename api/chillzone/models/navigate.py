@@ -7,9 +7,9 @@ class Navigate(models.Model):
 
     location_end = models.ForeignKey( Location, on_delete=models.CASCADE, related_name="navigates_as_end")
     
-    link_photo = models.TextField
+    link_photo = models.TextField()
 
-    position_x_photo = models.IntegerField
+    position_x_photo = models.IntegerField()
 
     class Meta:
         constraints = [

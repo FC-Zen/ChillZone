@@ -21,9 +21,9 @@ type RoomDataTableProps = {
   data: {
     id: number;
     name: string;
-    description: string;
+    description:  string | null;
     capacity: number;
-    floor: string;
+    floor_name: string;
     establishment: string;
     status: boolean;
   }[];
@@ -69,7 +69,7 @@ export const RoomDataTable = ({
     { field: 'name', headerName: t('tables.headers.room.name'), flex: 2 },
     { field: 'description', headerName: t('tables.headers.room.description'), flex: 5 },
     { field: 'capacity', headerName: t('tables.headers.room.capacity'), flex: 1.5 },
-    { field: 'floor', headerName: t('tables.headers.room.floor'), flex: 1.5 },
+    { field: 'floor_name', headerName: t('tables.headers.room.floor'), flex: 1.5 },
     { field: 'establishment', headerName: t('tables.headers.user.establishment'), flex: 2 },
     {
       field: 'toggle',

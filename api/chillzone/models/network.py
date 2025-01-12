@@ -14,6 +14,6 @@ class Network(models.Model) :
 
     type = models.CharField(max_length= 30 , choices= TYPE_CHOICES)
 
-    link_network = models.TextField
+    link_network = models.TextField()
 
     id_establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)

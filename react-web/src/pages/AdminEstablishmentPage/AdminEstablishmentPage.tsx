@@ -80,11 +80,10 @@ export const AdminEstablishmentPage: React.FC = () => {
   useEffect(() => {
     const fetchListInputsValues = async () => {
         const values = await getListInputsValues();
-        setListInputsValues(values);
+        setListInputsValues(values.establishment);
         setRefreshKey(prevKey => prevKey + 1);  // Force le re-rendu
     };
     fetchListInputsValues();
-
   }, []);
 
   useEffect(() => {
@@ -115,12 +114,12 @@ export const AdminEstablishmentPage: React.FC = () => {
         value: listInputsValues?.city,
       },
       {
-        name: "postal_code",
+        name: "postalCode",
         label: t('fields.address.postal_code'),
         type: "text",
         icon: "User",
         required: true,
-        value: listInputsValues?.postal_code,
+        value: listInputsValues?.postalCode,
       },
       {
         name: "phone",
@@ -131,12 +130,12 @@ export const AdminEstablishmentPage: React.FC = () => {
         value: listInputsValues?.phone,
       },
       {
-        name: "email",
+        name: "mail",
         label: t('fields.common.mail'),
         type: "text",
         icon: "User",
         required: true,
-        value: listInputsValues?.email,
+        value: listInputsValues?.mail,
       },
     ]);
   }, [listInputsValues]);

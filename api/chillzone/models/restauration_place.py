@@ -4,7 +4,7 @@ class RestaurationPlace(models.Model):
 
     TYPE_CHOICES = [
         ("restaurant", "Restaurant"),
-        ("frige", "Réfrégirateur")
+        ("fridge", "Réfrégirateur")
     ]
 
     name = models.CharField(max_length= 254)

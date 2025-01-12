@@ -307,7 +307,7 @@
         "description": "Description de la salle",
         "capacity": "Capacité de la salle",
         "floor": "Etage",
-        "isRoomFree": "La salle est bloquée ?",
+        "isRoomFree": "La salle est ouverte ?",
         "modify": "Modifier"
       },
       "reservation": {

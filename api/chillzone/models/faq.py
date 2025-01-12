@@ -5,8 +5,8 @@ class FAQ(models.Model):
     
     category = models.CharField(max_length=254) 
 
-    question = models.TextField
+    question = models.TextField()
 
-    answer = models.TextField
+    answer = models.TextField()
 
-    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
+    id_establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)

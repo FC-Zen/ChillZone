@@ -47,7 +47,7 @@ export const OwnersPendingDataTable = ({
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", flex: 0.3 },
     { field: "name", headerName: t("tables.headers.restaurant.name"), flex: 1 },
-    { field: "type", headerName: t("tables.headers.restaurant.type"), flex: 0.7 },
+    { field: "restauration_type", headerName: t("tables.headers.restaurant.type"), flex: 0.7 },
     { field: "location", headerName: t("tables.headers.restaurant.location"), flex: 1.5 },
     { field: "email", headerName: t("tables.headers.restaurant.email"), flex: 1.2 },
     {

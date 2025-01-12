@@ -16,6 +16,13 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -48,6 +55,7 @@ INSTALLED_APPS += [
     'rest_framework',
     'chillzone',
     'drf_spectacular',
+    'corsheaders', 
 ]
 
 # ----------------------------- Pour drf-spectacular ---------------------------------------------
@@ -77,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # CORS
 ]
 
 if DEBUG:
@@ -92,6 +101,32 @@ if DEBUG:
     }
 
 ROOT_URLCONF = 'chillzone.urls'
+
+# ----------------------------- Pour CORS ET SESSIONS  ---------------------------------------------
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_NAME = 'sessionid'  # Le nom du cookie de session
+SESSION_COOKIE_AGE = 3600  # Durée de vie du cookie (1h)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_HTTPONLY = False  # Empêche l'accès au cookie via JavaScript
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = False
+
+CORS_ALLOW_ALL_ORIGINS = False # Sécuriser l'accès  
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+]
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+]
+CSRF_COOKIE_NAME = 'csrftoken'  # Assurez-vous que le nom du cookie est le même
+CSRF_COOKIE_HTTPONLY = False  # Cela doit être False pour que le cookie soit accessible côté client
+CSRF_COOKIE_SECURE = False  # Si tu n'utilises pas HTTPS
+
+# FIN PASSAGE CORS et SESSIONS
 
 TEMPLATES = [
     {
@@ -151,7 +186,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 

@@ -13,9 +13,9 @@ type AdminRoomLayoutProps = {
   data: {
     id: number;
     name: string;
-    description: string;
+    description:  string | null;
     capacity: number;
-    floor: string;
+    floor_name: string;
     establishment: string;
     status: boolean;
   }[];
