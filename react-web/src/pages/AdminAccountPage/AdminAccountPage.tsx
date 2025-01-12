@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AccountModal } from '@components/organisms'; // Composant de modale
+import { Modal } from '@components/organisms'; // Composant de modale
 import { AdminAccountLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import users from '@assets/data/users.json';
@@ -103,10 +103,10 @@ export const AdminAccountPage: React.FC = () => {
       />
 
       {/* Modale pour la création d’un compte */}
-      <AccountModal
+      <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        addAccount={handleAddAccount}
+        handleForm={handleAddAccount}
         listInputs={listInputs}
         title={t("modals.create.account")}
       />

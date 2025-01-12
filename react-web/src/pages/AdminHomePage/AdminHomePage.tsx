@@ -10,7 +10,6 @@ import {
   Flag,
   Cube,
   Dashboard,
-  Graduation,
 } from '@components/atoms/Icons';
 import { colors } from '@theme';
 import { useUser } from '@hooks';
