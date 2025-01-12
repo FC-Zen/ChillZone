@@ -3,7 +3,7 @@ import { AdminRoomLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import rooms from '@assets/data/rooms.json'; // Données des salles
 import { useUser } from '@hooks';
-import { RoomModal } from '@components/organisms/RoomModal';
+import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
 
 export const AdminRoomsPage: React.FC = () => {
@@ -178,10 +178,10 @@ export const AdminRoomsPage: React.FC = () => {
         data={roomsData}
       />
 
-      <RoomModal 
+      <Modal 
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        addRoom={selectedRoom ? handleUpdateRoom : handleAddRoom}
+        handleForm={selectedRoom ? handleUpdateRoom : handleAddRoom}
         listInputs={listInputs}
         title={selectedRoom ?  t("modals.edit.room") : t("modals.create.room")}
       />

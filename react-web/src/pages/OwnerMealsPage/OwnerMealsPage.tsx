@@ -3,7 +3,7 @@ import { OwnerMealsTemplate } from '@components/templates';
 import { useUser } from '@hooks';
 import { useTranslation } from 'react-i18next';
 import meals from '@assets/data/meals.json';
-import { AccountModal } from '@components/organisms';
+import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
 
 export const OwnerMealsPage: React.FC = () => {
@@ -87,13 +87,8 @@ export const OwnerMealsPage: React.FC = () => {
   
     const listInputsStock = [
       {
-        name: t('fields.common.last_name'),
-        type: "text",
-        icon: "User",
-        disabled: true
-      },
-      {
-        name: t('fields.common.quantity'),
+        name: "quantity",
+        label: t('fields.common.quantity'),
         type: "number",
         icon: "User",
         required: true,
@@ -167,15 +162,81 @@ export const OwnerMealsPage: React.FC = () => {
   const handleUpdateMeal = (id: number) => {
     const mealToView = mealsData.find((command) => command.id === id);
     if (mealToView) {
+      setSelectedMeal(mealToView);
       handleOpenModal("editProduct");
     }
+  };
+
+  const handleUpdateMealbyForm = (formData: FormData) => {
+    const mealId = selectedMeal?.id; // Récupère l'ID du repas à partir des données du formulaire
+    if (!mealId) {
+      console.error("ID du repas introuvable !");
+      return;
+    }
+  
+    const tagsString = formData.get("tags") as string;
+    const tagsArray = tagsString ? tagsString.split(",") : [];
+    const selectedTags = tagsArray.map((tag: string) => {
+      const matchedTag = mealTags.find((mealTag) => mealTag.tag === tag);
+      return {
+        tag_id: matchedTag ? mealTags.indexOf(matchedTag) + 1 : 0,
+        tag_label: tag,
+      };
+    });
+  
+    // Mise à jour du repas dans mealsData
+    setMealsData((prevData) =>
+      prevData.map((meal) =>
+        meal.id === mealId
+          ? {
+              ...meal,
+              meal_name: formData.get('meal_name') as string,
+              meal_description: formData.get('meal_description') as string,
+              meal_type: formData.get('meal_type') as string,
+              meal_photo: formData.get('meal_photo') as string || '',
+              meal_price: parseFloat(formData.get('meal_price') as string) || 0,
+              meal_stock: parseInt(formData.get('meal_stock') as string, 10) || 0,
+              tags: selectedTags,
+            }
+          : meal
+      )
+    );
+  
+    handleCloseModal();
+    console.log(`Repas mis à jour avec ID ${mealId}`);
   };
 
   const handleUpdateMealQuantity = (id: number) => {
     const mealToView = mealsData.find((command) => command.id === id);
     if (mealToView) {
+      setSelectedMeal(mealToView);
       handleOpenModal('editStock');
     }
+  };
+
+  const handleUpdateMealQuantityByForm = (formData: FormData) => {
+    const mealId = selectedMeal?.id; // Récupère l'ID du repas
+    if (!mealId) {
+      console.error("ID du repas introuvable !");
+      return;
+    }
+  
+    const updatedStock = parseInt(formData.get('quantity') as string, 10) || 0; // Récupère la nouvelle quantité
+  
+    // Mise à jour de la quantité dans mealsData
+    setMealsData((prevData) =>
+      prevData.map((meal) =>
+        meal.id === mealId
+          ? {
+              ...meal,
+              meal_stock: updatedStock, // Met à jour uniquement le stock
+            }
+          : meal
+      )
+    );
+  
+    handleCloseModal();
+    console.log(`Quantité mise à jour pour le repas ID ${mealId} : ${updatedStock}`);
   };
 
   const addMealBtn = () => {
@@ -228,33 +289,31 @@ export const OwnerMealsPage: React.FC = () => {
     />
   
     {/* Modale de création de produit */}
-    <AccountModal
+    <Modal
       isOpen={openModal === 'createProduct'}
       onClose={handleCloseModal}
       title={t('modals.create.product')}
-      addAccount={handleAddMealBtn}
+      handleForm={handleAddMealBtn}
       listInputs={listInputs}
     />
 
-    {/*    
-    <AccountModal
+    {/* Modale d'édition du produit */}
+    <Modal
       isOpen={openModal === 'editProduct'}
       onClose={handleCloseModal}
-      title={t('modals.edit.product')}
-      addAccount={handleAddMealBtn}
+      title={t('modals.edit.stock')}
+      handleForm={handleUpdateMealbyForm}
       listInputs={listInputs}
     /> 
-    */}
 
-    {/* Modale d'édition du stock 
-    <AccountModal
+    {/* Modale d'édition du stock */}
+    <Modal
       isOpen={openModal === 'editStock'}
       onClose={handleCloseModal}
       title={t('modals.edit.stock')}
-      addAccount={handleAddMealBtn}
+      handleForm={handleUpdateMealQuantityByForm}
       listInputs={listInputsStock}
     />
-    */}
   </>
   );
 };

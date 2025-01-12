@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AccountModal } from '@components/organisms'; // Composant de modale
+import { Modal } from '@components/organisms'; // Composant de modale
 import { AdminEstablishmentLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import maps from '@assets/data/maps.json';
@@ -154,10 +154,10 @@ export const AdminEstablishmentPage: React.FC = () => {
         />
 
       {/* Modale pour la création d’un étage */}
-      <AccountModal
+      <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        addAccount={handleCloseModal}
+        handleForm={handleCloseModal}
         listInputs={modalInputs}
         title={t('modals.create.floor')
         }
