@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "title": "R5.01 - SAE",
+    "date": "2024-11-08",
+    "time": "10H30 - 11H30",
+    "room": "Salle 259",
+    "instructor": "M. OUBBATI"
+  },
+  {
+    "id": "2",
+    "title": "R5.02 - SAE",
+    "date": "2024-11-09",
+    "time": "14H00 - 16H00",
+    "room": "Salle 300",
+    "instructor": "Mme. DUPONT"
+  }
+]

@@ -1,0 +1,1 @@
+export {CourseDetailsModal } from './CourseDetailsModal';

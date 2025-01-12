@@ -51,3 +51,5 @@ export { default as Check } from './Check';
 export { default as Trash } from './Trash';
 export { default as Chain } from './Chain';
 export { default as AR } from './AR';
+export { default as Graduation } from './Graduation';
+export { default as Book } from './Book';

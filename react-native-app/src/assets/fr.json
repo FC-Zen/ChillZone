@@ -28,7 +28,17 @@
   "modals": {
     "pwdChange": "Modifier mon mot de passe",
     "infoChange": "Modifier mes informations",
-    "mail": "Renseignez votre adresse mail"
+    "mail": "Renseignez votre adresse mail",
+    "AdeRecover": "Récupérer mon emploi du temps",
+    "AdeLink": "Renseignez le lien d’exportation d’ADE",
+    "AdeLinkPlaceholder": "Lien ADE",
+    "AdeHelpTitle": "Aide pour le lien d’exportation",
+    "AdeValidateButton": "Valider",
+    "AdeHelpButton": "Aide",
+    "Step1": "Etape 1 : Se rendre sur l’ADE et sélectionner sa formation",
+    "Step2": "Etape 2 : Appuyer sur le bouton ci-dessous :",
+    "Step3": "Etape 3 : Sélectionner l’intervalle des dates puis appuyer sur le bouton “Générer URL” :",
+    "Note": "Sélectionner bien le format ICalendar"
   },
 
   "navbar": {
