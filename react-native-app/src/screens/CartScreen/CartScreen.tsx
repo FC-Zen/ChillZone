@@ -5,13 +5,13 @@ import { styles } from "./style";
 import { useTranslation } from "react-i18next";
 import { Separation } from "@components/atoms";
 import { layout } from "@theme";
-import { getAllMeals, getAllMenus, MenuProps } from "@services";
 import { MealProps } from "@services/DispenserServices";
 import { CartTemplate } from "@components";
 import { ImagesMap } from "@utils";
 import { ItemProps } from "@components/organisms";
 import { useNavigation } from "@hooks";
 import { ROUTE } from "@enums";
+import { useCommand } from "@contexts";
 
 export type SlotTime = {
     startTime: number;
@@ -25,11 +25,10 @@ export const CartScreen = () => {
     const [pickupSlot, setPickupSlot] = useState<SlotTime>({ startTime: 10, endTime: 11 });
     const [fixedPickupSlot] = useState<SlotTime>({ startTime: 10, endTime: 11 });
     const [selectedSlot, setSelectedSlot] = useState(false);
-    const [meals, setMeals] = useState<MealProps[]>([]);
-    const [menus, setMenus] = useState<MenuProps[]>([]);
     const [openTime, setOpenTime] = useState(10);
     const [closedTime, setClosedTime] = useState(20);
     const restaurantImage = ImagesMap['restaurant_image.png'];
+    const { listItems, updateListItems, totalAmount, setTotalAmount } = useCommand();
 
     const navigation = useNavigation();
     
@@ -39,63 +38,50 @@ export const CartScreen = () => {
         updateCartItems((prevCartItems) => {
             const newCart = prevCartItems.filter((cartItem) => cartItem.name !== itemName);
             console.log('Après suppression:', newCart);
+            updateCartItems(newCart);
             return newCart;
         });
     };
     
 
     const addQuantity = (itemName: string) => {
-        updateCartItems((prevCartItems) =>
-            prevCartItems.map((cartItem) => {
+        updateCartItems((prevCartItems) => {
+            const newCart = prevCartItems.map((cartItem) => {
                 if (cartItem.name === itemName) {
-                    return { ...cartItem, quantity: cartItem.quantity + 1 };
+                    cartItem.quantity += 1;
                 }
                 return cartItem;
-            })
-        );
+            });
+            return newCart;
+        });
+
+        updateListItems(cartItems);
     };
 
     const removeQuantity = (itemName: string) => {
-        updateCartItems(cartItems.map((cartItem) => {
-            if (cartItem.name === itemName) {
-                cartItem.quantity -= 1;
-            }
-            return cartItem;
-        }));
-    };
+        updateCartItems((prevCartItems) => {
+            const newCart = prevCartItems.map((cartItem) => {
+                if (cartItem.name === itemName) {
+                    cartItem.quantity -= 1;
+                }
+                return cartItem;
+            });
+            return newCart;
+        });
 
-    const fetchMeals = async () => {
-        try {
-            const mealData = await getAllMeals();
-            setMeals(mealData);
-    
-            const updatedCartItems = mealData.map((meal) => ({
-                id: meal.id,
-                name: meal.title,
-                type: meal.meal_type,
-                price: meal.price,
-                quantity: 1,
-                onIncrement: () => addQuantity(meal.title),
-                onDecrement: () => removeQuantity(meal.title),
-                onDelete: () => removeItemFromCart(meal.title),
-            }));
-    
-            updateCartItems(updatedCartItems);
-        } catch (error) {
-            console.error("Erreur lors de la récupération des repas :", error);
-        }
+        updateListItems(cartItems);
     };
     
-    const fetchMenus = async () => {
+    const fetchCartItems = async () => {
         try {
-            const menuData = await getAllMenus();
+            const menuData = listItems;
             const updatedCartItems = menuData.map((menu) => ({
                 id: menu.id,
                 name: menu.name,
                 type: 'menu',
-                price: parseFloat(menu.price.replace('€', '')),
-                quantity: 1,
-                meals: menu.meals.map((meal) => meal.title),
+                price: menu.price,
+                quantity: menu.quantity,
+                meals: menu.meals,
                 onIncrement: () => addQuantity(menu.name),
                 onDecrement: () => removeQuantity(menu.name),
                 onDelete: () => removeItemFromCart(menu.name),
@@ -107,13 +93,16 @@ export const CartScreen = () => {
         }
     };
 
-    const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const calcTotalAmount = () => {
+        let amount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        setTotalAmount(amount);
+        return amount;
+    };
     
 
     useEffect(() => {
         const fetchData = async () => {
-            await fetchMeals();
-            await fetchMenus();
+            await fetchCartItems();
         };
         fetchData();
     }, []);
@@ -128,7 +117,7 @@ export const CartScreen = () => {
                 commandTitle={t('cart.command')}
                 collectTitle={t('cart.collectTime')}
                 totalText={t('cart.total')}
-                totalPrice={`${totalAmount.toFixed(2)}€`}
+                totalPrice={`${calcTotalAmount().toFixed(2)}€`}
                 standardSlot={{
                     text: t('cart.standard'),
                     startTime: fixedPickupSlot.startTime,

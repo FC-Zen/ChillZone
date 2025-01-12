@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import { colors } from "@theme";
 import { useNavigation } from "@hooks";
 import { ROUTE } from "@enums";
+import { useCommand } from "@contexts";
 
 
 export const PaymentScreen = () => {
     const { t } = useTranslation();
-    const [totalAmount, setTotalAmount] = useState(0);
+    const {totalAmount} = useCommand();
     const [credit, setCredit] = useState("");
     const [cardName, setCardName] = useState("");
     const [cardExpiration, setCardExpiration] = useState("");

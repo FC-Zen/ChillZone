@@ -11,6 +11,7 @@ import * as Sharing from 'expo-sharing';
 import { Asset } from 'expo-asset';
 import { getPaymentId } from "@services/PaymentServices";
 import { useEffect, useState } from "react";
+import { useCommand } from "@contexts";
 
 export const FinalPaymentScreen = () => {
     const { t } = useTranslation();
@@ -66,7 +67,8 @@ export const FinalPaymentScreen = () => {
         }
     };
 
-    const [id, setId] = useState(15461);
+    const { commandId } = useCommand();
+    const [id, setId] = useState(commandId || 0);
     
     useEffect(() => {
         const fetchData = async () => {
@@ -83,7 +85,7 @@ export const FinalPaymentScreen = () => {
         <View style={styles.container}>
             <FinalPaymentTemplate 
                 headerTitle={t('headers.finalCommand')}
-                navigateToHome={() => navigation.navigate(ROUTE.HOME)} 
+                navigateToHome={() => navigation.navigate(ROUTE.HOME)}
                 qrImagelink={image} 
                 commandConfirmation={t('cart.confirmText')}
                 commandId={id}

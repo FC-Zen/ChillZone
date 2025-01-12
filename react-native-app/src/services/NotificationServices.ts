@@ -36,7 +36,10 @@ export const getNotifications = (): NotificationProps[] => {
       title,
       description,
       time,
-      icon: { name: 'Bell', color: 'white' },
+      icon: {
+        name: 'Bell',
+        color: 'white',
+      }
     };
   });
 };

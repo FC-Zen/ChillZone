@@ -27,7 +27,7 @@ export type RootStackParamList = {
 // Définition des routes et de leurs paramètres
 export type RouteParamList = {
   HomeScreen: {
-    data: NavItem[];
+    data?: NavItem[];
   };
   LoginScreen: undefined; // Correspond à ROUTE.LOGIN_SCREEN
   ForgotPasswordScreen: undefined;

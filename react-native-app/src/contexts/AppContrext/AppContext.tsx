@@ -1,3 +1,4 @@
+import { ItemProps } from '@components/organisms';
 import { Booking } from '@services/BookingInfoServices';
 import { Room } from '@services/RoomServices';
 import React, { createContext, useContext, useState } from 'react';
@@ -34,11 +35,11 @@ export const useUser = () => {
 // CONTEXTE POUR LA COMMANDE
 
 export type CommandContextType = {
-  commandId: string | null;
-  listItems: string[];
+  commandId: number | null;
+  listItems: ItemProps[];
   totalAmount: number;
-  setCommandId: (id: string) => void;
-  setListItems: (items: string[]) => void;
+  setCommandId: (id: number) => void;
+  updateListItems: (items: ItemProps[]) => void;
   setTotalAmount: (amount: number) => void;
 };
 
@@ -49,8 +50,8 @@ export const CommandContext = createContext<CommandContextType | undefined>(
 export const CommandProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [commandId, setCommandId] = useState<string | null>(null);
-  const [listItems, setListItems] = useState<string[]>([]);
+  const [commandId, setCommandId] = useState<number | null>(null);
+  const [listItems, updateListItems] = useState<ItemProps[]>([]);
   const [totalAmount, setTotalAmount] = useState<number>(0);
 
   return (
@@ -60,7 +61,7 @@ export const CommandProvider: React.FC<{ children: React.ReactNode }> = ({
         listItems,
         totalAmount,
         setCommandId,
-        setListItems,
+        updateListItems,
         setTotalAmount,
       }}
     >

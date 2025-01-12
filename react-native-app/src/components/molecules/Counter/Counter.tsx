@@ -26,7 +26,7 @@ export const Counter: React.FC<CounterProps> = ({
         <Icon name="Trash" onPress={onDelete} /> 
         : <Icon name="Less" onPress={onDecrement} />}
       </TouchableOpacity>
-      <Text style={[styles.quantity, variant === 'small' && { fontSize: 13, fontFamily: typography.h0.fontFamily }]}>{quantity}</Text>
+      <Text style={[styles.quantity, variant === 'small' && { fontSize: 13, fontFamily: typography.title1.fontFamily }]}>{quantity}</Text>
       <TouchableOpacity style={styles.button}>
         <Icon name="More" onPress={onIncrement} />
       </TouchableOpacity>
