@@ -172,7 +172,8 @@
 
   "info": {
     "reservation": "Retrouvez votre prochaine réservation",
-    "restaurants": "Explorez les restaurants à proximité"
+    "restaurants": "Explorez les restaurants à proximité",
+    "noReservations": "Vous n’avez pas de réservations à venir"
   },
 
   "filters": {

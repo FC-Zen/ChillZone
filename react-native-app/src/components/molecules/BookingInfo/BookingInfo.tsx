@@ -4,6 +4,7 @@ import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { colors } from '@theme';
 import { map } from '@assets/Images';
+import { useTranslation } from 'react-i18next';
 
 export type NavItem = {
   icon: IconProps['name'];
@@ -15,26 +16,47 @@ type BookingInfoProps = {
 };
 
 export const BookingInfo: React.FC<BookingInfoProps> = ({ items }) => {
+  const { t } = useTranslation();
+
   return (
-    <View style={styles.container}>
-      <Image source={map} style={styles.image} />
-      <View style={styles.content}>
-        <View style={styles.iconRow}>
-          {items.map((item, index) => (
-            <View key={index} style={styles.iconContainer}>
-              <View style={styles.iconLabelContainer}>
-                <Icon
-                  name={item.icon}
-                  color={colors.white}
-                  height={16}
-                  width={16}
-                />
-                <Text style={styles.iconText}>{item.label}</Text>
-              </View>
+    <View
+      style={[
+        styles.container,
+        items.length === 0 && {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: colors.resolutionBlue,
+          height: 100,
+        },
+      ]}
+    >
+      {items.length === 0 ? (
+        // Message lorsque la liste est vide
+        <Text style={styles.noReservation}>{t('info.noReservations')}</Text>
+      ) : (
+        // Affichage des informations si la liste n'est pas vide
+        <>
+          <Image source={map} style={styles.image} />
+          <View style={styles.content}>
+            <View style={styles.iconRow}>
+              {items.map((item, index) => (
+                <View key={index} style={styles.iconContainer}>
+                  <View style={styles.iconLabelContainer}>
+                    <Icon
+                      name={item.icon}
+                      color={colors.white}
+                      height={16}
+                      width={16}
+                    />
+                    <Text style={styles.iconText}>{item.label}</Text>
+                  </View>
+                </View>
+              ))}
             </View>
-          ))}
-        </View>
-      </View>
+          </View>
+        </>
+      )}
     </View>
   );
 };

@@ -35,12 +35,14 @@ export const OverlayList: React.FC<OverlayListProps> = ({
 
           {/* Liste des réservations d'aujourd'hui */}
           {todaysReservations.map((reservation, index) => (
-            <View key={index} style={styles.reservationContainer}>
+            <View key={reservation.id} style={styles.reservationContainer}>
               <Overlay
                 title={reservation.title}
                 data={reservation.data}
                 titleBtn={reservation.titleBtn}
-                cancelReservation={() => onCancelReservation?.(index)}
+                cancelReservation={() =>
+                  onCancelReservation?.(reservation.id || index)
+                }
               />
             </View>
           ))}

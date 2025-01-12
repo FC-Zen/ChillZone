@@ -20,7 +20,6 @@ export const ReservationScreen = () => {
   const [room, setRoom] = useState<Room | null>(null);
 
   const [selectedRoom, setSelectedRoom] = useState<string>('');
-
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('');
   const [selectedDuration, setSelectedDuration] = useState<string>('');
@@ -37,6 +36,8 @@ export const ReservationScreen = () => {
 
     return durationHours === 1 ? 'Court : 1h' : 'Long : 2h';
   };
+
+  const removeDuplicates = (array: string[]) => Array.from(new Set(array));
 
   const getModalData = () => {
     if (selectedRoom || selectedDate || selectedTimeSlot || selectedDuration) {
@@ -69,21 +70,22 @@ export const ReservationScreen = () => {
       const dates = reservations.map(
         (reservation) => reservation.day_reservation
       );
-      setDayReservations(dates);
+      setDayReservations(removeDuplicates(dates));
 
       const times = reservations.map(
         (reservation) => `${reservation.start_time} - ${reservation.end_time}`
       );
-      setTimeSlots(times);
+      setTimeSlots(removeDuplicates(times));
 
       const calculatedDurations = reservations.map((reservation) =>
         calculateDuration(reservation.start_time, reservation.end_time)
       );
+      const uniqueDurations = removeDuplicates(calculatedDurations);
 
       const roomTypes = roomsData.map((room) => room.tag_label || '') || [];
 
       setRoomTypes(roomTypes);
-      setDurations(calculatedDurations);
+      setDurations(uniqueDurations);
       setRooms(roomsData);
     };
     fetchData();

@@ -19,6 +19,7 @@ export type Booking = {
 };
 
 export type BookingOverlay = {
+  id?: number;
   data: Booking;
   title?: string;
   titleBtn?: string;
@@ -81,9 +82,14 @@ export const transformBookings = (): NavItem[] => {
   // const booking = bookings[0];
   // if (!booking) return navItems;
 
-  const booking = reservations[0];
+  // récupère la reservation à venir depuis le JSON en fonction de la date
+  const booking = reservations.find(
+    (reservation) => reservation.day_reservation === '2025-01-01'
+  );
 
   const navItems: NavItem[] = [];
+
+  if (!booking) return navItems;
 
   if (booking.location.location_name) {
     navItems.push({
@@ -147,6 +153,7 @@ export const transformReservations = (): BookingOverlay[] => {
           establishment_name: booking.establishment.establishment_name,
         },
       },
+      id: booking.reservation_id,
     });
   });
 
