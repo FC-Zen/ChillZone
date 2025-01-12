@@ -22,6 +22,7 @@ export type CommandListProps = {
 export const CommandList: React.FC<CommandListProps> = ({ 
     commands,
 }) => {
+    
     return (
         <ScrollView style={styles.container}>
             <View style={styles.items}>
@@ -37,7 +38,7 @@ export const CommandList: React.FC<CommandListProps> = ({
                                 onDelete={command.onDelete}
                                 variant='small'
                             />
-                            <Text style={styles.price}>{command.price}€</Text>
+                            <Text style={styles.price}>{(command.price * command.quantity).toFixed(2)}€</Text>
                         </View>
                         {
                             command.meals?.map((meal) => (

@@ -79,7 +79,7 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
 
       <View style={styles.contentContainer}>
         <Image source={meal.imageUrl} style={styles.image} />
-        <Text style={styles.price}>{meal.price}</Text>
+        <Text style={styles.price}>{meal.price} €</Text>
         <Text style={styles.subtitle}>{meal.subTitle}</Text>
 
         <View style={styles.counterContainer}>
