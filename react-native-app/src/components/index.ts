@@ -54,4 +54,5 @@ export {
   AccountTemplate,
   MenuTemplate,
   CartTemplate,
+  CommandSummaryTemplate,
 } from './templates';

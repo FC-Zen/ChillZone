@@ -19,3 +19,4 @@ export { AlertHourReservationTemplate } from './AlertHourReservationTemplate';
 export { AlertCancelReservationTemplate } from './AlertCancelReservationTemplate';
 export { ReportingFormTemplate } from './ReportingFormTemplate';
 export { ReportingFinalFormTemplate } from './ReportingFinalTemplate';
+export { CommandSummaryTemplate } from './CommandSummaryTemplate';
