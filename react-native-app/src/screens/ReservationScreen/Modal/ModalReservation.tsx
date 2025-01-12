@@ -87,22 +87,26 @@ export const ReservationModal: FC<ReservationModalProps> = ({
 
   const handleCloseAndNavigate = async () => {
     // Mise à jour de la réservation
-    onClose();
-    updateNextBooking([...nextBooking, transformDataToNavItems()]);
+    try {
+      onClose();
+      updateNextBooking([...nextBooking, transformDataToNavItems()]);
 
-    // Envoi d'une notification
-    await scheduleNotification(
-      t('notification.title'),
-      t('notification.reservation', { roomName: roomName || room?.name }),
-      {
-        roomName: roomName || room?.name,
-        date: date?.[0],
-        timeSlot: timeSlot?.[0],
+      navigation.navigate(ROUTE.HOME);
+
+      if (roomName || room?.name) {
+        await scheduleNotification(
+          t('notification.title'),
+          t('notification.reservation', { roomName: roomName || room?.name }),
+          {
+            roomName: roomName || room?.name,
+            date: date?.[0],
+            timeSlot: timeSlot?.[0],
+          }
+        );
       }
-    );
-
-    // Navigation vers la page d'accueil
-    navigation.navigate(ROUTE.HOME);
+    } catch (error) {
+      console.error('Error handling reservation:', error);
+    }
   };
 
   return (

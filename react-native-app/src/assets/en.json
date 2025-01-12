@@ -238,7 +238,9 @@
   },
 
   "notification": {
-    "title": "Chillzone",
-    "reservation": "Your reservation has been confirmed."
+    "title": "New Reservation !",
+    "reservation": "Your reservation for {{roomName}} has been confirmed.",
+    "paymentSuccessTitle": "Payment Successful !",
+    "paymentSuccessBody": "Your payment with ID {{commandId}} was processed successfully."
   }
 }

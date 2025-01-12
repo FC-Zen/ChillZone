@@ -239,7 +239,9 @@
   },
 
   "notification": {
-    "title": "Chillzone",
-    "reservation": "Votre réservation a été confirmée."
+    "title": "Nouvelle Réservation !",
+    "reservation": "Votre réservation pour {{roomName}} a été confirmée.",
+    "paymentSuccessTitle": "Paiement Réussi !",
+    "paymentSuccessBody": "Votre paiement avec l'identifiant {{commandId}} a été traité avec succès."
   }
 }
