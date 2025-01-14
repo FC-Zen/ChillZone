@@ -49,6 +49,9 @@ export const AccountScreen: React.FC = () => {
         onNavigateToReservations={() =>
           navigation.navigate(ROUTE.RESERVATION_SUMMARY)
         }
+        onNavigateToCommand={() =>
+          navigation.navigate(ROUTE.COMMAND_SUMMARY)
+        }
       />
 
       {/* Modales */}

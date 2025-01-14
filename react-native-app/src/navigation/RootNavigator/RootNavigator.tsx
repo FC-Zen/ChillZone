@@ -22,6 +22,7 @@ import {
   MenuModal,
   ReservationSummaryScreen,
   CartScreen,
+  CommandSummaryScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -167,6 +168,11 @@ export const RootNavigator = () => {
                   <Stack.Screen
                     name={ROUTE.ALERT}
                     component={AlertScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.COMMAND_SUMMARY}
+                    component={CommandSummaryScreen}
                     options={{ headerShown: false }}
                   />
                 </Stack.Navigator>

@@ -19,6 +19,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
   onCancelReservation,
 }) => {
   const { t } = useTranslation();
+  console.log(pastReservations);
   return (
     <ScrollView style={styles.container}>
       {/* Titre pour les réservations d'aujourd'hui */}

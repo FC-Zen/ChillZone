@@ -41,6 +41,7 @@ export const getReservations = async (): Promise<FormattedReservation[]> => {
         (reservation: Reservation) => formatReservation(reservation)
       );
       resolve(formattedReservations);
+      console.log("formattedReservations: ",formattedReservations)
     }, 1000);
   });
 };

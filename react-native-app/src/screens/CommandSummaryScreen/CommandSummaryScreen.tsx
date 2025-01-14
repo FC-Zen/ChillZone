@@ -8,6 +8,8 @@ import { styles } from './style';
 
 export const CommandSummaryScreen: React.FC = () => {
   const [reservations, setReservations] = useState<FormattedReservation[] | null>([]);
+  const [todaysReservations, setTodaysReservations] = useState<FormattedReservation[]>([]);
+  const [pastReservations, setPastReservations] = useState<FormattedReservation[]>([]);
 
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -22,6 +24,7 @@ export const CommandSummaryScreen: React.FC = () => {
     message: '',
   });
 
+  // Fetch initial reservations
   useEffect(() => {
     const fetchReservations = async () => {
       const transformedReservations = await getReservations();
@@ -31,10 +34,38 @@ export const CommandSummaryScreen: React.FC = () => {
     fetchReservations();
   }, []);
 
+  // Group reservations whenever "reservations" state changes
+  useEffect(() => {
+    const groupReservations = (reservations: FormattedReservation[] | null) => {
+      if (!reservations) {
+        setTodaysReservations([]);
+        setPastReservations([]);
+        return;
+      }
+
+      const today = new Date();
+      const todayReservations: FormattedReservation[] = [];
+      const pastReservationsList: FormattedReservation[] = [];
+
+      reservations.forEach((reservation) => {
+        const reservationDate = new Date(reservation.day_reservation);
+        if (reservationDate.toDateString() === today.toDateString()) {
+          todayReservations.push(reservation);
+        } else if (reservationDate > today) {
+          pastReservationsList.push(reservation);
+        }
+      });
+
+      setTodaysReservations(todayReservations);
+      setPastReservations(pastReservationsList);
+    };
+
+    groupReservations(reservations);
+  }, [reservations]);
+
   // Fonction pour annuler la réservation
   const handleCancelReservation = (id: number) => {
     if (reservations) {
-      // supprime l'index de la réservation
       setReservations(
         reservations.filter((reservation) => reservation?.reservation_id !== id)
       );
@@ -47,28 +78,7 @@ export const CommandSummaryScreen: React.FC = () => {
     }
   };
 
-  const getReservationsGrouped = (reservations: FormattedReservation[] | null) => {
-    if (!reservations) {
-      return { todaysReservations: [], pastReservations: [] };
-    }
-
-    const today = new Date();
-    const todaysReservations: FormattedReservation[] = [];
-    const pastReservations: FormattedReservation[] = [];
-
-    reservations.forEach((reservation) => {
-      const reservationDate = new Date(reservation.day_reservation);
-      if (reservationDate.toDateString() === today.toDateString()) {
-        todaysReservations.push({ ...reservation });
-      } else if (reservationDate > today) {
-        pastReservations.push({ ...reservation });
-      }
-    });
-    return { todaysReservations, pastReservations };
-  };
-
-  const { todaysReservations, pastReservations } =
-    getReservationsGrouped(reservations);
+  console.log("Screen : ", reservations)
 
   return (
     <View style={styles.container}>
@@ -79,7 +89,7 @@ export const CommandSummaryScreen: React.FC = () => {
         severity={snackbar.severity}
       />
       <CommandSummaryTemplate
-        headerTitle={t('headers.recapReservation')}
+        headerTitle={t('headers.recapCommands')}
         todaysReservations={todaysReservations}
         pastReservations={pastReservations}
         onCancelReservation={(id) => handleCancelReservation(id)}
