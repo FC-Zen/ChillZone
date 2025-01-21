@@ -45,26 +45,27 @@ export const LoginPage: React.FC = () => {
           userEmail: res.data.email,
           username: res.data.first_name + " " + res.data.last_name,
           organization: res.data.establishment,
-          role : res.data.type
+          role : res.data.type,
+          photo_link : 'http://localhost:3000' + res.data.photo_link,
         });
         switch (res?.data.type) {
           case 'admin':
             setUser(prevUser => ({
-              ...prevUser ?? { userEmail: '', username: '', organization: '', role: '' },
+              ...prevUser ?? { userEmail: '', username: '', organization: '', role: '', photo_link : '' },
               role: 'Administrateur'
             }));
             navigation.navigate(ROUTE.ADMIN_DASHBOARD);
             break;
           case 'owner':
             setUser(prevUser => ({
-              ...prevUser ?? { userEmail: '', username: '', organization: '', role: '' },
+              ...prevUser ?? { userEmail: '', username: '', organization: '', role: '', photo_link : '' },
               role: 'Restaurateur'
             }));
             navigation.navigate(ROUTE.OWNER_DASHBOARD);
             break;
           case 'superadmin':
             setUser(prevUser => ({
-              ...prevUser ?? { userEmail: '', username: '', organization: '', role: '' },
+              ...prevUser ?? { userEmail: '', username: '', organization: '', role: '', photo_link : '' },
               role: 'Super Administrateur'
             }));
             navigation.navigate(ROUTE.ADMIN_DASHBOARD);

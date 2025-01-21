@@ -1,22 +1,17 @@
 import React from 'react';
 import { OwnerSidebar, Header } from '@components/organisms';
+import { User } from '@hooks';
 
 type OwnerHomeLayoutProps = {
-  username: string;
-  userEmail: string;
-  organization: string;
+  user : User | null;
   part: string;
-  role: string;
   statsSection: React.ReactNode;
   mainContent: React.ReactNode;
 };
 
 export const OwnerHomeLayout: React.FC<OwnerHomeLayoutProps> = ({
-  username,
-  userEmail,
-  organization,
+  user,
   part,
-  role,
   statsSection,
   mainContent,
 }) => (
@@ -26,11 +21,8 @@ export const OwnerHomeLayout: React.FC<OwnerHomeLayoutProps> = ({
     <div className="flex-1">
       {/* En-tête */}
       <Header
-        userName={username}
-        userEmail={userEmail}
-        organization={organization}
+        user={user}
         part={part}
-        role={role}
       />
       {/* Contenu principal */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">

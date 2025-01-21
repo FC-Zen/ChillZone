@@ -1,12 +1,10 @@
 import { Header, AdminSideBar } from '@components/organisms';
 import { AccountDataTable } from '@components/organisms/DataTables';
+import { User } from '@hooks';
 
 type AdminAccountLayoutProps = {
-  username: string;
-  userEmail: string;
-  organization: string;
+  user : User | null;
   part: string;
-  role: string;
   addAccountBtn: () => void;
   deleteBtn: (id: number) => void;
   toggleBtn: (id: number, isActive: string) => void;
@@ -23,11 +21,8 @@ type AdminAccountLayoutProps = {
 };
 
 export const AdminAccountLayout: React.FC<AdminAccountLayoutProps> = ({
-  username,
-  userEmail,
-  organization,
+  user,
   part,
-  role,
   addAccountBtn,
   deleteBtn,
   toggleBtn,
@@ -41,11 +36,8 @@ export const AdminAccountLayout: React.FC<AdminAccountLayoutProps> = ({
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <Header
-          userName={username}
-          userEmail={userEmail}
-          organization={organization}
+          user={user}
           part={part}   
-          role={role}     
         />
 
         <main className="p-6">

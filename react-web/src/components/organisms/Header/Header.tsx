@@ -7,21 +7,16 @@ import { useNavigate } from 'react-router-dom';
 import { styles } from './style'; // Import des styles
 import { Icon } from '@components/atoms';
 import { colors } from '@theme';
+import { User } from '@hooks';
 
 type HeaderProps = {
-  userName: string;
-  userEmail: string;
-  organization: string;
-  part: string;
-  role: string;
+  user : User | null;
+  part : string
 };
 
 export const Header: React.FC<HeaderProps> = ({
-  userName,
-  userEmail,
-  organization,
-  part,
-  role
+  user,
+  part
 }) => {
   const navigate = useNavigate();
 
@@ -44,25 +39,25 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Section Gauche */}
       <div style={styles.leftSection}>
         <h1 style={styles.title}>
-          Bonjour, <span style={styles.bold}>{userName}</span>
+          Bonjour, <span style={styles.bold}>{user?.username}</span>
         </h1>
         <p style={styles.part}>{part}</p>
         <div style={styles.organizationContainer}>
           <Icon name={'Graduation'} color={colors.black}/>
-          <p style={styles.organization}>{organization}</p>
+          <p style={styles.organization}>{user?.organization}</p>
         </div>
       </div>
 
       {/* Section Droite */}
       <div style={styles.rightSection}>
         <div style={styles.profileCard}>
-          <Avatar alt={userName} size="lg" />
+          <Avatar alt={user?.username || "image inconnue"} size="lg" src={user?.photo_link} />
           <div style={styles.profileInfo}>
             <p style={styles.userName}>
-              {userName} <span style={styles.role}>({role})</span>
+              {user?.username} <span style={styles.role}>({user?.role})</span>
             </p>
-            <p style={styles.email}>{userEmail}</p>
-            <p style={styles.organizationRight}>{organization}</p>
+            <p style={styles.email}>{user?.userEmail}</p>
+            <p style={styles.organizationRight}>{user?.organization}</p>
           </div>
           <LogOut
             size={20}
