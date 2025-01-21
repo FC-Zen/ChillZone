@@ -3,23 +3,29 @@ import { Button, Input } from '@mui/material';
 import { Icon } from '@components/atoms';
 import { colors } from '@theme';
 
-export const FileInput: React.FC = () => {
+export const FileInput: React.FC<{ onFileChange: (file: File) => void }> = ({ onFileChange }) => {
   const [fileName, setFileName] = useState('');
   const [filePreview, setFilePreview] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    if (file && file.size > 800 * 1024) { // 800 Ko
+      console.log("non");
+      return; 
+    }
     if (file) {
       setFileName(file.name);
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result) {
           setFilePreview(reader.result as string);
+          onFileChange(file);
         }
       };
       reader.readAsDataURL(file);
     }
   };
+  
 
   return (
     <div style={{

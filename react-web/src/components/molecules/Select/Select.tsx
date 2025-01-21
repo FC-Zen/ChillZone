@@ -13,7 +13,7 @@ export type SelectProps = {
   name: string;
   value?: string | number;
   label: string;
-  options: { tag: string; }[];
+  options: { id: number; name?: string; libelle?: string }[];
   required?: boolean;
   disabled?: boolean;
   icon?: keyof typeof IconList;
@@ -116,8 +116,8 @@ export const StyledSelect = ({
           }}
         >
           {options.map((option) => (
-            <MenuItem key={option.tag} value={option.tag}>
-              {option.tag}
+            <MenuItem key={option.id} value={option.id}>
+              {option.name || option.libelle}
             </MenuItem>
           ))}
         </Select>
