@@ -23,7 +23,7 @@ class RestaurationPlace(models.Model):
 
     email = models.EmailField()
 
-    photo_link = models.ImageField(null=True, blank=True)
+    photo_link = models.ImageField(null=True, blank=True) 
 
     creation_date = models.DateTimeField(auto_now_add=True)
     

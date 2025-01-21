@@ -16,7 +16,7 @@ class Command(models.Model):
 
     status = models.CharField(max_length=15, choices=STATUS_CHOICES)
 
-    qrcode_link = models.TextField
+    qrcode_link = models.ImageField(upload_to='qrcodes/', blank=True)
 
     pickup_time = models.TimeField
 

@@ -25,7 +25,7 @@ class UserMeta(models.Model):
 
     phone = models.CharField(max_length=10, blank=True)
 
-    photo_link = models.ImageField(blank=True)
+    photo_link = models.ImageField(blank=True, default="DefaultProfile.png")
 
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, blank=True, null=True)
 
