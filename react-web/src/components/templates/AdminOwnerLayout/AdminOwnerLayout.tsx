@@ -2,13 +2,11 @@ import { AdminSideBar, BookingDataTable, ConflictDataTable, Header, OwnersAccept
 import "./style.css" ;
 import { HeaderIcon } from '@components/atoms';
 import { useTranslation } from 'react-i18next';
+import { User } from '@hooks';
 
 type AdminOwnerLayoutProps = {
-  username: string;
-  userEmail: string;
-  organization: string;
+  user : User | null;
   part: string;
-  role: string;
   restaurationPlacespendingData : {
     id: number;
     name : string; 
@@ -30,11 +28,8 @@ type AdminOwnerLayoutProps = {
 };
 
 export const AdminOwnerLayout = ({
-  username,
-  userEmail,
-  organization,
+  user,
   part,
-  role,
   restaurationPlacesAcceptedData,
   restaurationPlacespendingData,
   handleClickDelete,
@@ -49,11 +44,8 @@ export const AdminOwnerLayout = ({
 
       <div className="flex-1">
         <Header
-          userName={username}
-          userEmail={userEmail}
-          organization={organization}
-          part={part} 
-          role={role}
+          user={user}
+          part={part}   
           />
         
         <main className="mainContainerRestaurants">

@@ -1,21 +1,16 @@
 import { AdminSideBar, Header } from '@components/organisms';
+import { User } from '@hooks';
 
 type AdminHomeLayoutProps = {
-  username: string;
-  userEmail: string;
-  organization: string;
+  user : User | null;
   part: string;
-  role: string;
   statsSection: React.ReactNode;
   mainContent: React.ReactNode;
 };
 
 export const AdminHomeLayout: React.FC<AdminHomeLayoutProps> = ({
-  username,
-  userEmail,
-  organization,
+  user,
   part,
-  role,
   statsSection,
   mainContent,
 }) => {
@@ -27,11 +22,8 @@ export const AdminHomeLayout: React.FC<AdminHomeLayoutProps> = ({
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <Header
-          userName={username}
-          userEmail={userEmail}
-          organization={organization}
-          part={part}
-          role={role}
+          user={user}
+          part={part}   
         />
         {/* Conteneur principal */}
         <div className="flex p-6 gap-6">

@@ -80,11 +80,8 @@ export const OwnerOrdersPage: React.FC = () => {
   return (
   <>
     <OwnerOrdersTemplate
-      userEmail={user?.userEmail ?? ""}
-      username={user?.username ?? ""}
-      organization={user?.organization ?? ""}
+      user={user}
       part={t('navbar.owner.commands')}
-      role={user?.role ?? ""}
       statsSection={stats}
       data={commandsData}
       handleClick={handleViewCommand}

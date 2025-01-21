@@ -54,11 +54,8 @@ export const AdminOwnerPage: React.FC = () => {
     <div>
       {/* Layout principal contenant le tableau */}
       <AdminOwnerLayout
-        userEmail={user?.userEmail ?? ""}
-        username={user?.username ?? ""}
-        organization={user?.organization ?? ""}
+        user={user}
         part={t('headers.affiliates')}
-        role={user?.role ?? ""}
         restaurationPlacesAcceptedData={restaurationPlacesAcceptedData}
         restaurationPlacespendingData={restaurationPlacespendingData}
         handleClickDelete={handleClickDelete}

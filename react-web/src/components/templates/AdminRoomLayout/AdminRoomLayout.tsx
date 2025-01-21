@@ -1,12 +1,10 @@
 import { AdminSideBar, Header } from '@components/organisms';
 import { RoomDataTable } from '@components/organisms/DataTables';
+import { User } from '@hooks';
 
 type AdminRoomLayoutProps = {
-  username: string;
-  userEmail: string;
-  organization: string;
+  user : User | null;
   part: string;
-  role: string;
   addBtn: () => void;
   deleteBtn: (id: number) => void;
   toggleBtn: (id: number, isActive: boolean) => void;
@@ -22,11 +20,8 @@ type AdminRoomLayoutProps = {
 };
 
 export const AdminRoomLayout = ({
-  username,
-  userEmail,
-  organization,
+  user,
   part,
-  role,
   addBtn,
   deleteBtn,
   toggleBtn,
@@ -38,11 +33,8 @@ export const AdminRoomLayout = ({
 
       <div className="flex-1">
         <Header
-          userName={username}
-          userEmail={userEmail}
-          organization={organization}
-          part={part} 
-          role={role}
+          user={user}
+          part={part}   
           />
 
         <main className="p-6">

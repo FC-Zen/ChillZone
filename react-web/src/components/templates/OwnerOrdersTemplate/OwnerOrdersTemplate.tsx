@@ -1,12 +1,11 @@
 import React from "react";
 import { OwnerSidebar, Header, OrdersDataTable } from "@components/organisms";
 import { StatCard } from "@components/molecules";
-import { colors } from "@theme";
 import "./style.css"; // Importation du fichier CSS
 import { User } from "@hooks";
 
 type OwnerHomeLayoutProps = {
-  user : User;
+  user : User | null;
   part: string;
   statsSection: {
     commandsNow: { name: string; value: string | number };

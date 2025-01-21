@@ -33,11 +33,8 @@ export const AdminBookingPage: React.FC = () => {
     <div>
       {/* Layout principal contenant le tableau */}
       <AdminBookingLayout
-        userEmail={user?.userEmail ?? ""}
-        username={user?.username ?? ""}
-        organization={user?.organization ?? ""}
+        user={user}
         part={t('navbar.admin.reservation')}
-        role={user?.role ?? ""}
         reservationsData={reservationsData}
         conflictsData={conflictsData}
       />

@@ -2,13 +2,11 @@ import { AdminSideBar, BookingDataTable, ConflictDataTable, Header } from '@comp
 import "./style.css" ;
 import { HeaderIcon } from '@components/atoms';
 import { useTranslation } from 'react-i18next';
+import { User } from '@hooks';
 
 type AdminBookingLayoutProps = {
-  username: string;
-  userEmail: string;
-  organization: string;
+  user : User | null;
   part: string;
-  role: string;
   reservationsData : {
     id: number;
     day_reservation: string; 
@@ -27,11 +25,8 @@ type AdminBookingLayoutProps = {
 };
 
 export const AdminBookingLayout = ({
-  username,
-  userEmail,
-  organization,
+  user,
   part,
-  role,
   reservationsData,
   conflictsData,
 }: AdminBookingLayoutProps) => {
@@ -43,11 +38,8 @@ export const AdminBookingLayout = ({
 
       <div className="flex-1">
         <Header
-          userName={username}
-          userEmail={userEmail}
-          organization={organization}
-          part={part} 
-          role={role}
+          user={user}
+          part={part}   
           />
         
         <main className="mainContainerBooking">
