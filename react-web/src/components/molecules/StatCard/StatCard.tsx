@@ -1,9 +1,9 @@
 import React from 'react';
 import { colors } from '@theme/colors';
-import { ArrowUp, ArrowDown } from '@components/atoms/Icons';
+import { ArrowUp, ArrowDown, Icon, IconList } from '@components/atoms/Icons';
 
 type StatCardProps = {
-  icon: React.ReactNode;
+  icon: keyof typeof IconList ;
   title: string;
   value: string | number;
   trend?: { value: number; isPositive: boolean; duration: string }; // Inclure la durée
@@ -24,7 +24,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         color: colors.white, // Icône en blanc
       }}
     >
-      {icon}
+      <Icon name={icon} color={colors.white} />
     </div>
     <div>
       <p className="text-sm text-gray-500">{title}</p>

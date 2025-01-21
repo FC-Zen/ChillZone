@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from decouple import config
+from django.conf import settings
+from django.conf.urls.static import static
 
 from chillzone.views import admin_boards, home, notification, reservation, user, faq, network
 from drf_spectacular.views import (
@@ -65,7 +67,7 @@ urlpatterns = [
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     # Documentation Redoc UI
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if config('DEBUG') :
     urlpatterns = [

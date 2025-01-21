@@ -1,16 +1,13 @@
 import React from "react";
 import { OwnerSidebar, Header, OrdersDataTable } from "@components/organisms";
 import { StatCard } from "@components/molecules";
-import { User } from "@components/atoms/Icons";
 import { colors } from "@theme";
 import "./style.css"; // Importation du fichier CSS
+import { User } from "@hooks";
 
 type OwnerHomeLayoutProps = {
-  username: string;
-  userEmail: string;
-  organization: string;
+  user : User;
   part: string;
-  role: string;
   statsSection: {
     commandsNow: { name: string; value: string | number };
     commandsToday: { name: string; value: string | number };
@@ -21,11 +18,8 @@ type OwnerHomeLayoutProps = {
 };
 
 export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
-  username,
-  userEmail,
-  organization,
+  user,
   part,
-  role,
   statsSection,
   data,
   handleClick
@@ -35,11 +29,8 @@ export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
 
     <div className="content">
       <Header
-        userName={username}
-        userEmail={userEmail}
-        organization={organization}
+        user={user}
         part={part}
-        role={role}
       />
 
       <div className="main-content">
@@ -50,17 +41,17 @@ export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
 
         <div className="stats-section">
           <StatCard
-            icon={<User color={colors.white} />}
+            icon='User'
             title={statsSection.commandsNow.name}
             value={statsSection.commandsNow.value}
           />
           <StatCard
-            icon={<User color={colors.white} />}
+            icon='User'
             title={statsSection.commandsToday.name}
             value={statsSection.commandsToday.value}
           />
           <StatCard
-            icon={<User color={colors.white} />}
+            icon='User'
             title={statsSection.commandsTodo.name}
             value={statsSection.commandsTodo.value}
           />

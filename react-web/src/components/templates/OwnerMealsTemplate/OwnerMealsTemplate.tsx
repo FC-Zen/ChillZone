@@ -2,13 +2,11 @@ import React from "react";
 import { OwnerSidebar, Header } from "@components/organisms";
 import "./style.css"; // Importation du fichier CSS
 import { MealsDataTable } from "@components/organisms";
+import { User } from "@hooks";
 
 type OwnerMealsLayoutProps = {
-  username: string;
-  userEmail: string;
-  organization: string;
+  user : User;
   part: string;
-  role: string;
   data: any;
   addMealBtn: () => void;
   handleClickMeal : (id: number) => void;
@@ -16,11 +14,8 @@ type OwnerMealsLayoutProps = {
 };
 
 export const OwnerMealsTemplate: React.FC<OwnerMealsLayoutProps> = ({
-  username,
-  userEmail,
-  organization,
+  user,
   part,
-  role,
   data,
   handleClickMeal,
   handleClickQuantity,
@@ -31,11 +26,8 @@ export const OwnerMealsTemplate: React.FC<OwnerMealsLayoutProps> = ({
 
     <div className="content">
       <Header
-        userName={username}
-        userEmail={userEmail}
-        organization={organization}
+        user={user}
         part={part}
-        role={role}
       />
 
       <div className="main-content">

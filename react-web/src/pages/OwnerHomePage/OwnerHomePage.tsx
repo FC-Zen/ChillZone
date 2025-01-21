@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { OwnerHomeLayout } from '@components/templates';
 import { OwnerDashboardGraphs } from '@components/organisms';
 import { CustomSwitch, StatCard } from '@components/molecules'; // Réutilisation du StatCard d'Admin
-import { User, Flag, Layers, Graduation } from '@components/atoms/Icons'; // Icônes nécessaires
 import { colors } from '@theme'; // Couleurs
 import OwnerCardData from '@assets/fr.json'; // Import des données FR (renommées)
 import OwnerCardDataValues from '@assets/data/stat_card_value.json'; // Import des données FR (renommées)
@@ -28,22 +27,22 @@ export const OwnerHomePage: React.FC = () => {
         <h2>Votre restaurant est {restaurantOpen ? t('status.open') : t('status.close') }</h2>
       </div>
       <StatCard
-        icon={<User color={colors.white} />}
+        icon='User'
         title={OwnerCardData.dashboard.info.mostWantedProduct}
         value={OwnerCardDataValues.mostWantedName}
       />
       <StatCard
-        icon={<Flag color={colors.white} />}
+        icon='Flag'
         title={OwnerCardData.dashboard.info.mostWantedMenu}
         value={OwnerCardDataValues.mostWantedMenuName}
       />
       <StatCard
-        icon={<User color={colors.white} />}
+        icon='User'
         title={OwnerCardData.dashboard.info.onHour}
         value={OwnerCardDataValues.onHourValue}
       />
       <StatCard
-        icon={<Layers color={colors.white} />}
+        icon='Layers'
         title={OwnerCardData.dashboard.info.commandsToday}
         value={OwnerCardDataValues.onTodayValue}
       />
@@ -72,11 +71,8 @@ export const OwnerHomePage: React.FC = () => {
 
   return (
     <OwnerHomeLayout
-      userEmail={user?.userEmail ?? ""}
-      username={user?.username ?? ""}
-      organization={user?.organization ?? ""}
+      user={user || null}
       part={t('navbar.home')}
-      role={user?.role ?? ""}
       statsSection={statsSection}
       mainContent={mainContent}
     />

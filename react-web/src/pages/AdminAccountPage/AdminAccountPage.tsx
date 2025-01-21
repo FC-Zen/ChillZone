@@ -107,11 +107,8 @@ export const AdminAccountPage: React.FC = () => {
     <>
       {/* Layout principal contenant le tableau */}
       <AdminAccountLayout
-        userEmail={user?.userEmail ?? ""}
-        username={user?.username ?? ""}
-        organization={user?.organization ?? ""}
+        user={user}
         part={t('navbar.admin.users')}
-        role={user?.role ?? ""}
         addAccountBtn={handleOpenModal}
         deleteBtn={handleDeleteAccount}
         toggleBtn={handleToggleAccount}
