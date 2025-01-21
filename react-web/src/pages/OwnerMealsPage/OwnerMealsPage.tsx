@@ -307,11 +307,8 @@ export const OwnerMealsPage: React.FC = () => {
   return (
   <>
     <OwnerMealsTemplate
-      userEmail={user?.userEmail ?? ""}
-      username={user?.username ?? ""}
-      organization={user?.organization ?? ""}
+      user={user}
       part={t('headers.products')}
-      role={user?.role ?? ""}
       data={mealsData}
       handleClickMeal={handleUpdateMeal}
       handleClickQuantity={handleUpdateMealQuantity}

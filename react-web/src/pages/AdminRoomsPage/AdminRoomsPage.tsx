@@ -167,11 +167,8 @@ export const AdminRoomsPage: React.FC = () => {
     <div>
       {/* Layout principal contenant le tableau */}
       <AdminRoomLayout
-        userEmail={user?.userEmail ?? ""}
-        username={user?.username ?? ""}
-        organization={user?.organization ?? ""}
+        user={user}
         part={t('navbar.admin.rooms')}
-        role={user?.role ?? ""}
         addBtn={handleOpenModal}
         deleteBtn={handleEditRoom}
         toggleBtn={handleToggleRoomStatus}

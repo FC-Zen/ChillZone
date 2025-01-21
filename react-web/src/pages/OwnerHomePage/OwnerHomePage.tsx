@@ -71,7 +71,7 @@ export const OwnerHomePage: React.FC = () => {
 
   return (
     <OwnerHomeLayout
-      user={user || null}
+      user={user}
       part={t('navbar.home')}
       statsSection={statsSection}
       mainContent={mainContent}

@@ -145,11 +145,8 @@ export const AdminEstablishmentPage: React.FC = () => {
       {/* Layout principal contenant le tableau */}
       <AdminEstablishmentLayout
         key={refreshKey}
-        userEmail={user?.userEmail ?? ""}
-        username={user?.username ?? ""}
-        organization={user?.organization ?? ""}
+        user={user}
         part={t('headers.map')}
-        role={user?.role ?? ""}
 
         form={listInputs}
         addAccount={handleSaveForm}

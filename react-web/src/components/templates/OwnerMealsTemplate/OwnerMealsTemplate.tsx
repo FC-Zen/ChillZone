@@ -5,7 +5,7 @@ import { MealsDataTable } from "@components/organisms";
 import { User } from "@hooks";
 
 type OwnerMealsLayoutProps = {
-  user : User;
+  user : User | null;
   part: string;
   data: any;
   addMealBtn: () => void;

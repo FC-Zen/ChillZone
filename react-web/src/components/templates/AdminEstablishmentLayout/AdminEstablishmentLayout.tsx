@@ -5,6 +5,7 @@ import './style.css';
 import { Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { HeaderIcon, Icon } from '@components/atoms';
+import { User } from '@hooks';
 
 type Floor = {
   floor_id: number;
@@ -14,11 +15,8 @@ type Floor = {
 };
 
 type AdminEstablishmentLayoutProps = {
-  username: string;
-  userEmail: string;
-  organization: string;
+  user : User | null;
   part: string;
-  role: string;
   form: InputField[];
   addAccount: (formData: FormData) => void;
   mapName: string;
@@ -36,10 +34,7 @@ type AdminEstablishmentLayoutProps = {
 };
 
 export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> = ({
-  username,
-  userEmail,
-  role,
-  organization,
+  user,
   part,
   form,
   addAccount,
@@ -61,11 +56,8 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <Header
-          userName={username}
-          userEmail={userEmail}
-          organization={organization}
-          part={part}  
-          role={role}      
+          user={user}
+          part={part}      
         />
 
         <main className="p-6 flex main-map">

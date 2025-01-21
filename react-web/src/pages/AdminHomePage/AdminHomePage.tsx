@@ -55,11 +55,8 @@ export const AdminHomePage: React.FC = () => {
   // Rendu de la page avec le layout
   return (
     <AdminHomeLayout
-      userEmail={user?.userEmail ?? ""}
-      username={user?.username ?? ""}
-      organization={user?.organization ?? ""}
+      user={user}
       part={t('navbar.home')}
-      role={user?.role ?? ""}
       statsSection={statsSection}
       mainContent={mainContent}
     />
