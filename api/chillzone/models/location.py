@@ -6,13 +6,15 @@ class Location(models.Model) :
     
     name = models.CharField(max_length= 100)
     
-    photo_link = models.TextField(blank=True, null=True)
+    photo_link = models.ImageField(null=True, blank=True)
 
     description = models.TextField(blank=True, null=True)
 
     capacity = models.IntegerField()
 
     status = models.BooleanField(default=False)
+    
+    qrcode_link = models.ImageField(upload_to='qrcodes/', null=True, blank=True)
 
     position_x = models.IntegerField()
 

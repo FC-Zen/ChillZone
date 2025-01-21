@@ -7,7 +7,7 @@ class Navigate(models.Model):
 
     location_end = models.ForeignKey( Location, on_delete=models.CASCADE, related_name="navigates_as_end")
     
-    link_photo = models.TextField()
+    link_photo = models.ImageField(blank=True, null=True)
 
     position_x_photo = models.IntegerField()
 

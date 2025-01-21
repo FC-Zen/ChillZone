@@ -18,7 +18,7 @@ class Meal(models.Model):
 
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)
 
-    photo_link = models.TextField()
+    photo_link = models.ImageField(null=True, blank=True)
 
     price = models.FloatField(default=0.0)
 
