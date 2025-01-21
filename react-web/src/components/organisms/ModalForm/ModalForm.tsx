@@ -29,16 +29,28 @@ export const ModalForm: React.FC<ModalFormProps> = ({
   const { t } = useTranslation();
 
   const [selectedTags, setSelectedTags] = React.useState<{ tag_id: number; tag_label: string }[]>([]);
+  const [file, setFile] = React.useState<File | null>(null);
+
   const handleTagChange = (name: string, value: { tag_id: number; tag_label: string }[]) => {
     setSelectedTags(value);
   };
 
+  const handleFileChange = (file: File) => {
+    console.log(file.name);
+    setFile(file);
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
     const formData = new FormData(event.currentTarget);
     if (selectedTags.length > 0) {
       formData.delete('tags');
       formData.append('tags', JSON.stringify(selectedTags));
     }  
+    if (file) {
+      formData.append('photo_link', file);
+    }
     console.log("FormData avant soumission : ", Array.from(formData.entries()));
     onSubmit(formData);
   };
@@ -54,6 +66,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
     <form className="flex flex-col space-y-4 justify-center items-center" 
       onSubmit={handleSubmit} 
       id="AccountForm" 
+      method="POST"
       style={{ 
         padding: "20px 40px",
       }}>
@@ -79,11 +92,13 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 {...(input.value && { value: input.value})}
                 options={input.options ?? []}
                 icon={input.icon}
+                onValueChange={(name, value) => console.log(`${name}: ${value}`)}
               />
             );
           case 'file':
             return (
               <FileInput
+                  onFileChange={handleFileChange}
               />
             );
           default:
@@ -104,7 +119,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
         }
       })}
 
-      <Button title={t('modals.create.addaccount')} type="submit" onclick={() => {}} />
+      <Button title={t('modals.create.addaccount')} type="submit" />
     </form>
   );
 }

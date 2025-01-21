@@ -102,7 +102,7 @@ export const getRooms = async () => {
         } 
         );
         if (response.status == 200) {
-            return response.data.locations;
+            return response.data;
         }
     } catch (error: any) {
         console.error("Erreur lors de la récupération des salles:", error.message);
@@ -118,22 +118,23 @@ export const getRooms = async () => {
  * 
  * @returns {Promise<Object>} Réponse de l'API.
  */
-export const addRoom = async (roomData: {
-    name: string;
-    description: string;
-    capacity: number;
-    floor: string;
-    establishment: string;
-    status: boolean;
-}) => {
+export const addRoom = async (formData: FormData): Promise<any> => {
     try {
-        // AXIOS
-        return { success: true };
+        const response = await axios.post('http://localhost:3000/admin-rooms/', formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-CSRFToken': getCSRFToken(),
+            },
+        });
+        console.log('Réponse de l\'API:', response);
+        return response.data.locations;
     } catch (error: any) {
         console.error('Erreur lors de l\'ajout de la salle:', error.message);
-        throw new Error(error.message);
+        throw new Error(error.response?.data?.message || error.message);
     }
 };
+
 
 /**
  * Met à jour les informations d'une salle en envoyant une requête PUT à l'API.

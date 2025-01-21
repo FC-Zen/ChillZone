@@ -5,7 +5,7 @@ import { visuallyHidden } from '@mui/utils';
 export type ButtonProps = {
   title: string;
   type?: string;
-  onclick: () => void | false;
+  onclick?: () => void | false;
   variant?: 'primary' | 'secondary';
 };
 

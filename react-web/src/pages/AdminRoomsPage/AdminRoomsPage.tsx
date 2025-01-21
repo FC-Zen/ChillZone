@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
 import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import { getRooms, toggleAccount } from '@services/AdminServices';
+import { addRoom, getRooms, toggleAccount } from '@services/AdminServices';
 
 type Room = {
   id: number;
@@ -22,15 +22,21 @@ export const AdminRoomsPage: React.FC = () => {
   
   const [isModalOpen, setModalOpen] = useState(false);
   const [roomsData, setRoomsData] = useState<Room[]>([]);
+  const [availableFloors, setAvailableFloors] = useState<{ id: number; name: string }[]>([]);
+  const [availableTypes, setAvailableTypes] = useState<{ id: number; libelle: string }[]>([]);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-      const data = await getRooms();
-      setRoomsData(data);
+      if (roomsData.length === 0) {
+        const data = await getRooms();
+        setRoomsData(data.locations);
+        setAvailableFloors(data.available_floors);
+        setAvailableTypes(data.available_types);
+      }
     };
-
+  
     fetchData();
-  }, []);
+  }, [roomsData]);
 
   const [selectedRoom, setSelectedRoom] = useState<null | Room>(null);
 
@@ -53,44 +59,37 @@ export const AdminRoomsPage: React.FC = () => {
       value: selectedRoom?.description,
       required: true,
     },
-/*     {
-      name: "type_room",
+    {
+      name: "id_type",
       label: t("fields.common.roomtype"), 
       type: "select",
       icon: "Browser", 
       placeholder: "Description",
-      options: [
-        { tag: "Box Acoustique" },
-        { tag: "Salle de classe" },
-      ], //TODO: Service pour prendre les tag categorie de room
-      value: selectedRoom?.type_room,
+      options: availableTypes,
+      //value: selectedRoom?.type_room,
       required: true,
-    }, */
+    },
     {
       name: "capacity",
       label: t("fields.common.capacity"),
       type: "number",
-      icon: "Users", 
+      icon: "User", 
       placeholder: "Capacité",
       value: selectedRoom?.capacity,
       required: true,
     },
     {
-      name: "floor",
+      name: "id_floor",
       label: t("fields.common.floor"), 
       type: "select",
       icon: "User", 
-      options: [
-        { tag: "RDC" },
-        { tag: "1er étage" },
-        { tag: "2ème étage" },
-      ], //TODO: Service pour prendre les étages
+      options: availableFloors,
       value: selectedRoom?.floor_name,
       placeholder: "Étage",
       required: true,
     },
     {
-      name: "RoomPicture",
+      name: "photo_link",
       label: t("fields.common.establishment"), 
       type: "file",
       icon: "User",
@@ -142,26 +141,18 @@ export const AdminRoomsPage: React.FC = () => {
     console.log('Salle mise à jour :', updatedRoom);
   };
 
-  const handleAddRoom = (formData: FormData) => {
-    const newRoom = {
-      id: Math.max(...roomsData.map((r) => r.id)) + 1,
-      name: formData.get('name') as string,
-      description: formData.get('description') as string,
-      capacity: parseInt(formData.get('capacity') as string, 10),
-      floor_name: formData.get('floor') as string,
-      establishment: formData.get('establishment') as string,
-      status: true, // Statut par défaut 'Disponible'
-    };
-    // Service à mettre ici
-    // Simulation à la place
-    setRoomsData((prevData) => [...prevData, newRoom]);
-    handleCloseModal();
-    console.log('Nouvelle salle ajoutée :', newRoom);
+  const handleAddRoom = async (formData: FormData) => {
+    formData.append("position_x",'14'); // Données de tests
+    formData.append("position_y",'14'); // Données de tests
+    console.log("FormData avant soumission : ", Array.from(formData.entries()));
+    try {
+          const res = await addRoom(formData);
+          setRoomsData(res);
+          handleCloseModal();
+      } catch (error) {
+          console.error(error);
+    }
   };
-
-  useEffect(() => {
-    console.log('Les données des salles ont été mises à jour :', roomsData);
-  }, [roomsData]);
 
   return (
     <div>

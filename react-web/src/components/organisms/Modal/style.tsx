@@ -14,7 +14,7 @@ export const styles = {
     modal: {
       backgroundColor: '#FFF',
       borderRadius: '8px',
-      width: '500px',
+      width: '100vw',
       padding: '20px',
       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     },
