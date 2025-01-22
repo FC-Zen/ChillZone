@@ -201,6 +201,7 @@
       "commands": "Past orders",
       "reservations": "Upcoming reservations"
     },
+    "commandTitle": "Command",
     "reservationTitle": "Reservation"
   },
 
