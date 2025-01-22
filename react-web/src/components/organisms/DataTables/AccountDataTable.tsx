@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 type AccountDataTableProps = {
   addAccountBtn: () => void;
   deleteBtn: (id: number) => void;
-  toggleBtn: (id: number, isActive: string) => void;
+  toggleBtn: (id: number, isActive: boolean) => void;
   data: {
     id: number;
     first_name: string;
@@ -27,7 +27,8 @@ type AccountDataTableProps = {
     role: string;
     establishment: string;
     reservation_count: number;
-    status: string;
+    is_block: boolean;
+    is_active: boolean;
   }[];
 };
 
@@ -68,14 +69,14 @@ export const AccountDataTable = ({
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 0.5 },
-    { field: 'first_name', headerName: t('tables.headers.user.fullName'), flex: 2 },
+    { field: 'first_name', headerName: t('tables.headers.user.fullName'), flex: 1 },
     { field: 'last_name', headerName: t('tables.headers.user.last_name'), flex: 2 },
-    { field: 'role', headerName: t('tables.headers.user.type'), flex: 1.5 },
-    { field: 'establishment', headerName: t('tables.headers.user.establishment'), flex: 3 },
+    { field: 'role', headerName: t('tables.headers.user.type'), flex: 2 },
+    { field: 'establishment', headerName: t('tables.headers.user.establishment'), flex: 1},
     {
       field: 'reservation_count',
       headerName: t('tables.headers.user.reservationCount'),
-      flex: 2,
+      flex: 1.5,
     },
     {
       field: 'toggle',
@@ -83,16 +84,12 @@ export const AccountDataTable = ({
       flex: 1.5,
       align: 'center',
       renderCell: (params: any) => {
-        const isActive = params.row.status === 'Blocked';
         return (
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <CustomSwitch
-              checked={isActive}
+              checked={params.row.is_block}
               onChange={() => {
-                const newStatus = isActive ? 'Verified' : 'Blocked';
-                console.log(isActive);
-                console.log(newStatus);
-                toggleBtn(params.row.id, newStatus);
+                toggleBtn(params.row.id, params.row.is_block);
               }}
             />
           </div>

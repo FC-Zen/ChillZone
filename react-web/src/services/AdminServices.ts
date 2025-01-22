@@ -36,27 +36,8 @@ export const getAccounts = async () => {
     }
 };
 
-
 /**
- * Supprime un utilisateur en envoyant une requête DELETE à l'API.
- *
- * @param {number} id - L'ID de l'utilisateur à supprimer.
- * @throws {Error} Si la requête échoue.
- * 
- * @returns {Promise<Object>} Réponse de l'API.
- */
-export const deleteAccount = async (id: number) => {
-    try {
-        // AXIOS
-        return { success: true };
-    } catch (error: any) {
-        console.error('Erreur lors de la suppression de l\'utilisateur:', error.message);
-        throw new Error(error.message);
-    }
-};
-
-/**
- * Met à jour le statut de l'utilisateur en envoyant une requête PUT à l'API.
+ * Met à jour le statut de l'utilisateur en envoyant une requête PUT à l'API. Bloque les résa ou bloque le compte
  *
  * @param {number} id - L'ID de l'utilisateur à mettre à jour.
  * @param {string} status - Le nouveau statut (Verified ou Blocked).
@@ -64,12 +45,12 @@ export const deleteAccount = async (id: number) => {
  * 
  * @returns {Promise<Object>} Réponse de l'API.
  */
-export const toggleAccount = async (id: number, status: boolean) => {
+export const toggleAccountBlock = async (id: number, is_block: boolean) => {
     try {
         const response = await axios.put('http://localhost:3000/admin-accounts/', 
             {
                 id : id,
-                status : status,
+                is_block : is_block,
             },
             { 
                 withCredentials: true,
@@ -88,6 +69,40 @@ export const toggleAccount = async (id: number, status: boolean) => {
 };
 
 /**
+ * Met à jour le statut de l'utilisateur en envoyant une requête PUT à l'API. Bloque les résa ou bloque le compte
+ *
+ * @param {number} id - L'ID de l'utilisateur à mettre à jour.
+ * @param {string} status - Le nouveau statut (Verified ou Blocked).
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Object>} Réponse de l'API.
+ */
+export const toggleAccountActive = async (id: number, is_active: boolean) => {
+    try {
+        const response = await axios.put('http://localhost:3000/admin-accounts/', 
+            {
+                id : id,
+                is_active : is_active
+            },
+            { 
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
+    } catch (error: any) {
+        console.error('Erreur lors de la mise à jour du statut de l\'utilisateur:', error.message);
+        throw new Error(error.message);
+    }
+};
+
+
+
+/**
    * Ajoute un utilisateur en envoyant une requête POST à l'API.
    *
    * @param {Object} formData - Les informations de l'utilisateur à ajouter.
@@ -95,16 +110,18 @@ export const toggleAccount = async (id: number, status: boolean) => {
    * 
    * @returns {Promise<Object>} Réponse de l'API.
    */
-export const addAccount = async (formData: {
-    first_name: string;
-    last_name: string;
-    role: string;
-    email: string;
-    establishment: string;
-    }) => {
+export const addAccount = async (formData: FormData): Promise<any> => {
     try {
-        // AXIOS
-        return { success: true };
+        const response = await axios.post('http://localhost:3000/admin-accounts/', formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-CSRFToken': getCSRFToken(),
+            },
+        });
+        if (response.status == 200) {
+            return response.data;
+        }
     } catch (error: any) {
         console.error('Erreur lors de l\'ajout de l\'utilisateur:', error.message);
         throw new Error(error.message);

@@ -132,8 +132,9 @@ class AdminUserView(generics.ListAPIView):
 
     def get_queryset(self):
         return User.objects.filter(
+            is_active=True,
             usermeta__establishment=self.request.user.usermeta.establishment,
-            usermeta__status__in=['validated', 'blocked']
+            usermeta__is_verified=True,
         ).annotate(
             reservation_count=Count('reservation', filter=Q(reservation__status='Confirmed'))
         )
@@ -151,14 +152,16 @@ class AdminUserView(generics.ListAPIView):
                     email=serializer.validated_data['email'],
                     password=random_password,
                     first_name=serializer.validated_data['first_name'],
-                    last_name=serializer.validated_data['last_name']
+                    last_name=serializer.validated_data['last_name'],
+                    is_staff=serializer.validated_data['is_admin'],
+                    is_active=not(serializer.validated_data['is_admin'])
                 )
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
             UserMeta.objects.create(
                 user=user,
-                status='validated',
+                is_verified=not(serializer.validated_data['is_admin']),
                 role=serializer.validated_data['role'],
                 establishment=request.user.usermeta.establishment
             )
@@ -172,19 +175,32 @@ class AdminUserView(generics.ListAPIView):
     
     def put(self, request, *args, **kwargs):
         user_id = request.data.get('id')
-        status_data = request.data.get('status')
+        is_block = request.data.get('is_block')
+        is_active = request.data.get('is_active')
+
+        if user_id is None:
+            return Response({"error": "Id is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            user_meta = UserMeta.objects.get(user_id=user_id, establishment=request.user.usermeta.establishment)
-            user_meta.status = status_data
+            user = User.objects.get(
+                id=user_id,
+                usermeta__establishment=request.user.usermeta.establishment
+            )
+            user_meta = user.usermeta
+        except User.DoesNotExist:
+            return Response({"error": "Utilisateur non trouvé dans votre établissement."}, status=status.HTTP_404_NOT_FOUND)
+
+        if is_block is not None :
+            user_meta.is_block = is_block
             user_meta.save()
-        except UserMeta.DoesNotExist:
-            return Response({"error": "Utilisateur non trouvé dans votre établissement"}, status=status.HTTP_400_BAD_REQUEST)
+        elif is_active is not None and not bool(is_active) and bool(user.is_active):
+            user.is_active = False
+            user.save()        
 
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
+
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 class AdminLocationView(generics.ListAPIView):
     serializer_class = AdminCreateLocationSerializer
     permission_classes = [IsAuthenticated & IsAdminUser]

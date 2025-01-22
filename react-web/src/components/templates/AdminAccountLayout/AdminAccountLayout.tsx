@@ -7,7 +7,7 @@ type AdminAccountLayoutProps = {
   part: string;
   addAccountBtn: () => void;
   deleteBtn: (id: number) => void;
-  toggleBtn: (id: number, isActive: string) => void;
+  toggleBtn: (id: number, isActive: boolean) => void;
   data: {
     id: number;
     first_name: string;
@@ -16,7 +16,8 @@ type AdminAccountLayoutProps = {
     role: string;
     establishment: string;
     reservation_count: number;
-    status: string;
+    is_block: boolean;
+    is_active: boolean;
   }[];
 };
 

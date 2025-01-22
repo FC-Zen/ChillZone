@@ -8,15 +8,11 @@ class LocationSerializer(serializers.ModelSerializer) :
 
 class AdminLocationSerializer(serializers.ModelSerializer):
     floor_name = serializers.CharField(source='id_floor.name', read_only=True)
-    establishment = serializers.SerializerMethodField()
+    room_type = serializers.CharField(source='id_type.libelle', read_only=True)
 
     class Meta:
         model = Location
-        fields = ['id', 'name', 'description', 'capacity', 'floor_name', 'establishment', 'status', 'photo_link', 'id_type']
-
-    def get_establishment(self, obj):
-        is_located = IsLocated.objects.filter(location=obj).first()
-        return is_located.establishment.name if is_located else None
+        fields = ['id', 'name', 'description', 'capacity', 'floor_name', 'status', 'photo_link', 'room_type']
 
 class AdminAvailableFloorsSerializer(serializers.ModelSerializer):
     class Meta:

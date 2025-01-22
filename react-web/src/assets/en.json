@@ -171,7 +171,8 @@
       "file": "File",
       "room": "Room Name",
       "floor": "Floor",
-      "roomtype": "RoomType"
+      "roomtype": "RoomType",
+      "isadmin" : "Establishment Administrator ?"
     },
     "auth": {
       "password": "Password",
@@ -248,13 +249,14 @@
         "establishment": "Establishment",
         "reservationCount": "Number of reservations made",
         "blockReservations": "Block reservations",
-        "deleteAccount": "Delete account"
+        "deleteAccount": "Block Account Access"
       },
       "room": {
         "name": "Room name",
         "description": "Room description",
         "capacity": "Room capacity",
         "floor": "Floor",
+        "type_room": "Type de salle",
         "isRoomFree": "Is the room free now?",
         "modify": "Edit"
       },
