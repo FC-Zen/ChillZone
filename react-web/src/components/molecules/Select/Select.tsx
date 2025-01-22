@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import { colors } from '@theme';
 import { Icon } from '@components/atoms';
 import * as IconList from '@atoms/Icons/list';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export type SelectProps = {
   name: string;
@@ -31,7 +31,16 @@ export const StyledSelect = ({
   onValueChange,
 }: SelectProps) => {
   const [selectedValues, setSelectedValues] = useState<string | number >(value);
-  
+
+  useEffect(() => {
+    const matchingOption = options.find(option => 
+      option.id === value || option.name === value || option.libelle === value
+    );    
+    if (matchingOption) {
+      setSelectedValues(matchingOption.id);
+    }
+  }, [value, options]);
+
   const handleChange = (event: SelectChangeEvent) => {
     const newValue = event.target.value; // Récupère la nouvelle valeur
     setSelectedValues(newValue); // Met à jour l'état local

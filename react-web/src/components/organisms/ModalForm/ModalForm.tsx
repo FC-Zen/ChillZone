@@ -98,6 +98,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
           case 'file':
             return (
               <FileInput
+                  value={input.value}
                   onFileChange={handleFileChange}
               />
             );

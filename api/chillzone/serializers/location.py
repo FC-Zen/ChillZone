@@ -12,7 +12,7 @@ class AdminLocationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Location
-        fields = ['id', 'name', 'description', 'capacity', 'floor_name', 'establishment', 'status']
+        fields = ['id', 'name', 'description', 'capacity', 'floor_name', 'establishment', 'status', 'photo_link', 'id_type']
 
     def get_establishment(self, obj):
         is_located = IsLocated.objects.filter(location=obj).first()
