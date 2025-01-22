@@ -58,6 +58,9 @@ class UserLogin(APIView) :
                 res = Response(response_data, status=status.HTTP_200_OK)
                 res.set_cookie('sessionid', request.session.session_key, httponly=False, samesite='Lax', secure=False)  # test sans secure
                 return res
+        
+            else :
+                return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
     
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

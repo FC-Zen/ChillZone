@@ -223,7 +223,8 @@
       "file": "Fichier",
       "room": "Nom de la salle",
       "floor": "Etage",
-      "roomtype": "Type de salle"
+      "roomtype": "Type de salle",
+      "isadmin" : "Administrateur d'établissement ?"
     },
     "auth": {
       "password": "Mot de passe",
@@ -300,12 +301,13 @@
         "establishment": "Etablissement",
         "reservationCount": "Nombre de réservations faites",
         "blockReservations": "Bloquer les réservations",
-        "deleteAccount": "Supprimer le compte"
+        "deleteAccount": "Bloquer l'accès au compte"
       },
       "room": {
         "name": "Nom de la salle",
         "description": "Description de la salle",
         "capacity": "Capacité de la salle",
+        "type_room": "Type de salle",
         "floor": "Etage",
         "isRoomFree": "La salle est ouverte ?",
         "modify": "Modifier"

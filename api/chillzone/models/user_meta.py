@@ -9,17 +9,11 @@ class UserMeta(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
-    STATUS_CHOICES = [
-        ('validated', 'Validé'),
-        ('blocked', 'Bloqué'),
-        ('banned', 'Banni')
-    ]
-
     is_owner =  models.BooleanField(default=False)
 
-    status = models.CharField(max_length=24, choices=STATUS_CHOICES)
+    is_block = models.BooleanField(default=False)
     
-    verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
 
     role = models.CharField(max_length=254, blank=False, default="Etudiant")
 

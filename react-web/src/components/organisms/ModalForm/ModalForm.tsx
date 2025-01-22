@@ -2,7 +2,9 @@ import { Input } from '@components';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconProps } from '@components/atoms';
-import { AutoCompleteInput, FileInput, StyledSelect } from '@components/molecules';
+import { AutoCompleteInput, CustomSwitch, FileInput, StyledSelect } from '@components/molecules';
+import { RadioButtons } from '../RadioButtons';
+import { Typography } from '@mui/material';
 
 export type InputField = {
   name: string;
@@ -102,6 +104,16 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                   onFileChange={handleFileChange}
               />
             );
+            case 'switch':
+              return (
+                <div style={{ display : "flex", gap : "10px"}}>
+                  <Typography>{input.label.toLowerCase()}</Typography>
+                  <CustomSwitch
+                    name={input.name.toLowerCase()}
+                    checked={input.value} 
+                  />
+                </div>
+              );
           default:
             return (
               <Input

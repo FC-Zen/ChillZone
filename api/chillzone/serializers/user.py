@@ -115,6 +115,7 @@ class UserCreateSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=150)
     email = serializers.EmailField(validators=[UniqueValidator(queryset=User.objects.all())])
     role = serializers.CharField(max_length=254)
+    is_admin = serializers.BooleanField()
 
 class OwnerCreateSerializer(serializers.Serializer):
     username = serializers.CharField(
@@ -166,8 +167,8 @@ class AdminUserSerializer(serializers.ModelSerializer):
     role = serializers.CharField(source='usermeta.role')
     establishment = serializers.CharField(source='usermeta.establishment.name', allow_null=True)
     reservation_count = serializers.IntegerField()
-    status = serializers.CharField(source='usermeta.status')
+    is_block = serializers.BooleanField(source='usermeta.is_block')
 
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'role', 'establishment', 'reservation_count', 'status']
+        fields = ['id', 'first_name', 'last_name', 'email', 'role', 'establishment', 'reservation_count', 'is_block', 'is_active']

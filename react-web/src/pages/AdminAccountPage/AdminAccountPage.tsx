@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Modal } from '@components/organisms'; // Composant de modale
 import { AdminAccountLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
-import users from '@assets/data/users.json';
 import { useUser } from '@hooks';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import { getAccounts } from '@services/AdminServices';
+import { addAccount, getAccounts, toggleAccountActive, toggleAccountBlock } from '@services/AdminServices';
 
 export const AdminAccountPage: React.FC = () => {
   const { t } = useTranslation();
@@ -34,17 +33,34 @@ export const AdminAccountPage: React.FC = () => {
       required: true,
     },
     {
-      name: "mail",
+      name: "email",
       label: t('fields.common.mail'),
       type: "text",
       icon: "Envelope",
       required: true,
     },
+    {
+      name: "is_admin",
+      label: t('fields.common.isadmin'),
+      type: "switch",
+      icon: "Box",
+      required: true,
+    },
   ] as InputField[];
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [userData, setUserData] = useState(users);
-
+  
+  const [userData, setUserData] = useState<
+  { id: number; 
+    first_name: string; 
+    last_name: string; 
+    email: string; 
+    role: string; 
+    establishment: string; 
+    reservation_count: number; 
+    is_block: boolean; 
+    is_active: boolean; }[]>([]);
+  
   const fetchUserData = async () => {
     try {
       const usersData = await getAccounts(); // SERVICES
@@ -63,40 +79,43 @@ export const AdminAccountPage: React.FC = () => {
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
-  const handleDeleteAccount = (id: number) => {
-    // Service à mettre ici
-    // Simulation à la place
-    setUserData((prevData) => prevData.filter((user) => user.id !== id));
-    console.log(`Utilisateur avec ID ${id} supprimé.`);
+  const handleDeleteAccount = async (id: number) => {
+    if (userData) {
+      const account = userData.find(u => u.id === id);
+      if (account) {
+        const is_block = account.is_block;
+        const res = await toggleAccountActive(id, false);
+        setUserData(res);
+      } else {
+        console.error('Account not found');
+      }
+    }
   };
 
-  const handleToggleAccount = (id: number, isActive: string) => {
-    // Service à mettre ici
-    // Simulation à la place
-    setUserData((prevData) =>
-      prevData.map((user) =>
-        user.id === id ? { ...user, status: isActive } : user
-      )
-    );
-    console.log(`Utilisateur avec ID ${id} mis à jour : ${isActive}.`);
+  const handleToggleAccount = async (id: number, is_block: boolean) => {
+    if (userData) {
+      const account = userData.find(u => u.id === id);
+      if (account) {
+        const is_active = account.is_active;
+        console.log(id,!is_block,is_active);
+        const res = await toggleAccountBlock(id, !is_block);
+        setUserData(res);
+      } else {
+        console.error('Account not found');
+      }
+    }
   };
 
-  const handleAddAccount = (formData: FormData) => {
-    // Service à mettre ici
-    // Simulation à la place
-    const newAccount = {
-      id: Math.max(...userData.map((u) => u.id)) + 1,
-      first_name: formData.get("first_name") as string,
-      last_name: formData.get("last_name") as string,
-      role: formData.get("role") as string,
-      email: formData.get("mail") as string,
-      establishment: formData.get('establishment') as string,
-      reservation_count: 0,
-      status: 'Unverified',
-    };
-    setUserData((prevData) => [...prevData, newAccount]);
-    handleCloseModal();
-    console.log('Nouvel utilisateur ajouté :', newAccount);
+  const handleAddAccount = async (formData: FormData) => {
+    formData.append("username", formData.get('first_name') + "." + formData.get('last_name'));
+    console.log("FormData avant soumission : ", Array.from(formData.entries()));
+    try {
+          const res = await addAccount(formData);
+          setUserData(res);
+          handleCloseModal();
+      } catch (error) {
+          console.error(error);
+    }
   };
 
   useEffect(() => {
