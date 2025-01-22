@@ -6,6 +6,7 @@ import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
 import { FormattedReservation } from '@services';
+import { CommandOverlay } from '@components/molecules';
 
 export type OverlayCommandListProps = {
   todaysReservations: FormattedReservation[];
@@ -28,7 +29,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
           <IconWithText
             icon="BookMark"
             iconColor={colors.resolutionBlue}
-            text={t('recap.today.reservations')}
+            text={t('recap.today.commands')}
             textColor={colors.resolutionBlue}
             variant="horizontal"
             style={{ marginBottom: 9 }}
@@ -37,7 +38,9 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
           {/* Liste des réservations d'aujourd'hui */}
           {todaysReservations.map((reservation, index) => (
             <View key={reservation.reservation_id} style={styles.reservationContainer}>
-              <Text>{reservation.reservation_id}</Text>
+              <CommandOverlay
+                data={reservation}
+              />
             </View>
           ))}
         </View>
@@ -49,7 +52,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
           <IconWithText
             icon="BookMark"
             iconColor={colors.resolutionBlue}
-            text={t('recap.previous.reservations')}
+            text={t('recap.previous.commands')}
             textColor={colors.resolutionBlue}
             variant="horizontal"
             style={{ marginVertical: 9 }}
@@ -58,15 +61,9 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
           {/* Liste des réservations à venir */}
           {pastReservations.map((reservation, index) => (
             <View key={index} style={styles.reservationContainer}>
-              <Text>{reservation.reservation_id}</Text>
-              {/* 
-                <Overlay
-                  title={reservation.title}
-                  data={reservation.data}
-                  titleBtn={reservation.titleBtn}
-                  cancelReservation={() => onCancelReservation?.(index)}
-                />
-              */}
+              <CommandOverlay
+                data={reservation}
+              />
             </View>
           ))}
         </View>

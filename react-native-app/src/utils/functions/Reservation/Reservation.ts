@@ -1,3 +1,4 @@
+import { Command, FormattedCommand } from '@services';
 import { FormattedReservation, Reservation } from '@services/Reservation';
 
 /**
@@ -38,3 +39,21 @@ export const formatReservation = (
   end_time: formatTime(reservation.end_time),
   day_reservation: formatDate(reservation.day_reservation),
 });
+
+/**
+ * Reformate une commande en adaptant les formats de date et heure
+ * @param {Command} command - L'objet commande de base
+ * @returns {FormattedCommand} L'objet commande formaté
+ */
+export const formatCommand = (command: Command): FormattedCommand => {
+  const extractDate = (dateTime: string): string => {
+    return dateTime.split('T')[0];
+  };
+
+  return {
+    ...command,
+    pickup_time: formatTime(command.pickup_time),
+    final_pickup_time: formatTime(command.final_pickup_time),
+    creation_date: formatDate(extractDate(command.creation_date)),
+  };
+};

@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { CommandSummaryTemplate, SnackBar } from '@components';
 import { useTranslation } from 'react-i18next';
-import { FormattedReservation, getReservations } from '@services';
+import { FormattedCommand, getCommands } from '@services';
 import { useNavigation } from '@hooks';
 import { styles } from './style';
 
 export const CommandSummaryScreen: React.FC = () => {
-  const [reservations, setReservations] = useState<FormattedReservation[] | null>([]);
-  const [todaysReservations, setTodaysReservations] = useState<FormattedReservation[]>([]);
-  const [pastReservations, setPastReservations] = useState<FormattedReservation[]>([]);
+  const [reservations, setReservations] = useState<FormattedCommand[] | null>([]);
+  const [todaysReservations, setTodaysReservations] = useState<FormattedCommand[]>([]);
+  const [pastReservations, setPastReservations] = useState<FormattedCommand[]>([]);
 
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -27,8 +27,9 @@ export const CommandSummaryScreen: React.FC = () => {
   // Fetch initial reservations
   useEffect(() => {
     const fetchReservations = async () => {
-      const transformedReservations = await getReservations();
-      setReservations(transformedReservations);
+      const transformedCommand = await getCommands();
+      setReservations(transformedCommand);
+      console.log('transformedCommand: ', transformedCommand);
     };
 
     fetchReservations();
@@ -36,28 +37,17 @@ export const CommandSummaryScreen: React.FC = () => {
 
   // Group reservations whenever "reservations" state changes
   useEffect(() => {
-    const groupReservations = (reservations: FormattedReservation[] | null) => {
+    const groupReservations = (reservations: FormattedCommand[] | null) => {
       if (!reservations) {
         setTodaysReservations([]);
         setPastReservations([]);
         return;
       }
 
-      const today = new Date();
-      const todayReservations: FormattedReservation[] = [];
-      const pastReservationsList: FormattedReservation[] = [];
+      console.log('Command reservations: ', reservations);
 
-      reservations.forEach((reservation) => {
-        const reservationDate = new Date(reservation.day_reservation);
-        if (reservationDate.toDateString() === today.toDateString()) {
-          todayReservations.push(reservation);
-        } else if (reservationDate > today) {
-          pastReservationsList.push(reservation);
-        }
-      });
-
-      setTodaysReservations(todayReservations);
-      setPastReservations(pastReservationsList);
+      setTodaysReservations([]);
+      setPastReservations([]);
     };
 
     groupReservations(reservations);
@@ -67,7 +57,7 @@ export const CommandSummaryScreen: React.FC = () => {
   const handleCancelReservation = (id: number) => {
     if (reservations) {
       setReservations(
-        reservations.filter((reservation) => reservation?.reservation_id !== id)
+        reservations.filter((reservation) => reservation?.command_id !== id)
       );
 
       setSnackbar({
@@ -79,6 +69,8 @@ export const CommandSummaryScreen: React.FC = () => {
   };
 
   console.log("Screen : ", reservations)
+  console.log("Screen - Today : ", todaysReservations)
+  console.log("Screen - Past : ", pastReservations)
 
   return (
     <View style={styles.container}>
@@ -88,13 +80,13 @@ export const CommandSummaryScreen: React.FC = () => {
         onDismiss={() => setSnackbar({ ...snackbar, open: false })}
         severity={snackbar.severity}
       />
-      <CommandSummaryTemplate
+      {/*<CommandSummaryTemplate
         headerTitle={t('headers.recapCommands')}
         todaysReservations={todaysReservations}
         pastReservations={pastReservations}
         onCancelReservation={(id) => handleCancelReservation(id)}
         onBackPress={() => navigation.goBack()}
-      />
+      />*/}
     </View>
   );
 };

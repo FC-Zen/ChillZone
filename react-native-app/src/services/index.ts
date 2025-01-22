@@ -26,4 +26,9 @@ export {
   MenuProps,
   ModalScreenProps,
 } from './MenusServices';
-export { uploadCommand } from './CommandServices';
+export { 
+  Command,
+  FormattedCommand,
+  getCommands,
+  getCommandById,
+ } from './CommandServices';
