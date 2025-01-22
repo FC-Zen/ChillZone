@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Input } from '@mui/material';
 import { Icon } from '@components/atoms';
 import { colors } from '@theme';
 
-export const FileInput: React.FC<{ onFileChange: (file: File) => void }> = ({ onFileChange }) => {
+type FileInputProps = {
+  onFileChange: (file: File) => void;
+  value : string;
+}
+
+export const FileInput: React.FC<FileInputProps> = ({ 
+  onFileChange,
+  value
+  }) => {
+
   const [fileName, setFileName] = useState('');
   const [filePreview, setFilePreview] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (value) {
+      setFileName(value);
+      setFilePreview('http://localhost:3000' + value);
+    }
+  }, [value]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

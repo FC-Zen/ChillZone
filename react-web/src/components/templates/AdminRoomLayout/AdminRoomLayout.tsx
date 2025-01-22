@@ -16,6 +16,8 @@ type AdminRoomLayoutProps = {
     floor_name: string;
     establishment: string;
     status: boolean;
+    photo_link : string;
+    id_type : number;
   }[];
 };
 

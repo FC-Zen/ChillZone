@@ -10,6 +10,34 @@ export type Floor = {
 }
 
 /**
+ * Récupère la liste des utilisateurs depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getAccounts = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/admin-accounts/', 
+            { withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+        );        
+        if (response.status == 200) {
+            return { data : response.data };
+        } else {
+            throw new Error('Erreur lors de la récupération des comptes');
+        }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+
+/**
  * Supprime un utilisateur en envoyant une requête DELETE à l'API.
  *
  * @param {number} id - L'ID de l'utilisateur à supprimer.
@@ -38,7 +66,7 @@ export const deleteAccount = async (id: number) => {
  */
 export const toggleAccount = async (id: number, status: boolean) => {
     try {
-        const response = await axios.put('http://localhost:3000/admin-rooms/', 
+        const response = await axios.put('http://localhost:3000/admin-accounts/', 
             {
                 id : id,
                 status : status,
@@ -51,7 +79,7 @@ export const toggleAccount = async (id: number, status: boolean) => {
             } 
             );
             if (response.status == 200) {
-                return response.data.locations;
+                return response.data;
             }
     } catch (error: any) {
         console.error('Erreur lors de la mise à jour du statut de l\'utilisateur:', error.message);
@@ -145,17 +173,17 @@ export const addRoom = async (formData: FormData): Promise<any> => {
  * 
  * @returns {Promise<Object>} Réponse de l'API.
  */
-export const updateRoom = async (id: number, roomData: {
-    name: string;
-    description: string;
-    capacity: number;
-    floor: string;
-    establishment: string;
-    status: boolean;
-}) => {
+export const updateRoom = async (formData: FormData): Promise<any> => {
     try {
-        // AXIOS
-        return { success: true };
+        const response = await axios.put('http://localhost:3000/admin-rooms/', formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-CSRFToken': getCSRFToken(),
+            },
+        });
+        console.log('Réponse de l\'API:', response);
+        return response.data.locations;
     } catch (error: any) {
         console.error('Erreur lors de la mise à jour de la salle:', error.message);
         throw new Error(error.message);
@@ -163,31 +191,37 @@ export const updateRoom = async (id: number, roomData: {
 };
 
 /**
- * Récupère la liste des utilisateurs depuis l'API.
+ * Met à jour le statut de l'utilisateur en envoyant une requête PUT à l'API.
  *
+ * @param {number} id - L'ID de l'utilisateur à mettre à jour.
+ * @param {string} status - Le nouveau statut (Verified ou Blocked).
  * @throws {Error} Si la requête échoue.
  * 
- * @returns {Promise<Array>} Liste des salles.
+ * @returns {Promise<Object>} Réponse de l'API.
  */
-export const getAccounts = async () => {
+export const toggleRoom = async (id: number, status: boolean) => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-accounts/', 
-            { withCredentials: true,
+        const response = await axios.put('http://localhost:3000/admin-rooms/', 
+            {
+                id : id,
+                status : status,
+            },
+            { 
+                withCredentials: true,
                 headers: {
                     'X-CSRFToken': getCSRFToken(),
                 },
             } 
-        );        
-        if (response.status == 200) {
-            return { data : response.data };
-        } else {
-            throw new Error('Erreur lors de la récupération des comptes');
-        }
+            );
+            if (response.status == 200) {
+                return response.data.locations;
+            }
     } catch (error: any) {
-        console.error("Erreur lors de la récupération des salles:", error.message);
+        console.error('Erreur lors de la mise à jour du statut de l\'utilisateur:', error.message);
         throw new Error(error.message);
     }
 };
+
 
 /**
  * Récupère la liste des signalements depuis l'API.

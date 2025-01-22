@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
 import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import { addRoom, getRooms, toggleAccount } from '@services/AdminServices';
+import { addRoom, getRooms, toggleAccount, toggleRoom, updateRoom } from '@services/AdminServices';
 
 type Room = {
   id: number;
@@ -14,6 +14,8 @@ type Room = {
   floor_name: string;
   establishment: string;
   status: boolean;
+  photo_link: string;
+  id_type : number;
 }
 
 export const AdminRoomsPage: React.FC = () => {
@@ -66,7 +68,7 @@ export const AdminRoomsPage: React.FC = () => {
       icon: "Browser", 
       placeholder: "Description",
       options: availableTypes,
-      //value: selectedRoom?.type_room,
+      value: selectedRoom?.id_type,
       required: true,
     },
     {
@@ -93,7 +95,7 @@ export const AdminRoomsPage: React.FC = () => {
       label: t("fields.common.establishment"), 
       type: "file",
       icon: "User",
-      value: selectedRoom?.establishment,
+      value: selectedRoom?.photo_link,
       required: true,
     },
   ] as InputField[];
@@ -105,7 +107,7 @@ export const AdminRoomsPage: React.FC = () => {
   };
 
   const handleToggleRoomStatus = async (id: number, status: boolean) => {
-    const res = toggleAccount(id,status);
+    const res = toggleRoom(id,status);
     setRoomsData(await res);
   };
 
@@ -117,28 +119,18 @@ export const AdminRoomsPage: React.FC = () => {
     }
   };
 
-  const handleUpdateRoom = (formData: FormData) => {
+  const handleUpdateRoom = async (formData: FormData) => {
     if (!selectedRoom) return;
-
-    const updatedRoom = {
-      id: selectedRoom.id,
-      name: formData.get('name') as string,
-      description: formData.get('description') as string,
-      capacity: parseInt(formData.get('capacity') as string, 10),
-      floor_name: formData.get('floor') as string,
-      establishment: formData.get('establishment') as string,
-      status: selectedRoom.status,
-    };
-
-    // Mise à jour des données de la salle
-    // Service à mettre ici
-    // Simulation à la place
-    setRoomsData((prevData) =>
-      prevData.map((room) => (room.id === selectedRoom.id ? updatedRoom : room))
-    );
-
-    handleCloseModal(); // Fermeture de la modale après la mise à jour
-    console.log('Salle mise à jour :', updatedRoom);
+    formData.append("id", String(selectedRoom.id));    
+    formData.append("position_x",'14'); // Données de tests
+    formData.append("position_y",'14'); // Données de tests
+    try {
+      const res = await updateRoom(formData);
+      setRoomsData(res);
+      handleCloseModal();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleAddRoom = async (formData: FormData) => {
