@@ -238,7 +238,9 @@
       "reservations": "Table of reservations",
       "conflicts": "Table of reports",
       "currentcommands": "Latest ongoing orders",
-      "restauration_place": "My dining locations"
+      "restauration_place": "My dining locations",
+      "superadminOwners" : "Restaurant registration applications",
+      "superadminAdmins" : "Administrator management board"
     },
     "headers": {
       "user": {
@@ -317,9 +319,9 @@
       "owner": {
         "head": "Head Restaurateur Name",
         "name": "Restaurant name",
-        "acceptAccount": "Accept account",
+        "acceptAccount": "Accept or Decline account",
         "declineAccount": "Decline account",
-        "deleteRestaurantAccount": "Delete account"
+        "deleteRestaurantAccount": "Manage account"
       }
     }
   },

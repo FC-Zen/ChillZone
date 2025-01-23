@@ -1,0 +1,26 @@
+[
+    {
+        "id" : 2,
+        "first_name": "Alice",
+        "last_name": "Durand",
+        "restauration_place_name": "Le Petit Gourmet",
+        "restauration_place_address": "12 Rue des Lilas, 75015 Paris",
+        "restauration_place_mail": "contact@lepetitgourmet.fr"
+    },
+    {
+        "id" : 42,
+        "first_name": "Thomas",
+        "last_name": "Lemoine",
+        "restauration_place_name": "Bistro du Coin",
+        "restauration_place_address": "45 Avenue de la République, 69003 Lyon",
+        "restauration_place_mail": "reservation@bistroducoin.com"
+    },
+    {
+        "id" : 52,
+        "first_name": "Sophie",
+        "last_name": "Martin",
+        "restauration_place_name": "Chez Sophie",
+        "restauration_place_address": "8 Boulevard Haussmann, 75008 Paris",
+        "restauration_place_mail": "info@chezsophie.com"
+    }
+]

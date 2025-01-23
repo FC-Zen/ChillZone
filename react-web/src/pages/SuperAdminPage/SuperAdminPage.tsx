@@ -1,66 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
-import { AdminOwnerLayout } from '@components';
-
-import restauration_places_accepted from '@assets/data/restauration_places_accepted.json';
-import restauration_places_pending from '@assets/data/restauration_places_pending.json';
-import { getAffiliations } from '@services/AdminServices';
+import owners_registration from '@assets/data/owners_registration.json';
+import admins from '@assets/data/admins.json';
+import { SuperAdminLayout } from '@components/templates/SuperAdminLayout';
 
 export const SuperAdminPage: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useUser();
   
-  const [restaurationPlacesAcceptedData, setRestaurationPlacesAcceptedData] = useState(restauration_places_accepted);
-  const [restaurationPlacespendingData, setRestaurationPlacespendingData] = useState(restauration_places_pending);
-  
-  // Delete sur lieux de restauration affiliés à l’établissement
-  const handleClickDelete = (id: number) => {
-    setRestaurationPlacesAcceptedData((prevData) =>
-      prevData.filter((place) => place.id !== id)
-    );
-  };
+  const [ownersRegisterData, setOwnersRegisterData] = useState(owners_registration);
+  const [usersData, setUsersData] = useState(admins);
 
   // Demandes d'affiliation des lieux de restauration à l’établissement
   // Si on accepte => on ajoute au dessus
-  const handleClickAccept = (id: number) => {
-    const placeToAccept = restaurationPlacespendingData.find((place) => place.id === id);
-    if (placeToAccept) {
-      setRestaurationPlacesAcceptedData((prevData) => [
-        ...prevData,
-        { ...placeToAccept, status: true } // Ajout du statut
-      ]);
-      setRestaurationPlacespendingData((prevData) => prevData.filter((place) => place.id !== id));
+  const handleClickAcceptOwner = (id: number) => {
+    const ownerToAccept = ownersRegisterData.find((owner) => owner.id === id);
+    if (ownerToAccept) {
+      setOwnersRegisterData((prevData) => prevData.filter((owner) => owner.id !== id));
     }
   };
 
   // Si on refuse => on delete al ligne
-  const handleClickRefuse = (id: number) => {
-    setRestaurationPlacespendingData((prevData) =>
+  const handleClickRefuseOwner = (id: number) => {
+    setOwnersRegisterData((prevData) =>
       prevData.filter((place) => place.id !== id)
     );
   };
 
-  useEffect(() => {
-    const fetchRestaurants = async () => {
-        const res = await getAffiliations();
-        setRestaurationPlacesAcceptedData(res.confirmed_restaurants);
-        setRestaurationPlacespendingData(res.pending_restaurants);
-    };
-    fetchRestaurants();
-  }, []);
+  const handleClickAcceptAdmin = (id: number) => {
+    setUsersData((prevData) =>
+      prevData.map((user) =>
+        user.id === id ? { ...user, is_verified: true } : user
+      )
+    );
+  };
+
+  // Si on refuse => on delete al ligne
+  const handleClickRefuseAdmin = (id: number) => {
+    setUsersData((prevData) =>
+      prevData.filter((place) => place.id !== id)
+    );
+  };
+
+  // Si on refuse => on delete al ligne
+  const handleClickDeleteAdmin = (id: number) => {
+    setUsersData((prevData) =>
+      prevData.filter((place) => place.id !== id)
+    );
+  };
 
   return (
     <div>
       {/* Layout principal contenant le tableau */}
-      <AdminOwnerLayout
+      <SuperAdminLayout
         user={user}
-        part={t('headers.affiliates')}
-        restaurationPlacesAcceptedData={restaurationPlacesAcceptedData}
-        restaurationPlacespendingData={restaurationPlacespendingData}
-        handleClickDelete={handleClickDelete}
-        handleClickAccept={handleClickAccept}
-        handleClickRefuse={handleClickRefuse}
+        part={t('headers.home')}
+        ownersRegisterData={ownersRegisterData}
+        usersData={usersData}
+        handleClickAcceptOwner={handleClickAcceptOwner}
+        handleClickRefuseOwner={handleClickRefuseOwner}
+        handleClickAcceptAdmin={handleClickAcceptAdmin}
+        handleClickRefuseAdmin={handleClickRefuseAdmin}
+        handleClickDeleteAdmin={handleClickDeleteAdmin}
       />
     </div>
   );

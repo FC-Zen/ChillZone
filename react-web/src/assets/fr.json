@@ -290,7 +290,9 @@
       "reservations": "Tableau des réservations",
       "conflicts": "Tableau des signalements",
       "currentcommands": "Dernières commandes en cours",
-      "restauration_place": "Mes lieux de restauration"
+      "restauration_place": "Mes lieux de restauration",
+      "superadminOwners" : "Demandes d'inscriptions de restaurateur",
+      "superadminAdmins" : "Tableau de gestion des administrateurs"
     },
     "headers": {
       "user": {
@@ -369,9 +371,9 @@
       "owner": {
         "head": "Nom Prénom du restaurateur chef",
         "name": "Nom du restaurant",
-        "acceptAccount": "Accepter le compte",
+        "acceptAccount": "Accepter ou Refuser le compte",
         "declineAccount": "Refuser le compte",
-        "deleteRestaurantAccount": "Supprimer le compte"
+        "deleteRestaurantAccount": "Gérer le compte"
       }
     }
   },

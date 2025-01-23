@@ -1,0 +1,38 @@
+[
+    {
+        "id": 2,
+        "first_name": "Emma",
+        "last_name": "Dubois",
+        "type": "Etudiant",
+        "role": "Apprenant",
+        "establishment": "Université Gustave Eiffel",
+        "is_verified": false
+    },
+    {
+        "id": 42,
+        "first_name": "Lucas",
+        "last_name": "Morel",
+        "type": "Restaurateur",
+        "role": "Professeur",
+        "establishment": "Université de Paris",
+        "is_verified": true
+    },
+    {
+        "id": 21,
+        "first_name": "Claire",
+        "last_name": "Leroy",
+        "type": "Administrateur",
+        "role": "Responsable RH",
+        "establishment": "École Centrale de Lyon",
+        "is_verified": true
+    },
+    {
+        "id": 32,
+        "first_name": "Antoine",
+        "last_name": "Garcia",
+        "type": "Etudiant",
+        "role": "Stagiaire",
+        "establishment": "INSA Lyon",
+        "is_verified": false
+    }
+]
