@@ -1,2 +1,1 @@
 export { ProtectedRoute } from './ProtectedRoute';
-export { RootNavigator } from './RootNavigator';
