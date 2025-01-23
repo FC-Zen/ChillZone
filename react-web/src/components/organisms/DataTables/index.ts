@@ -8,3 +8,5 @@ export { MealsDataTable } from './MealsDataTable';
 export { OwnersAcceptedDataTable } from './OwnersAcceptedDataTable';
 export { OwnersPendingDataTable } from './OwnersPendingDataTable';
 export { DetailsOrdersDataTable } from './DetailsOrdersDataTable';
+export { OwnersRegisterDataTable } from './OwnersRegisterDataTable';
+export { AdminUsersDataTable } from './AdminUsersDataTable';
