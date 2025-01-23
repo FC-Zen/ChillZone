@@ -66,7 +66,7 @@ export const LoginPage: React.FC = () => {
           case 'superadmin':
             setUser(prevUser => ({
               ...prevUser ?? { userEmail: '', username: '', organization: '', role: '', photo_link : '' },
-              role: 'Super Administrateur'
+              role: 'Super-Administrateur'
             }));
             navigation.navigate(ROUTE.ADMIN_DASHBOARD);
             break;
