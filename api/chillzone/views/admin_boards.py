@@ -354,3 +354,52 @@ class AdminRestaurantView(APIView):
             "confirmed_restaurants": confirmed_serializer.data,
             "pending_restaurants": pending_serializer.data
         })
+    
+    def post(self, request):
+        restaurant_id = request.data.get('id')
+        
+        if not restaurant_id:
+            return Response({"error": "Id required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            establishment = request.user.usermeta.establishment
+
+            link = LinkTo.objects.get(
+                restaurant_id=restaurant_id,
+                establishment=establishment
+            )
+            
+            link.status = True
+            link.save()
+
+            return self.get(request)
+
+        except LinkTo.DoesNotExist:
+            return Response(
+                {"error": "Le restaurant n'existe pas ou n'est pas associé à votre établissement."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+    
+    def delete(self, request):
+        restaurant_id = request.data.get('id')
+        
+        if not restaurant_id:
+            return Response({"error": "Id required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            establishment = request.user.usermeta.establishment
+
+            link = LinkTo.objects.get(
+                restaurant_id=restaurant_id,
+                establishment=establishment
+            )
+            
+            link.delete()
+
+            return self.get()
+
+        except LinkTo.DoesNotExist:
+            return Response(
+                {"error": "Le restaurant n'existe pas ou n'est pas associé à votre établissement."},
+                status=status.HTTP_404_NOT_FOUND
+            )
