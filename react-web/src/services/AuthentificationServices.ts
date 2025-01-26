@@ -1,3 +1,4 @@
+import { User } from '@hooks';
 import { getCSRFToken } from '@utils';
 import axios from 'axios';
 import { z } from 'zod';
@@ -130,7 +131,7 @@ export const changePassword = async (
  * @returns {Promise<Object>} Résultat de la déconnexion.
  * @throws {Error} Si une erreur se produit lors de la déconnexion.
  */
-export const logoutUser = async () => {
+export const logoutUser = async (setUser: React.Dispatch<React.SetStateAction<User | null>>) => {
   try {
     console.log("Cookies avant la requête DELETE:", document);
     const response = await axios.delete('http://localhost:3000/login/', 
@@ -144,6 +145,8 @@ export const logoutUser = async () => {
     if (response.status === 204) {
       console.log('Utilisateur déconnecté avec succès.');
       localStorage.removeItem('user');
+      setUser(null);
+      document.cookie = "csrftoken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
       return { success: true, message: 'Déconnexion réussie.' };
     } else {
       throw new Error('Échec de la déconnexion.');
