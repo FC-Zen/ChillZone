@@ -20,5 +20,9 @@ export {
   OwnerHomeLayout,
   AdminHomeLayout,
   AdminOwnerLayout,
-  AdminEstablishmentLayout
+  AdminEstablishmentLayout,
+  OwnerMealsTemplate,
+  OwnerOrdersTemplate,
+  OwnerMenusTemplate,
+  SuperAdminLayout
 } from './templates';

@@ -1,0 +1,1 @@
+export { OwnerMenusTemplate } from './OwnerMenusTemplate';

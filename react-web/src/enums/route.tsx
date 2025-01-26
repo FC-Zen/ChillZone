@@ -13,5 +13,6 @@ export enum ROUTE {
   ADMIN_BOOKING = '/admin-booking',
   OWNER_ORDERS = '/owner-orders',
   OWNER_MEALS = '/owner-meals',
-  SUPER_ADMIN = '/super-admin'
+  SUPER_ADMIN = '/super-admin',
+  OWNER_MENUS = '/owner-menus'
 }

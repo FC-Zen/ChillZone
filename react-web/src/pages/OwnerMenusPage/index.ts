@@ -1,0 +1,1 @@
+export { OwnerMenusPage } from './OwnerMenusPage';
