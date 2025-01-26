@@ -39,13 +39,10 @@ export const ReportingFormTemplate: FC<ReportingFormProps> = ({
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        {' '}
-        {/* Utilisation d'un View comme conteneur */}
         <PageHeader
           title={t('headers.conflictReservation')}
           variant="back"
           onBackPress={() => {
-            navigation.goBack();
             if (onClose) onClose();
           }}
           colorTitle={colors.white}
@@ -56,7 +53,6 @@ export const ReportingFormTemplate: FC<ReportingFormProps> = ({
           <Text style={styles.word2}>{wordPara}</Text>
           <Text style={styles.word2}>{wordPara2}</Text>
 
-          {/* Champ de commentaire */}
           <TextInput
             style={styles.commentInput}
             placeholder={t('fields.common.commentary')}
@@ -74,7 +70,6 @@ export const ReportingFormTemplate: FC<ReportingFormProps> = ({
               style={[styles.button, styles.primaryButton]}
               onPress={() => {
                 if (button1Props.onPress) button1Props.onPress();
-                if (onClose) onClose();
               }}
             />
           </View>

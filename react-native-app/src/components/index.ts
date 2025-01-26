@@ -44,6 +44,7 @@ export {
   ResetPasswordTemplate,
   HomeScreenTemplate,
   HomeScreenTemplateProps,
+  ReportingFinalFormTemplate,
   ReportingFormTemplate,
   RestaurationTemplate,
   PaymentTemplate,

@@ -2,32 +2,66 @@ import React, { useState } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import {
   AlertCancelReservationTemplate,
-  ReportingFormTemplate, // Remplacez par votre template
+  ReportingFormTemplate,
+  ReportingFinalFormTemplate,
+  AlertHourReservationTemplate,
 } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 
 export const AlertScreen = () => {
-  const [hasAlert, setHasAlert] = useState(true);
+  const [showAlertHour, setShowAlertHour] = useState(true);
   const [showCancelAlert, setShowCancelAlert] = useState(false);
-  const [comment, setComment] = useState(''); // État pour le commentaire
+  const [showReportingForm, setShowReportingForm] = useState(false);
+  const [showFinalAlert, setShowFinalAlert] = useState(false);
+  const [comment, setComment] = useState('');
 
   const { t } = useTranslation();
   const navigation = useNavigation();
 
   const handleCancelPress = () => {
     setShowCancelAlert(true);
-    setHasAlert(false);
+    setShowAlertHour(false);
+  };
+
+  const handleConflictPress = () => {
+    setShowReportingForm(true);
+    setShowAlertHour(false);
+  };
+
+  const handleFinalPress = () => {
+    setShowFinalAlert(true);
+    setShowReportingForm(false);
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {showCancelAlert ? (
+      {showAlertHour && (
+        <AlertHourReservationTemplate
+          timeSlot="12H00 - 13H00"
+          location="Salle 001"
+          address="IUT Champs sur Marne"
+          floor="Étage 1"
+          button1Props={{
+            title: t('buttons.actions.yesImHere'),
+            onPress: () => alert('Vous avez confirmé votre présence !'),
+          }}
+          button2Props={{
+            title: t('buttons.actions.imCanceling'),
+            onPress: handleCancelPress,
+          }}
+          button3Props={{
+            title: t('buttons.actions.conflictReservation'),
+            onPress: handleConflictPress,
+          }}
+        />
+      )}
+      {showCancelAlert && (
         <AlertCancelReservationTemplate
           onClose={() => {
             setShowCancelAlert(false);
-            setHasAlert(true);
+            setShowAlertHour(true);
           }}
           word={t('reservationConflicts.timeReservationCancel')}
           button1Props={{
@@ -35,7 +69,8 @@ export const AlertScreen = () => {
             onPress: () => navigation.navigate(ROUTE.HOME),
           }}
         />
-      ) : hasAlert ? (
+      )}
+      {showReportingForm && (
         <ReportingFormTemplate
           word={t('reservationConflicts.timeReservationConflictCareful')}
           wordPara={t('reservationConflicts.timeReservationConflict1')}
@@ -43,21 +78,30 @@ export const AlertScreen = () => {
           button1Props={{
             title: t('buttons.actions.conflictReservation'),
             onPress: () => {
-              // logique à faire
               console.log(comment);
+              handleFinalPress();
             },
           }}
           comment={comment}
           setComment={setComment}
-          onClose={() => setHasAlert(false)}
+          onClose={() => setShowAlertHour(true)}
           onConflictPress={handleCancelPress}
         />
-      ) : (
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Text>Aucune alerte pour le moment.</Text>
-        </View>
+      )}
+      {showFinalAlert && (
+        <ReportingFinalFormTemplate
+          word={t('reservationConflicts.timeReservationConflictDone')}
+          button1Props={{
+            title: t('buttons.auth.returnHome'),
+            onPress: () => {
+              navigation.navigate(ROUTE.HOME);
+            },
+          }}
+          onClose={() => {
+            setShowFinalAlert(false);
+            navigation.navigate(ROUTE.HOME);
+          }}
+        />
       )}
     </SafeAreaView>
   );
