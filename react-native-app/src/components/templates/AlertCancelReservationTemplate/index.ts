@@ -1,0 +1,1 @@
+export { AlertCancelReservationTemplate } from './AlertCancelReservationTemplate';

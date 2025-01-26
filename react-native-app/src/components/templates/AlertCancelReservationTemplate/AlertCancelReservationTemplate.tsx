@@ -8,43 +8,32 @@ import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import LottieView from 'lottie-react-native';
 
-export type AlertHourReservationTemplateProps = {
-  timeSlot: string;
-  location: string;
-  address: string;
-  floor: string;
+export type AlertCancelReservationProps = {
+  word: string;
   button1Props: ButtonProps;
-  button2Props: ButtonProps;
-  button3Props: ButtonProps;
+  onClose?: () => void;
 };
 
-export const AlertHourReservationTemplate: FC<
-  AlertHourReservationTemplateProps
-> = ({
-  timeSlot,
-  location,
-  address,
-  floor,
-  button1Props,
-  button2Props,
-  button3Props,
-}) => {
+export const AlertCancelReservationTemplate: FC<
+  AlertCancelReservationProps
+> = ({ word, button1Props, onClose }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <PageHeader
-        title={t('headers.timeReservation')}
+        title={t('headers.cancelReservation')}
         variant="back"
-        onBackPress={() => navigation.navigate(ROUTE.HOME)}
+        onBackPress={() => {
+          navigation.goBack();
+          if (onClose) onClose();
+        }}
         colorTitle={colors.white}
         colorArrow={colors.white}
       />
 
       <View style={styles.cont2}>
-        <Text style={styles.timeSlot}>{timeSlot}</Text>
-
         <View style={styles.iconContainer}>
           <LottieView
             source={require('@assets/Images/Hour.json')}
@@ -54,22 +43,17 @@ export const AlertHourReservationTemplate: FC<
           />
         </View>
 
-        <Text style={styles.location}>{location}</Text>
-        <Text style={styles.address}>{address}</Text>
-        <Text style={styles.floor}>{floor}</Text>
+        <Text style={styles.word}>{word}</Text>
 
         <View style={styles.buttonContainer}>
           <Button
             {...button1Props}
+            textColor={colors.aquaDeep}
             style={[styles.button, styles.primaryButton]}
-          />
-          <Button
-            {...button2Props}
-            style={[styles.button, styles.secondaryButton]}
-          />
-          <Button
-            {...button3Props}
-            style={[styles.button, styles.dangerButton]}
+            onPress={() => {
+              if (button1Props.onPress) button1Props.onPress();
+              if (onClose) onClose();
+            }}
           />
         </View>
       </View>
