@@ -5,7 +5,7 @@ import { AdminOwnerLayout } from '@components';
 
 import restauration_places_accepted from '@assets/data/restauration_places_accepted.json';
 import restauration_places_pending from '@assets/data/restauration_places_pending.json';
-import { getAffiliations } from '@services/AdminServices';
+import { acceptAffiliations, deleteAffiliations, getAffiliations } from '@services/AdminServices';
 
 export const AdminOwnerPage: React.FC = () => {
   const { t } = useTranslation();
@@ -13,32 +13,20 @@ export const AdminOwnerPage: React.FC = () => {
   
   const [restaurationPlacesAcceptedData, setRestaurationPlacesAcceptedData] = useState(restauration_places_accepted);
   const [restaurationPlacespendingData, setRestaurationPlacespendingData] = useState(restauration_places_pending);
-  
-  // Delete sur lieux de restauration affiliés à l’établissement
-  const handleClickDelete = (id: number) => {
-    setRestaurationPlacesAcceptedData((prevData) =>
-      prevData.filter((place) => place.id !== id)
-    );
-  };
 
   // Demandes d'affiliation des lieux de restauration à l’établissement
   // Si on accepte => on ajoute au dessus
-  const handleClickAccept = (id: number) => {
-    const placeToAccept = restaurationPlacespendingData.find((place) => place.id === id);
-    if (placeToAccept) {
-      setRestaurationPlacesAcceptedData((prevData) => [
-        ...prevData,
-        { ...placeToAccept, status: true } // Ajout du statut
-      ]);
-      setRestaurationPlacespendingData((prevData) => prevData.filter((place) => place.id !== id));
-    }
+  const handleClickAccept = async (id: number) => {
+    const res = await acceptAffiliations(id);
+    setRestaurationPlacesAcceptedData(res.confirmed_restaurants);
+    setRestaurationPlacespendingData(res.pending_restaurants);
   };
 
-  // Si on refuse => on delete al ligne
-  const handleClickRefuse = (id: number) => {
-    setRestaurationPlacespendingData((prevData) =>
-      prevData.filter((place) => place.id !== id)
-    );
+  // Si on refuse => on delete la ligne
+  const handleClickRefuse = async (id: number) => {
+    const res = await deleteAffiliations(id);
+    setRestaurationPlacesAcceptedData(res.confirmed_restaurants);
+    setRestaurationPlacespendingData(res.pending_restaurants);
   };
 
   useEffect(() => {
@@ -58,7 +46,7 @@ export const AdminOwnerPage: React.FC = () => {
         part={t('headers.affiliates')}
         restaurationPlacesAcceptedData={restaurationPlacesAcceptedData}
         restaurationPlacespendingData={restaurationPlacespendingData}
-        handleClickDelete={handleClickDelete}
+        handleClickDelete={handleClickRefuse}
         handleClickAccept={handleClickAccept}
         handleClickRefuse={handleClickRefuse}
       />

@@ -171,7 +171,7 @@ python manage.py runserver <HOST>:<PORT>
 Ce qui donne en local :
 
 ```bash
-python manage.py runserver 127.0.0.1:5000
+python manage.py runserver localhost:3000
 ```
 
 Accédez à l'url ```HOST:PORT``` que vous avez rentré et ajouter les paths que vous avez dans `urls.py` pour tester vos requêtes.

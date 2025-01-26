@@ -396,7 +396,7 @@ class AdminRestaurantView(APIView):
             
             link.delete()
 
-            return self.get()
+            return self.get(request)
 
         except LinkTo.DoesNotExist:
             return Response(
