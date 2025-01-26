@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { styles } from './style'; // Import des styles
 import { Icon } from '@components/atoms';
 import { colors } from '@theme';
-import { User } from '@hooks';
+import { User, useUser } from '@hooks';
 
 type HeaderProps = {
   user : User | null;
@@ -19,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
   part
 }) => {
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleLogout = async () => {
     const confirmLogout = window.confirm(
@@ -27,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
     if (!confirmLogout) return;
 
     try {
-      await logoutUser(); // Appel du service de déconnexion
+      await logoutUser(setUser); // Appel du service de déconnexion
       navigate(ROUTE.LOGIN); // Redirection après déconnexion
     } catch {
       alert('Erreur lors de la déconnexion. Veuillez réessayer.');
