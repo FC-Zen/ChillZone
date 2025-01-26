@@ -13,7 +13,7 @@ export type SelectProps = {
   name: string;
   value?: string | number;
   label: string;
-  options: { id: number; name?: string; libelle?: string }[];
+  options: { id: number; name?: string; label?: string }[];
   required?: boolean;
   disabled?: boolean;
   icon?: keyof typeof IconList;
@@ -34,7 +34,7 @@ export const StyledSelect = ({
 
   useEffect(() => {
     const matchingOption = options.find(option => 
-      option.id === value || option.name === value || option.libelle === value
+      option.id === value || option.name === value || option.label === value
     );    
     if (matchingOption) {
       setSelectedValues(matchingOption.id);
@@ -126,7 +126,7 @@ export const StyledSelect = ({
         >
           {options.map((option) => (
             <MenuItem key={option.id} value={option.id}>
-              {option.name || option.libelle}
+              {option.name || option.label}
             </MenuItem>
           ))}
         </Select>

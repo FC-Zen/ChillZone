@@ -9,6 +9,7 @@ type Modalprops = {
   handleForm: (formData: FormData) => void;
   title: string;
   listInputs: InputField[];
+  listInputs2? :  InputField[];
 };
 
 export const Modal = ({
@@ -17,6 +18,7 @@ export const Modal = ({
   handleForm,
   title,
   listInputs,
+  listInputs2,
 }: Modalprops) => {
   if (!isOpen) return null;
 
@@ -25,7 +27,7 @@ export const Modal = ({
         <div className="bg-white rounded-lg shadow-lg p-6 w-1/1 sm:w-1/2 md:w-1/2 lg:w-1/3">
           <ModalHeader title={title} onClose={onClose} />
         <div style={styles.body} >
-          <ModalForm  onSubmit={handleForm} listInputs={listInputs}  />
+          <ModalForm  onSubmit={handleForm} listInputs={listInputs} listInputs2={listInputs2}  />
         </div>
       </div>
     </div>

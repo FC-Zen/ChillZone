@@ -124,7 +124,7 @@ export const AdminEstablishmentPage: React.FC = () => {
       {
         name: "phone",
         label: t('fields.common.phone'),
-        type: "phone",
+        type: "text",
         icon: "User",
         required: true,
         value: listInputsValues?.phone,

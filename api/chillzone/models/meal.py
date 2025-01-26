@@ -3,20 +3,9 @@ from chillzone.models import RestaurationPlace, Category
 
 class Meal(models.Model):
 
-    TYPE_CHOICES = [
-        ('starter', 'Starter'),
-        ('main', 'Main'),
-        ('dessert', 'Dessert'),
-        ('side', 'Side'),
-        ('drinks', 'Drinks'),
-        ('other', 'Other'),
-    ]
-
     name = models.CharField(max_length=254)
 
     description = models.TextField()
-
-    type = models.CharField(max_length=10, choices=TYPE_CHOICES)
 
     photo_link = models.ImageField(null=True, blank=True)
 

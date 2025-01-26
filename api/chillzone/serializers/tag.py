@@ -4,4 +4,4 @@ from chillzone.models import Tag
 class AdminAvailableTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ['id', 'libelle']
+        fields = ['id', 'label']

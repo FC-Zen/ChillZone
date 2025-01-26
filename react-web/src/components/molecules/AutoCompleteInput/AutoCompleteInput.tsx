@@ -80,7 +80,16 @@ export const AutoCompleteInput = ({
           },
           width: "100%",
         }}
-        renderInput={(params) => <TextField {...params} variant="standard" label={label} name={name} />}
+        renderInput={(params) => <TextField {...params} 
+          variant="standard" 
+          label={label} 
+          name={name} 
+          slotProps={{
+            inputLabel: {
+              shrink: true,
+            },
+          }}
+        />}
       />
     </Box>
   );

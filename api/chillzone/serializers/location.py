@@ -8,7 +8,7 @@ class LocationSerializer(serializers.ModelSerializer) :
 
 class AdminLocationSerializer(serializers.ModelSerializer):
     floor_name = serializers.CharField(source='id_floor.name', read_only=True)
-    room_type = serializers.CharField(source='id_type.libelle', read_only=True)
+    room_type = serializers.CharField(source='id_type.label', read_only=True)
 
     class Meta:
         model = Location
