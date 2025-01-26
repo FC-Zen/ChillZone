@@ -35,6 +35,7 @@ export {
   CommandList,
 } from './organisms';
 export {
+  AlertHourReservationTemplate,
   ConnectionTemplate,
   DispenserTemplate,
   ForgotMdpTemplate,

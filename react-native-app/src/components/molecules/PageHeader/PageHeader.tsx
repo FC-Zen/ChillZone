@@ -10,12 +10,16 @@ export type PageHeaderProps = {
   icon?: IconProps; // Icône personnalisée (optionnel)
   onBackPress?: () => void; // Fonction personnalisée pour le clic
   noMargin?: boolean; // Suppression des marges (optionnel)
+  colorTitle?: string;
+  colorArrow?: string;
 };
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
   title,
+  colorTitle,
   variant,
-  icon = { name: 'BackArrow', color: 'black' }, // Icône par défaut
+  colorArrow,
+  icon = { name: 'BackArrow', color: colorArrow || 'black' }, // Icône par défaut
   onBackPress,
   noMargin,
 }) => {
@@ -42,7 +46,13 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
       )}
 
       {/* Titre de la page */}
-      <Text style={[styles.title, variant === 'back' && styles.titleWithBack]}>
+      <Text
+        style={[
+          styles.title,
+          variant === 'back' && styles.titleWithBack,
+          colorTitle ? { color: colorTitle } : {},
+        ]}
+      >
         {title}
       </Text>
 
