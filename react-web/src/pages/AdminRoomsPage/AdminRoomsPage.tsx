@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
 import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import { addRoom, getRooms, toggleAccount, toggleRoom, updateRoom } from '@services/AdminServices';
+import { addRoom, getRooms, toggleRoom, updateRoom } from '@services/AdminServices';
 
 type Room = {
   id: number;
@@ -24,7 +24,7 @@ export const AdminRoomsPage: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [roomsData, setRoomsData] = useState<Room[]>([]);
   const [availableFloors, setAvailableFloors] = useState<{ id: number; name: string }[]>([]);
-  const [availableTypes, setAvailableTypes] = useState<{ id: number; libelle: string }[]>([]);
+  const [availableTypes, setAvailableTypes] = useState<{ id: number; label: string }[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

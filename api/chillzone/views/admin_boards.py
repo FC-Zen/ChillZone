@@ -215,7 +215,7 @@ class AdminLocationView(generics.ListAPIView):
         floor_serializer = AdminAvailableFloorsSerializer(floors, many=True)
 
         try:
-            location_category = TagCategory.objects.get(libelle="Location")
+            location_category = TagCategory.objects.get(label="Location")
         except TagCategory.DoesNotExist:
             return Response({"error": "Tag category 'Location' not found."}, status=status.HTTP_404_NOT_FOUND)
 

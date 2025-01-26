@@ -38,7 +38,7 @@ export const styles = {
     },
     body: {
       marginTop: '20px',
-      maxHeight: "400px", 
+      maxHeight: "1000px", 
       overflowY: 'scroll' as 'scroll',
     },
 };
