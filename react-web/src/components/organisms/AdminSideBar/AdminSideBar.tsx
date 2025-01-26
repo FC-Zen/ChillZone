@@ -1,17 +1,7 @@
 // src/components/organisms/AdminSideBar/AdminSideBar.tsx
-import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import du hook de navigation
 import { NavigationButton } from '@components/molecules';
 import { ROUTE } from '@enums'; // Import des routes
-import { colors } from '@theme'; // Import des couleurs
-import {
-  Home,
-  User,
-  Cube,
-  Calendar,
-  Building,
-  Shop,
-} from '@components/atoms/Icons'; // Import des icônes nécessaires
 
 export const AdminSideBar = () => {
   const navigate = useNavigate(); // Hook pour naviguer
@@ -35,37 +25,37 @@ export const AdminSideBar = () => {
     >
       {/* Tableau de bord */}
       <NavigationButton
-        icon={<Home color={colors.white} />}
+        icon='Home'
         onClick={() => handleIconClick(ROUTE.ADMIN_DASHBOARD)}
       />
 
       {/* Profil de l'admin */}
       <NavigationButton
-        icon={<User color={colors.white} />}
+        icon='User'
         onClick={() => handleIconClick(ROUTE.ADMIN_ACCOUNTS)} // Ajustez cette route si nécessaire
       />
 
       {/* Produits */}
       <NavigationButton
-        icon={<Cube color={colors.white} />}
+        icon='Cube'
         onClick={() => handleIconClick(ROUTE.ADMIN_ROOMS)} // Ajustez cette route si nécessaire
       />
 
       {/* Calendrier */}
       <NavigationButton
-        icon={<Calendar color={colors.white} />}
+        icon='Calendar'
         onClick={() => handleIconClick(ROUTE.ADMIN_BOOKING)} // Ajustez cette route si nécessaire
       />
 
       {/* Bâtiments */}
       <NavigationButton
-        icon={<Building color={colors.white} />}
+        icon='Building'
         onClick={() => handleIconClick(ROUTE.ADMIN_ESTABLISHMENT)} // Ajustez cette route si nécessaire
       />
 
       {/* Boutique */}
       <NavigationButton
-        icon={<Shop color={colors.white} />}
+        icon='Shop'
         onClick={() => handleIconClick(ROUTE.ADMIN_OWNERS)} // Ajustez cette route si nécessaire
       />
     </div>

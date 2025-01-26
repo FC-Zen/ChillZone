@@ -1,0 +1,34 @@
+/* style.css */
+
+.Pagecontainer {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f3f4f6; /* Gris clair */
+    width: 100%;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 24px;
+    padding: 24px;
+}
+
+.table-container {
+    width: 80%;
+}
+
+.stats-section {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 250px;
+}

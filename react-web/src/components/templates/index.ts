@@ -13,4 +13,5 @@ export { OwnerOrdersTemplate } from './OwnerOrdersTemplate';
 export { OwnerMealsTemplate } from './OwnerMealsTemplate';
 export { AdminOwnerLayout } from './AdminOwnerLayout';
 export { AdminEstablishmentLayout } from './AdminEstablishmentLayout';
-
+export { OwnerMenusTemplate } from './OwnerMenusTemplate';
+export { SuperAdminLayout } from './SuperAdminLayout';
