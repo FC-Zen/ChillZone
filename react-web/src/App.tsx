@@ -14,7 +14,8 @@ import {
   OwnerMealsPage,
   AdminOwnerPage,
   AdminEstablishmentPage,
-  SuperAdminPage
+  SuperAdminPage,
+  OwnerMenusPage
 } from '@pages';
 import { UserProvider } from '@hooks/UserContext/UserContext';
 import { ProtectedRoute } from '@navigation';
@@ -48,6 +49,7 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={['Restaurateur', 'Super-Administrateur']} />}>
             <Route path="/owner-dashboard" element={<OwnerHomePage />} />
             <Route path="/owner-meals" element={<OwnerMealsPage />} />
+            <Route path="/owner-menus" element={<OwnerMenusPage />} />
             <Route path="/owner-orders" element={<OwnerOrdersPage />} />
           </Route>
 

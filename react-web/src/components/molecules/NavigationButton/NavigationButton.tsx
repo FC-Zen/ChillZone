@@ -1,10 +1,10 @@
-// src/components/molecules/NavigationButton.tsx
 import React from 'react';
 import './NavigationButton.css'; // Import du fichier CSS
 import { colors } from '@theme';
+import { Icon, IconList } from '@components/atoms';
 
 export type NavigationButtonProps = {
-  icon: React.ReactNode; // Accepte un élément React
+  icon: keyof typeof IconList; 
   onClick: () => void;
   label?: string; // Étiquette optionnelle
   active?: boolean; // État actif
@@ -21,7 +21,7 @@ export const NavigationButton: React.FC<NavigationButtonProps> = ({
 
   return (
     <button className={buttonClass} onClick={onClick}>
-      {icon}
+      <Icon color={colors.white} name={icon}  />
       {label && <span className="label">{label}</span>}
     </button>
   );

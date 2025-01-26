@@ -15,6 +15,7 @@ export type RootStackParamList = {
   [ROUTE.OWNER_MEALS]: undefined;
   [ROUTE.ADMIN_OWNERS]: undefined;
   [ROUTE.ADMIN_ESTABLISHMENT]: undefined;
+  [ROUTE.OWNER_MENUS]: undefined;
 };
 
 export type RouteParamList = {

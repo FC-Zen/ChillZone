@@ -26,26 +26,26 @@ export const OwnerSidebar = () => {
     >
       {/* Tableau de bord */}
       <NavigationButton
-        icon={<Home color={colors.white} />}
+        icon='Home'
         onClick={() => handleIconClick(ROUTE.OWNER_DASHBOARD)}
       />
 
       {/* Produits */}
       <NavigationButton
-        icon={<Pizza color={colors.white} />}
+        icon='Pizza'
         onClick={() =>  handleIconClick(ROUTE.OWNER_MEALS)}
       />
 
-      {/* Menus SEMESTRE 2 
+      {/* Menus SEMESTRE 2 */}
       <NavigationButton
-        icon={<Document color={colors.white} />}
-        onClick={() => handleIconClick('/owner-orders')} 
+        icon='Document'
+        onClick={() => handleIconClick(ROUTE.OWNER_MENUS)} 
       />
-      */}
+      
 
       {/* Commandes */}
       <NavigationButton
-        icon={<Package color={colors.white} />}
+        icon='Package'
         onClick={() => handleIconClick(ROUTE.OWNER_ORDERS)} 
       />
     </div>
