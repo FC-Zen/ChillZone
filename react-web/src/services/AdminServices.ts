@@ -318,3 +318,59 @@ export const getAffiliations = async () => {
         throw new Error(error.message);
     }
 };
+
+/**
+ * Accepte la demande d'affiliation de restaurant
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des affiliations.
+ */
+export const acceptAffiliations = async (id: number) => {
+    try {
+        const response = await axios.post('http://localhost:3000/admin-restaurants/', 
+            {
+                id : id
+            },
+            { 
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des affiliations:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+/**
+ * Refuse la demande ou supprime le lien
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des affiliations.
+ */
+export const deleteAffiliations = async (id: number) => {
+    try {
+        const response = await axios.delete('http://localhost:3000/admin-restaurants/', 
+            { 
+                data: { id: id },
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des affiliations:", error.message);
+        throw new Error(error.message);
+    }
+};
