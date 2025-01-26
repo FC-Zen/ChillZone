@@ -5,7 +5,6 @@ import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
-import { ROUTE } from '@enums';
 import LottieView from 'lottie-react-native';
 
 export type AlertCancelReservationProps = {

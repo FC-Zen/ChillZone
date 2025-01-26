@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import {
   AlertCancelReservationTemplate,
-  AlertHourReservationTemplate,
+  ReportingFormTemplate, // Remplacez par votre template
 } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
@@ -11,11 +11,11 @@ import { ROUTE } from '@enums';
 export const AlertScreen = () => {
   const [hasAlert, setHasAlert] = useState(true);
   const [showCancelAlert, setShowCancelAlert] = useState(false);
+  const [comment, setComment] = useState(''); // État pour le commentaire
 
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  // Fonction pour gérer l'annulation
   const handleCancelPress = () => {
     setShowCancelAlert(true);
     setHasAlert(false);
@@ -36,23 +36,21 @@ export const AlertScreen = () => {
           }}
         />
       ) : hasAlert ? (
-        <AlertHourReservationTemplate
-          timeSlot="12H00 - 13H00"
-          location="Salle 001"
-          address="IUT Champs sur Marne"
-          floor="Étage 1"
+        <ReportingFormTemplate
+          word={t('reservationConflicts.timeReservationConflictCareful')}
+          wordPara={t('reservationConflicts.timeReservationConflict1')}
+          wordPara2={t('reservationConflicts.timeReservationConflict2')}
           button1Props={{
-            title: t('buttons.actions.yesImHere'),
-            onPress: () => alert('Vous avez confirmé votre présence !'),
-          }}
-          button2Props={{
-            title: t('buttons.actions.imCanceling'),
-            onPress: handleCancelPress,
-          }}
-          button3Props={{
             title: t('buttons.actions.conflictReservation'),
-            onPress: () => alert('Un problème a été signalé.'),
+            onPress: () => {
+              // logique à faire
+              console.log(comment);
+            },
           }}
+          comment={comment}
+          setComment={setComment}
+          onClose={() => setHasAlert(false)}
+          onConflictPress={handleCancelPress}
         />
       ) : (
         <View

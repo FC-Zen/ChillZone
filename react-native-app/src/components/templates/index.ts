@@ -17,3 +17,4 @@ export { ReservationSummaryTemplate } from './ReservationSummaryTemplate';
 export { CartTemplate } from './CartTemplate';
 export { AlertHourReservationTemplate } from './AlertHourReservationTemplate';
 export { AlertCancelReservationTemplate } from './AlertCancelReservationTemplate';
+export { ReportingFormTemplate } from './ReportingFormTemplate';
