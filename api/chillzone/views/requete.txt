@@ -1,111 +1,129 @@
-View Reservation Conflict - Admin
+View Owner - Menu
 
-Renvoie :
-"reservations": reservation_serializer.data,
-"conflicts": conflict_serializer.data
+Renvoie (fais un serializer) :
+Un JSON qui renvoie chaque menu appartenant au restaurant dans lequel travaille la personne avec à chaque fois tout les types et les catégories associés par type (si y'a pas de catégorie associé alors on renvoie une liste vide pour le type en question)
 
-class Reservation(models.Model):
+class UserMeta(models.Model):
 
-    STATUS_CHOICES = [
-        ('Confirmed', 'Confirmed'),
-        ('Cancelled', 'Cancelled'),
-        ('Ongoing', 'Ongoing'),
-        ('Pending', 'Pending')
+    class Meta:
+        db_table = "auth_user_meta"
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+
+    is_owner =  models.BooleanField(default=False)
+
+    is_block = models.BooleanField(default=False)
+    
+    is_verified = models.BooleanField(default=False)
+
+    role = models.CharField(max_length=254, blank=False, default="Etudiant")
+
+    phone = models.CharField(max_length=10, blank=True)
+
+    photo_link = models.ImageField(blank=True, default="DefaultProfile.png")
+
+    establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, blank=True, null=True)
+
+    notification = models.ManyToManyField('Notification',through='NotificationCenter', related_name='notifications')
+
+class WorkIn(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
+
+    role = models.CharField(max_length=100)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'restaurant'], name='unique_user_restaurant'
+            )
+        ]
+
+class RestaurationPlace(models.Model):
+
+    TYPE_CHOICES = [
+        ("restaurant", "Restaurant"),
+        ("fridge", "Réfrégirateur")
     ]
 
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Confirmed')
+    name = models.CharField(max_length= 254)
+
+    description = models.TextField(blank=True)
+
+    location = models.CharField(max_length= 254)
+
+    restauration_type = models.CharField(choices=TYPE_CHOICES, max_length= 25)
+
+    opening_time = models.TimeField()
+
+    closing_time = models.TimeField()
+
+    status = models.BooleanField(default=False)
+
+    email = models.EmailField()
+
+    photo_link = models.ImageField(null=True, blank=True) 
+
+    creation_date = models.DateTimeField(auto_now_add=True)
+    
+    modification_date = models.DateTimeField(auto_now=True)
+
+class Menu(models.Model):
+
+    name = models.CharField(max_length=254)
+
+    description = models.TextField()
+
+    photo_link = models.ImageField(null=True, blank=True)
+
+    price = models.FloatField()
 
     creation_date = models.DateTimeField(auto_now_add=True)
 
     modification_date = models.DateTimeField(auto_now=True)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
 
+    meal = models.ManyToManyField('Meal',through='LineContent', related_name='meal')
 
-class LocationReservation(models.Model):
+class Associate(models.Model):
 
-    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
 
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    type = models.ForeignKey(Type, on_delete=models.CASCADE)
 
-    start_time = models.TimeField()
-
-    end_time = models.TimeField()
-
-    day_reservation = models.DateField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['reservation', 'location'], name='unique_rervation_location'
+                fields=['menu', 'type', 'category'], name='unique_menu_type_category'
             )
         ]
 
-class Location(models.Model) :
+class Type(models.Model):
+
+    TYPE_CHOICES = [
+        ('starter', 'Starter'),
+        ('main', 'Main'),
+        ('dessert', 'Dessert'),
+        ('side', 'Side'),
+        ('drink', 'Drink'),
+        ('other', 'Other'),
+    ]
+
+    label = models.CharField(max_length=10, choices=TYPE_CHOICES)
+
+    menu = models.ManyToManyField('Menu',through='Associate', related_name='menu_id')
+
+class Category(models.Model):
     
-    name = models.CharField(max_length= 100)
-    
-    photo_link = models.TextField(blank=True, null=True)
+    label = models.CharField(max_length=50)
 
-    description = models.TextField(blank=True, null=True)
-
-    capacity = models.IntegerField()
-
-    status = models.BooleanField(default=False)
-
-    position_x = models.IntegerField()
-
-    position_y = models.IntegerField()
-
-    creation_date = models.DateTimeField(auto_now_add=True)
-    
-    modification_date = models.DateTimeField(auto_now=True) 
-
-    id_type = models.ForeignKey(Tag, on_delete=models.CASCADE)
-
-    id_floor = models.ForeignKey(MapFloor, on_delete=models.CASCADE)
-
-class AdminReservationConflictView(APIView):
-    permission_classes = [IsAuthenticated & IsAdminUser]
-
-    def get(self, request, *args, **kwargs):
-        establishment = request.user.usermeta.establishment
-
-        reservations = LocationReservation.objects.filter(
-            location__islocated__establishment=establishment
-        )
-        conflicts = Conflict.objects.filter(
-            reservation__locationreservation__location__islocated__establishment=establishment
-        )
-
-        reservation_serializer = AdminLocationReservationSerializer(reservations, many=True)
-        conflict_serializer = AdminConflictSerializer(conflicts, many=True)
-
-        return Response({
-            "reservations": reservation_serializer.data,
-            "conflicts": conflict_serializer.data
-        })
-
-class AdminLocationReservationSerializer(serializers.ModelSerializer):
-    location_name = serializers.CharField(source='location.name')
-    status = serializers.CharField(source='reservation.status')
-
-    class Meta:
-        model = LocationReservation
-        fields = ['id', 'day_reservation', 'start_time', 'end_time', 'location_name', 'status']
-
-class AdminConflictSerializer(serializers.ModelSerializer):
-    full_name = serializers.SerializerMethodField()
-    location_name = serializers.CharField(source='reservation.locationreservation.location.name')
-    day_reservation = serializers.CharField(source='reservation.locationreservation.day_reservation')
-
-    class Meta:
-        model = Conflict
-        fields = ['id', 'day_reservation', 'full_name', 'location_name', 'comment']
-
-    def get_full_name(self, obj):
-        return f"{obj.user.user.first_name} {obj.user.user.last_name}"
+    description = models.CharField(max_length=254, null=True)
 
 Permission :
 être connecté
-être admin
+être owner

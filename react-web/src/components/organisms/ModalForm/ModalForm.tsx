@@ -10,18 +10,23 @@ export type InputField = {
   label: string;
   type: string;
   icon: IconProps['name'];
-  value?: any | string[];
+  value?: any | string;
   required?: boolean;
   disabled?: boolean;
   step?: string;
-  options?: { tag: string }[];
-  optionsTags?: { tag_id: number; tag_label: string }[];
+  options?: { id: number; name?: string; label?: string }[];
+  optionsTags?: { id: number; label: string }[];
+};
+
+export type OptionTag = {
+  id: number;
+  label: string;
 };
 
 type ModalFormProps = {
   onSubmit: (formData: FormData) => void;
   listInputs: InputField[];
-  listInputs2?: InputField[]; // listInputs2 est maintenant optionnel
+  listInputs2?: InputField[];
 };
 
 export const ModalForm: React.FC<ModalFormProps> = ({
@@ -31,63 +36,113 @@ export const ModalForm: React.FC<ModalFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const [selectedTags, setSelectedTags] = React.useState<{ tag_id: number; tag_label: string }[]>([]);
+  const [selectedTags, setSelectedTags] = React.useState<{ id: number; label: string }[]>([]);
   const [file, setFile] = React.useState<File | null>(null);
-  const [currentInputs, setCurrentInputs] = React.useState<InputField[]>(listInputs); // Liste des inputs à afficher
-  const [formData, setFormData] = React.useState<FormData>(new FormData()); // Stocke les données du formulaire
+  const [currentInputs, setCurrentInputs] = React.useState<InputField[]>(listInputs);
+  const [formData, setFormData] = React.useState<Record<string, any>>({});
 
-  const handleTagChange = (name: string, value: { tag_id: number; tag_label: string }[]) => {
+  useEffect(() => {
+    const initialData: Record<string, any> = {};
+    const combinedInputs = [...listInputs, ...(listInputs2 || [])];
+
+    combinedInputs.forEach(input => {
+      if (input.type === 'select') {
+        initialData[input.name.toLowerCase()] = input.options?.find(option => option.id === input.value || option.name === input.value || option.label === input.value)?.id || '';
+      } else if (input.type === 'autocomplete' && Array.isArray(input.value)) {
+        // For autocomplete, store selected tags as objects
+        initialData[input.name.toLowerCase()] = input.value.reduce((acc: { [key: string]: { id: number; label: string } }, tag: OptionTag) => {
+          acc[tag.id] = tag;
+          return acc;
+        }, {});
+      } else {
+        initialData[input.name.toLowerCase()] = input.value || '';
+      }
+    });
+    setFormData(initialData);
+  }, [listInputs, listInputs2]);
+
+  const handleTagChange = (name: string, value: { id: number; label: string }[]) => {
+    // Mettre à jour formData avec seulement les IDs des objets
     setSelectedTags(value);
+    setFormData(prev => ({
+      ...prev,
+      [name]: value.map(tag => tag.id),  // Extraire seulement les IDs des tags
+    }));
+  
+    console.log(formData);  // Vérifier l'état mis à jour
+  };
+  
+  const handleFileChange = (file: File) => {
+    setFile(file);
+    setFormData(prev => ({
+      ...prev,
+      photo_link: file,
+    }));
   };
 
-  const handleFileChange = (file: File) => {
-    console.log(file.name);
-    setFile(file);
+  const handleInputChange = (name: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
-    // Ajouter les tags et le fichier dans le FormData
-    const updatedFormData = new FormData(event.currentTarget);
-    if (selectedTags.length > 0) {
-      updatedFormData.delete('tags');
-      updatedFormData.append('tags', JSON.stringify(selectedTags));
-    }  
+    console.log(formData);
+    const updatedFormData = new FormData();
+    const combinedInputs = [...listInputs, ...(listInputs2 || [])];
+  
+    combinedInputs.forEach(input => {
+      const fieldValue = formData[input.name.toLowerCase()];
+  
+      if (fieldValue && typeof fieldValue === 'object') {
+        updatedFormData.append(input.name.toLowerCase(), JSON.stringify(fieldValue));
+      } else if (fieldValue !== undefined) {
+        updatedFormData.append(input.name.toLowerCase(), fieldValue);
+      } else {
+        updatedFormData.append(input.name.toLowerCase(), '');
+      }
+    });
+  
+    // Si un fichier est sélectionné, on l'ajoute également
     if (file) {
       updatedFormData.append('photo_link', file);
     }
-
+  
     console.log("FormData avant soumission : ", Array.from(updatedFormData.entries()));
     onSubmit(updatedFormData);
   };
 
-  // Gérer l'initialisation des tags si un champ 'autocomplete' est défini
-  useEffect(() => {
-    const inputField = listInputs.find(input => input.type === 'autocomplete');
-    if (inputField?.value) {
-      setSelectedTags(inputField.value);
-    }
-  }, [listInputs]);
+
 
   const handleNext = () => {
-    // Ajouter les données de la première liste dans formData
-    const updatedFormData = new FormData();
-    listInputs.forEach(input => {
+    // Log de formData pour voir son contenu avant la mise à jour
+    console.log(formData);
+  
+    // Combine listInputs et listInputs2
+    const combinedInputs = [...listInputs, ...(listInputs2 || [])];
+  
+    // Crée un nouvel objet formData avec les nouvelles valeurs
+    const updatedFormData: Record<string, any> = { ...formData };
+  
+    combinedInputs.forEach(input => {
       const inputElement = document.querySelector(`[name=${input.name.toLowerCase()}]`) as HTMLInputElement;
-      if (inputElement) updatedFormData.append(input.name, inputElement.value);
+      if (inputElement) {
+        // Ajoute les valeurs des inputs au formData
+        updatedFormData[input.name.toLowerCase()] = inputElement.value;
+      }
     });
+  
+    // Met à jour l'état avec les nouvelles valeurs
     setFormData(updatedFormData);
-
-    // Si listInputs2 est définie, afficher la deuxième liste d'inputs
+  
+    // Gère les étapes suivantes
     if (listInputs2) {
       setCurrentInputs(listInputs2);
-    } else {
-      // Si on est à la fin, soumettre le formulaire
-      onSubmit(updatedFormData);
     }
   };
-
+  
   return (
     <form className="flex flex-col space-y-4 justify-center items-center" 
       onSubmit={handleSubmit} 
@@ -100,12 +155,12 @@ export const ModalForm: React.FC<ModalFormProps> = ({
           case 'autocomplete':
             return (
               <AutoCompleteInput
-                key={index}
+                key={input.name}
                 name={input.name.toLowerCase()}
                 label={input.label.toLowerCase()}
-                {...(input.value && { value: input.value })}
+                value={input.value || []}
                 options={input.optionsTags ?? []}
-                onInputChange={(name, value) => handleTagChange(name, value)}
+                onInputChange={handleTagChange}
               />
             );
           case 'select':
@@ -114,15 +169,17 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 key={index}
                 name={input.name.toLowerCase()}
                 label={input.label.toLowerCase()}
-                {...(input.value && { value: input.value })}
+                value={input.value || ''}
                 options={input.options ?? []}
                 icon={input.icon}
-                onValueChange={(name, value) => console.log(`${name}: ${value}`)}
+                onValueChange={(name, value) => handleInputChange(name, value)}
               />
             );
           case 'file':
             return (
               <FileInput
+                key={index}
+                id={index}
                 value={input.value}
                 onFileChange={handleFileChange}
               />
@@ -134,6 +191,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 <CustomSwitch
                   name={input.name.toLowerCase()}
                   checked={input.value}
+                  onChange={(event) => handleInputChange(input.name.toLowerCase(), event.target.checked)}
                 />
               </div>
             );
@@ -146,10 +204,10 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 label={input.label.toLowerCase()}
                 required={input.required ?? false}
                 type={input.type}
-                value={input.value || ''}
+                value={formData[input.name.toLowerCase()] || ''}
                 step={input.step}
                 disabled={input.disabled ?? false}
-                onInputChange={(name, value) => console.log(`${name}: ${value}`)}
+                onInputChange={(name, value) => handleInputChange(name, value)}
               />
             );
         }

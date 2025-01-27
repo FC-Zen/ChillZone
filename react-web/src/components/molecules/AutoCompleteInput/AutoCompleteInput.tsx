@@ -6,9 +6,9 @@ import { colors } from "@theme";
 
 export type InputProps = {
   name: string;
-  value?: { tag_id: number; tag_label: string }[];
+  value?: { id: number; label: string }[];
   label: string;
-  options: { tag_id: number; tag_label: string }[];
+  options: { id: number; label: string }[];
   onInputChange?: (name: string, value: any) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 };
@@ -22,9 +22,9 @@ export const AutoCompleteInput = ({
   onKeyDown,
 }: InputProps) => {
 
-  const [selectedValues, setSelectedValues] = useState<{ tag_id: number; tag_label: string }[]>(value);
+  const [selectedValues, setSelectedValues] = useState<{ id: number; label: string }[]>(value);
 
-  const handleChange = (event: any, newValue: { tag_id: number; tag_label: string }[]) => {
+  const handleChange = (event: any, newValue: { id: number; label: string }[]) => {
     setSelectedValues(newValue);
     if (onInputChange) {
       onInputChange(name, newValue);
@@ -37,7 +37,7 @@ export const AutoCompleteInput = ({
       <Autocomplete
         multiple
         options={options}
-        getOptionLabel={(option) => option.tag_label}
+        getOptionLabel={(option) => option.label}
         value={selectedValues}
         onChange={handleChange}
         isOptionEqualToValue={(option, value) => option === value}

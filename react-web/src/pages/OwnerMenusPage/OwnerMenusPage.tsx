@@ -1,65 +1,93 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { OwnerMenusTemplate } from '@components/templates';
 import { useUser } from '@hooks';
 import { useTranslation } from 'react-i18next';
-import menus from '@assets/data/menus.json';
 import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
+import { fetchMenus } from '@services/OwnerServices';
+
+export type MenuItem = {
+  id: number;
+  name: string;
+  description: string;
+  photo: string;
+  price: number;
+  type_category: {
+    main: { id: number; label: string }[];
+    drink: { id: number; label: string }[];
+    side: { id: number; label: string }[];
+    other: { id: number; label: string }[];
+    starter: { id: number; label: string }[];
+    dessert: { id: number; label: string }[];
+  };
+};
+
+export type AvailableOptions = {
+  main: { id: number; label: string }[];
+  drink: { id: number; label: string }[];
+  side: { id: number; label: string }[];
+  other: { id: number; label: string }[];
+  starter: { id: number; label: string }[];
+  dessert: { id: number; label: string }[];
+};
+
 
 export const OwnerMenusPage: React.FC = () => {
   const { user } = useUser();
   const { t } = useTranslation();
 
-  const [selectedMenu, setSelectedMenu] = useState(null);
-  const [menusData, setMenusData] = useState(menus);
+  const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null);
+  const [menusData, setMenusData] = useState<MenuItem[]>([]);
+  const [availableOptions, setAvailableOptions] = useState<AvailableOptions | null>(null);
   const [openModal, setOpenModal] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (menusData.length === 0) {
+        const res = await fetchMenus();
+        setMenusData(res.data.menu);
+        setAvailableOptions(res.data.available_options);
+      }
+    };
+  
+    fetchData();
+  }, [menusData]);
 
   const listInputs = [
       {
-        name: "menu_name",
+        name: "name",
         label: t('fields.common.last_name'),
         type: "text",
         icon: "Browser",
+        value: selectedMenu?.name,
         required: true,
       },
       {
-        name: "menu_description",
+        name: "description",
         label: t('fields.common.description'),
         type: "text",
         icon: "Browser",
+        value: selectedMenu?.description,
         required: true,
       },
       {
-        name: "menu_price",
+        name: "price",
         label: t('fields.common.price'),
         type: "text", // SELECT 
         icon: "Box",
         required: true,
+        value: selectedMenu?.price,
+        disabled: false,
       },
       {
         name: "meal_photo",
         label: t('fields.common.file'),
         type: "file",
         icon: "Box",
+        value: selectedMenu?.photo,
         required: true,
       },
   ] as InputField[];
-
-
-  const mealTags = [
-    { tag_id: 1, tag_label: "Vegan" },
-    { tag_id: 2, tag_label: "Vegetarian" },
-    { tag_id: 3, tag_label: "Gluten-Free" },
-    { tag_id: 4, tag_label: "Dairy-Free" },
-    { tag_id: 5, tag_label: "Spicy" },
-    { tag_id: 6, tag_label: "Low-Carb" },
-    { tag_id: 7, tag_label: "High-Protein" },
-    { tag_id: 8, tag_label: "Organic" },
-    { tag_id: 9, tag_label: "Halal" },
-    { tag_id: 10, tag_label: "Kosher" },
-    { tag_id: 11, tag_label: "Seafood" }
-  ];  
-
 
   const listInputs2 = [
     {
@@ -67,15 +95,18 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Starter'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: mealTags,
+      optionsTags: availableOptions?.starter ?? [],
+      value: selectedMenu?.type_category.starter,
       required: true,
+      disabled: false,
     },
     {
       name: "Main",
       label: t('categories.Main'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: mealTags,
+      optionsTags: availableOptions?.main ?? [],
+      value: selectedMenu?.type_category.main,
       required: true,
     },
     {
@@ -83,7 +114,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Drink'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: mealTags,
+      optionsTags: availableOptions?.drink ?? [],
+      value: selectedMenu?.type_category.drink,
       required: true,
     },
     {
@@ -91,7 +123,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Dessert'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: mealTags,
+      optionsTags: availableOptions?.dessert ?? [],
+      value: selectedMenu?.type_category.dessert,
       required: true,
     },
     {
@@ -99,7 +132,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Side'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: mealTags,
+      optionsTags: availableOptions?.side ?? [],
+      value: selectedMenu?.type_category.side,
       required: true,
     },
     {
@@ -107,7 +141,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Other'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: mealTags,
+      optionsTags: availableOptions?.other ?? [],
+      value: selectedMenu?.type_category.other,
       required: true,
     },
 ] as InputField[];
@@ -125,13 +160,18 @@ export const OwnerMenusPage: React.FC = () => {
   };
 
   const handleCloseModal = () => {
-    setOpenModal(null);
     setSelectedMenu(null);
+    setOpenModal(null);
+
   };
 
   const handleUpdateMeal = (id: number) => {
-    console.log(`Updating meal with ID: ${id}`);
-    setOpenModal('editMenu');
+    const menuToView = menusData.find((x) => x.id === id);
+    if (menuToView) {
+      console.log(menuToView);
+      setSelectedMenu(menuToView);
+      handleOpenModal('editMenu');
+    }
   };
 
   return (

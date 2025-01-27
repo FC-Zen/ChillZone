@@ -20,7 +20,7 @@ from decouple import config
 from django.conf import settings
 from django.conf.urls.static import static
 
-from chillzone.views import admin_boards, home, notification, reservation, user, faq, network
+from chillzone.views import admin_boards, home, notification, reservation, user, faq, network, owner_boards
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
@@ -59,6 +59,7 @@ urlpatterns = [
     path('admin-network/', network.AdminNetworkView.as_view(), name='Admin List / Create / Update / Delete Network'),
 
     # ----------------------- Owner ------------------------ #
+    path('owner-menus/', owner_boards.OwnerMenuView.as_view(), name='Admin'),
 
 
     # Endpoint pour le schéma OpenAPI JSON
