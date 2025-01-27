@@ -1,5 +1,6 @@
 import axios from 'axios';
 import menus from '@assets/data/menus.json';
+import { getCSRFToken } from '@utils';
 
 /**
  * Récupère la liste des commandes depuis l'API.
@@ -72,7 +73,7 @@ export const fetchMeals = async () => {
  */
 export const fetchMenus = async () => {
   try {
-/*     const response = await axios.get('http://localhost:3000/owner-menus/', 
+      const response = await axios.get('http://localhost:3000/owner-menus/', 
       { 
           withCredentials: true,
           headers: {
@@ -81,9 +82,8 @@ export const fetchMenus = async () => {
       } 
       );
       if (response.status == 200) {
-          return response.data;
-      } */
-    return { data : menus };
+          return response;
+      }
   } catch (error: any) {
     console.error('Erreur lors de la récupération des commandes:', error.message);
     throw new Error(error.message);

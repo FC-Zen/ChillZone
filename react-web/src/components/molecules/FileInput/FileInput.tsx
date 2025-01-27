@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Button, Input } from '@mui/material';
 import { Icon } from '@components/atoms';
 import { colors } from '@theme';
 
 type FileInputProps = {
   onFileChange: (file: File) => void;
-  value : string;
-  id : number;
-}
+  value: string;
+  id: number;
+};
 
 export const FileInput: React.FC<FileInputProps> = ({ 
   onFileChange,
   value,
   id
-  }) => {
-
+}) => {
   const [fileName, setFileName] = useState('');
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);  // Référence à l'élément input
 
   useEffect(() => {
     if (value) {
@@ -43,24 +43,31 @@ export const FileInput: React.FC<FileInputProps> = ({
       reader.readAsDataURL(file);
     }
   };
-  
+
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Déclenche manuellement l'événement de clic sur input
+    }
+  };
 
   return (
-    <div style={{
-      borderRadius: '10px',
-      width:"100%",
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'hidden',
-      alignItems: 'center',
-      color: 'rgba(0, 0, 0, 1)',
-      textAlign: 'center',
-      letterSpacing: '-0.3px',
-      justifyContent: 'center',
-      padding: '10px 30px',
-      font: '500 10px/20px Montserrat, -apple-system, Roboto, Helvetica, sans-serif',
-      border: '2px solid rgba(187, 187, 187, 1)'
-    }}>
+    <div
+      style={{
+        borderRadius: '10px',
+        width: "100%",
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        alignItems: 'center',
+        color: 'rgba(0, 0, 0, 1)',
+        textAlign: 'center',
+        letterSpacing: '-0.3px',
+        justifyContent: 'center',
+        padding: '10px 30px',
+        font: '500 10px/20px Montserrat, -apple-system, Roboto, Helvetica, sans-serif',
+        border: '2px solid rgba(187, 187, 187, 1)'
+      }}
+    >
       {filePreview ? (
         <img
           loading="lazy"
@@ -83,14 +90,14 @@ export const FileInput: React.FC<FileInputProps> = ({
       </div>
 
       <Input
-        id={String(id)}
-        key={id}
+        ref={fileInputRef}
+        id={`file-upload-${id}`}  // Assurez-vous que l'id est unique
         type="file"
         inputProps={{ accept: 'image/*' }}
         onChange={handleFileChange}
-        style={{ display: 'none' }}
+        style={{ display: 'none' }} // Masquer l'input
       />
-      <label htmlFor="file-upload">
+      <label htmlFor={`file-upload-${id}`}>
         <Button
           variant="outlined"
           component="span"
@@ -99,6 +106,7 @@ export const FileInput: React.FC<FileInputProps> = ({
             padding: '0px 20px',
             color: colors.aquaDeep,
           }}
+          onClick={triggerFileInput} // Ajouter l'événement de clic pour déclencher l'input
         >
           Télécharger un fichier
         </Button>

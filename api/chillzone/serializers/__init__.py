@@ -18,7 +18,7 @@ from .log import LogSerializer
 from .map import MapSerializer
 from .map_floor import MapFloorSerializer, AdminMapFloorSerializer
 from .meal import MealSerializer
-from .menu import CategorySerializer, TypeWithCategoriesSerializer, MenuWithTypesSerializer
+from .menu import MenuWithOptionsSerializer
 from .navigate import NavigateSerializer
 from .network import NetworkSerializer, AdminNetworkSerializer
 from .notification import NotificationSerializer

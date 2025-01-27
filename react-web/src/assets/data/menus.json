@@ -78,59 +78,16 @@
             }
         }
     ],
-        "available_options": {
-            "main": [
-                { "id": 1, "label": "Burger" },
-                { "id": 2, "label": "Pizzas" },
-                { "id": 3, "label": "Pastabox" },
-                { "id": 4, "label": "Sandwich" },
-                { "id": 5, "label": "Burgers" },
-                { "id": 6, "label": "Wraps" },
-                { "id": 7, "label": "Tacos" },
-                { "id": 8, "label": "Salade repas" }
-            ],
-            "drink": [
-                { "id": 9, "label": "Boissons Sodas" },
-                { "id": 10, "label": "Boissons fraîches" },
-                { "id": 11, "label": "Smoothies" },
-                { "id": 12, "label": "Sodas" },
-                { "id": 13, "label": "Jus de fruits" },
-                { "id": 14, "label": "Café" },
-                { "id": 15, "label": "Thé glacé" }
-            ],
-            "side": [
-                { "id": 16, "label": "Frites" },
-                { "id": 17, "label": "Chips" },
-                { "id": 18, "label": "Salade" },
-                { "id": 19, "label": "Légumes grillés" },
-                { "id": 20, "label": "Riz" },
-                { "id": 21, "label": "Purée" },
-                { "id": 22, "label": "Pain" }
-            ],
-            "other": [
-                { "id": 23, "label": "Sauces" },
-                { "id": 24, "label": "Condiments" },
-                { "id": 25, "label": "Extras" },
-                { "id": 26, "label": "Snacks" }
-            ],
-            "starter": [
-                { "id": 27, "label": "Salade" },
-                { "id": 28, "label": "Pain" },
-                { "id": 29, "label": "Soupe" },
-                { "id": 30, "label": "Bruschetta" },
-                { "id": 31, "label": "Tapenade" },
-                { "id": 32, "label": "Tartare de légumes" }
-            ],
-            "dessert": [
-                { "id": 33, "label": "Bonbons" },
-                { "id": 34, "label": "Patisserie" },
-                { "id": 35, "label": "Fruits" },
-                { "id": 36, "label": "Glace" },
-                { "id": 37, "label": "Mousse au chocolat" },
-                { "id": 38, "label": "Tarte" },
-                { "id": 39, "label": "Yaourt" }
-            ]
-        }
-    }
+        "available_options": [
+            { "id": 1, "label": "Burger" },
+            { "id": 2, "label": "Pizzas" },
+            { "id": 3, "label": "Pastabox" },
+            { "id": 4, "label": "Sandwich" },
+            { "id": 5, "label": "Burgers" },
+            { "id": 6, "label": "Wraps" },
+            { "id": 7, "label": "Tacos" },
+            { "id": 8, "label": "Salade repas" }
+        ]
+}
     
     

@@ -20,9 +20,9 @@ type MenuDataTableProps = {
     id: number;
     name: string;
     description: string;
-    photo: string;
+    photo_link: string;
     price: number;
-    type_category: {
+    types: {
       main: { id: number; label: string }[];
       drink: { id: number; label: string }[];
       side: { id: number; label: string }[];
@@ -64,18 +64,19 @@ export const MenuDataTable = ({ addMenuBtn, handleClickMenu, data }: MenuDataTab
       headerName: t('tables.headers.menu.activeTypes'),
       flex: 2,
       renderCell: (params: any) => {
-        // Récupérer les catégories actives (dont la liste n'est pas vide)
-        const activeTypes = Object.entries(params.row.type_category || {})
-          .filter(([_, items]) => Array.isArray(items) && items.length > 0)
+        const activeTypes = Object.entries(params.row.types || {})
+          .filter(([key, items]) => {
+            //console.log(key, items); 
+            return Array.isArray(items) && items.length > 0; 
+          })
           .map(([key, items]) => ({
-            category_id: key, 
-            category_label: (key.charAt(0).toUpperCase() + key.slice(1).toLowerCase()), // Utiliser le nom de la catégorie comme label
+            id: key, 
+            label: (key.charAt(0).toUpperCase() + key.slice(1).toLowerCase()),
           }));
-    
         return (
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', gap: '5px' }}>
             {activeTypes.map((type) => (
-              <Chip key={type.category_id} label={t(`categories.${type.category_label}`)} />
+              <Chip key={type.id} label={t(`categories.${type.label}`)} />
             ))}
           </div>
         );
