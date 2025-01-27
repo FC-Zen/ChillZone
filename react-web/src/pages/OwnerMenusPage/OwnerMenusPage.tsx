@@ -10,9 +10,9 @@ export type MenuItem = {
   id: number;
   name: string;
   description: string;
-  photo: string;
+  photo_link: string;
   price: number;
-  type_category: {
+  types: {
     main: { id: number; label: string }[];
     drink: { id: number; label: string }[];
     side: { id: number; label: string }[];
@@ -22,15 +22,6 @@ export type MenuItem = {
   };
 };
 
-export type AvailableOptions = {
-  main: { id: number; label: string }[];
-  drink: { id: number; label: string }[];
-  side: { id: number; label: string }[];
-  other: { id: number; label: string }[];
-  starter: { id: number; label: string }[];
-  dessert: { id: number; label: string }[];
-};
-
 
 export const OwnerMenusPage: React.FC = () => {
   const { user } = useUser();
@@ -38,18 +29,17 @@ export const OwnerMenusPage: React.FC = () => {
 
   const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null);
   const [menusData, setMenusData] = useState<MenuItem[]>([]);
-  const [availableOptions, setAvailableOptions] = useState<AvailableOptions | null>(null);
+  const [availableOptions, setAvailableOptions] = useState<{id : number , label : string}[] | null>(null);
   const [openModal, setOpenModal] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       if (menusData.length === 0) {
         const res = await fetchMenus();
-        setMenusData(res.data.menu);
-        setAvailableOptions(res.data.available_options);
+        setMenusData(res?.data.menus);
+        setAvailableOptions(res?.data.available_options);
       }
     };
-  
     fetchData();
   }, [menusData]);
 
@@ -80,11 +70,11 @@ export const OwnerMenusPage: React.FC = () => {
         disabled: false,
       },
       {
-        name: "meal_photo",
+        name: "photo_link",
         label: t('fields.common.file'),
         type: "file",
         icon: "Box",
-        value: selectedMenu?.photo,
+        value: selectedMenu?.photo_link,
         required: true,
       },
   ] as InputField[];
@@ -95,8 +85,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Starter'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: availableOptions?.starter ?? [],
-      value: selectedMenu?.type_category.starter,
+      optionsTags: availableOptions ?? [],
+      value: selectedMenu?.types.starter,
       required: true,
       disabled: false,
     },
@@ -105,8 +95,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Main'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: availableOptions?.main ?? [],
-      value: selectedMenu?.type_category.main,
+      optionsTags: availableOptions ?? [],
+      value: selectedMenu?.types.main,
       required: true,
     },
     {
@@ -114,8 +104,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Drink'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: availableOptions?.drink ?? [],
-      value: selectedMenu?.type_category.drink,
+      optionsTags: availableOptions ?? [],
+      value: selectedMenu?.types.drink,
       required: true,
     },
     {
@@ -123,8 +113,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Dessert'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: availableOptions?.dessert ?? [],
-      value: selectedMenu?.type_category.dessert,
+      optionsTags: availableOptions ?? [],
+      value: selectedMenu?.types.dessert,
       required: true,
     },
     {
@@ -132,8 +122,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Side'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: availableOptions?.side ?? [],
-      value: selectedMenu?.type_category.side,
+      optionsTags: availableOptions ?? [],
+      value: selectedMenu?.types.side,
       required: true,
     },
     {
@@ -141,8 +131,8 @@ export const OwnerMenusPage: React.FC = () => {
       label: t('categories.Other'),
       type: "autocomplete",
       icon: "Box",
-      optionsTags: availableOptions?.other ?? [],
-      value: selectedMenu?.type_category.other,
+      optionsTags: availableOptions ?? [],
+      value: selectedMenu?.types.other,
       required: true,
     },
 ] as InputField[];

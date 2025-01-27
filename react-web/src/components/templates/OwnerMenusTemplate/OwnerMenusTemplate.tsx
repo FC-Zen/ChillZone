@@ -11,9 +11,9 @@ type OwnerMenusLayoutProps = {
     id: number;
     name: string;
     description: string;
-    photo: string;
+    photo_link: string;
     price: number;
-    type_category: {
+    types: {
       main: { id: number; label: string }[];
       drink: { id: number; label: string }[];
       side: { id: number; label: string }[];

@@ -62,22 +62,16 @@ export const ModalForm: React.FC<ModalFormProps> = ({
   }, [listInputs, listInputs2]);
 
   const handleTagChange = (name: string, value: { id: number; label: string }[]) => {
-    // Mettre à jour formData avec seulement les IDs des objets
     setSelectedTags(value);
     setFormData(prev => ({
       ...prev,
-      [name]: value.map(tag => tag.id),  // Extraire seulement les IDs des tags
+      [name]: value.map(tag => ({ id: tag.id, label: tag.label })) 
     }));
-  
-    console.log(formData);  // Vérifier l'état mis à jour
+    console.log(formData);
   };
-  
+
   const handleFileChange = (file: File) => {
     setFile(file);
-    setFormData(prev => ({
-      ...prev,
-      photo_link: file,
-    }));
   };
 
   const handleInputChange = (name: string, value: any) => {
@@ -107,6 +101,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
   
     // Si un fichier est sélectionné, on l'ajoute également
     if (file) {
+      updatedFormData.delete('photo_link');
       updatedFormData.append('photo_link', file);
     }
   
