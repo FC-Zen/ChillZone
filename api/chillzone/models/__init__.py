@@ -1,7 +1,6 @@
 #import pour éviter les importations circulaire lors du chargements des models
 from .type import Type
 from .category import Category
-from .type_category import TypeCategory
 from .restauration_place import RestaurationPlace
 from .menu import Menu
 from .establishment import Establishment

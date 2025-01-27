@@ -17,19 +17,19 @@ type MenuDataTableProps = {
   addMenuBtn: () => void;
   handleClickMenu: (id: number) => void;
   data: {
-    menu_id: number;
-    menu_name: string;
-    menu_description: string;
-    menu_price: number;
-    menu_photo: string;
-    categories: { category_id: number; category_label: string }[];
-    meals: {
-      meal_id: number;
-      meal_name: string;
-      meal_description: string;
-      meal_price: number;
-      meal_photo: string;
-    }[];
+    id: number;
+    name: string;
+    description: string;
+    photo: string;
+    price: number;
+    type_category: {
+      main: { id: number; label: string }[];
+      drink: { id: number; label: string }[];
+      side: { id: number; label: string }[];
+      other: { id: number; label: string }[];
+      starter: { id: number; label: string }[];
+      dessert: { id: number; label: string }[];
+    };
   }[];
 };
 
@@ -55,30 +55,57 @@ export const MenuDataTable = ({ addMenuBtn, handleClickMenu, data }: MenuDataTab
   const { t } = useTranslation();
 
   const columns: GridColDef[] = [
-    { field: 'menu_id', headerName: 'ID', flex: 0.5 },
-    { field: 'menu_name', headerName: t('tables.headers.menu.name'), flex: 1 },
-    { field: 'menu_description', headerName: t('tables.headers.menu.description'), flex: 2 },
-    { field: 'menu_price', headerName: t('tables.headers.menu.price'), flex: 0.5 },
-    { field: 'menu_photo', headerName: t('tables.headers.menu.activeTypes'), flex: 2 },
+    { field: 'id', headerName: 'ID', flex: 0.5 },
+    { field: 'name', headerName: t('tables.headers.menu.name'), flex: 1 },
+    { field: 'description', headerName: t('tables.headers.menu.description'), flex: 2 },
+    { field: 'price', headerName: t('tables.headers.menu.price'), flex: 0.5 },
     {
-      field: 'categories',
+      field: 'actives_types',
+      headerName: t('tables.headers.menu.activeTypes'),
+      flex: 2,
+      renderCell: (params: any) => {
+        // Récupérer les catégories actives (dont la liste n'est pas vide)
+        const activeTypes = Object.entries(params.row.type_category || {})
+          .filter(([_, items]) => Array.isArray(items) && items.length > 0)
+          .map(([key, items]) => ({
+            category_id: key, 
+            category_label: (key.charAt(0).toUpperCase() + key.slice(1).toLowerCase()), // Utiliser le nom de la catégorie comme label
+          }));
+    
+        return (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', gap: '5px' }}>
+            {activeTypes.map((type) => (
+              <Chip key={type.category_id} label={t(`categories.${type.category_label}`)} />
+            ))}
+          </div>
+        );
+      },
+    },
+    /*     {
+      field: 'type_category',
       headerName: t('tables.headers.menu.activeCategories'),
       flex: 2,
-      renderCell: (params: any) => (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', gap : "5px" }}>
-          {params.value.map((category: { category_id: number; category_label: string }) => (
-            <Chip key={category.category_id} label={category.category_label} />
-          ))}
-        </div>
-      ),
-    },
+      renderCell: (params: any) => {
+        const categoryLabels = Object.entries(params.row.type_category || {})
+          .filter(([_, items]) => Array.isArray(items) && items.length > 0)  // Filtrer les catégories non vides
+          .flatMap(([_, items]) => items.map((item: { label: string }) => item.label)); // Extraire les labels des items
+    
+        return (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', gap: '5px' }}>
+            {categoryLabels.map((label, index) => (
+              <Chip key={index} label={label} />
+            ))}
+          </div>
+        );
+      },
+    }, */
     {
       field: 'editMenu',
       headerName: t('tables.headers.room.modify'),
-      flex: 0.5,
+      flex: 0.4,
       sortable: false,
       renderCell: (params: any) => (
-        <IconButton color="primary" onClick={() => handleClickMenu(params.row.menu_id)}>
+        <IconButton color="primary" onClick={() => handleClickMenu(params.row.id)}>
           <Icon name="Pencil" />
         </IconButton>
       ),
@@ -88,7 +115,7 @@ export const MenuDataTable = ({ addMenuBtn, handleClickMenu, data }: MenuDataTab
   return (
     <div style={{ height: 700, width: '100%' }}>
       <DataGrid
-        rows={data.map((menu) => ({ ...menu, id: menu.menu_id }))}
+        rows={data}
         columns={columns}
         slots={{
           toolbar: () => <CustomToolbar onActionClick={addMenuBtn} />,

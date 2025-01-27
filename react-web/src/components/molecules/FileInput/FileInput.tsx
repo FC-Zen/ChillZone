@@ -6,11 +6,13 @@ import { colors } from '@theme';
 type FileInputProps = {
   onFileChange: (file: File) => void;
   value : string;
+  id : number;
 }
 
 export const FileInput: React.FC<FileInputProps> = ({ 
   onFileChange,
-  value
+  value,
+  id
   }) => {
 
   const [fileName, setFileName] = useState('');
@@ -81,11 +83,12 @@ export const FileInput: React.FC<FileInputProps> = ({
       </div>
 
       <Input
+        id={String(id)}
+        key={id}
         type="file"
         inputProps={{ accept: 'image/*' }}
         onChange={handleFileChange}
         style={{ display: 'none' }}
-        id="file-upload"
       />
       <label htmlFor="file-upload">
         <Button

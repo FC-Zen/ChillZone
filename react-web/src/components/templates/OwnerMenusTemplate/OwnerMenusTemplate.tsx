@@ -7,7 +7,21 @@ import { MenuDataTable } from "@components/organisms/DataTables/MenusDataTable";
 type OwnerMenusLayoutProps = {
   user : User | null;
   part: string;
-  data: any;
+  data: {
+    id: number;
+    name: string;
+    description: string;
+    photo: string;
+    price: number;
+    type_category: {
+      main: { id: number; label: string }[];
+      drink: { id: number; label: string }[];
+      side: { id: number; label: string }[];
+      other: { id: number; label: string }[];
+      starter: { id: number; label: string }[];
+      dessert: { id: number; label: string }[];
+    };
+  }[];
   addMenuBtn: () => void;
   handleClickMenu : (id: number) => void;
 };
