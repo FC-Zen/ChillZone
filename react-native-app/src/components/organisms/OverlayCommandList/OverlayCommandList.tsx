@@ -5,12 +5,12 @@ import { IconWithText } from '@components';
 import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
-import { FormattedReservation } from '@services';
+import { FormattedCommand } from '@services';
 import { CommandOverlay } from '@components/molecules';
 
 export type OverlayCommandListProps = {
-  todaysReservations: FormattedReservation[];
-  pastReservations: FormattedReservation[];
+  todaysReservations: FormattedCommand[];
+  pastReservations: FormattedCommand[];
   onCancelReservation?: (index: number) => void;
 };
 
@@ -37,7 +37,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
 
           {/* Liste des réservations d'aujourd'hui */}
           {todaysReservations.map((reservation, index) => (
-            <View key={reservation.reservation_id} style={styles.reservationContainer}>
+            <View key={reservation.command_id} style={styles.reservationContainer}>
               <CommandOverlay
                 data={reservation}
               />

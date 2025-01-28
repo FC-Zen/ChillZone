@@ -1,26 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { Button } from '../Button';
 import { styles } from './style';
-import { map } from '@assets/Images';
 import { colors, typography } from '@theme';
-import { FormattedReservation } from '@services';
+import { FormattedCommand } from '@services';
 import { IconWithText } from '../IconWithText';
 import { useTranslation } from 'react-i18next';
 
 type CommandOverlayProps = {
-  data: FormattedReservation;
+  data: FormattedCommand;
 };
 
 export const CommandOverlay: React.FC<CommandOverlayProps> = ({
   data,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [QRcodePath, setQRcodePath] = useState<string | null>(null);
   const { t } = useTranslation();
 
   const toggleOverlay = () => {
     setIsExpanded(!isExpanded);
   };
+
+  useEffect(() => {
+    setQRcodePath(data.qrcode_link.replace("~/","@/"))
+  },[])
+
+  console.log("QRcodePath : ", QRcodePath)
 
   return (
     <TouchableOpacity onPress={toggleOverlay} style={styles.container}>
@@ -30,7 +35,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
             <IconWithText
               icon="Cube"
               variant="horizontal"
-              text={data.location.location_name}
+              text={`N°${data.command_id.toString()}`}
               iconColor={colors.resolutionBlue}
               iconWidth={16}
               iconHeight={16}
@@ -42,7 +47,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
               <IconWithText
                 icon="Calendar"
                 variant="horizontal"
-                text={data.day_reservation}
+                text={data.creation_date}
                 iconColor={colors.resolutionBlue}
                 iconWidth={16}
                 iconHeight={16}
@@ -56,7 +61,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
               <IconWithText
                 icon="Clock"
                 variant="horizontal"
-                text={`${data.start_time}-${data.end_time}`}
+                text={`${data.pickup_time}-${data.final_pickup_time}`}
                 iconColor={colors.resolutionBlue}
                 iconWidth={16}
                 iconHeight={16}
@@ -78,20 +83,21 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
             <IconWithText
               icon="Cube"
               variant="horizontal"
-              text={data.location.location_name}
+              text={`N°${data.command_id.toString()}`}
               iconColor={colors.resolutionBlue}
               iconWidth={16}
               iconHeight={16}
               textColor={colors.resolutionBlue}
               style={styles.previewText}
             />
-            <Image source={map} style={styles.image} />
+
+            {QRcodePath && <Image source={require('@/assets/data/Images_test/qrcode.png')} style={styles.image} />}
 
             <View style={styles.detailsContainer}>
               <IconWithText
                 icon="Calendar"
                 variant="horizontal"
-                text={data.day_reservation}
+                text={data.creation_date}
                 iconColor={colors.resolutionBlue}
                 iconWidth={16}
                 iconHeight={16}
@@ -101,7 +107,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
               <IconWithText
                 icon="Clock"
                 variant="horizontal"
-                text={`${data.start_time}-${data.end_time}`}
+                text={`${data.pickup_time}-${data.final_pickup_time}`}
                 iconColor={colors.resolutionBlue}
                 iconWidth={16}
                 iconHeight={16}
@@ -111,7 +117,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
               <IconWithText
                 icon="Marker"
                 variant="horizontal"
-                text={data.establishment.establishment_name}
+                text={data.restauration_place_name}
                 iconColor={colors.resolutionBlue}
                 iconWidth={16}
                 iconHeight={16}
@@ -120,9 +126,9 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
               />
 
               <IconWithText
-                icon="HomeLocation"
+                icon="Money"
                 variant="horizontal"
-                text={data.location.floor_name}
+                text={`${data.total_amount.toString()} €`}
                 iconColor={colors.resolutionBlue}
                 iconWidth={16}
                 iconHeight={16}

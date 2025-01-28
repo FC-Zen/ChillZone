@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   headerRow: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     width: '100%',
     height: 'auto',
