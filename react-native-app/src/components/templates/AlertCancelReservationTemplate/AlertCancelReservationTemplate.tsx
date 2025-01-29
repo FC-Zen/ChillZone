@@ -17,7 +17,6 @@ export const AlertCancelReservationTemplate: FC<
   AlertCancelReservationProps
 > = ({ word, button1Props, onClose }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -25,7 +24,6 @@ export const AlertCancelReservationTemplate: FC<
         title={t('headers.cancelReservation')}
         variant="back"
         onBackPress={() => {
-          navigation.goBack();
           if (onClose) onClose();
         }}
         colorTitle={colors.white}

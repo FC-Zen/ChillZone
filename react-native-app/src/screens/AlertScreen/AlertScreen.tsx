@@ -173,7 +173,10 @@ export const AlertScreen = () => {
           }}
           comment={comment}
           setComment={setComment}
-          onClose={() => setShowAlertHour(true)}
+          onClose={() => {
+            setShowReportingForm(false);
+            setShowAlertHour(true);
+          }}
           onConflictPress={handleCancelPress}
         />
       )}
