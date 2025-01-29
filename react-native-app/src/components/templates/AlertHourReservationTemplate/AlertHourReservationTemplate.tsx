@@ -1,18 +1,24 @@
 import React, { FC } from 'react';
 import { View, Text } from 'react-native';
-import { Button, ButtonProps, PageHeader } from '@components/molecules';
+import {
+  Button,
+  ButtonProps,
+  IconWithText,
+  PageHeader,
+} from '@components/molecules';
 import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import LottieView from 'lottie-react-native';
+import { NavItem } from '@components/molecules/BookingInfo';
 
 export type AlertHourReservationTemplateProps = {
-  timeSlot: string;
-  location: string;
-  address: string;
-  floor: string;
+  timeSlot: NavItem;
+  location: NavItem;
+  duration: NavItem;
+  floor: NavItem;
   button1Props: ButtonProps;
   button2Props: ButtonProps;
   button3Props: ButtonProps;
@@ -23,7 +29,7 @@ export const AlertHourReservationTemplate: FC<
 > = ({
   timeSlot,
   location,
-  address,
+  duration,
   floor,
   button1Props,
   button2Props,
@@ -43,7 +49,13 @@ export const AlertHourReservationTemplate: FC<
       />
 
       <View style={styles.cont2}>
-        <Text style={styles.timeSlot}>{timeSlot}</Text>
+        <IconWithText
+          icon={timeSlot.icon}
+          text={timeSlot.label}
+          variant={'horizontal'}
+          textStyle={styles.timeSlot}
+          iconColor={colors.white}
+        />
 
         <View style={styles.iconContainer}>
           <LottieView
@@ -54,9 +66,33 @@ export const AlertHourReservationTemplate: FC<
           />
         </View>
 
-        <Text style={styles.location}>{location}</Text>
-        <Text style={styles.address}>{address}</Text>
-        <Text style={styles.floor}>{floor}</Text>
+        <IconWithText
+          icon={location.icon}
+          text={location.label}
+          variant={'horizontal'}
+          textStyle={styles.location}
+          iconColor={colors.white}
+          iconWidth={16}
+          iconHeight={16}
+        />
+        <IconWithText
+          icon={duration.icon}
+          text={'Durée : ' + duration.label} // à revoir
+          variant={'horizontal'}
+          textStyle={styles.duration}
+          iconColor={colors.white}
+          iconWidth={16}
+          iconHeight={16}
+        />
+        <IconWithText
+          icon={floor.icon}
+          text={floor.label}
+          variant={'horizontal'}
+          textStyle={styles.floor}
+          iconColor={colors.white}
+          iconWidth={16}
+          iconHeight={16}
+        />
 
         <View style={styles.buttonContainer}>
           <Button

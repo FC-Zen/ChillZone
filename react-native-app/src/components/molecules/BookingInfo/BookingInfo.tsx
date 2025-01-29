@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 export type NavItem = {
   icon: IconProps['name'];
   label: string;
+  typeLabel?: string;
 };
 
 type BookingInfoProps = {

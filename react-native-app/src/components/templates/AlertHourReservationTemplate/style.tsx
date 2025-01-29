@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontSize: typography.h2.fontSize,
     fontFamily: typography.h2.fontFamily,
-    marginBottom: 30,
+    paddingVertical: 10,
   },
   iconContainer: {
     borderRadius: 40,
@@ -38,17 +38,17 @@ export const styles = StyleSheet.create({
   location: {
     color: colors.white,
     fontSize: typography.h3.fontSize,
-    marginBottom: 5,
+    paddingVertical: 10,
   },
-  address: {
+  duration: {
     color: colors.white,
     fontSize: typography.h3.fontSize,
-    marginBottom: 5,
+    paddingVertical: 10,
   },
   floor: {
     color: colors.white,
     fontSize: typography.h3.fontSize,
-    marginBottom: 30,
+    paddingVertical: 10,
   },
   buttonContainer: {
     width: '100%',
