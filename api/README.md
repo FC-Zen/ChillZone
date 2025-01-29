@@ -42,28 +42,43 @@ pip install -r requirements.txt
 Si vous n'avez pas de fichier `requirements.txt`, vous pouvez installer les dépendances manuellement :
 
 ```bash
-pip install Django django-debug-toolbar django-filter djangorestframework Markdown mysqlclient pillow python-decouple
+pip install Django django-debug-toolbar django-filter djangorestframework Markdown mysqlclient pillow python-decouple drf-spectacular django-cors-headers qrcode
 ```
 
 Une fois executé si vous faites la commande `pip list` vous devriez obtenir quelque chose du style :
 
 ```bash
-Package              Version
--------------------- -------
-Django               5.1.4
-django-debug-toolbar 4.4.6
-django-filter        24.3
-djangorestframework  3.15.2
-Markdown             3.7
-mysqlclient          2.2.6
-pillow               11.0.0
-pip                  24.0
-python-decouple      3.8
-sqlparse             0.5.2
+Package                   Version
+------------------------- ---------
+asgiref                   3.8.1
+attrs                     25.1.0
+colorama                  0.4.6
+Django                    5.1.5
+django-cors-headers       4.6.0
+django-debug-toolbar      5.0.1
+django-filter             24.3
+djangorestframework       3.15.2
+drf-spectacular           0.28.0
+inflection                0.5.1
+jsonschema                4.23.0
+jsonschema-specifications 2024.10.1
+Markdown                  3.7
+mysqlclient               2.2.7
+pillow                    11.1.0
+pip                       25.0
+python-decouple           3.8
+PyYAML                    6.0.2
+qrcode                    8.0
+referencing               0.36.2
+rpds-py                   0.22.3
+sqlparse                  0.5.3
+typing_extensions         4.12.2
+tzdata                    2025.1
+uritemplate               4.1.1
 ```
 
 <div style="background-color: #e7f3fe; border-left: 4px solid #2196f3; padding: 10px; margin: 10px 0; border-radius: 5px; font-family: Arial, sans-serif; color: #0c5460;">
-    &nbsp;&nbsp;ℹ️&nbsp;&nbsp; Il se peut que vous ayez d'autres dépendances comme <strong><code style="color: #004085;">tzdata</code></strong> ou <strong><code style="color: #004085;">asgiref</code></strong> mais le principal est que vous ayez ceux écrit au dessus.
+    &nbsp;&nbsp;ℹ️&nbsp;&nbsp; Il se peut que vous ayez d'autres dépendances comme mais le principal est que vous ayez ceux écrit au dessus.
 </div>
 
 <br>
