@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission
 from django.contrib.auth.models import User
 from chillzone.models import RestaurationPlace, Menu, Meal, Type, Category, Associate, LineContent, Command, CommandLine, CommandComposition, WorkIn, Tag
-from chillzone.serializers import MenuWithOptionsSerializer, TagSerializer, MealSerializer, CategorySerializer
+from chillzone.serializers import MenuWithOptionsSerializer, TagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer
 
 class IsOwner(BasePermission):
     """
@@ -68,3 +68,57 @@ class OwnerMealView(APIView):
             "available_categories": categories_serializer.data,
             "available_tags": tags_serializer.data
         }, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        user = request.user
+
+        try:
+            work_in = WorkIn.objects.get(user=user)
+            restaurant = work_in.restaurant
+        except WorkIn.DoesNotExist:
+            return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = CreateMealSerializer(data=request.data)
+        if serializer.is_valid():
+            meal = serializer.save(restaurant=restaurant)
+            return self.get(request)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        user = request.user
+        try:
+            work_in = WorkIn.objects.get(user=user)
+            restaurant = work_in.restaurant
+        except WorkIn.DoesNotExist:
+            return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = UpdateMealSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        id = serializer.validated_data["id"]
+
+        try:
+            meal = Meal.objects.get(id=id, restaurant=restaurant)
+        except Meal.DoesNotExist:
+            return Response({"error": "Meal not found or does not belong to your restaurant."}, status=status.HTTP_404_NOT_FOUND)
+        
+        fields_to_update = ["name", "description", "photo_link", "price", "stock"]
+        for field in fields_to_update:
+            if field in serializer.validated_data:
+                setattr(meal, field, serializer.validated_data[field])
+
+        if "category" in serializer.validated_data:
+            try:
+                category = Category.objects.filter(id=serializer.validated_data["category"]).first()
+                meal.category = category
+            except Category.DoesNotExist:
+                return Response({"error": "Category not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        if "tags" in serializer.validated_data:
+            meal.tag.set(Tag.objects.filter(id__in=serializer.validated_data["tags"]))
+
+        meal.save()
+
+        return self.get(request)
