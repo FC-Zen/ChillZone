@@ -44,43 +44,41 @@ export const ModalForm: React.FC<ModalFormProps> = ({
   useEffect(() => {
     const initialData: Record<string, any> = {};
     const combinedInputs = [...listInputs, ...(listInputs2 || [])];
-
+  
     combinedInputs.forEach(input => {
       if (input.type === 'select') {
         initialData[input.name.toLowerCase()] = input.options?.find(option => option.id === input.value || option.name === input.value || option.label === input.value)?.id || '';
       } else if (input.type === 'autocomplete' && Array.isArray(input.value)) {
-        // For autocomplete, store selected tags as objects
-        initialData[input.name.toLowerCase()] = input.value.reduce((acc: { [key: string]: { id: number; label: string } }, tag: OptionTag) => {
-          acc[tag.id] = tag;
-          return acc;
-        }, {});
+        // Pour autocomplete, stocker uniquement les IDs des tags
+        initialData[input.name.toLowerCase()] = input.value.map((tag: { id: number; label: string }) => tag.id);
       } else {
         initialData[input.name.toLowerCase()] = input.value || '';
       }
     });
     setFormData(initialData);
   }, [listInputs, listInputs2]);
-
+  
   const handleTagChange = (name: string, value: { id: number; label: string }[]) => {
     setSelectedTags(value);
+    // Stocker uniquement les IDs des tags dans formData
     setFormData(prev => ({
       ...prev,
-      [name]: value.map(tag => ({ id: tag.id, label: tag.label })) 
+      [name]: value.map(tag => tag.id), // Transforme en liste d'IDs
     }));
     console.log(formData);
   };
-
+  
   const handleFileChange = (file: File) => {
     setFile(file);
   };
-
+  
   const handleInputChange = (name: string, value: any) => {
     setFormData(prev => ({
       ...prev,
       [name]: value,
     }));
   };
-
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(formData);
@@ -90,7 +88,11 @@ export const ModalForm: React.FC<ModalFormProps> = ({
     combinedInputs.forEach(input => {
       const fieldValue = formData[input.name.toLowerCase()];
   
-      if (fieldValue && typeof fieldValue === 'object') {
+      if (fieldValue && Array.isArray(fieldValue)) {
+        fieldValue.forEach(value => {
+          updatedFormData.append(input.name.toLowerCase(), value); 
+        });
+      } else if (fieldValue && typeof fieldValue === 'object') {
         updatedFormData.append(input.name.toLowerCase(), JSON.stringify(fieldValue));
       } else if (fieldValue !== undefined) {
         updatedFormData.append(input.name.toLowerCase(), fieldValue);
@@ -108,8 +110,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
     console.log("FormData avant soumission : ", Array.from(updatedFormData.entries()));
     onSubmit(updatedFormData);
   };
-
-
+  
 
   const handleNext = () => {
     // Log de formData pour voir son contenu avant la mise à jour

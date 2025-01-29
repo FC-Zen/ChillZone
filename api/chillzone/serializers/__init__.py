@@ -18,7 +18,7 @@ from .log import LogSerializer
 from .map import MapSerializer
 from .map_floor import MapFloorSerializer, AdminMapFloorSerializer
 from .tag import TagSerializer
-from .meal import MealSerializer
+from .meal import MealSerializer, CreateMealSerializer
 from .menu import MenuWithOptionsSerializer
 from .navigate import NavigateSerializer
 from .network import NetworkSerializer, AdminNetworkSerializer
@@ -30,3 +30,4 @@ from .tag_category import TagCategorySerializer
 from .tagging import TaggingSerializer
 from .user import UserCreateSerializer, UserLoginSerializer, UserSerializer, AdminUserSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, SuperAdminUserSerializer, SuperAdminRequestAdminSerializer
 from .work_in import WorkInSerializer, RestaurantRegisterRequestSerializer
+from .meal import UpdateMealSerializer

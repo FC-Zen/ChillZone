@@ -3,11 +3,12 @@ import { OwnerSidebar, Header } from "@components/organisms";
 import "./style.css"; // Importation du fichier CSS
 import { MealsDataTable } from "@components/organisms";
 import { User } from "@hooks";
+import { Meal } from "@pages/OwnerMealsPage/OwnerMealsPage";
 
 type OwnerMealsLayoutProps = {
   user : User | null;
   part: string;
-  data: any;
+  data: Meal[];
   addMealBtn: () => void;
   handleClickMeal : (id: number) => void;
   handleClickQuantity : (id: number) => void;

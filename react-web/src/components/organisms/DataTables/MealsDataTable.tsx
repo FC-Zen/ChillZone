@@ -13,24 +13,13 @@ import './style.css';
 import { Icon } from '@components/atoms/Icons';
 import { useTranslation } from 'react-i18next';
 import { colors } from '@theme';
+import { Meal } from '@pages/OwnerMealsPage/OwnerMealsPage';
 
 type MealsDataTableProps = {
   addMealBtn: () => void;
   handleClickMeal: (id: number) => void;
   handleClickQuantity: (id: number) => void;
-  data: {
-    id : number;
-    meal_name: string;
-    meal_description: string;
-    meal_type: string;
-    meal_photo: string;
-    meal_price: number;
-    meal_stock: number;
-    tags: {
-      tag_id: number;
-      tag_label: string;
-    }[];
-  }[];
+  data: Meal[];
 };
 
 function CustomToolbar({ onActionClick }: { onActionClick: () => void }) {
@@ -68,21 +57,21 @@ export const MealsDataTable = ({
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 0.5 },
-    { field: 'meal_name', headerName: t('tables.headers.product.name'), flex: 1 },
-    { field: 'meal_description', headerName: t('tables.headers.product.description'), flex: 4 },
-    { field: 'meal_type', headerName: t('tables.headers.product.type'), flex: 1 },
-    { field: 'meal_price', headerName: t('tables.headers.product.price'), flex: 0.5 },
-    { field: 'meal_stock', headerName: t('tables.headers.product.quantity'), flex: 0.6 },
+    { field: 'name', headerName: t('tables.headers.product.name'), flex: 1 },
+    { field: 'description', headerName: t('tables.headers.product.description'), flex: 4,  },
+    { field: 'category', headerName: t('tables.headers.product.category'), flex: 1 },
+    { field: 'price', headerName: t('tables.headers.product.price'), flex: 0.5 },
+    { field: 'stock', headerName: t('tables.headers.product.quantity'), flex: 0.6 },
     {
       field: 'tags',
       headerName: t('tables.headers.product.tag'),
       flex: 1.5,
       renderCell: (params: any) => (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', gap : "5px" }}>
-          {params.value.map((tag: { tag_id: number; tag_label: string }) => (
+          {params.value.map((tag: { id: number; label: string }) => (
             <Chip 
-              key={tag.tag_id}
-              label={tag.tag_label}
+              key={tag.id}
+              label={tag.label}
             />
           ))}
         </div>
