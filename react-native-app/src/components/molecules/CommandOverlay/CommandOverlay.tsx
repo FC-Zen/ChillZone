@@ -22,7 +22,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
   };
 
   useEffect(() => {
-    setQRcodePath(data.qrcode_link.replace("~/","@/"))
+    setQRcodePath(data.qrcode_link.replace("~/","@"))
   },[])
 
   console.log("QRcodePath : ", QRcodePath)
@@ -91,7 +91,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
               style={styles.previewText}
             />
 
-            {QRcodePath && <Image source={require('@/assets/data/Images_test/qrcode.png')} style={styles.image} />}
+            {QRcodePath && <Image source={require('@assets/data/Images_test/qrcode.png')} style={styles.image} />}
 
             <View style={styles.detailsContainer}>
               <IconWithText
