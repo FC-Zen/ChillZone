@@ -17,6 +17,7 @@ from .location_reservation import LocationReservationSerializer, AdminLocationRe
 from .log import LogSerializer
 from .map import MapSerializer
 from .map_floor import MapFloorSerializer, AdminMapFloorSerializer
+from .tag import TagSerializer
 from .meal import MealSerializer
 from .menu import MenuWithOptionsSerializer
 from .navigate import NavigateSerializer
@@ -25,7 +26,6 @@ from .notification import NotificationSerializer
 from .notification_center import NotificationCenterSerializer
 from .reservation import ReservationSerializer
 from .restauration_place import OpenRestaurantSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer
-from .tag import AdminAvailableTypeSerializer
 from .tag_category import TagCategorySerializer
 from .tagging import TaggingSerializer
 from .user import UserCreateSerializer, UserLoginSerializer, UserSerializer, AdminUserSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, SuperAdminUserSerializer, SuperAdminRequestAdminSerializer

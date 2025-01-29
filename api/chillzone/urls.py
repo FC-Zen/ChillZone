@@ -62,6 +62,7 @@ urlpatterns = [
 
     # ----------------------- Owner ------------------------ #
     path('owner-menus/', owner_boards.OwnerMenuView.as_view(), name='Admin'),
+    path('owner-meals/', owner_boards.OwnerMealView.as_view(), name='Admin'),
 
 
     # Endpoint pour le schéma OpenAPI JSON
