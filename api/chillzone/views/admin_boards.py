@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.models import User
 from chillzone.services import EmailService
 from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo, Tag, TagCategory, IsLocated
-from chillzone.serializers import AdminCreateLocationSerializer, AdminAvailableTypeSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
+from chillzone.serializers import AdminCreateLocationSerializer, TagSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
 
 import random
 import string
@@ -220,7 +220,7 @@ class AdminLocationView(generics.ListAPIView):
             return Response({"error": "Tag category 'Location' not found."}, status=status.HTTP_404_NOT_FOUND)
 
         tags = Tag.objects.filter(id_tag_category=location_category)
-        serializer = AdminAvailableTypeSerializer(tags, many=True)
+        serializer = TagSerializer(tags, many=True)
 
         return Response({
             "locations": location_serializer.data,

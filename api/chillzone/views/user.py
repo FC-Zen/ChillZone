@@ -1,5 +1,4 @@
-from django.shortcuts import get_object_or_404
-from django.contrib import auth
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -15,60 +14,83 @@ import uuid
 class UserLogin(APIView) :
     serializer_class = UserLoginSerializer
 
-    def post(self, request):
-        if request.user is not None and request.user.is_authenticated:
-            return Response(status=status.HTTP_403_FORBIDDEN)
-        
-        serializer = UserLoginSerializer(data=request.data)
-        if serializer.is_valid():
-            
-            user = auth.authenticate(request, username=serializer.validated_data['login'], password=serializer.validated_data['password'])
+    def get(self, request):
+        if request.user.is_authenticated:
 
-            if user is None :
-                try:
-                    user = get_object_or_404(User, email=serializer.validated_data['login'])
-                except:
-                    pass
+            user_meta = getattr(request.user, 'usermeta', None)
 
-                user = auth.authenticate(request, username=user.username, password=serializer.validated_data['password'])
-
-            if user is not None :
-                auth.login(request, user)
-                user_meta = request.user.usermeta
-                request.session.set_expiry(0)
-                if user.is_superuser :
-                    type = 'superadmin'
-                elif user.is_staff :
-                    type = 'admin'
-                elif user_meta.is_owner :
-                    type = 'owner'
-                else :
-                    type = 'user'
-
-                response_data = {
-                    'first_name': user.first_name,
-                    'last_name': user.last_name,
-                    'email': user.email,
-                    'establishment': user_meta.establishment.name if user_meta and user_meta.establishment else None,
-                    'phone': user_meta.phone if user_meta and user_meta.phone else None,
-                    'photo_link': user_meta.photo_link.url if user_meta and user_meta.photo_link else '/default',
-                    'type': type
-                }
-                
-                res = Response(response_data, status=status.HTTP_200_OK)
-                res.set_cookie('sessionid', request.session.session_key, httponly=False, samesite='Lax', secure=False)  # test sans secure
-                return res
-        
+            if request.user.is_superuser :
+                type = 'superadmin'
+            elif request.user.is_staff :
+                type = 'admin'
+            elif user_meta.is_owner :
+                type = 'owner'
             else :
-                return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
-    
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+                type = 'user'
+            
+            response_data = {
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'email': request.user.email,
+                'establishment': getattr(user_meta.establishment, 'name', None) if user_meta else None,
+                'phone': user_meta.phone if user_meta else None,
+                'photo_link': user_meta.photo_link.url if user_meta and user_meta.photo_link else '/default',
+                'type': type
+            }
+
+            return Response(response_data, status=status.HTTP_202_ACCEPTED)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    def post(self, request):
+        if request.user.is_authenticated:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        serializer = UserLoginSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate(request, username=serializer.validated_data['login'], password=serializer.validated_data['password'])
+        
+        if user is None:
+            user = User.objects.filter(email=serializer.validated_data['login']).first()
+            if user:
+                user = authenticate(request, username=user.username, password=serializer.validated_data['password'])
+
+        if not user:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_403_FORBIDDEN)
+        
+        login(request, user)
+        request.session.set_expiry(0)
+        user_meta = getattr(user, 'usermeta', None)
+
+        if user.is_superuser :
+            type = 'superadmin'
+        elif user.is_staff :
+            type = 'admin'
+        elif user_meta.is_owner :
+            type = 'owner'
+        else :
+            type = 'user'
+        
+        response_data = {
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'establishment': getattr(user_meta.establishment, 'name', None) if user_meta else None,
+            'phone': user_meta.phone if user_meta else None,
+            'photo_link': user_meta.photo_link.url if user_meta and user_meta.photo_link else '/default',
+            'type': type
+        }
+        
+        response = Response(response_data, status=status.HTTP_200_OK)
+        response.set_cookie('sessionid', request.session.session_key, httponly=False, samesite='Lax', secure=False)
+        return response
+
     def delete(self, request):
         if request.user is None or not request.user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        auth.logout(request)
+        logout(request)
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class ChangePasswordView(APIView):

@@ -1,7 +1,12 @@
-View Owner - Menu
+View Owner - Meals
 
 Renvoie (fais un serializer) :
-Un JSON qui renvoie chaque menu appartenant au restaurant dans lequel travaille la personne avec à chaque fois tout les types et les catégories associés par type (si y'a pas de catégorie associé alors on renvoie une liste vide pour le type en question)
+Json qui renvoie : 
+{
+    meals : #tous les plats du restaurants ou travaille le owner (avec tags la catégorie associés)
+    availables_catagories : #toutes les catégories possibles
+    availables_tags : #tous les tags de tag_catégorie Meals (id = 1)
+}
 
 class UserMeta(models.Model):
 
@@ -70,7 +75,7 @@ class RestaurationPlace(models.Model):
     
     modification_date = models.DateTimeField(auto_now=True)
 
-class Menu(models.Model):
+class Meal(models.Model):
 
     name = models.CharField(max_length=254)
 
@@ -78,51 +83,63 @@ class Menu(models.Model):
 
     photo_link = models.ImageField(null=True, blank=True)
 
-    price = models.FloatField()
+    price = models.FloatField(default=0.0)
 
-    creation_date = models.DateTimeField(auto_now_add=True)
+    stock = models.IntegerField(default=0)
 
     modification_date = models.DateTimeField(auto_now=True)
 
+    creation_date = models.DateTimeField(auto_now_add=True)
+
     restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
-
-    meal = models.ManyToManyField('Meal',through='LineContent', related_name='meal')
-
-class Associate(models.Model):
-
-    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
-
-    type = models.ForeignKey(Type, on_delete=models.CASCADE)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['menu', 'type', 'category'], name='unique_menu_type_category'
-            )
-        ]
-
-class Type(models.Model):
-
-    TYPE_CHOICES = [
-        ('starter', 'Starter'),
-        ('main', 'Main'),
-        ('dessert', 'Dessert'),
-        ('side', 'Side'),
-        ('drink', 'Drink'),
-        ('other', 'Other'),
-    ]
-
-    label = models.CharField(max_length=10, choices=TYPE_CHOICES)
-
-    menu = models.ManyToManyField('Menu',through='Associate', related_name='menu_id')
+    tag = models.ManyToManyField('Tag',through='Tagging', related_name='tag')
 
 class Category(models.Model):
     
     label = models.CharField(max_length=50)
 
     description = models.CharField(max_length=254, null=True)
+
+class Tagging(models.Model):
+
+    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['meal', 'tag'], name='unique_meal_tag'
+            )
+        ]
+
+class Tag(models.Model) :
+    
+    label = models.CharField(max_length= 50)
+
+    description = models.TextField(blank=True, null=True)
+
+    id_tag_category = models.ForeignKey(TagCategory, on_delete=models.CASCADE)
+
+class TagCategory(models.Model) :
+    
+    label = models.CharField(max_length= 254)
+
+class OwnerMealView(APIView): #A completer
+    permission_classes = [IsAuthenticated & IsOwner]
+
+    def get(self, request):
+
+        user = request.user
+
+        try:
+            work_in = WorkIn.objects.get(user=user)
+            restaurant = work_in.restaurant
+        except WorkIn.DoesNotExist:
+            return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
 
 Permission :
 être connecté
