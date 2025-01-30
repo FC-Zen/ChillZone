@@ -28,88 +28,46 @@ export const CommandSummaryScreen: React.FC = () => {
   useEffect(() => {
     const fetchReservations = async () => {
       const transformedCommand = await getCommands();
-  
-      // Convert creation_date format
-      const months: { [key: string]: string } = {
-        janvier: '01',
-        février: '02',
-        mars: '03',
-        avril: '04',
-        mai: '05',
-        juin: '06',
-        juillet: '07',
-        août: '08',
-        septembre: '09',
-        octobre: '10',
-        novembre: '11',
-        décembre: '12',
-      };
-  
-      const formattedCommands = transformedCommand.map((reservation) => {
-        const [day, month, year] = reservation.creation_date.split(' ');
-        return {
-          ...reservation,
-          creation_date: `${day}/${months[month.toLowerCase()]}/${year.slice(-2)}`, // Transform date format
-        };
-      });
-  
-      setReservations(formattedCommands);
+      setReservations(transformedCommand);
     };
   
     fetchReservations();
   }, []);
   
 
-  // Group reservations whenever "reservations" state changes
   useEffect(() => {
-    // Helper function to check if a date is today
+    // Vérifie si une date est aujourd'hui
     const isToday = (dateString: string) => {
       const today = new Date();
-      const [day, month, year] = dateString.split(' ');
-      const months: { [key: string]: number } = {
-        janvier: 0,
-        février: 1,
-        mars: 2,
-        avril: 3,
-        mai: 4,
-        juin: 5,
-        juillet: 6,
-        août: 7,
-        septembre: 8,
-        octobre: 9,
-        novembre: 10,
-        décembre: 11
-      };
-
-      const targetDate = new Date(
-        parseInt(year, 10),
-        months[month],
-        parseInt(day, 10)
-      );
-
+      const [day, month, year] = dateString.split('/').map(Number);
+      const targetDate = new Date(year, month - 1, day); // Mois commence à 0 dans JS
+  
       return (
         today.getFullYear() === targetDate.getFullYear() &&
         today.getMonth() === targetDate.getMonth() &&
         today.getDate() === targetDate.getDate()
       );
     };
-
+  
     const groupReservations = (reservations: FormattedCommand[] | null): void => {
       if (!reservations) {
         setTodaysReservations([]);
         setPastReservations([]);
         return;
       }
-    
+  
       const now = new Date();
       const todaysReservations: FormattedCommand[] = [];
       const pastReservations: FormattedCommand[] = [];
-    
+  
       reservations.forEach((reservation) => {
+        const [day, month, year] = reservation.creation_date.split('/').map(Number);
+        const reservationDate = new Date(year, month - 1, day); // Conversion en Date
+  
         const finalPickupTime = new Date(
-          `${reservation.creation_date} ${reservation.final_pickup_time}`
+          `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T${reservation.final_pickup_time}`
         );
-    
+  
         if (isToday(reservation.creation_date)) {
           if (finalPickupTime < now) {
             pastReservations.push(reservation);
@@ -120,12 +78,11 @@ export const CommandSummaryScreen: React.FC = () => {
           pastReservations.push(reservation);
         }
       });
-    
+  
       setTodaysReservations(todaysReservations);
       setPastReservations(pastReservations);
     };
-    
-
+  
     groupReservations(reservations);
   }, [reservations]);
 
@@ -143,10 +100,6 @@ export const CommandSummaryScreen: React.FC = () => {
       });
     }
   };
-
-  console.log("Screen : ", reservations)
-  console.log("Screen - Today : ", todaysReservations)
-  console.log("Screen - Past : ", pastReservations)
 
   return (
     <View style={styles.container}>

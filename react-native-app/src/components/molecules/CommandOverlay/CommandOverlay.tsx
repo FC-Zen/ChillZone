@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from './style';
 import { colors, typography } from '@theme';
 import { FormattedCommand } from '@services';
 import { IconWithText } from '../IconWithText';
-import { useTranslation } from 'react-i18next';
 
 type CommandOverlayProps = {
+  title:string,
   data: FormattedCommand;
 };
 
 export const CommandOverlay: React.FC<CommandOverlayProps> = ({
+  title,
   data,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [QRcodePath, setQRcodePath] = useState<string | null>(null);
-  const { t } = useTranslation();
 
   const toggleOverlay = () => {
     setIsExpanded(!isExpanded);
   };
-
-  useEffect(() => {
-    setQRcodePath(data.qrcode_link.replace("~/","@"))
-  },[])
-
-  console.log("QRcodePath : ", QRcodePath)
 
   return (
     <TouchableOpacity onPress={toggleOverlay} style={styles.container}>
@@ -79,7 +72,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
         {/* ------------------------------------------- Expanded ------------------------------------------ */}
         {isExpanded && (
           <View style={styles.expandedContent}>
-            <Text style={styles.titleText}>{t("recap.commandTitle")}</Text>
+            <Text style={styles.titleText}>{title}</Text>
             <IconWithText
               icon="Cube"
               variant="horizontal"
@@ -91,7 +84,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
               style={styles.previewText}
             />
 
-            {QRcodePath && <Image source={require('@assets/data/Images_test/qrcode.png')} style={styles.image} />}
+            <Image source={require('@assets/data/Images_test/qrcode.png')} style={styles.image} />
 
             <View style={styles.detailsContainer}>
               <IconWithText

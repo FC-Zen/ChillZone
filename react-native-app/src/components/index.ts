@@ -21,6 +21,7 @@ export {
   Button,
   PickupSlot,
   PickupSlotProps,
+  CommandOverlay,
 } from './molecules';
 export {
   Connection,

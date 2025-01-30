@@ -1,12 +1,10 @@
 import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
-import { Overlay } from '@components/molecules/Overlay';
-import { IconWithText } from '@components';
+import { ScrollView, View } from 'react-native';
+import { IconWithText, CommandOverlay } from '@components';
 import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
 import { FormattedCommand } from '@services';
-import { CommandOverlay } from '@components/molecules';
 
 export type OverlayCommandListProps = {
   todaysReservations: FormattedCommand[];
@@ -20,7 +18,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
   onCancelReservation,
 }) => {
   const { t } = useTranslation();
-  console.log(pastReservations);
+  
   return (
     <ScrollView style={styles.container}>
       {/* Titre pour les réservations d'aujourd'hui */}
@@ -39,6 +37,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
           {todaysReservations.map((reservation, index) => (
             <View key={reservation.command_id} style={styles.reservationContainer}>
               <CommandOverlay
+                title={t('recap.previous.commands')}
                 data={reservation}
               />
             </View>
@@ -62,6 +61,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
           {pastReservations.map((reservation, index) => (
             <View key={index} style={styles.reservationContainer}>
               <CommandOverlay
+                title={t('recap.previous.commands')}
                 data={reservation}
               />
             </View>

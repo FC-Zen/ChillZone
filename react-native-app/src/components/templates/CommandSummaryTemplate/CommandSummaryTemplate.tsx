@@ -22,7 +22,7 @@ export const CommandSummaryTemplate: React.FC<
   onCancelReservation,
   onBackPress,
 }) => {
-  console.log("Template: ",pastReservations)
+  
   return (
     <View style={styles.container}>
       <PageHeader
