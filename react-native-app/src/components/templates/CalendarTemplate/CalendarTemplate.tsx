@@ -1,11 +1,10 @@
 import React from 'react';
-import { TouchableOpacityProps, View } from 'react-native';
+import { View } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
 import { styles } from './style';
 import { Button, CalendarCell, CalendarHeader, Select, TopBar } from '@components';
 import 'dayjs/locale/fr';
 import { CalendarEvent } from '@services';
-import { useTranslation } from 'react-i18next';
 import { colors, typography } from '@theme';
 
 export type CalendarTemplateProps = {
