@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
 import { styles } from './style';
-import { BottomNavbar, CalendarHeader, TopBar } from '@components';
-import { colors } from '@theme';
+import { CalendarHeader, TopBar } from '@components';
 import 'dayjs/locale/fr';
 import { CalendarEvent } from '@services';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { styles } from './style';
 
 export type CalendarHeaderProps = {
@@ -28,10 +28,6 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             currentDate.setDate(startOfWeek.getDate() + index); // Calculer chaque jour de la semaine
   
             const isSelected = selectedDate.toDateString() === currentDate.toDateString();
-            console.log("Selected Date : ", selectedDate.toDateString());
-            console.log("currentDate : ", currentDate.toDateString());
-            console.log("isSelected : ", isSelected);
-
   
             return (
               <View
