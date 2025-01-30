@@ -10,3 +10,5 @@ export {Avatar} from './Avatar';
 export { HeaderIcon } from './HeaderIcon';
 export { ButtonIcon } from "./ButtonIcon";
 export { ButtonModal } from "./ButtonModal";
+export { BarGraph } from './BarGraph';
+export { LineGraph } from './LineGraph';
