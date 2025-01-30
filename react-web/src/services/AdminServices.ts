@@ -9,6 +9,27 @@ export type Floor = {
     floor_plan: string;
 }
 
+/* Types specifiques au dashboards admins  */
+export type MonthlyData = {
+    month: number;
+    count: number;
+}
+
+export type DashboardData = {
+    reservations_per_month_current_year: MonthlyData[];
+    reservations_per_month_previous_year: MonthlyData[];
+    connections_per_month_current_year: MonthlyData[];
+    connections_per_month_previous_year: MonthlyData[];
+    users_current_year: number;
+    users_previous_year: number;
+    users_percentage_change: number;
+    reports_current_month: number;
+    reports_previous_month: number;
+    reports_percentage_change: number;
+    available_locations: number;
+    available_restaurants: number;
+}
+
 /**
  * Récupère la liste des utilisateurs depuis l'API.
  *
@@ -32,6 +53,34 @@ export const getAccounts = async () => {
         }
     } catch (error: any) {
         console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+/**
+ * Récupère le JSON concernant les données des dashboards admin pour les graphiques.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getDashboardData = async (): Promise<DashboardData> => {
+    try {
+        const response = await axios.get('http://localhost:3000/admin-dashboard/', {
+            withCredentials: true,
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+            },
+        });
+
+        if (response.status === 200) {
+            const data: DashboardData = response.data;
+            return data; // Retourne un tableau contenant l'objet
+        } else {
+            throw new Error('Erreur lors de la récupération des comptes');
+        }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des données de Dashboards:", error.message);
         throw new Error(error.message);
     }
 };
