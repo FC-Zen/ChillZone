@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AdminHomeLayout } from '@components/templates'; // Layout principal
 import { StatCard } from '@components/molecules'; // Cartes statistiques
 import { AdminDashboardGraphs } from '@components/organisms'; // Composant pour les graphiques
 import AdminCardData from '@assets/fr.json'; // Import des données FR (renommées)
 import AdminCardDataValue from '@assets/data/stat_card_value.json'; // Import des données FR (renommées)
 import { useUser } from '@hooks';
+import { DashboardData, getDashboardData } from '@services/AdminServices';
 
 export const AdminHomePage: React.FC = () => {
   const { user } = useUser();
+  const [dashboardData, setDashboardData] = React.useState<DashboardData | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getDashboardData();
+        setDashboardData(data); // Stocke un tableau de `DashboardData`
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données du dashboard:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
   
   // Section des statistiques
   const statsSection = (
@@ -41,7 +56,7 @@ export const AdminHomePage: React.FC = () => {
   // Section du contenu principal
   const mainContent = (
     <div className="space-y-6">
-      <AdminDashboardGraphs />
+      {dashboardData && <AdminDashboardGraphs data={dashboardData} />}
     </div>
   );
 
