@@ -1,11 +1,18 @@
-// src/components/atoms/Text/Text.test.tsx
 import React from 'react';
 import { render } from '@testing-library/react-native';
 import { Text } from './Text';
 
-test('affiche correctement le texte', () => {
-  const { getByText } = render(<Text>Bonjour</Text>); // Rendre le composant
-  const textElement = getByText('Bonjour'); // Vérifie que le texte est bien dans le rendu
-  expect(textElement).toBeTruthy(); // Vérifie que l'élément existe
+describe('Text Component', () => {
+  it('should render text correctly', () => {
+    const { getByText } = render(<Text>Test Text</Text>);
+    expect(getByText('Test Text')).toBeTruthy();
+  });
+
+  it('should apply custom styles', () => {
+    const customStyle = { color: 'red', fontSize: 20 };
+    const { getByText } = render(<Text style={customStyle}>Styled Text</Text>);
+
+    const textElement = getByText('Styled Text');
+    expect(textElement.props.style).toEqual(customStyle);
+  });
 });
-// No need to implement the expect function as it is already provided by the testing framework
