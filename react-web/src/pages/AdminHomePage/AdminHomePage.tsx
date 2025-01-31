@@ -1,20 +1,45 @@
 import React, { useEffect } from 'react';
 import { AdminHomeLayout } from '@components/templates'; // Layout principal
-import { StatCard } from '@components/molecules'; // Cartes statistiques
-import { AdminDashboardGraphs } from '@components/organisms'; // Composant pour les graphiques
-import AdminCardData from '@assets/fr.json'; // Import des données FR (renommées)
 import { useUser } from '@hooks';
 import { DashboardData, getDashboardData } from '@services/AdminServices';
+import { useTranslation } from 'react-i18next';
+import { StatItem } from '@components/organisms/AdminDashboardStatsCards';
 
 export const AdminHomePage: React.FC = () => {
   const { user } = useUser();
+  const { t } = useTranslation();
   const [dashboardData, setDashboardData] = React.useState<DashboardData | null>(null);
+  const [statsData, setStatsData] = React.useState<StatItem[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getDashboardData();
         setDashboardData(data); // Stocke un tableau de `DashboardData`
+        setStatsData([
+          {
+            icon: 'User',
+            title: t('dashboard.info.users'),
+            value: data.users_current_year ?? 0,
+            trend: { value: data.users_percentage_change ?? 0, isPositive: true, duration: '1 month' },
+          },
+          {
+            icon: 'Flag',
+            title: t('dashboard.info.conflict'),
+            value: data.reports_current_month ?? 0,
+            trend: { value: data.reports_percentage_change ?? 0, isPositive: false, duration: '1 month' },
+          },
+          {
+            icon: 'Cube',
+            title: t('dashboard.info.openRooms'),
+            value: data.available_locations ?? 0,
+          },
+          {
+            icon: 'Dashboard',
+            title: t('dashboard.info.openrestaurants'),
+            value: data.available_restaurants ?? 0,
+          },
+        ]); // Créer les données pour les cartes de statistiques
       } catch (error) {
         console.error("Erreur lors de la récupération des données du dashboard:", error);
       }
@@ -22,60 +47,14 @@ export const AdminHomePage: React.FC = () => {
   
     fetchData();
   }, []);
-  
-  // Section des statistiques
-  const statsSection = (
-    <div className="flex flex-col gap-6">
-      {dashboardData && 
-        <>
-          <StatCard
-            icon='User'
-            title={AdminCardData.dashboard.info.users}
-            value={dashboardData.users_current_year}
-            trend={{ value: dashboardData.users_percentage_change, isPositive: true, duration: '1 month' }}
-          />
-          <StatCard
-            icon='Flag'
-            title={AdminCardData.dashboard.info.conflict}
-            value={dashboardData.reports_current_month}
-            trend={{ value: dashboardData.reports_percentage_change, isPositive: false, duration: '1 month' }}
-          />
-          <StatCard
-            icon='Cube'
-            title={AdminCardData.dashboard.info.openRooms}
-            value={dashboardData.available_locations}
-          />
-          <StatCard
-            icon='Dashboard'
-            title={AdminCardData.dashboard.info.openrestaurants}
-            value={dashboardData.available_restaurants}
-          />
-        </>
-      }
-    </div>
-  );
-
-  // Section du contenu principal
-  const mainContent = (
-    <div className="space-y-6">
-      {dashboardData && <AdminDashboardGraphs data={dashboardData} />}
-    </div>
-  );
-
-  function t(key: string): string {
-    const translations: { [key: string]: string } = {
-      'navbar.home': 'Accueil',
-    };
-    return translations[key] || key;
-  }
 
   // Rendu de la page avec le layout
   return (
     <AdminHomeLayout
       user={user}
       part={t('navbar.home')}
-      statsSection={statsSection}
-      mainContent={mainContent}
+      data={dashboardData}
+      stats={statsData}
     />
   );
 };
