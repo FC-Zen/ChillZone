@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Modal, TouchableOpacity } from 'react-native';
 import { Input } from '@components/molecules';
 import { Icon } from '@components/atoms/Icons';
@@ -6,11 +6,11 @@ import { colors } from '@theme';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@components/molecules';
-import { HelpModal } from '@components/organisms'; // Importez la modale d'aide
 
 export type AdeModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  onOpenHelp: () => void; // Géré par le parent
   adeLink: string;
   setAdeLink: (link: string) => void;
   onSubmit: () => void;
@@ -19,12 +19,12 @@ export type AdeModalProps = {
 export const AdeModal = ({
   isOpen,
   onClose,
+  onOpenHelp,
   adeLink,
   setAdeLink,
   onSubmit,
 }: AdeModalProps) => {
   const { t } = useTranslation();
-  const [isHelpModalOpen, setHelpModalOpen] = useState(false); // État pour ouvrir/fermer la modale d'aide
 
   return (
     <Modal
@@ -42,7 +42,7 @@ export const AdeModal = ({
               variant="icon"
               style={styles.helpButton}
               textColor={colors.aquaDeep}
-              onPress={() => setHelpModalOpen(true)} // Ouvre la modale d'aide
+              onPress={onOpenHelp} // Passé par le parent
             />
           </View>
 
@@ -79,12 +79,6 @@ export const AdeModal = ({
               onPress={onClose}
             />
           </TouchableOpacity>
-
-          {/* Modale d'Aide */}
-          <HelpModal
-            isOpen={isHelpModalOpen}
-            onClose={() => setHelpModalOpen(false)} // Ferme la modale d'aide
-          />
         </View>
       </View>
     </Modal>
