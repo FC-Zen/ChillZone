@@ -28,17 +28,7 @@
   "modals": {
     "pwdChange": "Change my password",
     "infoChange": "Change my information",
-    "mail": "Please insert your email address",
-    "AdeRecover": "Recover my schedule",
-    "AdeLink": "Enter the ADE export link",
-    "AdeHelpTitle": "Link ADE",
-    "AdeLinkPlaceholder": "Export link help",
-    "AdeValidateButton": "Validate",
-    "AdeHelpButton": "Help",
-    "Step1": "Step 1: Go to the ADE and select your training",
-    "Step2": "Step 2: Press the button below:",
-    "Step3": "Step 3: Select the date range then press the “Generate URL” button:",
-    "Note": "Select the ICalendar format carefully"
+    "mail": "Please insert your email address"
   },
 
   "navbar": {

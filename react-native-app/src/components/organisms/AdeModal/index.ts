@@ -1,1 +1,0 @@
-export {AdeModal} from './AdeModal';

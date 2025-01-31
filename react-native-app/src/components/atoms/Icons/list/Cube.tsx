@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, { Path, G, Defs, ClipPath, Rect } from 'react-native-svg';
 import { colors } from '@theme';
 
-const CubeIcon = ({ width = 16, height = 16, color = colors.silver }) => {
+const CubeIcon = ({ width = 24, height = 24, color = colors.silver }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 25 25" fill="none">
       <G id="fi-sr-cube" clipPath="url(#clip0_2083_705)">
