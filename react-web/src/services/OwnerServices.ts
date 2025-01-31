@@ -152,3 +152,54 @@ export const fetchMenus = async () => {
     throw new Error(error.message);
   }
 };
+
+/**
+ * Ajoute une salle en envoyant une requête POST à l'API.
+ *
+ * @param {Object} formData - Les informations de la salle à ajouter.
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Object>} Réponse de l'API.
+ */
+export const addMenu = async (formData: FormData): Promise<any> => {
+  try {
+      const response = await axios.post('http://localhost:3000/owner-menus/', formData, {
+          withCredentials: true,
+          headers: {
+              'Content-Type': 'multipart/form-data',
+              'X-CSRFToken': getCSRFToken(),
+          },
+      });
+      console.log('Réponse de l\'API:', response);
+      return response.data;
+  } catch (error: any) {
+    console.error('Erreur lors de la récupération des repas:', error.message);
+    throw new Error(error.message);
+  }
+};
+
+
+/**
+ * Ajoute une salle en envoyant une requête POST à l'API.
+ *
+ * @param {Object} formData - Les informations de la salle à ajouter.
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Object>} Réponse de l'API.
+ */
+export const updateMenu = async (formData: FormData): Promise<any> => {
+  try {
+      const response = await axios.put('http://localhost:3000/owner-menus/', formData, {
+          withCredentials: true,
+          headers: {
+              'Content-Type': 'multipart/form-data',
+              'X-CSRFToken': getCSRFToken(),
+          },
+      });
+      console.log('Réponse de l\'API:', response);
+      return response.data;
+  } catch (error: any) {
+    console.error('Erreur lors de la récupération des repas:', error.message);
+    throw new Error(error.message);
+  }
+};

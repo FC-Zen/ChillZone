@@ -60,7 +60,7 @@ class UserLogin(APIView) :
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_403_FORBIDDEN)
         
         login(request, user)
-        request.session.set_expiry(0)
+        request.session.set_expiry(None)
         user_meta = getattr(user, 'usermeta', None)
 
         if user.is_superuser :

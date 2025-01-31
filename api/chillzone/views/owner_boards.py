@@ -1,14 +1,16 @@
 from rest_framework import generics
 from rest_framework import status
 from rest_framework.views import APIView
+from django.http import QueryDict
 from django.db.models import Count, Q, F
 from django.utils.timezone import timedelta
 from django.utils import timezone
 from rest_framework.response import Response
+from collections import defaultdict
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission
 from django.contrib.auth.models import User
 from chillzone.models import RestaurationPlace, Menu, Meal, Type, Category, Associate, LineContent, Command, CommandLine, CommandComposition, WorkIn, Tag
-from chillzone.serializers import MenuWithOptionsSerializer, TagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer
+from chillzone.serializers import MenuWithOptionsSerializer, TagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer, CreateMenuSerializer, UpdateMenuSerializer
 
 class IsOwner(BasePermission):
     """
@@ -43,8 +45,84 @@ class OwnerMenuView(APIView):
         }
         return Response(data, status=status.HTTP_200_OK)
     
+    def post(self, request):
+        user = request.user
+
+        try:
+            work_in = WorkIn.objects.get(user=user)
+            restaurant = work_in.restaurant
+        except WorkIn.DoesNotExist:
+            return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = CreateMenuSerializer(data=request.data)
+        if serializer.is_valid():
+            menu = serializer.save(restaurant=restaurant)
+            return self.get(request)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        user = request.user
+
+        try:
+            work_in = WorkIn.objects.get(user=user)
+            restaurant = work_in.restaurant
+        except WorkIn.DoesNotExist:
+            return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = UpdateMenuSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        id = serializer.validated_data["id"]
+
+        try:
+            menu = Menu.objects.get(id=id, restaurant=restaurant)
+        except Menu.DoesNotExist:
+            return Response({"error": "Menu not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        fields_to_update = ["name", "description", "photo_link", "price", "stock"]
+        for field in fields_to_update:
+            if field in serializer.validated_data:
+                setattr(menu, field, serializer.validated_data[field])
+
+        Associate.objects.filter(menu=menu).delete()
+
+        mutable_data = request.data.copy() 
+
+        category_fields = ["starter", "main", "drink", "dessert", "side", "other"]
+        categories_data = {field: mutable_data.pop(field, []) for field in category_fields}
+
+        menu.save()
+
+        for field in category_fields:
+            try:
+                type_obj = Type.objects.get(label=field)
+            except Type.DoesNotExist:
+                continue
+
+            for category_id in categories_data[field]:
+                try:
+                    category_obj = Category.objects.get(id=category_id)
+                    Associate.objects.create(
+                        menu=menu,
+                        type=type_obj,
+                        category=category_obj
+                    )
+                except Category.DoesNotExist:
+                    pass 
+
+        return self.get(request)
+
+    
 class OwnerMealView(APIView):
     permission_classes = [IsAuthenticated & IsOwner]
+
+    def clean_empty_list_fields(self, data):
+        """ Remplace les listes contenant une chaîne vide par une liste vide """
+        if isinstance(data, dict):
+            return {k: [] if v == [''] else v for k, v in data.items()}
+        return data
 
     def get(self, request):
 
@@ -70,19 +148,21 @@ class OwnerMealView(APIView):
         }, status=status.HTTP_200_OK)
 
     def post(self, request):
+    
         user = request.user
-
+        
         try:
             work_in = WorkIn.objects.get(user=user)
             restaurant = work_in.restaurant
         except WorkIn.DoesNotExist:
             return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        cleaned_data = self.clean_empty_list_fields(request.data)
 
-        serializer = CreateMealSerializer(data=request.data)
+        serializer = CreateMealSerializer(data=cleaned_data)
         if serializer.is_valid():
             meal = serializer.save(restaurant=restaurant)
             return self.get(request)
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
@@ -116,6 +196,7 @@ class OwnerMealView(APIView):
             except Category.DoesNotExist:
                 return Response({"error": "Category not found."}, status=status.HTTP_404_NOT_FOUND)
 
+        meal.tag.clear()
         if "tags" in serializer.validated_data:
             meal.tag.set(Tag.objects.filter(id__in=serializer.validated_data["tags"]))
 

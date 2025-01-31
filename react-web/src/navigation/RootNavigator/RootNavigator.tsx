@@ -13,7 +13,8 @@ import {
   SuperAdminPage,
   OwnerOrdersPage,
   OwnerMealsPage,
-  AdminOwnerPage
+  AdminOwnerPage,
+  SuperUsersAdminPage
 } from '@pages';
 import { ROUTE } from '@enums';
 
@@ -38,7 +39,7 @@ export const RootNavigator = () => {
         <Route path={ROUTE.OWNER_ORDERS} element={<OwnerOrdersPage />} />
 
         <Route path={ROUTE.SUPER_ADMIN} element={<SuperAdminPage />} />
-
+        <Route path={ROUTE.SUPER_ADMIN_USERS} element={<SuperUsersAdminPage />} />
       </Routes>
     </Router>
   );

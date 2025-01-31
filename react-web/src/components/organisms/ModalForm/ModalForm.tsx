@@ -81,13 +81,13 @@ export const ModalForm: React.FC<ModalFormProps> = ({
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
+    //console.log(formData);
     const updatedFormData = new FormData();
     const combinedInputs = [...listInputs, ...(listInputs2 || [])];
   
     combinedInputs.forEach(input => {
       const fieldValue = formData[input.name.toLowerCase()];
-  
+      //console.log(input.name, fieldValue, Array.isArray(fieldValue));
       if (fieldValue && Array.isArray(fieldValue)) {
         fieldValue.forEach(value => {
           updatedFormData.append(input.name.toLowerCase(), value); 
@@ -102,10 +102,16 @@ export const ModalForm: React.FC<ModalFormProps> = ({
     });
   
     // Si un fichier est sélectionné, on l'ajoute également
+    updatedFormData.delete('photo_link');
     if (file) {
-      updatedFormData.delete('photo_link');
       updatedFormData.append('photo_link', file);
     }
+
+    ['starter', 'main', 'drink', 'side', 'dessert', 'other'].forEach((key) => {
+      if (updatedFormData.get(key) === '') {
+        updatedFormData.delete(key);
+      }
+    });
   
     console.log("FormData avant soumission : ", Array.from(updatedFormData.entries()));
     onSubmit(updatedFormData);
