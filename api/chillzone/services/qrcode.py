@@ -1,12 +1,14 @@
 class QRCodeService:
     @staticmethod
-    def generate_qr_code(data: str, dirpath: str = "./qrcodes/", filename: str = "qr_code.png") -> str:
+    def generate_qr_code(data: str = "https://example.com", dirpath: str = "../../medial/qrcodes/", filename: str = "qr_code.png", fillcolor: str = "#2E2A85", backcolor: str = None) -> str:
         """
         Génère un QRCode avec un fond transparent et une couleur spécifique.
-        :param data: Les données à encoder dans le QR Code.
-        :param dirpath: Le dossier où enregistrer le fichier QR Code.
-        :param filename: Le nom du fichier QR Code.
-        :return: Le chemin du fichier QR Code généré.
+        :param data: Les données à encoder dans le QR Code (default: "https://example.com").
+        :param dirpath: Le dossier où enregistrer le fichier QR Code (default: "../../medial/qrcodes/").
+        :param filename: Le nom du fichier QR Code (default: "qr_code.png").
+        :param fillcolor: La couleur de remplissage du QRCode (default: "#2E2A85").
+        :param backcolor: La couleur de fond du QRCode (default: None).
+        :return: Le nom du fichier QR Code généré.
         """
         import qrcode
         import os
@@ -22,18 +24,22 @@ class QRCodeService:
         )
         qr.add_data(data)
         qr.make(fit=True)
-        
-        qr_img = qr.make_image(fill_color="#2E2A85", back_color="white").convert("RGBA")
-        
-        datas = qr_img.getdata()
-        new_data = []
-        for item in datas:
-            if item[:3] == (255, 255, 255):
-                new_data.append((255, 255, 255, 0))
-            else:
-                new_data.append(item)
-        
-        qr_img.putdata(new_data)
+
+        if backcolor is None :
+            qr_img = qr.make_image(fill_color=fillcolor, back_color="white").convert("RGBA")
+            
+            datas = qr_img.getdata()
+            new_data = []
+            for item in datas:
+                if item[:3] == (255, 255, 255):
+                    new_data.append((255, 255, 255, 0))
+                else:
+                    new_data.append(item)
+
+            qr_img.putdata(new_data)
+
+        else :
+            qr_img = qr.make_image(fill_color=fillcolor, back_color=backcolor)        
         
         qr_img.save(output_path, format='PNG')
-        return output_path
+        return filename
