@@ -90,9 +90,9 @@ export type NextBookingContextType = {
   updateNextBooking: (booking: NavItem[][]) => void;
 };
 
-export const NextBookingContext = createContext<
-  NextBookingContextType | undefined
->(undefined);
+export const NextBookingContext = createContext<NextBookingContextType | undefined>(
+  undefined
+);
 
 export const NextBookingProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

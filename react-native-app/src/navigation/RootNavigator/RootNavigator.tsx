@@ -30,6 +30,7 @@ import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   CommandProvider,
+  NextBookingContext,
   NextBookingProvider,
   ReservationProvider,
   UserProvider,
