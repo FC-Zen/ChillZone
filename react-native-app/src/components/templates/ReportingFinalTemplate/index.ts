@@ -1,0 +1,1 @@
+export { ReportingFinalFormTemplate } from './ReportingFinalTemplate';

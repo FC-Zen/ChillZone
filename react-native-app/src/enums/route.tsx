@@ -17,4 +17,5 @@ export enum ROUTE {
   MENU_MODAL = 'MenuModal',
   RESERVATION_SUMMARY = 'ReservationSummaryScreen',
   CART = 'CartScreen',
+  ALERT = 'AlertScreen',
 }

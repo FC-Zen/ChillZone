@@ -15,3 +15,7 @@ export { AccountTemplate } from './AccountTemplate';
 export { MenuTemplate } from './MenusTemplate';
 export { ReservationSummaryTemplate } from './ReservationSummaryTemplate';
 export { CartTemplate } from './CartTemplate';
+export { AlertHourReservationTemplate } from './AlertHourReservationTemplate';
+export { AlertCancelReservationTemplate } from './AlertCancelReservationTemplate';
+export { ReportingFormTemplate } from './ReportingFormTemplate';
+export { ReportingFinalFormTemplate } from './ReportingFinalTemplate';

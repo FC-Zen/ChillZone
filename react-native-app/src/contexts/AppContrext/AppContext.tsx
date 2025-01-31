@@ -1,8 +1,14 @@
 import { NavItem } from '@components/molecules/BookingInfo';
 import { ItemProps } from '@components/organisms';
-import { Booking } from '@services/BookingInfoServices';
-import { Room } from '@services/RoomServices';
-import React, { createContext, useContext, useState } from 'react';
+import { ROUTE } from '@enums';
+import { useNavigation } from '@hooks';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 // CONTEXTE POUR LE USER
 
@@ -84,9 +90,9 @@ export type NextBookingContextType = {
   updateNextBooking: (booking: NavItem[][]) => void;
 };
 
-export const NextBookingContext = createContext<NextBookingContextType | undefined>(
-  undefined
-);
+export const NextBookingContext = createContext<
+  NextBookingContextType | undefined
+>(undefined);
 
 export const NextBookingProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -109,6 +115,78 @@ export const useNextBooking = () => {
   const context = useContext(NextBookingContext);
   if (!context) {
     throw new Error('useNextBooking must be used within a NextBookingProvider');
+  }
+  return context;
+};
+
+export type ReservationContextType = {
+  checkReservationTime: () => void;
+};
+
+const ReservationContext = createContext<ReservationContextType | undefined>(
+  undefined
+);
+
+export const ReservationProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const { nextBooking } = useNextBooking();
+  const navigation = useNavigation();
+  const isAlertDisplayed = useRef(false);
+
+  const checkReservationTime = () => {
+    console.log('isAlertDisplayed : ', isAlertDisplayed);
+    console.log('checkReservationTime');
+    if (nextBooking.length === 0) {
+      console.log('no booking');
+      return;
+    }
+    if (isAlertDisplayed.current) {
+      return;
+    }
+    const now = new Date();
+    const nowHours = now.getHours();
+    const nowMinutes = now.getMinutes();
+
+    const bookingTimeString = nextBooking[0]
+      .filter((item) => item.typeLabel === 'timeSlot')[0]
+      .label.split('-')[0]
+      .split('h');
+
+    const [bookingHours, bookingMinutes] = bookingTimeString.map(Number);
+    if (
+      (nowHours === bookingHours &&
+        nowMinutes >= bookingMinutes &&
+        nowMinutes <= bookingMinutes + 20) ||
+      (nowHours === bookingHours + 1 &&
+        nowMinutes <= (bookingMinutes + 20) % 60)
+    ) {
+      console.log('Navigating to Alert Screen');
+      isAlertDisplayed.current = true;
+      navigation.navigate(ROUTE.ALERT);
+    }
+  };
+
+  useEffect(() => {
+    isAlertDisplayed.current = false;
+  }, [nextBooking]);
+
+  useEffect(() => {
+    const interval = setInterval(checkReservationTime, 60000); // Vérifie chaque minute
+    return () => clearInterval(interval);
+  }, [nextBooking]);
+
+  return (
+    <ReservationContext.Provider value={{ checkReservationTime }}>
+      {children}
+    </ReservationContext.Provider>
+  );
+};
+
+export const useReservation = () => {
+  const context = useContext(ReservationContext);
+  if (!context) {
+    throw new Error('useReservation must be used within a ReservationProvider');
   }
   return context;
 };

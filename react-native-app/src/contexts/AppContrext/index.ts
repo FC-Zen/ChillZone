@@ -10,4 +10,7 @@ export {
   NextBookingContextType,
   NextBookingProvider,
   useNextBooking,
+  ReservationContextType,
+  ReservationProvider,
+  useReservation,
 } from './AppContext';

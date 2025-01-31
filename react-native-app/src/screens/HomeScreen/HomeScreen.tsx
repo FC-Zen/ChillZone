@@ -11,17 +11,8 @@ import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
-import { NavItem } from '@components/molecules/BookingInfo';
 
-type HomeScreenProps = {
-  route: {
-    params: {
-      data: NavItem[];
-    };
-  };
-};
-
-export const HomeScreen: React.FC<HomeScreenProps> = () => {
+export const HomeScreen: React.FC = () => {
   const { userName } = useUser();
   let items = [transformBookings()];
   const { t } = useTranslation();
@@ -36,7 +27,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = () => {
   const getNextBooking = () => {
     const nextBooking = items[0];
     return nextBooking;
-  }
+  };
 
   const [snackbar, setSnackbar] = useState<{
     open: boolean;

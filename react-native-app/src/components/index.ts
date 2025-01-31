@@ -35,6 +35,8 @@ export {
   CommandList,
 } from './organisms';
 export {
+  AlertCancelReservationTemplate,
+  AlertHourReservationTemplate,
   ConnectionTemplate,
   DispenserTemplate,
   ForgotMdpTemplate,
@@ -42,6 +44,8 @@ export {
   ResetPasswordTemplate,
   HomeScreenTemplate,
   HomeScreenTemplateProps,
+  ReportingFinalFormTemplate,
+  ReportingFormTemplate,
   RestaurationTemplate,
   PaymentTemplate,
   FinalPaymentTemplate,

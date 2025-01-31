@@ -1,0 +1,1 @@
+export { AlertHourReservationTemplate } from './AlertHourReservationTemplate';

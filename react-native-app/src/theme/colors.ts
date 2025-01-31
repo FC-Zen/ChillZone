@@ -8,4 +8,5 @@ export const colors = {
   white: '#FFFFFF',
   black: '#000000',
   warn: '#EC221F',
+  darkWarn: '#A0120F',
 } as const;

@@ -44,6 +44,7 @@ export const ReservationModal: FC<ReservationModalProps> = ({
       navItems.push({
         icon: 'School',
         label: roomName || room?.name || '',
+        typeLabel: 'roomName',
       });
     }
 
@@ -51,6 +52,7 @@ export const ReservationModal: FC<ReservationModalProps> = ({
       navItems.push({
         icon: 'Calendar',
         label: date[0],
+        typeLabel: 'date',
       });
     }
 
@@ -58,6 +60,7 @@ export const ReservationModal: FC<ReservationModalProps> = ({
       navItems.push({
         icon: 'Clock',
         label: timeSlot[0],
+        typeLabel: 'timeSlot',
       });
     }
 
@@ -65,6 +68,7 @@ export const ReservationModal: FC<ReservationModalProps> = ({
       navItems.push({
         icon: 'Calendar',
         label: duration[0],
+        typeLabel: 'duration',
       });
     }
 
@@ -72,6 +76,7 @@ export const ReservationModal: FC<ReservationModalProps> = ({
       navItems.push({
         icon: 'HomeLocation',
         label: `Etage ${floor || room?.floor}`,
+        typeLabel: 'floor',
       });
     }
 
@@ -79,6 +84,7 @@ export const ReservationModal: FC<ReservationModalProps> = ({
       navItems.push({
         icon: 'List',
         label: `${capacity || room?.capacity} places`,
+        typeLabel: 'capacity',
       });
     }
 
@@ -90,7 +96,6 @@ export const ReservationModal: FC<ReservationModalProps> = ({
     try {
       onClose();
       updateNextBooking([...nextBooking, transformDataToNavItems()]);
-
       navigation.navigate(ROUTE.HOME);
 
       if (roomName || room?.name) {
