@@ -16,6 +16,7 @@ export type AccountTemplateProps = {
   onOpenResetPasswordModal: () => void;
   onOpenEditInfoModal: () => void;
   onNavigateToReservations: () => void;
+  onNavigateToCommand: () => void;
 };
 
 export const AccountTemplate: React.FC<AccountTemplateProps> = ({
@@ -27,6 +28,7 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
   onOpenResetPasswordModal,
   onOpenEditInfoModal,
   onNavigateToReservations,
+  onNavigateToCommand,
 }) => {
   const { t } = useTranslation();
 
@@ -48,6 +50,7 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
         onOpenResetPasswordModal={onOpenResetPasswordModal}
         onOpenEditInfoModal={onOpenEditInfoModal}
         onNavigateToReservations={onNavigateToReservations}
+        onNavigateToCommand={onNavigateToCommand}
       />
     </ScrollView>
   );

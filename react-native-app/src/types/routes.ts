@@ -23,6 +23,7 @@ export type RootStackParamList = {
   [ROUTE.RESERVATION_SUMMARY]: undefined;
   [ROUTE.CART]: undefined;
   [ROUTE.ALERT]: undefined;
+  [ROUTE.COMMAND_SUMMARY]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
@@ -46,6 +47,7 @@ export type RouteParamList = {
   ReservationSummaryScreen: undefined;
   CartScreen: undefined;
   AlertScreen: undefined;
+  CommandSummaryScreen: undefined;
 };
 
 // Typage des propriétés des écrans

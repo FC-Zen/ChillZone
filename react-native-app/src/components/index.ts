@@ -21,6 +21,7 @@ export {
   Button,
   PickupSlot,
   PickupSlotProps,
+  CommandOverlay,
 } from './molecules';
 export {
   Connection,
@@ -54,4 +55,5 @@ export {
   AccountTemplate,
   MenuTemplate,
   CartTemplate,
+  CommandSummaryTemplate,
 } from './templates';

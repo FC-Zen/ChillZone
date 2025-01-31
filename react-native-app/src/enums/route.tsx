@@ -18,4 +18,5 @@ export enum ROUTE {
   RESERVATION_SUMMARY = 'ReservationSummaryScreen',
   CART = 'CartScreen',
   ALERT = 'AlertScreen',
+  COMMAND_SUMMARY = 'CommandSummaryScreen',
 }

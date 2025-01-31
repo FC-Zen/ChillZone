@@ -15,3 +15,4 @@ export { LinksScreen } from './LinksScreen';
 export { ReservationSummaryScreen } from './ReservationSummaryScreen';
 export { CartScreen } from './CartScreen';
 export { AlertScreen } from './AlertScreen';
+export { CommandSummaryScreen } from './CommandSummaryScreen';

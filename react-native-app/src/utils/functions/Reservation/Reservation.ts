@@ -1,3 +1,4 @@
+import { Command, FormattedCommand } from '@services';
 import { FormattedReservation, Reservation } from '@services/Reservation';
 
 /**
@@ -38,3 +39,22 @@ export const formatReservation = (
   end_time: formatTime(reservation.end_time),
   day_reservation: formatDate(reservation.day_reservation),
 });
+
+export const formatCommand = (command: Command): FormattedCommand => {
+  const extractDate = (dateTime: string): string => dateTime.split('T')[0];
+
+  const formatDateToNumeric = (dateString: string): string => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Mois commence à 0
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  return {
+    ...command,
+    pickup_time: formatTime(command.pickup_time),
+    final_pickup_time: formatTime(command.final_pickup_time),
+    creation_date: formatDateToNumeric(extractDate(command.creation_date)), // Format changé ici
+  };
+};

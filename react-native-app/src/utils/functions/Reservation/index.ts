@@ -1,1 +1,1 @@
-export { formatDate, formatReservation, formatTime } from './Reservation';
+export { formatDate, formatReservation, formatTime, formatCommand } from './Reservation';
