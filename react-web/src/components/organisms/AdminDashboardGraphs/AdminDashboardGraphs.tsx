@@ -15,8 +15,18 @@ export const AdminDashboardGraphs: React.FC<AdminDashboardGraphsprops> = ({ data
   const prepareMonthData = (data: Array<{ month: number; count: number }>) => {
     // Mois de l'année en français
     const months = [
-      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+      t('months.january'), 
+      t('months.february'),
+      t('months.march'),
+      t('months.april'), 
+      t('months.may'), 
+      t('months.june'), 
+      t('months.july'), 
+      t('months.august'),
+      t('months.september'), 
+      t('months.october'),  
+      t('months.november'), 
+      t('months.december'),
     ];
   
     // Crée un tableau avec les mois, chaque mois a un count de 0 par défaut
@@ -49,7 +59,7 @@ export const AdminDashboardGraphs: React.FC<AdminDashboardGraphsprops> = ({ data
           data={currentYearReservationCounts}
           previousData={previousYearReservationCounts} 
           xLabels={months} 
-          yAxisLabel={t('dashboard.graph.cnx')}        
+          yAxisLabel={t('dashboard.graph.reservation')}        
         />
       </div>
       <div className="bg-white rounded-lg shadow-md p-6">

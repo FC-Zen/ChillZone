@@ -10,9 +10,8 @@ interface BarGraphProps {
 
 export const BarGraph: React.FC<BarGraphProps> = ({ data, previousData, xLabels, yAxisLabel }) => {
   return (
-    <div className="w-full">
+    <div className="w-full h-[30%]">
       <BarChart
-        height={300}
         series={[
           { data: previousData, label: `${yAxisLabel} (Previous Year)` },
           { data: data, label: `${yAxisLabel} (Current Year)` },
