@@ -4,7 +4,7 @@ import { useUser } from '@hooks';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import { fetchMenus } from '@services/OwnerServices';
+import { addMenu, fetchMenus, updateMenu } from '@services/OwnerServices';
 
 export type MenuItem = {
   id: number;
@@ -63,7 +63,7 @@ export const OwnerMenusPage: React.FC = () => {
       {
         name: "price",
         label: t('fields.common.price'),
-        type: "text", // SELECT 
+        type: "number",
         icon: "Box",
         required: true,
         value: selectedMenu?.price,
@@ -81,7 +81,7 @@ export const OwnerMenusPage: React.FC = () => {
 
   const listInputs2 = [
     {
-      name: "Starters",
+      name: "Starter",
       label: t('categories.Starter'),
       type: "autocomplete",
       icon: "Box",
@@ -141,12 +141,28 @@ export const OwnerMenusPage: React.FC = () => {
     setOpenModal(modalType);
   };
 
-  const handleNextAddModal = () => {
-    setOpenModal('createMenuPart2');
+  const handleNextAddModal = async (formData: FormData) => {
+    try {
+      const res = await addMenu(formData);
+      setMenusData(res.menus);
+      handleCloseModal();
+    } catch (error) {
+      console.error(error);
+    }
+    handleCloseModal();
   };
 
-  const handleNextUpdateModal = () => {
-    setOpenModal('editMenuPart2');
+  const handleNextUpdateModal = async (formData: FormData) => {
+    if (!selectedMenu) return;
+    try {
+      formData.append("id", String(selectedMenu.id));    
+      const res = await updateMenu(formData);
+      setMenusData(res.menus);
+      handleCloseModal();
+    } catch (error) {
+      console.error(error);
+    }
+    handleCloseModal();
   };
 
   const handleCloseModal = () => {
@@ -189,7 +205,7 @@ export const OwnerMenusPage: React.FC = () => {
         isOpen={openModal === 'editMenu'}
         onClose={handleCloseModal}
         title={t('modals.edit.menu')}
-        handleForm={handleNextAddModal}
+        handleForm={handleNextUpdateModal}
         listInputs={listInputs}
         listInputs2={listInputs2}
       />

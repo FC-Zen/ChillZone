@@ -16,6 +16,7 @@ export type RootStackParamList = {
   [ROUTE.ADMIN_OWNERS]: undefined;
   [ROUTE.ADMIN_ESTABLISHMENT]: undefined;
   [ROUTE.OWNER_MENUS]: undefined;
+  [ROUTE.SUPER_ADMIN_USERS]: undefined;
 };
 
 export type RouteParamList = {
@@ -33,6 +34,8 @@ export type RouteParamList = {
   OwnerMeals : undefined;
   AdminOwners : undefined;
   AdminEstablishment : undefined;
+  SuperAdmin : undefined;
+  SuperAdminUsers : undefined;
 };
 
 // Typage des propriétés des écrans

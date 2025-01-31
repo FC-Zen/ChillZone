@@ -19,7 +19,7 @@ from .map import MapSerializer
 from .map_floor import MapFloorSerializer, AdminMapFloorSerializer
 from .tag import TagSerializer
 from .meal import MealSerializer, CreateMealSerializer
-from .menu import MenuWithOptionsSerializer
+from .menu import MenuWithOptionsSerializer, CreateMenuSerializer, UpdateMenuSerializer
 from .navigate import NavigateSerializer
 from .network import NetworkSerializer, AdminNetworkSerializer
 from .notification import NotificationSerializer

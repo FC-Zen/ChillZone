@@ -21,7 +21,7 @@ class CreateMealSerializer(serializers.Serializer):
     stock = serializers.IntegerField()
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
     tags = serializers.ListField(
-        child=serializers.IntegerField(), required=False
+        child=serializers.IntegerField(), required=False, allow_empty=True
     )
 
     def create(self, validated_data):
@@ -40,7 +40,7 @@ class UpdateMealSerializer(serializers.Serializer):
     stock = serializers.IntegerField(required=False)
     category = serializers.IntegerField(required=False)
     tags = serializers.ListField(
-        child=serializers.IntegerField(), required=False
+        child=serializers.IntegerField(allow_null=True, required=False), required=False, allow_empty=True
     )
 
     def validate_category(self, value):
