@@ -6,7 +6,7 @@ import type {Config} from 'jest';
 
 const config: Config = {
   preset: "react-native",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"], // Fichier pour configurer Jest avant les tests
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testMatch: [
     "**/__tests__/**/*.[jt]s?(x)", 
     "**/?(*.)+(spec|test).[tj]s?(x)"

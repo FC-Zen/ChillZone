@@ -1,48 +1,65 @@
 import { StyleSheet } from 'react-native';
-import { colors, layout, typography } from '@theme';
+import { colors, typography } from '@theme';
 
 export const styles = StyleSheet.create({
-  modalBackground: {
-    width: layout.screen.width,
-    height: layout.screen.height,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  overlay: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  modalContent: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: '90%',
+  modal: {
     backgroundColor: colors.resolutionBlue,
-    borderRadius: 20,
-    paddingVertical: 20,
-    gap: 10,
+    borderRadius: 10,
+    padding: 20,
+    width: '90%',
+    maxWidth: 400,
+    alignItems: 'center',
   },
-  header: {
-    width: '100%',
-    paddingBottom: 0,
+  closeIcon: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+  },
+  title: {
+    fontSize: typography.h2.fontSize,
+    fontFamily: typography.h2.fontFamily,
+    color: colors.white,
+    marginBottom: 20,
+    textAlign: 'center',
   },
   stepText: {
-    fontFamily: typography.h2.fontFamily,
     fontSize: typography.h3.fontSize,
+    fontFamily: typography.h2.fontFamily,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginLeft: 50,
     color: colors.white,
-    textAlign: 'center',
-    paddingHorizontal: 20,
-  },
-  image: {
-    width: '90%',
-    maxHeight: 200,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-    paddingVertical: 10,
+    marginBottom: 10,
+    textAlign: 'left',
+    width: '100%',
   },
   finalText: {
+    fontSize: typography.h3.fontSize,
     fontFamily: typography.h3.fontFamily,
-    fontSize: typography.h4.fontSize,
     color: colors.white,
+    marginTop: 20,
     textAlign: 'center',
-    marginTop: 10,
-    fontStyle: 'italic',
+  },
+  image: {
+    width: '70%',
+    height: 150,
+    resizeMode: 'contain',
+    marginVertical: 10,
+  },
+  stepContainer: {
+    flexDirection: 'row', // Aligne le cercle et le texte en ligne
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  indicationText: {
+    fontSize: 16,
+    color: colors.white,
+    flex: 1, // Permet au texte de prendre la place restante
   },
 });
