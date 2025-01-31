@@ -1,37 +1,41 @@
-import { AdminSideBar, Header } from '@components/organisms';
+import { AdminDashboardGraphs, AdminSideBar, Header, AdminDashboardStatsCards } from '@components/organisms';
+import { StatItem } from '@components/organisms/AdminDashboardStatsCards';
 import { User } from '@hooks';
+import { DashboardData } from '@services/AdminServices';
 
 type AdminHomeLayoutProps = {
   user : User | null;
   part: string;
-  statsSection: React.ReactNode;
-  mainContent: React.ReactNode;
+  data: DashboardData | null;
+  stats: StatItem[];
 };
 
 export const AdminHomeLayout: React.FC<AdminHomeLayoutProps> = ({
   user,
   part,
-  statsSection,
-  mainContent,
+  data,
+  stats,
 }) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       <AdminSideBar />
 
-      {/* Contenu principal */}
       <div className="flex-1 flex flex-col">
-        {/* Header */}
         <Header
           user={user}
           part={part}   
         />
-        {/* Conteneur principal */}
+        
         <div className="flex p-6 gap-6">
-          {/* Contenu principal (graphiques, etc.) */}
-          <div className="flex-1 space-y-6">{mainContent}</div>
+          <div className="flex-1 space-y-6">
+            <div className="space-y-6">
+              {data && <AdminDashboardGraphs data={data} />}
+            </div>
+          </div>
 
-          {/* Section des statistiques */}
-          <div className="flex flex-col gap-6">{statsSection}</div>
+          <div className="flex flex-col gap-6">
+            <AdminDashboardStatsCards stats={stats} />
+          </div>
         </div>
       </div>
     </div>
