@@ -45,14 +45,11 @@ export const AdminHomePage: React.FC = () => {
             title={AdminCardData.dashboard.info.openRooms}
             value={dashboardData.available_locations}
           />
-          {/* Card pour le taux d'occupation (à implémenter en données dynamiques)
-          
           <StatCard
             icon='Dashboard'
-            title={AdminCardData.dashboard.info.occupationTime}
-            value={AdminCardDataValue.occupationTimeValue}
-            trend={{ value: 9.9, isPositive: true, duration: '1 month' }}
-          />*/}
+            title={AdminCardData.dashboard.info.openrestaurants}
+            value={dashboardData.available_restaurants}
+          />
         </>
       }
     </div>
