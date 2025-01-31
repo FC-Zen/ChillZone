@@ -13,4 +13,5 @@ export { ModalForm } from './ModalForm';
 export { FloorSelection } from './FloorSelection';
 export {CommandModal} from './CommandModal';
 export {Modal} from './Modal';
+export {AdminDashboardStatsCards} from './AdminDashboardStatsCards';
 
