@@ -130,7 +130,8 @@
     "commands": {
       "stateReady": "Order is ready",
       "stateFinished": "Order has been collected"
-    }
+    },
+    "admin" : "Admin Interface Django"
   },
 
   "navbar": {
@@ -156,6 +157,7 @@
       "first_name": "First name",
       "last_name": "Last name",
       "phone": "Phone",
+      "admin_phone": "Establishment's phone",
       "date": "Date",
       "establishment": "Establishment",
       "label": "Label",
@@ -240,7 +242,8 @@
       "currentcommands": "Latest ongoing orders",
       "restauration_place": "My dining locations",
       "superadminOwners" : "Restaurant registration applications",
-      "superadminAdmins" : "Administrator management board"
+      "superadminAdmins" : "Admins registration applications",
+      "superadminUsers" : "Users management board"
     },
     "headers": {
       "user": {
@@ -251,7 +254,8 @@
         "establishment": "Establishment",
         "reservationCount": "Number of reservations made",
         "blockReservations": "Block reservations",
-        "deleteAccount": "Block Account Access"
+        "deleteAccount": "Block Account Access",
+        "toggleAccount" : "Is the account active ?"
       },
       "room": {
         "name": "Room name",

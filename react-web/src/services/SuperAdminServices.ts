@@ -10,7 +10,7 @@ import { getCSRFToken } from '@utils';
  */
 export const getUsersSuperAdmin = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-restaurants/',  // A MODIF
+        const response = await axios.get('http://localhost:3000/superadmin-users/',  // A MODIF
             { 
                 withCredentials: true,
                 headers: {
@@ -19,7 +19,34 @@ export const getUsersSuperAdmin = async () => {
             } 
             );
             if (response.status == 200) {
-                return response.data;
+                return response;
+            }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des affiliations:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+
+/**
+ * Récupère la liste de TOUTES LES DEMANDES
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des affiliations.
+ */
+export const getRequestsSuperAdmin = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/superadmin-requests/',  // A MODIF
+            { 
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response;
             }
     } catch (error: any) {
         console.error("Erreur lors de la récupération des affiliations:", error.message);
@@ -28,15 +55,21 @@ export const getUsersSuperAdmin = async () => {
 };
 
 /**
- * Récupère la liste des restaurants qui veulent s'inscrire
+ * Change l'utilisateur (accepte ou refuse ou block) bloque le compte
  *
+ * @param {number} id - L'ID de l'utilisateur à mettre à jour.
+ * @param {string} status - Le nouveau statut (Verified ou Blocked).
  * @throws {Error} Si la requête échoue.
  * 
- * @returns {Promise<Array>} Liste des affiliations.
+ * @returns {Promise<Object>} Réponse de l'API.
  */
-export const getOwnerRegistrations = async () => {
+export const toggleAccountActive = async (id: number, is_active: boolean) => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-restaurants/',  // A MODIF
+        const response = await axios.put('http://localhost:3000/superadmin-users/', 
+            {
+                id : id,
+                is_active : is_active
+            },
             { 
                 withCredentials: true,
                 headers: {
@@ -48,33 +81,7 @@ export const getOwnerRegistrations = async () => {
                 return response.data;
             }
     } catch (error: any) {
-        console.error("Erreur lors de la récupération des affiliations:", error.message);
-        throw new Error(error.message);
-    }
-};
-
-/**
- * Change l'utilisateur (accepte ou refuse ou block)
- *
- * @throws {Error} Si la requête échoue.
- * 
- * @returns {Promise<Array>} Liste des affiliations.
- */
-export const manageUser = async () => {
-    try {
-        const response = await axios.put('http://localhost:3000/admin-restaurants/',  // A MODIF
-            { 
-                withCredentials: true,
-                headers: {
-                    'X-CSRFToken': getCSRFToken(),
-                },
-            } 
-            );
-            if (response.status == 200) {
-                return response.data;
-            }
-    } catch (error: any) {
-        console.error("Erreur lors de la récupération des affiliations:", error.message);
+        console.error('Erreur lors de la mise à jour du statut de l\'utilisateur:', error.message);
         throw new Error(error.message);
     }
 };
@@ -86,9 +93,12 @@ export const manageUser = async () => {
  * 
  * @returns {Promise<Array>} Liste des affiliations.
  */
-export const manageOwnerRegistration = async () => {
+export const manageOwnerRegistration = async (id: number) => {
     try {
-        const response = await axios.put('http://localhost:3000/admin-restaurants/',  // A MODIF
+        const response = await axios.put('http://localhost:3000/superadmin-requests/',  // A MODIF
+            {
+                id : id
+            },
             { 
                 withCredentials: true,
                 headers: {
@@ -100,7 +110,35 @@ export const manageOwnerRegistration = async () => {
                 return response.data;
             }
     } catch (error: any) {
-        console.error("Erreur lors de la récupération des affiliations:", error.message);
+        console.error("Erreur lors de la récupération des demandes:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+
+/**
+ * Accepte ou refuse l'inscription
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des affiliations.
+ */
+export const deleteOwnerRegistration = async (id: number) => {
+    try {
+        const response = await axios.delete('http://localhost:3000/superadmin-requests/',  // A MODIF
+            { 
+                data: { id: id },
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des demandes:", error.message);
         throw new Error(error.message);
     }
 };

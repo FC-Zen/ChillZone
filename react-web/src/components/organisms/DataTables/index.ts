@@ -10,3 +10,4 @@ export { OwnersPendingDataTable } from './OwnersPendingDataTable';
 export { DetailsOrdersDataTable } from './DetailsOrdersDataTable';
 export { OwnersRegisterDataTable } from './OwnersRegisterDataTable';
 export { AdminUsersDataTable } from './AdminUsersDataTable';
+export { AdminsRegisterDataTable } from './AdminsRegisterDataTable';

@@ -1,54 +1,69 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
-import owners_registration from '@assets/data/owners_registration.json';
-import admins from '@assets/data/admins.json';
 import { SuperAdminLayout } from '@components/templates/SuperAdminLayout';
+import { deleteOwnerRegistration, getRequestsSuperAdmin, manageOwnerRegistration } from '@services/SuperAdminServices';
+
+export type RegisterRequest = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email : string;
+  phone : string;
+  restaurant_name: string;
+  restaurant_location: string;
+};
+
+export type AdminsRequest = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email : string;
+  role : string;
+  establishment: string;
+  phone: string;
+};
 
 export const SuperAdminPage: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useUser();
   
-  const [ownersRegisterData, setOwnersRegisterData] = useState(owners_registration);
-  const [usersData, setUsersData] = useState(admins);
+  const [ownersRegisterData, setOwnersRegisterData] = useState<RegisterRequest[]>([]);
+  const [adminsRegisterData, setAdminsRegisterData] = useState<AdminsRequest[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getRequestsSuperAdmin();
+      setAdminsRegisterData(res?.data.admin_requests);
+      setOwnersRegisterData(res?.data.register_requests);
+    };
+    fetchData();
+  }, []);
+
 
   // Demandes d'affiliation des lieux de restauration à l’établissement
   // Si on accepte => on ajoute au dessus
-  const handleClickAcceptOwner = (id: number) => {
-    const ownerToAccept = ownersRegisterData.find((owner) => owner.id === id);
-    if (ownerToAccept) {
-      setOwnersRegisterData((prevData) => prevData.filter((owner) => owner.id !== id));
+  const handleClickAcceptOwner = async (id: number) => {
+    try {
+      const res = await manageOwnerRegistration(id);
+      setAdminsRegisterData(res?.admin_requests);
+      setOwnersRegisterData(res?.register_requests);
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du compte:', error);
     }
   };
 
-  // Si on refuse => on delete al ligne
-  const handleClickRefuseOwner = (id: number) => {
-    setOwnersRegisterData((prevData) =>
-      prevData.filter((place) => place.id !== id)
-    );
+  // Si on refuse => on delete la ligne
+  const handleClickRefuseOwner = async (id: number) => {
+    try {
+      const res = await deleteOwnerRegistration(id);
+      setAdminsRegisterData(res?.admin_requests);
+      setOwnersRegisterData(res?.register_requests);
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du compte:', error);
+    }
   };
 
-  const handleClickAcceptAdmin = (id: number) => {
-    setUsersData((prevData) =>
-      prevData.map((user) =>
-        user.id === id ? { ...user, is_verified: true } : user
-      )
-    );
-  };
-
-  // Si on refuse => on delete al ligne
-  const handleClickRefuseAdmin = (id: number) => {
-    setUsersData((prevData) =>
-      prevData.filter((place) => place.id !== id)
-    );
-  };
-
-  // Si on refuse => on delete al ligne
-  const handleClickDeleteAdmin = (id: number) => {
-    setUsersData((prevData) =>
-      prevData.filter((place) => place.id !== id)
-    );
-  };
 
   return (
     <div>
@@ -57,12 +72,9 @@ export const SuperAdminPage: React.FC = () => {
         user={user}
         part={t('headers.home')}
         ownersRegisterData={ownersRegisterData}
-        usersData={usersData}
+        adminsRegisterData={adminsRegisterData}
         handleClickAcceptOwner={handleClickAcceptOwner}
         handleClickRefuseOwner={handleClickRefuseOwner}
-        handleClickAcceptAdmin={handleClickAcceptAdmin}
-        handleClickRefuseAdmin={handleClickRefuseAdmin}
-        handleClickDeleteAdmin={handleClickDeleteAdmin}
       />
     </div>
   );

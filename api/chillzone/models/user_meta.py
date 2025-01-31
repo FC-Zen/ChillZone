@@ -17,7 +17,7 @@ class UserMeta(models.Model):
 
     role = models.CharField(max_length=254, blank=False, default="Etudiant")
 
-    phone = models.CharField(max_length=10, blank=True)
+    phone = models.CharField(max_length=10, blank=True, null=True)
 
     photo_link = models.ImageField(blank=True, default="DefaultProfile.png")
 

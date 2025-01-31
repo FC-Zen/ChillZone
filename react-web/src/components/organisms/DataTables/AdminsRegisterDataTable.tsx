@@ -8,15 +8,14 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@components/atoms';
 import { IconButton } from '@mui/material';
 import { colors } from '@theme';
-import { RegisterRequest } from '@pages/SuperAdminPage/SuperAdminPage';
+import { AdminsRequest } from '@pages/SuperAdminPage/SuperAdminPage';
 
 
-type OwnersRegisterDataTableProps = {
-  data: RegisterRequest[];
+type AdminsRegisterDataTableProps = {
+  data: AdminsRequest[];
   handleClickAccept : (id: number) => void;
   handleClickRefuse : (id: number) => void;
 };
-
 
 function CustomToolbar() {  
   const { t } = useTranslation();
@@ -27,21 +26,21 @@ function CustomToolbar() {
   );
 }
 
-export const OwnersRegisterDataTable = ({
+export const AdminsRegisterDataTable = ({
   data,
   handleClickAccept,
   handleClickRefuse
-}: OwnersRegisterDataTableProps) => {
+}: AdminsRegisterDataTableProps) => {
   const { t } = useTranslation();
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", flex: 0.3 },
     { field: "first_name", headerName: t("fields.common.first_name"), flex: 1 },
     { field: "last_name", headerName: t("fields.common.last_name"), flex: 1 },
-    { field: "email", headerName: t("fields.common.mail"), flex: 1.2 },
-    { field: "phone", headerName: t("fields.common.phone"), flex: 1.2 },
-    { field: "restaurant_name", headerName: t("tables.headers.restaurant.name"), flex: 1.5 },
-    { field: "restaurant_location", headerName: t("tables.headers.restaurant.location"), flex: 1.5 },
+    { field: "email", headerName: t("fields.common.mail"), flex: 1.5 },
+    { field: "role", headerName: t('tables.headers.user.type'), flex: 1.5 },
+    { field: "establishment", headerName: t('tables.headers.user.establishment'), flex: 1.2 },
+    { field: "phone", headerName: t("fields.common.admin_phone"), flex: 1.2 },
     {
       field: "actions",
       headerName: t("tables.headers.owner.acceptAccount"),
