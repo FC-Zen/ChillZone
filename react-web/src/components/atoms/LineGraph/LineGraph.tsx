@@ -10,9 +10,8 @@ interface LineGraphProps {
 
 export const LineGraph: React.FC<LineGraphProps> = ({ data, previousData, xLabels, yAxisLabel }) => {
   return (
-    <div className="w-full">
+    <div className="w-full h-[30%]">
       <LineChart
-      height={300}
         series={[
           { data: previousData, label: `${yAxisLabel} (Previous Year)` },
           { data: data, label: `${yAxisLabel} (Current Year)` },
