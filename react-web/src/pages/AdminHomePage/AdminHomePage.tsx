@@ -27,29 +27,33 @@ export const AdminHomePage: React.FC = () => {
   // Section des statistiques
   const statsSection = (
     <div className="flex flex-col gap-6">
-      <StatCard
-        icon='User'
-        title={AdminCardData.dashboard.info.users}
-        value={AdminCardDataValue.usersValue}
-        trend={{ value: 9.9, isPositive: true, duration: '1 month' }}
-      />
-      <StatCard
-        icon='Flag'
-        title={AdminCardData.dashboard.info.conflict}
-        value={AdminCardDataValue.conflictValue}
-        trend={{ value: 1.2, isPositive: false, duration: '1 month' }}
-      />
-      <StatCard
-        icon='Cube'
-        title={AdminCardData.dashboard.info.openRooms}
-        value={AdminCardDataValue.openRoomsValue}
-      />
-      <StatCard
-        icon='Dashboard'
-        title={AdminCardData.dashboard.info.occupationTime}
-        value={AdminCardDataValue.occupationTimeValue}
-        trend={{ value: 9.9, isPositive: true, duration: '1 month' }}
-      />
+      {dashboardData && 
+        <>
+          <StatCard
+            icon='User'
+            title={AdminCardData.dashboard.info.users}
+            value={dashboardData.users_current_year}
+            trend={{ value: dashboardData.users_percentage_change, isPositive: true, duration: '1 month' }}
+          />
+          <StatCard
+            icon='Flag'
+            title={AdminCardData.dashboard.info.conflict}
+            value={dashboardData.reports_current_month}
+            trend={{ value: dashboardData.reports_percentage_change, isPositive: false, duration: '1 month' }}
+          />
+          <StatCard
+            icon='Cube'
+            title={AdminCardData.dashboard.info.openRooms}
+            value={dashboardData.available_locations}
+          />
+          <StatCard
+            icon='Dashboard'
+            title={AdminCardData.dashboard.info.occupationTime}
+            value={AdminCardDataValue.occupationTimeValue}
+            trend={{ value: 9.9, isPositive: true, duration: '1 month' }}
+          />
+        </>
+      }
     </div>
   );
 
