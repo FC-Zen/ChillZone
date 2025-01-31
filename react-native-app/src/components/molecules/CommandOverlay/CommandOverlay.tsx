@@ -115,7 +115,7 @@ export const CommandOverlay: React.FC<CommandOverlayProps> = ({
                 iconWidth={16}
                 iconHeight={16}
                 textColor={colors.resolutionBlue}
-                style={styles.previewText}
+                style={styles.previewTextRestaurant}
               />
 
               <IconWithText

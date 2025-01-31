@@ -25,7 +25,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
       {todaysReservations.length > 0 && (
         <View>
           <IconWithText
-            icon="BookMark"
+            icon="Hamburger"
             iconColor={colors.resolutionBlue}
             text={t('recap.today.commands')}
             textColor={colors.resolutionBlue}
@@ -49,7 +49,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
       {pastReservations.length > 0 && (
         <View>
           <IconWithText
-            icon="BookMark"
+            icon="Hamburger"
             iconColor={colors.resolutionBlue}
             text={t('recap.previous.commands')}
             textColor={colors.resolutionBlue}

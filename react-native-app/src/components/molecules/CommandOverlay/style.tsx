@@ -48,6 +48,15 @@ export const styles = StyleSheet.create({
     fontSize: typography.h3.fontSize,
     fontFamily: typography.h3.fontFamily,
     marginVertical: 5,
+    paddingHorizontal: 3,
+  },
+  previewTextRestaurant: {
+    color: colors.resolutionBlue,
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h3.fontFamily,
+    marginVertical: 5,
+    width: '70%',
+    paddingHorizontal: 2,
   },
   expandedContent: {
     alignItems: 'center',
@@ -75,6 +84,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 0,
     gap: 10,
+    paddingHorizontal: 5,
   },
   closeButton: {
     backgroundColor: 'transparent',
