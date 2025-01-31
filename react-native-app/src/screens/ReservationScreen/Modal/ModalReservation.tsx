@@ -96,7 +96,6 @@ export const ReservationModal: FC<ReservationModalProps> = ({
     try {
       onClose();
       updateNextBooking([...nextBooking, transformDataToNavItems()]);
-
       navigation.navigate(ROUTE.HOME);
 
       if (roomName || room?.name) {

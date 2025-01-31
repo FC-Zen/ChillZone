@@ -46,37 +46,6 @@ export const AlertScreen = () => {
     setShowReportingForm(false);
   };
 
-  // Création d'une réservation fictive pour tester l'alerte
-  useEffect(() => {
-    if (!isBooked) {
-      console.log('Booking already created');
-      updateNextBooking([
-        [
-          {
-            icon: 'Clock',
-            typeLabel: 'timeSlot',
-            label: '10:00 - 11:00',
-          },
-          {
-            icon: 'School',
-            typeLabel: 'roomName',
-            label: 'Salle 1',
-          },
-          {
-            icon: 'Clock',
-            typeLabel: 'duration',
-            label: '1h',
-          },
-          {
-            icon: 'HomeLocation',
-            typeLabel: 'floor',
-            label: 'RDC',
-          },
-        ],
-      ]);
-    }
-  }, [isBooked, updateNextBooking]);
-
   // Transforme les tableaux de tableaux de NavItem en tableau de BookingInfo
   const transformBooking = (booking: NavItem[][]): BookingInfo[] => {
     const bookingInfo: BookingInfo[] = [];
@@ -118,20 +87,18 @@ export const AlertScreen = () => {
       {showAlertHour && booking && (
         <AlertHourReservationTemplate
           timeSlot={
-            booking.timeSlot || { icon: 'Lock', typeLabel: '', label: 'Test' }
+            booking.timeSlot || { icon: 'Lock', typeLabel: '', label: '' }
           }
           location={
-            booking.location || { icon: 'Lock', typeLabel: '', label: 'Test2' }
+            booking.location || { icon: 'Lock', typeLabel: '', label: '' }
           }
           duration={
-            booking.duration || { icon: 'Lock', typeLabel: '', label: 'Test3' }
+            booking.duration || { icon: 'Lock', typeLabel: '', label: '' }
           }
-          floor={
-            booking.floor || { icon: 'Lock', typeLabel: '', label: 'Test4' }
-          }
+          floor={booking.floor || { icon: 'Lock', typeLabel: '', label: '' }}
           button1Props={{
             title: t('buttons.actions.yesImHere'),
-            onPress: () => alert('Vous avez confirmé votre présence !'),
+            onPress: () => navigation.navigate(ROUTE.HOME),
           }}
           button2Props={{
             title: t('buttons.actions.imCanceling'),

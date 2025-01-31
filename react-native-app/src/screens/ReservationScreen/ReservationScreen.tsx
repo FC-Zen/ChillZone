@@ -46,6 +46,7 @@ export const ReservationScreen = () => {
         date: selectedDate ? [selectedDate] : [],
         duration: selectedDuration ? [selectedDuration] : [],
         timeSlot: selectedTimeSlot ? [selectedTimeSlot] : [],
+        floor: room?.floor?.toString() || 'Étage inconnu',
       };
     } else {
       return {

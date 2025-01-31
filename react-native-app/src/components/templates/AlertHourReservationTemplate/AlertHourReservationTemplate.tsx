@@ -77,7 +77,7 @@ export const AlertHourReservationTemplate: FC<
         />
         <IconWithText
           icon={duration.icon}
-          text={'Durée : ' + duration.label} // à revoir
+          text={duration.label}
           variant={'horizontal'}
           textStyle={styles.duration}
           iconColor={colors.white}

@@ -27,8 +27,8 @@ import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   CommandProvider,
-  NextBookingContext,
   NextBookingProvider,
+  ReservationProvider,
   UserProvider,
 } from '@contexts/AppContrext';
 import { colors } from '@theme';
@@ -72,103 +72,105 @@ export const RootNavigator = () => {
         <CommandProvider>
           <UserProvider>
             <NavigationContainer>
-              <Stack.Navigator>
-                {/* <Stack.Screen
-                  name={ROUTE.LOGIN_SCREEN}
-                  component={LoginScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.FORGOT_PASSWORD}
-                  component={ForgotPasswordScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.FORGOT_MDP}
-                  component={ForgotMdpScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.RESET_PASSWORD}
-                  component={ResetPasswordScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.HOME}
-                  component={HomeScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.NOTIFICATION}
-                  component={NotificationScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.RESTAURATION}
-                  component={RestaurationScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.FAQ}
-                  component={FaqScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.DISPENSER}
-                  component={DispenserScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.DISPENSER_MODAL}
-                  component={DispenserModal}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.MENU_MODAL}
-                  component={MenuModal}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.CART}
-                  component={CartScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.PAYMENT}
-                  component={PaymentScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.FINAL_PAYMENT}
-                  component={FinalPaymentScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.RESERVATION}
-                  component={ReservationScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.ACCOUNT}
-                  component={AccountScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.LINKS}
-                  component={LinksScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name={ROUTE.RESERVATION_SUMMARY}
-                  component={ReservationSummaryScreen}
-                  options={{ headerShown: false }}
-                /> */}
-                <Stack.Screen
-                  name={ROUTE.ALERT}
-                  component={AlertScreen}
-                  options={{ headerShown: false }}
-                />
-              </Stack.Navigator>
+              <ReservationProvider>
+                <Stack.Navigator>
+                  <Stack.Screen
+                    name={ROUTE.LOGIN_SCREEN}
+                    component={LoginScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.FORGOT_PASSWORD}
+                    component={ForgotPasswordScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.FORGOT_MDP}
+                    component={ForgotMdpScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.RESET_PASSWORD}
+                    component={ResetPasswordScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.HOME}
+                    component={HomeScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.NOTIFICATION}
+                    component={NotificationScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.RESTAURATION}
+                    component={RestaurationScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.FAQ}
+                    component={FaqScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.DISPENSER}
+                    component={DispenserScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.DISPENSER_MODAL}
+                    component={DispenserModal}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.MENU_MODAL}
+                    component={MenuModal}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.CART}
+                    component={CartScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.PAYMENT}
+                    component={PaymentScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.FINAL_PAYMENT}
+                    component={FinalPaymentScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.RESERVATION}
+                    component={ReservationScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.ACCOUNT}
+                    component={AccountScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.LINKS}
+                    component={LinksScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.RESERVATION_SUMMARY}
+                    component={ReservationSummaryScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.ALERT}
+                    component={AlertScreen}
+                    options={{ headerShown: false }}
+                  />
+                </Stack.Navigator>
+              </ReservationProvider>
             </NavigationContainer>
           </UserProvider>
         </CommandProvider>
