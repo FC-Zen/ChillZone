@@ -211,7 +211,7 @@
       "users": "Users",
       "conflict": "Reports received",
       "openRooms": "Available rooms / boxes",
-      "occupationTime": "Occupancy rate of boxes/rooms",
+      "openrestaurants": "Available dining locations",
       "mostWantedProduct": "Best-selling product",
       "mostWantedMenu": "Best-selling menu",
       "commandsNow": "Orders to process",
