@@ -20,7 +20,7 @@ from decouple import config
 from django.conf import settings
 from django.conf.urls.static import static
 
-from chillzone.views import admin_boards, home, notification, reservation, user, faq, network, owner_boards
+from chillzone.views import admin_boards, home, notification, reservation, user, faq, network, owner_boards, super_admin_boards
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
@@ -47,6 +47,8 @@ urlpatterns = [
     # ======================== WEB ========================= #
 
     # -------------------- Super Admin --------------------- #
+    path('superadmin-requests/', super_admin_boards.SuperAdminRequestsView.as_view(), name='Super Admin Requests'),
+    path('superadmin-users/', super_admin_boards.SuperAdminUsersView.as_view(), name='Super Admin Users'),
 
     # ----------------------- Admin ------------------------ #
     path('admin-dashboard/', admin_boards.AdminDashboardView.as_view(), name='Admin Dashboard'),

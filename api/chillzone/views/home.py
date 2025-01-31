@@ -23,7 +23,8 @@ class UserDashboardView(APIView):
         open_restaurants = RestaurationPlace.objects.filter(
             linkto__establishment=establishment,
             linkto__status=True,
-            status=True
+            status=True,
+            is_valid=True
         )
         open_restaurants_data = OpenRestaurantSerializer(open_restaurants, many=True).data
 

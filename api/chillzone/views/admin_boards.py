@@ -342,10 +342,10 @@ class AdminRestaurantView(APIView):
     def get(self, request, *args, **kwargs):
         establishment = request.user.usermeta.establishment
         confirmed_restaurants = RestaurationPlace.objects.filter(
-            linkto__establishment=establishment, linkto__status=True
+            linkto__establishment=establishment, linkto__status=True, is_valid=True
         )
         pending_restaurants = RestaurationPlace.objects.filter(
-            linkto__establishment=establishment, linkto__status=False
+            linkto__establishment=establishment, linkto__status=False, is_valid=True
         )
         confirmed_serializer = AdminConfirmedRestaurantSerializer(confirmed_restaurants, many=True)
         pending_serializer = AdminPendingRestaurantSerializer(pending_restaurants, many=True)

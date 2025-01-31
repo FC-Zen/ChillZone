@@ -182,7 +182,8 @@
     "commands": {
       "stateReady": "La commande est prête",
       "stateFinished": "La commande a été récupérée"
-    }
+    },
+    "admin" : "Interface Administrateur Django"
   },
 
   "navbar": {
@@ -208,6 +209,7 @@
       "first_name": "Prénom",
       "last_name": "Nom",
       "phone": "Téléphone",
+      "admin_phone": "Téléphone de l'établissement",
       "date": "Date",
       "establishment": "Etablissement",
       "label": "Libellé",
@@ -292,7 +294,8 @@
       "currentcommands": "Dernières commandes en cours",
       "restauration_place": "Mes lieux de restauration",
       "superadminOwners" : "Demandes d'inscriptions de restaurateur",
-      "superadminAdmins" : "Tableau de gestion des administrateurs"
+      "superadminAdmins" : "Demandes de validation des comptes administrateurs",
+      "superadminUsers" : "Tableau de gestion des utilisateurs"
     },
     "headers": {
       "user": {
@@ -303,7 +306,8 @@
         "establishment": "Etablissement",
         "reservationCount": "Nombre de réservations faites",
         "blockReservations": "Bloquer les réservations",
-        "deleteAccount": "Bloquer l'accès au compte"
+        "deleteAccount": "Bloquer l'accès au compte",
+        "toggleAccount" : "Le compte est actif ?"
       },
       "room": {
         "name": "Nom de la salle",

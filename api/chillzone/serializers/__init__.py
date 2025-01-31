@@ -28,5 +28,5 @@ from .restauration_place import OpenRestaurantSerializer, AdminConfirmedRestaura
 from .tag import AdminAvailableTypeSerializer
 from .tag_category import TagCategorySerializer
 from .tagging import TaggingSerializer
-from .user import UserCreateSerializer, UserLoginSerializer, UserSerializer, AdminUserSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer
-from .work_in import WorkInSerializer
+from .user import UserCreateSerializer, UserLoginSerializer, UserSerializer, AdminUserSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, SuperAdminUserSerializer, SuperAdminRequestAdminSerializer
+from .work_in import WorkInSerializer, RestaurantRegisterRequestSerializer

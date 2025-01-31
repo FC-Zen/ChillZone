@@ -172,3 +172,32 @@ class AdminUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'email', 'role', 'establishment', 'reservation_count', 'is_block', 'is_active']
+        
+class SuperAdminUserSerializer(serializers.ModelSerializer):
+    role = serializers.CharField(source='usermeta.role')
+    establishment = serializers.CharField(source='usermeta.establishment.name', allow_null=True)
+    type = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'type', 'role', 'establishment', 'is_active']
+
+    def get_type(self, obj):
+        #Détermine le type d'utilisateur basé sur ses attributs.
+        if obj.is_superuser:
+            return 'Super-Admin'
+        elif obj.is_staff:
+            return 'Administrateur'
+        elif hasattr(obj, 'usermeta') and getattr(obj.usermeta, 'is_owner', False):
+            return 'Restaurateur'
+        else:
+            return 'Utilisateur'
+        
+class SuperAdminRequestAdminSerializer(serializers.ModelSerializer):
+    role = serializers.CharField(source='usermeta.role')
+    establishment = serializers.CharField(source='usermeta.establishment.name', allow_null=True)
+    phone = serializers.CharField(source='usermeta.establishment.phone', allow_null=True)
+    
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'email', 'role', 'establishment', 'phone']

@@ -149,9 +149,6 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
         value={formData.link_to_establishment}
       />
 
-      <FileInput 
-
-      />
 
 
 

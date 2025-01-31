@@ -1,12 +1,23 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useUser } from '@hooks/UserContext/UserContext';
+import { useEffect } from 'react';
+import { logoutUser } from '@services';
 
 type ProtectedRouteProps = {
     allowedRoles: string[];
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
-    const { user } = useUser();
+    const { user, setUser } = useUser();
+
+    useEffect(() => {
+        const sessionID = document.cookie.split('; ').find(cookie => cookie.startsWith('sessionid='));
+        if (!sessionID) {
+            localStorage.removeItem('user');
+            setUser(null);
+            document.cookie = "csrftoken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        }
+    }, [setUser]);
 
     // Pas connectée => LOGIN
     if (!user) {

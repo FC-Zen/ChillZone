@@ -24,6 +24,8 @@ class RestaurationPlace(models.Model):
     email = models.EmailField()
 
     photo_link = models.ImageField(null=True, blank=True) 
+    
+    is_valid = models.BooleanField(default=False)
 
     creation_date = models.DateTimeField(auto_now_add=True)
     

@@ -15,7 +15,8 @@ import {
   AdminOwnerPage,
   AdminEstablishmentPage,
   SuperAdminPage,
-  OwnerMenusPage
+  OwnerMenusPage,
+  SuperUsersAdminPage
 } from '@pages';
 import { UserProvider } from '@hooks/UserContext/UserContext';
 import { ProtectedRoute } from '@navigation';
@@ -55,6 +56,7 @@ function App() {
 
           <Route element={<ProtectedRoute allowedRoles={['Super-Administrateur']} />}>
             <Route path="/super-admin" element={<SuperAdminPage />} />
+            <Route path="/super-admin-users" element={<SuperUsersAdminPage />} />
           </Route>
         </Routes>
       </Router>
