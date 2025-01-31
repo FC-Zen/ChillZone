@@ -3,7 +3,6 @@ import { AdminHomeLayout } from '@components/templates'; // Layout principal
 import { StatCard } from '@components/molecules'; // Cartes statistiques
 import { AdminDashboardGraphs } from '@components/organisms'; // Composant pour les graphiques
 import AdminCardData from '@assets/fr.json'; // Import des données FR (renommées)
-import AdminCardDataValue from '@assets/data/stat_card_value.json'; // Import des données FR (renommées)
 import { useUser } from '@hooks';
 import { DashboardData, getDashboardData } from '@services/AdminServices';
 
@@ -46,12 +45,14 @@ export const AdminHomePage: React.FC = () => {
             title={AdminCardData.dashboard.info.openRooms}
             value={dashboardData.available_locations}
           />
+          {/* Card pour le taux d'occupation (à implémenter en données dynamiques)
+          
           <StatCard
             icon='Dashboard'
             title={AdminCardData.dashboard.info.occupationTime}
             value={AdminCardDataValue.occupationTimeValue}
             trend={{ value: 9.9, isPositive: true, duration: '1 month' }}
-          />
+          />*/}
         </>
       }
     </div>
