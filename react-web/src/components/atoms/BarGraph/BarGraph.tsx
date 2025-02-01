@@ -10,10 +10,10 @@ interface BarGraphProps {
 
 export const BarGraph: React.FC<BarGraphProps> = ({ data, previousData, xLabels, yAxisLabel }) => {
 
-  const containerHeight = window.innerHeight * 0.3; // 30% de la hauteur de l'écran
+  const containerHeight = window.innerHeight * 0.27; // 30% de la hauteur de l'écran
 
   return (
-    <div className="w-full h-[30%]">
+    <div className="w-full h-[20%]">
       <BarChart
         height={containerHeight}
         series={[
