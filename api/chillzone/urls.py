@@ -45,6 +45,7 @@ urlpatterns = [
     path('network/', network.NetworkView.as_view(), name='Client List Network'),
 
     # ======================== WEB ========================= #
+    path('create-owner-account/', user.OwnerCreateView.as_view(), name='Create account and restaurant for owner'),
 
     # -------------------- Super Admin --------------------- #
     path('superadmin-requests/', super_admin_boards.SuperAdminRequestsView.as_view(), name='Super Admin Requests'),

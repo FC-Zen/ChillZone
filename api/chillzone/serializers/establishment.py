@@ -5,3 +5,8 @@ class AdminEstablishmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Establishment
         fields = ['id', 'name', 'address', 'city', 'postalCode', 'phone', 'mail']
+
+class OwnerEstablishmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Establishment
+        fields = ['id', 'name']
