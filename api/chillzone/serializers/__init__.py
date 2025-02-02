@@ -6,7 +6,7 @@ from .command_composition import CommandCompositionSerializer
 from .command_line import CommandLineSerializer
 from .conflict import ConflictSerializer, AdminConflictSerializer
 from .dashboard import DashboardSerializer
-from .establishment import AdminEstablishmentSerializer
+from .establishment import AdminEstablishmentSerializer, OwnerEstablishmentSerializer
 from .event import EventSerializer
 from .faq import FAQSerializer, AdminFAQSerializer
 from .is_located import IsLocatedSerializer
@@ -28,6 +28,6 @@ from .reservation import ReservationSerializer
 from .restauration_place import OpenRestaurantSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer
 from .tag_category import TagCategorySerializer
 from .tagging import TaggingSerializer
-from .user import UserCreateSerializer, UserLoginSerializer, UserSerializer, AdminUserSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, SuperAdminUserSerializer, SuperAdminRequestAdminSerializer
+from .user import OwnerCreateSerializer, UserCreateSerializer, UserLoginSerializer, UserSerializer, AdminUserSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, SuperAdminUserSerializer, SuperAdminRequestAdminSerializer
 from .work_in import WorkInSerializer, RestaurantRegisterRequestSerializer
 from .meal import UpdateMealSerializer

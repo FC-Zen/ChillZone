@@ -4,6 +4,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.core.validators import RegexValidator
+from chillzone.models import RestaurationPlace, Establishment
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -201,3 +202,63 @@ class SuperAdminRequestAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'email', 'role', 'establishment', 'phone']
+
+class OwnerCreateSerializer(serializers.Serializer):
+    special_characters = string.punctuation
+
+    # Informations utilisateur
+    first_name = serializers.CharField(max_length=150)
+    last_name = serializers.CharField(max_length=150)
+    email = serializers.EmailField()
+    phone = serializers.CharField(max_length=10, required=False, allow_null=True, allow_blank=True)
+    password = serializers.CharField(
+        write_only=True,
+        validators=[
+            RegexValidator(
+                regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[' + re.escape(special_characters) + r'])[A-Za-z\d' + re.escape(special_characters) + r']{12,}$',
+                message='Le mot de passe doit contenir au moins 12 caractères, une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.'
+            )
+        ]
+    )
+
+    password_verified = serializers.CharField(
+        write_only=True,
+        validators=[
+            RegexValidator(
+                regex=r'.+',
+                message='Le mot de passe vérifié ne peut pas être vide.'
+            )
+        ]
+    )
+
+    # Informations restaurant
+    name = serializers.CharField(max_length=254)
+    description = serializers.CharField(required=False, allow_blank=True)
+    location = serializers.CharField(max_length= 254)
+    restauration_type = serializers.ChoiceField(choices=RestaurationPlace.TYPE_CHOICES)
+    opening_time = serializers.TimeField()
+    closing_time = serializers.TimeField()
+    email_restaurant = serializers.EmailField()
+    photo_link = serializers.ImageField(required=False, allow_null=True)
+
+    # Établissements affiliés
+    establishments = serializers.ListField(
+        child=serializers.IntegerField(), required=True
+    )
+
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("This email is already taken.")
+        return value
+
+    def validate(self, data):
+        if data['password'] != data['password_verified']:
+            raise serializers.ValidationError({"password_verified": "Les mots de passe ne correspondent pas."})
+        return data
+
+    def validate_establishments(self, value):
+        existing_establishments = set(Establishment.objects.filter(id__in=value).values_list("id", flat=True))
+        invalid_establishments = set(value) - existing_establishments
+        if invalid_establishments:
+            raise serializers.ValidationError(f"Invalid establishment IDs: {list(invalid_establishments)}")
+        return value

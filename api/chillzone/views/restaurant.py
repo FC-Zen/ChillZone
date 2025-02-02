@@ -21,7 +21,8 @@ class ClientRestaurantView(APIView):
             Q(name__icontains="Crous") | Q(description__icontains="Crous")
         ).filter(
             linkto__establishment=establishment,
-            linkto__status=True
+            linkto__status=True,
+            is_valid=True
         )
 
         crous_restaurants = RestaurationPlace.objects.filter(
@@ -30,13 +31,15 @@ class ClientRestaurantView(APIView):
             Q(name__icontains="Crous") | Q(description__icontains="Crous")
         ).filter(
             linkto__establishment=establishment,
-            linkto__status=True
+            linkto__status=True,
+            is_valid=True
         )
 
         fridges = RestaurationPlace.objects.filter(
             restauration_type="fridge",
             linkto__establishment=establishment,
-            linkto__status=True
+            linkto__status=True,
+            is_valid=True
         )
 
         return Response({

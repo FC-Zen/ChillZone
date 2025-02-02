@@ -92,3 +92,83 @@ class EmailService:
         except Exception as e:
             print(f"Erreur lors de l'envoi de l'email : {e}")
             return False
+
+    @staticmethod
+    def send_account_approval_email(user_email):
+        """Envoie un e-mail confirmant l'acceptation de la demande de création de compte restaurant"""
+        subject = "Votre demande de création de restaurant a été acceptée 🎉"
+        from_email = "ChillZone - Mon IUT"
+        to_email = [user_email]
+
+        logo_path = os.path.join(os.getcwd(), "chillzone/services/img/logo-zen-fill.png")
+        logo_base64 = EmailService.encode_image_to_base64(logo_path)
+
+        html_message = f'''
+        <html>
+        <body style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; background-color: #F8F9FA; color: #000000;">
+            <h2>✔️ Votre demande de création de restaurant et de votre compte a été refusée</h2>
+            <p>Bonjour,</p>
+            <p>Nous avons le plaisir de vous informer que votre demande de création de restaurant et de votre compte <strong>ChillZone - Mon IUT</strong> a été approuvée.</p>
+            <p>Vous pouvez maintenant accéder à votre espace de gestion et commencer à gérer votre établissement.</p>
+            <p style="text-align: center;">
+                <a href="https://localhost:5000/login" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Accéder à mon espace</a>
+            </p>
+            <p>Cordialement,<br> L'équipe ChillZone - Mon IUT</p>
+            <div style="margin-top: 30px; text-align: center; font-size: 0.9em; color: #777;">
+                <p>&copy; 2025 <a href="https://github.com/FC-Zen">FC-Zen</a>. Tous droits réservés.</p>
+            </div>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <img src="{logo_base64}" alt="Logo Zen" style="width: 100px;">
+            </div>
+        </body>
+        </html>
+        '''
+
+        email = EmailMultiAlternatives(subject, "Votre demande de création de compte a été acceptée.", from_email, to_email)
+        email.attach_alternative(html_message, "text/html")
+
+        try:
+            email.send()
+            return True
+        except Exception as e:
+            print(f"Erreur lors de l'envoi de l'email d'approbation : {e}")
+            return False
+
+    @staticmethod
+    def send_account_rejection_email(user_email):
+        """Envoie un e-mail informant que la demande de création de compte restaurant a été refusée"""
+        subject = "Votre demande de création de restaurant a été refusée ❌"
+        from_email = "ChillZone - Mon IUT"
+        to_email = [user_email]
+
+        logo_path = os.path.join(os.getcwd(), "chillzone/services/img/logo-zen-fill.png")
+        logo_base64 = EmailService.encode_image_to_base64(logo_path)
+
+        html_message = f'''
+        <html>
+        <body style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; background-color: #F8F9FA; color: #000000;">
+            <h2>❌ Votre demande de création de restaurant et de votre compte a été refusée</h2>
+            <p>Bonjour,</p>
+            <p>Nous sommes désolés de vous informer que votre demande de création de restaurant et de votre compte <strong>ChillZone - Mon IUT</strong> a été refusée.</p>
+            <p>Vos informations ont été supprimées de notre base de données et vous pouvez toujours reformuler une demande plus tard.</p>
+            <p>Si vous avez des questions ou souhaitez en savoir plus, vous pouvez contacter notre équipe.</p>
+            <p>Cordialement,<br> L'équipe ChillZone - Mon IUT</p>
+            <div style="margin-top: 30px; text-align: center; font-size: 0.9em; color: #777;">
+                <p>&copy; 2025 <a href="https://github.com/FC-Zen">FC-Zen</a>. Tous droits réservés.</p>
+            </div>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <img src="{logo_base64}" alt="Logo Zen" style="width: 100px;">
+            </div>
+        </body>
+        </html>
+        '''
+
+        email = EmailMultiAlternatives(subject, "Votre demande de création de compte a été refusée.", from_email, to_email)
+        email.attach_alternative(html_message, "text/html")
+
+        try:
+            email.send()
+            return True
+        except Exception as e:
+            print(f"Erreur lors de l'envoi de l'email de refus : {e}")
+            return False
