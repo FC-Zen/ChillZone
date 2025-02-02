@@ -30,6 +30,10 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             // console.log("currentDate", currentDate);
   
             const isSelected = selectedDate.toDateString() === currentDate.toDateString();
+            console.log("Selected Date : ", selectedDate.toDateString());
+            console.log("currentDate : ", currentDate.toDateString());
+            console.log("isSelected : ", isSelected);
+
   
             return (
               <View
