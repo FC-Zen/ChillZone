@@ -13,6 +13,14 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
     startOfWeek,
     selectedDate,
 }) => {
+    // Définir le début de la semaine au dimanche précédent
+    // Explication du calcul :
+    // startOfWeek.getDay() : Récupérer le jour de la semaine (0 = dimanche, 1 = lundi, ...)
+    // startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()) : Définir le début de la semaine
+    // Exemple : Si on est le mardi 15 juin 2021, startOfWeek.getDay() = 2
+    // startOfWeek.setDate(startOfWeek.getDate() - 2) : startOfWeek = dimanche 13
+    startOfWeek = new Date(startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()));
+
     return (
         <View style={styles.headerContainer}>
           {daysOfWeek.map((day, index) => {
@@ -20,6 +28,10 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             currentDate.setDate(startOfWeek.getDate() + index); // Calculer chaque jour de la semaine
   
             const isSelected = selectedDate.toDateString() === currentDate.toDateString();
+            console.log("Selected Date : ", selectedDate.toDateString());
+            console.log("currentDate : ", currentDate.toDateString());
+            console.log("isSelected : ", isSelected);
+
   
             return (
               <View
@@ -29,17 +41,19 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                   isSelected && styles.selectedDayContainer,
                 ]}
               >
-                <Text style={[styles.dayText, isSelected && styles.selectedText]}>
+                <Text style={styles.dayText}>
                   {day}
                 </Text>
-                <Text
-                  style={[
-                    styles.dateText,
-                    isSelected && styles.selectedText,
-                  ]}
-                >
-                  {currentDate.getDate()}
-                </Text>
+                <View style={isSelected && styles.selectedDateContainer}>
+                  <Text
+                    style={[
+                      styles.dateText,
+                      isSelected && styles.selectedDate,
+                    ]}
+                  >
+                    {currentDate.getDate()}
+                  </Text>
+                </View>
               </View>
             );
           })}

@@ -34,6 +34,7 @@ export {
   RestaurantSlider,
   RoomAvailable,
   CommandList,
+  CalendarHeader,
 } from './organisms';
 export {
   AlertCancelReservationTemplate,
@@ -56,4 +57,5 @@ export {
   MenuTemplate,
   CartTemplate,
   CommandSummaryTemplate,
+  CalendarTemplate,
 } from './templates';

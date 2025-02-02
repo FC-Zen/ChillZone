@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { Calendar } from 'react-native-big-calendar';
 import { styles } from './style';
 import { BottomNavbar, CalendarTemplate } from '@components';
-import calendar from '@assets/data/calendar.json';
-
-const events = calendar;
+import { Calendar, getCalendarEvents } from '@services/CalendarServices';
 
 export const CalendarScreen = () => {
     const [selectedDate, setSelectedDate] = React.useState(new Date(2025, 0, 8));
     const [startOfWeek, setStartOfWeek] = React.useState(new Date(2025, 0, 6));
+    const [events, setEvents] = React.useState<Calendar>({ events: [] });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const events = await getCalendarEvents();
+            setEvents(events);
+        }
+        fetchData();
+    }, []);
 
     return (
         <View style={styles.container}>
             <CalendarTemplate
-                events={events}
+                events={events.events}
                 daysOfWeek={['D', 'L', 'M', 'M', 'J', 'V', 'S']}
                 startOfWeek={startOfWeek}
                 selectedDate={selectedDate}

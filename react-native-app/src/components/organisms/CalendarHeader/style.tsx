@@ -1,35 +1,49 @@
+import { colors, typography } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     headerContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 10,
+    paddingHorizontal: 10,
     backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
-    paddingLeft: "12%",
+    paddingLeft: "14%",
   },
   dayContainer: {
     alignItems: "center",
-    paddingHorizontal: 5,
+    width: 30,
+    height: 50,
   },
   selectedDayContainer: {
-    borderBottomWidth: 2,
-    borderBottomColor: "#4C1D95", // Violet pour le jour sélectionné
+    paddingHorizontal: 0,
   },
   dayText: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#000",
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h1.fontFamily,
+    color: colors.black,
   },
   dateText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#000",
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h2.fontFamily,
+    color: colors.black,
+    textDecorationStyle: "solid",
   },
-  selectedText: {
-    color: "#4C1D95", // Violet pour le jour sélectionné
+  selectedDate: {
+    color: colors.white, // Violet pour le jour sélectionné
+    fontFamily: typography.h1.fontFamily,
+
+  },
+  selectedDateContainer: {
+    backgroundColor: colors.resolutionBlue, // Fond violet pour le jour sélectionné
+    borderRadius: 50,
+    width: 30,
+    height: 30,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
