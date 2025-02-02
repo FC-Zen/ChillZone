@@ -20,12 +20,10 @@ export const NavigationScreen = () => {
     <View style={styles.container}>
       <TopBar />
       <PageHeader title={t('headers.map')} variant="default" />
-      <RDCTemplate imageSource={rdc} onSelectFloor={setSelectedFloor} />
+      {selectedFloor && (
+        <RDCTemplate imageSource={rdc} onSelectFloor={setSelectedFloor} />
+      )}
       <BottomNavbar activeIcon="Navigation" />
-      {/* <NavigationBar
-        onSelectFloor={setSelectedFloor}
-        selectedFloor={selectedFloor}
-      /> */}
     </View>
   );
 };

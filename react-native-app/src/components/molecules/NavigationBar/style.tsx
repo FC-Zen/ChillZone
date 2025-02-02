@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   },
   navBar: {
     flexDirection: 'row',
-    width: '65%',
+    width: '60%',
     backgroundColor: colors.resolutionBlue,
     alignItems: 'center',
     justifyContent: 'space-around',
