@@ -6,6 +6,7 @@ export {
   FoodCard,
   Input,
   IconWithText,
+  NavigationBar,
   NotificationItem,
   NotificationPopup,
   Overlay,
@@ -62,4 +63,5 @@ export {
   CartTemplate,
   CommandSummaryTemplate,
   CalendarTemplate,
+  RDCTemplate,
 } from './templates';

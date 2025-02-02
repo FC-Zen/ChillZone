@@ -24,6 +24,7 @@ import {
   CartScreen,
   CommandSummaryScreen,
   CalendarScreen,
+  NavigationScreen,
 } from '@screens';
 import { ROUTE } from '@enums';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -179,6 +180,11 @@ export const RootNavigator = () => {
                   <Stack.Screen
                     name={ROUTE.CALENDAR}
                     component={CalendarScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name={ROUTE.NAVIGATION}
+                    component={NavigationScreen}
                     options={{ headerShown: false }}
                   />
                 </Stack.Navigator>

@@ -1,0 +1,1 @@
+export { RDCTemplate } from './RDCTemplate';

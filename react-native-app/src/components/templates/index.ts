@@ -21,3 +21,4 @@ export { ReportingFormTemplate } from './ReportingFormTemplate';
 export { ReportingFinalFormTemplate } from './ReportingFinalTemplate';
 export { CommandSummaryTemplate } from './CommandSummaryTemplate';
 export { CalendarTemplate } from './CalendarTemplate';
+export { RDCTemplate } from './RDCTemplate';
