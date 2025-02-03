@@ -22,3 +22,4 @@ export { ReportingFinalFormTemplate } from './ReportingFinalTemplate';
 export { CommandSummaryTemplate } from './CommandSummaryTemplate';
 export { CalendarTemplate } from './CalendarTemplate';
 export { RDCTemplate } from './RDCTemplate';
+export { Floor1Template } from './Floor1Template';

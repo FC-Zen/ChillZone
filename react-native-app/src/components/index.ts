@@ -64,4 +64,5 @@ export {
   CommandSummaryTemplate,
   CalendarTemplate,
   RDCTemplate,
+  Floor1Template,
 } from './templates';
