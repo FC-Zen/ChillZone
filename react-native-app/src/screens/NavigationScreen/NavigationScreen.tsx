@@ -3,12 +3,11 @@ import { View } from 'react-native';
 import { styles } from './style';
 import {
   BottomNavbar,
-  Floor1Template,
+  NavigationTemplate,
   PageHeader,
-  RDCTemplate,
   TopBar,
 } from '@components';
-import { rdc, floor1 } from '@assets/Images';
+import { rdc, floor1, floor2, floor3 } from '@assets/Images';
 import { useTranslation } from 'react-i18next';
 
 export const NavigationScreen = () => {
@@ -16,24 +15,23 @@ export const NavigationScreen = () => {
 
   const { t } = useTranslation();
 
+  const floorImages: { [key: string]: any } = {
+    RDC: rdc,
+    Floor1: floor1,
+    Floor2: floor2,
+    Floor3: floor3,
+  };
+
   return (
     <View style={styles.container}>
       <TopBar />
       <PageHeader title={t('headers.map')} variant="default" />
 
-      {selectedFloor === 'RDC' && (
-        <RDCTemplate
-          imageSource={rdc}
-          onSelectFloor={() => setSelectedFloor('Floor1')}
-        />
-      )}
-
-      {selectedFloor === 'Floor1' && (
-        <Floor1Template
-          imageSource={floor1}
-          onSelectFloor={() => setSelectedFloor('RDC')}
-        />
-      )}
+      <NavigationTemplate
+        imageSource={floorImages[selectedFloor]}
+        selectedFloor={selectedFloor}
+        onSelectFloor={setSelectedFloor}
+      />
 
       <BottomNavbar activeIcon="Navigation" />
     </View>

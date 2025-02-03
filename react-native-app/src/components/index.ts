@@ -62,7 +62,5 @@ export {
   MenuTemplate,
   CartTemplate,
   CommandSummaryTemplate,
-  CalendarTemplate,
-  RDCTemplate,
-  Floor1Template,
+  NavigationTemplate,
 } from './templates';

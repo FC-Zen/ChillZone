@@ -5,13 +5,15 @@ import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
 
-type RDCTemplateProps = {
+type NavigationTemplateProps = {
   imageSource: any;
+  selectedFloor: string;
   onSelectFloor: (floor: string) => void;
 };
 
-export const RDCTemplate: React.FC<RDCTemplateProps> = ({
+export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
   imageSource,
+  selectedFloor,
   onSelectFloor,
 }) => {
   const { t } = useTranslation();
@@ -21,7 +23,10 @@ export const RDCTemplate: React.FC<RDCTemplateProps> = ({
       <View style={styles.container}>
         <Image source={imageSource} style={styles.image} />
       </View>
-      <NavigationBar onSelectFloor={onSelectFloor} selectedFloor="RDC" />
+      <NavigationBar
+        onSelectFloor={onSelectFloor}
+        selectedFloor={selectedFloor}
+      />
       <View style={styles.iconContainer}>
         <IconWithText
           icon="AR"

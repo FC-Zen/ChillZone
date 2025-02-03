@@ -14,16 +14,18 @@ export const NavigationBar: React.FC<NavBarProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  const floors = ['RDC', 'Floor1', 'Floor2', 'Floor3'];
+
   return (
     <View style={[styles.navBar, styles.navBarBottom]}>
-      {['RDC', '1', '2', '3'].map((floor, index) => (
+      {floors.map((floor, index) => (
         <TouchableOpacity key={index} onPress={() => onSelectFloor(floor)}>
           <Text
             style={[styles.navItem, selectedFloor === floor && styles.active]}
           >
             {floor === 'RDC'
               ? t('rooms.baseFloor')
-              : t('rooms.floor', { x: floor })}
+              : t('rooms.floor', { x: index })}{' '}
           </Text>
         </TouchableOpacity>
       ))}

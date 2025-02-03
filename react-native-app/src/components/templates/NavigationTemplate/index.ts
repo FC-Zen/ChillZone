@@ -1,0 +1,1 @@
+export { NavigationTemplate } from './NavigationTemplate';
