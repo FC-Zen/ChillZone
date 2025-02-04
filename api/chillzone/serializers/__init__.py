@@ -16,7 +16,7 @@ from .location import LocationSerializer, AdminLocationSerializer, AdminAvailabl
 from .location_reservation import LocationReservationSerializer, AdminLocationReservationSerializer
 from .log import LogSerializer
 from .map import MapSerializer
-from .map_floor import MapFloorSerializer, AdminMapFloorSerializer
+from .map_floor import MapFloorSerializer, AdminMapFloorSerializer, CreateMapFloorSerializer, UpdateMapFloorSerializer
 from .tag import TagSerializer
 from .meal import MealSerializer, CreateMealSerializer
 from .menu import MenuWithOptionsSerializer, CreateMenuSerializer, UpdateMenuSerializer

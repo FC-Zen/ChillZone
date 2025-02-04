@@ -26,4 +26,4 @@ class Location(models.Model) :
 
     id_type = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
-    id_floor = models.ForeignKey(MapFloor, on_delete=models.CASCADE)
+    id_floor = models.ForeignKey(MapFloor, on_delete=models.CASCADE, null=True, blank=True)
