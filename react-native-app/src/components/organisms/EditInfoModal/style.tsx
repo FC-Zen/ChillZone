@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.70)',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -12,7 +12,8 @@ export const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: colors.resolutionBlue,
     borderRadius: 10,
-    padding: 20,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
   },
   closeButton: {
     alignSelf: 'flex-end',
@@ -25,26 +26,19 @@ export const styles = StyleSheet.create({
     fontSize: typography.h2.fontSize,
     fontFamily: typography.h2.fontFamily,
     color: colors.white,
-    marginBottom: 20,
+    marginBottom: 40,
+    marginTop: 20,
     textAlign: 'center',
   },
   input: {
     backgroundColor: colors.white,
-    borderRadius: 8,
+    borderRadius: 10,
     paddingHorizontal: 15,
     marginBottom: 15,
     fontSize: 16,
   },
   confirmButton: {
-    backgroundColor: colors.aquaDeep,
-    borderRadius: 50,
-    paddingVertical: 12,
-    alignItems: 'center',
     marginTop: 10,
-  },
-  confirmButtonText: {
-    color: colors.white,
-    fontWeight: 'bold',
-    fontSize: 16,
+    marginHorizontal: 80,
   },
 });

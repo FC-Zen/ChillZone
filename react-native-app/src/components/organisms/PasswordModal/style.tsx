@@ -6,20 +6,21 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.70)',
   },
   modal: {
-    backgroundColor: '#2E2A85',
+    backgroundColor: colors.resolutionBlue,
     borderRadius: 10,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 10,
     width: '90%',
-    maxWidth: 400,
     position: 'relative', // Nécessaire pour positionner la croix
   },
   closeIcon: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: 20,
+    right: 20,
     zIndex: 10,
   },
   title: {
@@ -31,14 +32,14 @@ export const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: colors.white,
-    borderRadius: 8,
+    borderRadius: 10,
     marginBottom: 15,
   },
   validationTagsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 15,
-    gap: 4,
+    marginVertical: 10,
+    gap: 5,
     justifyContent: 'center',
     alignContent: 'center',
   },
@@ -46,19 +47,18 @@ export const styles = StyleSheet.create({
     flexDirection: 'row', // Alignement horizontal
     alignItems: 'center', // Centrer verticalement
     borderRadius: 16,
-    paddingHorizontal: 12,
     paddingVertical: 4,
-    marginRight: 4,
-    marginBottom: 4,
+    marginVertical: 4,
+    gap: 5,
   },
   validTag: {
     backgroundColor: '#DFF2E0',
-    borderColor: '#00A859',
+    borderColor: colors.aquaDeep,
     borderWidth: 1,
   },
   invalidTag: {
     backgroundColor: colors.warn,
-    borderColor: '#FF5A5A',
+    borderColor: colors.warn,
     borderWidth: 1,
   },
   validationTagText: {
@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
   },
   validText: {
-    color: '#00A859',
+    color: colors.aquaDeep,
   },
   invalidText: {
     color: colors.white,
@@ -77,8 +77,9 @@ export const styles = StyleSheet.create({
     padding: 12,
     alignItems: 'center',
     marginBottom: 10,
-    width: '60%',
+    width: '40%',
     alignSelf: 'center',
+    marginTop: 10,
   },
   buttonText: {
     fontSize: typography.h3.fontSize,

@@ -6,14 +6,15 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.70)',
   },
   modal: {
     backgroundColor: colors.resolutionBlue,
     borderRadius: 10,
-    padding: 20,
+    paddingTop: 50,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
     width: '90%',
-    maxWidth: 400,
     alignItems: 'center',
   },
   title: {
@@ -22,6 +23,7 @@ export default StyleSheet.create({
     fontFamily: typography.h2.fontFamily,
     display: 'flex',
     padding: 20,
+    textAlign: 'center',
     justifyContent: 'center',
   },
   subtitle: {
@@ -30,7 +32,7 @@ export default StyleSheet.create({
     fontFamily: typography.h2.fontFamily,
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: 15,
+    marginVertical: 25,
   },
   input: {
     backgroundColor: colors.white,
@@ -38,24 +40,9 @@ export default StyleSheet.create({
     marginBottom: 15,
     width: '100%',
   },
-  button: {
-    backgroundColor: colors.aquaDeep,
-    borderRadius: 50,
-    padding: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '60%',
-    gap: 10,
-  },
-  buttonText: {
-    color: colors.white,
-    fontWeight: 'bold',
-    fontSize: typography.h3.fontSize,
-    fontFamily: typography.h3.fontFamily,
-  },
   closeButton: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: 25,
+    right: 25,
   },
 });

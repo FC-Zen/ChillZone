@@ -22,7 +22,7 @@ export const ChangeProfilePictureModal: React.FC<
       animationType="slide"
       transparent={true}
       visible={isOpen}
-      onRequestClose={onClose} // Gère la fermeture sur Android
+      onRequestClose={onClose}
     >
       <View style={styles.overlay}>
         <View style={styles.modal}>

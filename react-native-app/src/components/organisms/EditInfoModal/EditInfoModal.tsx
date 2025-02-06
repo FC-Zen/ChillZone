@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { styles } from './style';
 import { Icon } from '@components/atoms/Icons';
 import { colors } from '@theme';
-import { Input } from '@components/molecules';
+import { Button, Input } from '@components/molecules';
 import { useTranslation } from 'react-i18next';
 
 export type EditInfoModalProps = {
@@ -73,11 +73,12 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({
             value={data.email}
             onChangeText={(text) => onChange('email', text)}
           />
-          <TouchableOpacity style={styles.confirmButton} onPress={onConfirm}>
-            <Text style={styles.confirmButtonText}>
-              {t('buttons.actions.confirm')}
-            </Text>
-          </TouchableOpacity>
+          <Button
+            onPress={onConfirm}
+            title={t('buttons.actions.confirm')}
+            color={colors.aquaDeep}
+            style={styles.confirmButton}
+          />
         </View>
       </View>
     </Modal>

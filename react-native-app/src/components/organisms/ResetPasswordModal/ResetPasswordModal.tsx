@@ -7,13 +7,12 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import { Input } from '@components/molecules';
+import { Button, Input } from '@components/molecules';
 import { Icon } from '@components/atoms/Icons';
 import { colors } from '@theme';
 import styles from './style';
 import { useTranslation } from 'react-i18next';
 import { accountServices } from '@services/AccountServices'; // Import du service
-import { Button } from 'react-native-paper';
 
 export type ResetPasswordModalProps = {
   isOpen: boolean;
@@ -56,9 +55,12 @@ export const ResetPasswordModal = ({
           />
 
           {/* Bouton Réinitialiser */}
-          <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-            <Text style={styles.buttonText}>{t('buttons.actions.reset')}</Text>
-          </TouchableOpacity>
+          <Button
+            title={t('buttons.actions.reset')}
+            onPress={handleResetPassword}
+            color={colors.aquaDeep}
+            style={{ marginVertical: 10 }}
+          />
 
           {/* Bouton Fermer */}
           <TouchableOpacity style={styles.closeButton}>
