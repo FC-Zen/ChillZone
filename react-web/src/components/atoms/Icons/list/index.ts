@@ -35,3 +35,4 @@ export { default as AddCircle } from './AddCircle';
 export { default as CrossCircle } from './CrossCircle';
 export { default as Download } from './Download';
 export { default as FaqQuestion } from './FaqQuestion';
+export { default as Trash } from './Trash';

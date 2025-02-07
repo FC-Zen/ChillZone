@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@components/atoms';
 import { Question } from '@pages/AdminFAQPage/AdminFAQPage';
 import { Button, IconButton, TextField } from '@mui/material';
+import { colors } from '@theme';
 
 type FAQTableProps = {
   data: Question[];
@@ -40,7 +41,7 @@ function CustomToolbar({ onActionClick }: { onActionClick: () => void }) {
 }
 
 export const FaqDataTable = ({
-  data,addQuestionBtn,handleClickEdit
+  data,addQuestionBtn,handleClickEdit,handleClickDelete
 }: FAQTableProps) => {
   const { t } = useTranslation();
 
@@ -57,7 +58,7 @@ export const FaqDataTable = ({
           multiline
           disabled
           InputProps={{
-            style: { whiteSpace: 'pre-wrap' },
+            style: { whiteSpace: 'pre-wrap', fontSize: '0.875rem' },
           }}
         />
       ),
@@ -72,7 +73,7 @@ export const FaqDataTable = ({
           multiline
           disabled
           InputProps={{
-            style: { whiteSpace: 'pre-wrap' },
+            style: { whiteSpace: 'pre-wrap', fontSize: '0.875rem'  },
           }}
         />
       ),
@@ -97,8 +98,8 @@ export const FaqDataTable = ({
       sortable: false,
       renderCell: (params: any) => (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-        <IconButton color="primary" onClick={() => handleClickEdit(params.row.id)}>
-          <Icon name="Exclamation" />
+        <IconButton color="primary" onClick={() => handleClickDelete(params.row.id)}>
+          <Icon name="Trash" color={colors.red} />
         </IconButton></div>
       ),
     },

@@ -16,7 +16,7 @@ class NetworkView(APIView):
         if not establishment:
             return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
 
-        networks = Network.objects.filter(id_establishment=establishment)
+        networks = Network.objects.filter(establishment=establishment)
         serializer = NetworkSerializer(networks, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -29,10 +29,21 @@ class AdminNetworkView(APIView):
 
         if not establishment:
             return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        used_types = Network.objects.filter(establishment=establishment).values_list("type", flat=True)
+        
+        available_types = [
+            {"id": type_choice[0], "label": type_choice[1]}
+            for type_choice in Network.TYPE_CHOICES if type_choice[0] not in used_types
+        ]
 
-        networks = Network.objects.filter(id_establishment=establishment)
+        networks = Network.objects.filter(establishment=establishment)
         serializer = AdminNetworkSerializer(networks, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response({
+            "networks": serializer.data,
+            "available_types": available_types
+        }, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = AdminNetworkSerializer(data=request.data)
@@ -41,31 +52,32 @@ class AdminNetworkView(APIView):
             if not establishment:
                 return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
 
-            if Network.objects.filter(id_establishment=establishment, type=serializer.validated_data['type']).exists():
+            if Network.objects.filter(establishment=establishment, type=serializer.validated_data['type']).exists():
                 return Response({"error": "Network type already exists for this establishment."}, status=status.HTTP_400_BAD_REQUEST)
 
             Network.objects.create(
                 type=serializer.validated_data['type'],
                 link_network=serializer.validated_data['link_network'],
-                id_establishment=establishment
+                establishment=establishment
             )
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return self.get(request)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         network_id = request.data.get('id')
+        print(network_id)
         if not network_id:
             return Response({"error": "Network ID is required."}, status=status.HTTP_400_BAD_REQUEST)
 
         network = get_object_or_404(Network, id=network_id)
         establishment = request.user.usermeta.establishment
-        if network.id_establishment != establishment:
+        if network.establishment != establishment:
             return Response({"error": "You do not have permission to modify this network."}, status=status.HTTP_403_FORBIDDEN)
 
         serializer = AdminNetworkSerializer(network, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return self.get(request)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
@@ -75,8 +87,8 @@ class AdminNetworkView(APIView):
 
         network = get_object_or_404(Network, id=network_id)
         establishment = request.user.usermeta.establishment
-        if network.id_establishment != establishment:
+        if network.establishment != establishment:
             return Response({"error": "You do not have permission to delete this network."}, status=status.HTTP_403_FORBIDDEN)
 
         network.delete()
-        return Response({"message": "Network deleted successfully."}, status=status.HTTP_200_OK)
+        return self.get(request)

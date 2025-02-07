@@ -1,10 +1,12 @@
-.mainContainerBooking {
+.mainContainerFAQ {
     display: flex;
     margin: auto;
     padding-top: 1%;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
+    padding: 1%;
+    gap: 10px;
 }
 
 .table1-layout {
@@ -12,5 +14,14 @@
 }
 
 .network-layout {
-    width: 25%;
+    width: 27%;
+    margin: auto;
+}
+
+.network-headers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
 }

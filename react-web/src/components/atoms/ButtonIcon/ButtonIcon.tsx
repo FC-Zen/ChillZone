@@ -19,12 +19,13 @@ export const ButtonIcon: FC<ButtonIconProps> = ({
 }) => {
 
   const linkStyle: React.CSSProperties = {
-    backgroundColor: variant === 'primary' ? colors.darkCyan : colors.white,
-    color: variant === 'primary' ? colors.white : colors.darkCyan,
+    backgroundColor: variant === 'primary' ? colors.aquaDeep : colors.white,
+    color: variant === 'primary' ? colors.white : colors.aquaDeep,
     padding: "8px 20px",
     border: variant === 'primary' ? "" : "solid 3px #2e2a85 ",
     fontWeight: "semibold",
-    borderRadius: "10px",
+    borderRadius: "5px",
+    gap: "15px",
     cursor: "pointer",
     overflow: "hidden",
     display:"flex"
@@ -37,7 +38,7 @@ export const ButtonIcon: FC<ButtonIconProps> = ({
         variant={variant === 'primary' ? 'contained' : 'outlined'}
         style={linkStyle}
       >
-        <div style={{ padding: '0px 10px', display : 'flex'  }}>
+        <div style={{ padding: '0px 0px', display : 'flex'  }}>
           <Icon name={icon} color={colors.white}/>
         </div>
         {title}
