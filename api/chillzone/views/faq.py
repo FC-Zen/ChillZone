@@ -9,15 +9,16 @@ from collections import defaultdict
 
 class FAQView(APIView):
     permission_classes = [IsAuthenticated]
-
+    
     def get(self, request):
         user_meta = request.user.usermeta
         establishment = user_meta.establishment if user_meta else None
 
         if not establishment:
             return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
-
-        faqs = FAQ.objects.filter(establishment=establishment)
+        
+        print(establishment)
+        faqs = FAQ.objects.filter(id_establishment=establishment)
         categorized_faqs = defaultdict(list)
 
         for faq in faqs:
@@ -38,7 +39,7 @@ class AdminFAQView(APIView) :
 
     def get(self, request):
         user_meta = request.user.usermeta
-        establishment = user_meta.establishment if user_meta else None
+        establishment = request.user.usermeta.establishment
 
         if not establishment:
             return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
@@ -63,7 +64,7 @@ class AdminFAQView(APIView) :
                 id_establishment=establishment
             )
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return self.get(request)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
@@ -75,7 +76,7 @@ class AdminFAQView(APIView) :
         serializer = AdminFAQSerializer(faq, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return self.get(request)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
@@ -90,4 +91,4 @@ class AdminFAQView(APIView) :
             return Response({"error": "You do not have permission to delete this FAQ."}, status=status.HTTP_403_FORBIDDEN)
 
         faq.delete()
-        return Response({"message": "FAQ deleted successfully."}, status=status.HTTP_200_OK)
+        return self.get(request)

@@ -16,7 +16,8 @@ import {
   AdminEstablishmentPage,
   SuperAdminPage,
   OwnerMenusPage,
-  SuperUsersAdminPage
+  SuperUsersAdminPage,
+  AdminFAQPage
 } from '@pages';
 import { UserProvider } from '@hooks/UserContext/UserContext';
 import { ProtectedRoute } from '@navigation';
@@ -44,6 +45,7 @@ function App() {
             <Route path="/admin-rooms" element={<AdminRoomsPage />} />
             <Route path="/admin-booking" element={<AdminBookingPage />} />
             <Route path="/admin-establishment" element={<AdminEstablishmentPage />} />
+            <Route path="/admin-faq" element={<AdminFAQPage />} />
             <Route path="/admin-affiliates" element={<AdminOwnerPage />} />
           </Route>
 

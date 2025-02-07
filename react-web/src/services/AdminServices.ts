@@ -423,3 +423,107 @@ export const deleteAffiliations = async (id: number) => {
         throw new Error(error.message);
     }
 };
+
+/**
+ * Récupère la liste des signalements depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getFAQ = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/admin-faq/', 
+            { 
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
+    }
+};
+
+/**
+ * Ajoute une FAQ en envoyant une requête POST à l'API.
+ *
+ * @param {FormData} formData - Les informations de la FAQ à ajouter.
+ * @throws {Error} Si la requête échoue.
+ *
+ * @returns {Promise<Object>} Réponse de l'API contenant les FAQ mises à jour.
+ */
+export const addFAQ = async (formData: FormData): Promise<any> => {
+    try {
+        const response = await axios.post('http://localhost:3000/admin-faq/', formData, {
+        withCredentials: true,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFToken': getCSRFToken(),
+        },
+        });
+        console.log('Réponse de l\'API (ajout FAQ):', response);
+        return response.data; // Renvoie les FAQ mises à jour
+    } catch (error: any) {
+        console.error('Erreur lors de l\'ajout de la FAQ:', error.message);
+        throw new Error(error.response?.data?.message || error.message);
+    }
+};
+
+/**
+ * Met à jour une FAQ en envoyant une requête PUT à l'API.
+ *
+ * @param {FormData} formData - Les nouvelles informations de la FAQ.
+ * @throws {Error} Si la requête échoue.
+ *
+ * @returns {Promise<Object>} Réponse de l'API contenant les FAQ mises à jour.
+ */
+export const updateFAQ = async (formData: FormData): Promise<any> => {
+    try {
+        const response = await axios.put('http://localhost:3000/admin-faq/', formData, {
+        withCredentials: true,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFToken': getCSRFToken(),
+        },
+        });
+        console.log('Réponse de l\'API (mise à jour FAQ):', response);
+        return response.data; // Renvoie les FAQ mises à jour
+    } catch (error: any) {
+        console.error('Erreur lors de la mise à jour de la FAQ:', error.message);
+        throw new Error(error.response?.data?.message || error.message);
+    }
+};
+
+/**
+ * Supprime une FAQ en envoyant une requête DELETE à l'API.
+ *
+ * @param {number} id - L'ID de la FAQ à supprimer.
+ * @throws {Error} Si la requête échoue.
+ *
+ * @returns {Promise<Object>} Réponse de l'API contenant les FAQ mises à jour.
+ */
+export const deleteFAQ = async (id: number): Promise<any> => {
+    try {
+        const response = await axios.delete('http://localhost:3000/admin-faq/', 
+            { 
+                data: { id: id },
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des affiliations:", error.message);
+        throw new Error(error.message);
+    }
+};

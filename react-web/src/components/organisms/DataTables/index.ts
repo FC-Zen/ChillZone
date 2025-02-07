@@ -11,3 +11,4 @@ export { DetailsOrdersDataTable } from './DetailsOrdersDataTable';
 export { OwnersRegisterDataTable } from './OwnersRegisterDataTable';
 export { AdminUsersDataTable } from './AdminUsersDataTable';
 export { AdminsRegisterDataTable } from './AdminsRegisterDataTable';
+export { FaqDataTable } from './FaqDataTable';

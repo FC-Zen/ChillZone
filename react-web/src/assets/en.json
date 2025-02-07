@@ -16,7 +16,8 @@
     "affiliates": "Affiliated dining locations",
     "products": "Products",
     "commands": "Orders",
-    "menus": "Menus"
+    "menus": "Menus",
+    "faq": "Frequently Asked Questions Management"
   },
 
   "userGreeting": {
@@ -28,7 +29,8 @@
       "product": "Edit product",
       "menu": "Edit menu",
       "room": "Edit room",
-      "stock": "Edit product stock"
+      "stock": "Edit product stock",
+      "faq" : "Edit a question"
     },
     "create": {
       "account": "Create a student test account",
@@ -36,7 +38,8 @@
       "room": "Create a room",
       "floor": "Create a floor",
       "product": "Create a product",
-      "menu": "Create a menu"
+      "menu": "Create a menu",
+      "faq" : "Create a question"
     },
     "info": {
       "command": "Order details",
@@ -117,7 +120,8 @@
       "confirm": "Confirm",
       "back": "Back",
       "reset": "Reset",
-      "changeMap": "Change map"
+      "changeMap": "Change map",
+      "delete" : "Delete"
     },
     "add": {
       "generic": "Add {{ entity }}",
@@ -125,7 +129,8 @@
       "room": "Add a room",
       "floor": "Add a floor",
       "menu": "Add a menu",
-      "product": "Add a product"
+      "product": "Add a product",
+      "faq" : "Add a question"
     },
     "commands": {
       "stateReady": "Order is ready",
@@ -326,6 +331,11 @@
         "acceptAccount": "Accept or Decline account",
         "declineAccount": "Decline account",
         "deleteRestaurantAccount": "Manage account"
+      },
+      "faq" : {
+        "category": "Category",
+        "question": "Question",
+        "answer": "Answer"
       }
     }
   },
