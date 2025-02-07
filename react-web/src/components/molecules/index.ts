@@ -10,3 +10,5 @@ export { ModalHeader } from './ModalHeader';
 export { Map } from './Map';
 export { StyledSelect } from './Select';
 export { CommandInfo } from './CommandInfo';
+export { CustomCard } from './CustomCard';
+

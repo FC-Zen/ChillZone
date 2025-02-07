@@ -5,6 +5,7 @@ class Network(models.Model) :
 
     TYPE_CHOICES = [
         ("facebook", "Facebook"),
+        ("x", "X"),
         ("instagram", "Instagram"),
         ("youtube", "Youtube"),
         ("linkedin", "LinkedIn"),
@@ -16,4 +17,4 @@ class Network(models.Model) :
 
     link_network = models.TextField()
 
-    id_establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
+    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)

@@ -86,8 +86,8 @@ class AdminFAQView(APIView) :
 
         faq = get_object_or_404(FAQ, id=faq_id)
         establishment = request.user.usermeta.establishment
-
-        if faq.establishment != establishment:
+        
+        if faq.id_establishment != establishment:
             return Response({"error": "You do not have permission to delete this FAQ."}, status=status.HTTP_403_FORBIDDEN)
 
         faq.delete()

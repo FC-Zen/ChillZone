@@ -17,7 +17,8 @@
     "products": "Products",
     "commands": "Orders",
     "menus": "Menus",
-    "faq": "Frequently Asked Questions Management"
+    "faq": "Frequently Asked Questions Management",
+    "network" : "Networks'Establishment"
   },
 
   "userGreeting": {
@@ -39,7 +40,8 @@
       "floor": "Create a floor",
       "product": "Create a product",
       "menu": "Create a menu",
-      "faq" : "Create a question"
+      "faq" : "Create a question",
+      "network" : "Link a network"
     },
     "info": {
       "command": "Order details",
@@ -124,7 +126,7 @@
       "delete" : "Delete"
     },
     "add": {
-      "generic": "Add {{ entity }}",
+      "generic": "Add",
       "user": "Add a user account",
       "room": "Add a room",
       "floor": "Add a floor",
@@ -179,7 +181,8 @@
       "room": "Room Name",
       "floor": "Floor",
       "roomtype": "RoomType",
-      "isadmin" : "Establishment Administrator ?"
+      "isadmin" : "Establishment Administrator ?",
+      "link" : "Link"
     },
     "auth": {
       "password": "Password",
@@ -235,7 +238,8 @@
     "infoPwd": "If the account exists, you will receive an email shortly.",
     "recoverPwd": "I forgot my password",
     "singin": "I want to register as a restaurateur",
-    "rememberMe": "Remember me"
+    "rememberMe": "Remember me",
+    "nolinks": "You do not have any network linked"
   },
 
   "tables": {

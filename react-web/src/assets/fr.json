@@ -17,7 +17,8 @@
     "products": "Produits",
     "commands": "Commandes",
     "menus": "Menus",
-    "faq" : "Gestion de la Foire aux questions"
+    "faq" : "Gestion de la Foire aux questions",
+    "network" : "Réseaux de l'établissement"
   },
 
   "userGreeting": {
@@ -39,7 +40,8 @@
       "floor": "Créer un étage",
       "product": "Créer un produit",
       "menu": "Créer un menu",
-      "faq" : "Créer une question-réponse"
+      "faq" : "Créer une question-réponse",
+      "network" : "Lier un réseau"
     },
     "info": {
       "command": "Détails de la commande",
@@ -176,7 +178,7 @@
       "delete" : "Supprimer"
     },
     "add": {
-      "generic": "Ajouter {{ entity }}",
+      "generic": "Ajouter",
       "user": "Ajouter un compte utilisateur",
       "room": "Ajouter une salle",
       "floor": "Ajouter un étage",
@@ -231,7 +233,8 @@
       "room": "Nom de la salle",
       "floor": "Etage",
       "roomtype": "Type de salle",
-      "isadmin" : "Administrateur d'établissement ?"
+      "isadmin" : "Administrateur d'établissement ?",
+      "link" : "Lien"
     },
     "auth": {
       "password": "Mot de passe",
@@ -287,7 +290,8 @@
     "infoPwd": "Si le compte existe, vous receverez un mail sous peu",
     "recoverPwd": "J’ai oublié mon mot de passe",
     "singin": "Je veux m’inscrire en tant que restaurateur",
-    "rememberMe": "Se souvenir de moi"
+    "rememberMe": "Se souvenir de moi",
+    "nolinks": "Vous n'avez pas configuré de réseau"
   },
 
   "tables": {

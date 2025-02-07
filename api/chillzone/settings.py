@@ -80,12 +80,12 @@ SPECTACULAR_SETTINGS = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware', # CORS
 ]
 
 if DEBUG:
@@ -105,7 +105,8 @@ ROOT_URLCONF = 'chillzone.urls'
 # ----------------------------- Pour CORS ET SESSIONS  ---------------------------------------------
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_NAME = 'sessionid'  # Le nom du cookie de session
-SESSION_COOKIE_AGE = 3600  # Durée de vie du cookie (1h)
+SESSION_COOKIE_AGE = 86400  # Durée de vie du cookie (1h)
+SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_HTTPONLY = False  # Empêche l'accès au cookie via JavaScript
 SESSION_COOKIE_SAMESITE = 'Lax'
