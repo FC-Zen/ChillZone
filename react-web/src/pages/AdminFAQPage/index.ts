@@ -1,0 +1,1 @@
+export { AdminFAQPage } from './AdminFAQPage';

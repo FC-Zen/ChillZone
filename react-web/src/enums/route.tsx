@@ -15,5 +15,6 @@ export enum ROUTE {
   OWNER_MEALS = '/owner-meals',
   SUPER_ADMIN = '/super-admin',
   OWNER_MENUS = '/owner-menus',
-  SUPER_ADMIN_USERS = '/super-admin-users'
+  SUPER_ADMIN_USERS = '/super-admin-users',
+  ADMIN_FAQ = '/admin-faq'
 }

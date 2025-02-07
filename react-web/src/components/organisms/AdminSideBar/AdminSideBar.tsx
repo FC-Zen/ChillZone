@@ -53,11 +53,20 @@ export const AdminSideBar = () => {
         onClick={() => handleIconClick(ROUTE.ADMIN_ESTABLISHMENT)} // Ajustez cette route si nécessaire
       />
 
+      {/* FAQ */}
+      <NavigationButton
+        icon='FaqQuestion'
+        onClick={() => handleIconClick(ROUTE.ADMIN_FAQ)} // Ajustez cette route si nécessaire
+      />
+
       {/* Boutique */}
       <NavigationButton
         icon='Shop'
         onClick={() => handleIconClick(ROUTE.ADMIN_OWNERS)} // Ajustez cette route si nécessaire
       />
+
+
+      
     </div>
   );
 };

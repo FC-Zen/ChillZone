@@ -1,0 +1,16 @@
+.mainContainerBooking {
+    display: flex;
+    margin: auto;
+    padding-top: 1%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.table1-layout {
+    width: 70%;
+}
+
+.network-layout {
+    width: 25%;
+}

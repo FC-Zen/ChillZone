@@ -4,7 +4,7 @@ from chillzone.models import FAQ
 class FAQSerializer(serializers.ModelSerializer) :
     class Meta:
         model = FAQ
-        fields = ['pk', 'category', 'question', 'answer']
+        fields = ['id', 'category', 'question', 'answer']
 
 class AdminFAQSerializer(serializers.ModelSerializer):
     category = serializers.CharField(max_length=255)
@@ -13,4 +13,4 @@ class AdminFAQSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FAQ
-        fields = ['pk', 'category', 'question', 'answer']
+        fields = ['id', 'category', 'question', 'answer']

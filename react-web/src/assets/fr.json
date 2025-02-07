@@ -16,7 +16,8 @@
     "affiliates": "Lieux de restauration affiliés",
     "products": "Produits",
     "commands": "Commandes",
-    "menus": "Menus"
+    "menus": "Menus",
+    "faq" : "Gestion de la Foire aux questions"
   },
 
   "userGreeting": {
@@ -28,7 +29,8 @@
       "product": "Modifier le produit",
       "menu": "Modifier le menu",
       "room": "Modifier la salle",
-      "stock": "Modifier le stock du produit"
+      "stock": "Modifier le stock du produit",
+      "faq" : "Modifier la question-réponse"
     },
     "create": {
       "account": "Création d’un compte de test étudiant",
@@ -36,7 +38,8 @@
       "room": "Créer une salle",
       "floor": "Créer un étage",
       "product": "Créer un produit",
-      "menu": "Créer un menu"
+      "menu": "Créer un menu",
+      "faq" : "Créer une question-réponse"
     },
     "info": {
       "command": "Détails de la commande",
@@ -169,7 +172,8 @@
       "confirm": "Confirmer",
       "back": "Retour",
       "reset": "Réinitialiser",
-      "changeMap": "Changer de plan"
+      "changeMap": "Changer de plan",
+      "delete" : "Supprimer"
     },
     "add": {
       "generic": "Ajouter {{ entity }}",
@@ -177,7 +181,8 @@
       "room": "Ajouter une salle",
       "floor": "Ajouter un étage",
       "menu": "Ajouter un menu",
-      "product": "Ajouter un produit"
+      "product": "Ajouter un produit",
+      "faq" : "Ajouter une question"
     },
     "commands": {
       "stateReady": "La commande est prête",
@@ -378,6 +383,11 @@
         "acceptAccount": "Accepter ou Refuser le compte",
         "declineAccount": "Refuser le compte",
         "deleteRestaurantAccount": "Gérer le compte"
+      },
+      "faq" : {
+        "category": "Catégorie",
+        "question": "Question",
+        "answer": "Réponse"
       }
     }
   },

@@ -1,4 +1,4 @@
-.css-2lyh9o-MuiButtonBase-root-MuiButton-root{
+.css-1ccsd5i-MuiButtonBase-root-MuiButton-root{
     display: flex!important;
     background-color: #2e2a85 !important;
     color: white!important;
@@ -78,4 +78,13 @@
     white-space: normal !important;
     word-wrap: break-word  !important;
     overflow-wrap: break-word  !important;
+}
+
+.css-5qryqg-MuiInputBase-input-MuiInput-input.Mui-disabled {
+    opacity: 1;
+    -webkit-text-fill-color: rgb(27, 27, 27) !important;
+}
+
+.css-12fcghw-MuiInputBase-root-MuiInput-root.Mui-disabled:before {
+    border-bottom-style: none !important;
 }

@@ -1,0 +1,1 @@
+export { AdminFAQLayout } from './AdminFAQLayout';
