@@ -319,18 +319,43 @@ class AdminReservationConflictView(APIView):
             "reservations": reservation_serializer.data,
             "conflicts": conflict_serializer.data
         })
+    
+class AdminInfoView(APIView):
+    permission_classes = [IsAuthenticated & IsAdminUser]
+
+    def get(self, request, *args, **kwargs):
+        establishment = request.user.usermeta.establishment
+        establishment_serializer = AdminEstablishmentSerializer(establishment)
+
+        return Response({
+            "establishment": establishment_serializer.data,
+        })
+    
+    def put(self, request, *args, **kwargs):
+            """Update establishment details."""
+            establishment = request.user.usermeta.establishment
+
+            if not establishment:
+                return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
+
+            serializer = AdminEstablishmentSerializer(establishment, data=request.data, partial=True)
+
+            if serializer.is_valid():
+                serializer.save()
+                return self.get(request)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AdminMapView(APIView):
     permission_classes = [IsAuthenticated & IsAdminUser]
 
     def get(self, request, *args, **kwargs):
         establishment = request.user.usermeta.establishment
-        establishment_serializer = AdminEstablishmentSerializer(establishment)
+
         floors = MapFloor.objects.filter(map__establishment=establishment)
         floors_serializer = AdminMapFloorSerializer(floors, many=True)
 
         return Response({
-            "establishment": establishment_serializer.data,
             "floors": floors_serializer.data
         })
     

@@ -6,13 +6,7 @@ import { Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { HeaderIcon, Icon } from '@components/atoms';
 import { User } from '@hooks';
-
-type Floor = {
-  floor_id: number;
-  floor_number: number;
-  floor_name: string;
-  floor_plan: string;
-};
+import { Floor } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
 
 type AdminEstablishmentLayoutProps = {
   user : User | null;
@@ -20,14 +14,8 @@ type AdminEstablishmentLayoutProps = {
   form: InputField[];
   addAccount: (formData: FormData) => void;
   mapName: string;
-  mapImageSrc: string;
   onMapClick: (x: number, y: number) => void; 
-  floors: {
-    floor_id: number;
-    floor_number: number;
-    floor_name: string;
-    floor_plan: string;
-  }[];
+  floors: Floor[];
   selectedFloor: Floor | null;
   handleFloorClick: (id : number) => void;
   handleAddFloorClick: () => void;
@@ -39,7 +27,6 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
   form,
   addAccount,
   mapName,
-  mapImageSrc,
   onMapClick,
   floors,
   selectedFloor,
@@ -47,7 +34,6 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
   handleAddFloorClick
 }) => {
   const { t } = useTranslation();
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <AdminSideBar />
@@ -91,7 +77,10 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
                       {t('buttons.actions.changeMap')}
               </Button>
             </div>
-            <Map imageSrc={mapImageSrc} onClick={(onMapClick)} />
+            <Map 
+              onClick={(onMapClick)} 
+              selectedFloor={selectedFloor} 
+            />
           </div>
 
 

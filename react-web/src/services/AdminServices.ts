@@ -2,13 +2,6 @@ import axios from 'axios';
 import maps from '@assets/data/maps.json';
 import { getCSRFToken } from '@utils';
 
-export type Floor = {
-    floor_id: number;
-    floor_number: number;
-    floor_name: string;
-    floor_plan: string;
-}
-
 /* Types specifiques au dashboards admins  */
 export type MonthlyData = {
     month: number;
@@ -323,7 +316,7 @@ export const getConflictsaAndReservations = async () => {
  * 
  * @returns {Promise<Array>} Liste des salles.
  */
-export const getListInputsValues = async () => {
+export const getAdminMap = async () => {
     try {
         const response = await axios.get('http://localhost:3000/admin-map/', 
             { 
@@ -341,6 +334,33 @@ export const getListInputsValues = async () => {
         throw new Error(error.message);
     }
 };
+
+/**
+ * Récupère la liste des plans de l'établissement depuis l'API. ET FLOORS
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getAdminInfo = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/admin-info/', 
+            { 
+                withCredentials: true,
+                headers: {
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            } 
+            );
+            if (response.status == 200) {
+                return response.data;
+            }
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération des plans:", error.message);
+        throw new Error(error.message);
+    }
+};
+
 
 /**
  * Récupère la liste des restaurants affiliés

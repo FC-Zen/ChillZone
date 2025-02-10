@@ -2,17 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { Modal } from '@components/organisms';
 import { AdminEstablishmentLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
-import maps from '@assets/data/maps.json';
 import { useUser } from '@hooks';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import { getListInputsValues } from '@services/AdminServices';
+import { getAdminInfo, getAdminMap } from '@services/AdminServices';
+
 
 export type Floor = {
-    floor_id: number;
-    floor_number: number;
-    floor_name: string;
-    floor_plan: string;
+    id: number;
+    number: number;
+    name: string;
+    photo_link: string;
+    locations : MapLocation[];
 }
+
+export type MapLocation = {
+  id: number;
+  name: string;
+  description: string;
+  capacity: number;
+  status: boolean;
+  photo_link: string | null;
+  position_x: number;
+  position_y: number;
+};
+
 
 export const AdminEstablishmentPage: React.FC = () => {
   const { t } = useTranslation();
@@ -21,8 +34,8 @@ export const AdminEstablishmentPage: React.FC = () => {
   const [listInputsValues, setListInputsValues] = useState<Record<string, string>>({});
   const [listInputs, setListInputs] = useState<InputField[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [floors, setFloors] = useState<Floor[]>(maps);
-  const [selectedFloor, setSelectedFloor] = useState<Floor>(maps[0]);
+  const [floors, setFloors] = useState<Floor[]>([]);
+  const [selectedFloor, setSelectedFloor] = useState<Floor | null>(null);
   const [selectedCoords, setSelectedCoords] = useState<{ x: number, y: number } | null>(null);
 
   // Ajoutez un état pour forcer le re-rendu lors du fetch
@@ -60,7 +73,7 @@ export const AdminEstablishmentPage: React.FC = () => {
   };
 
   const handleFloorClick = (id: number) => {
-    const floor = floors.find(f => f.floor_id === id);
+    const floor = floors.find(f => f.id === id);
     if (floor) {
       setSelectedFloor(floor);
       console.log('Floor selected:', floor);
@@ -78,16 +91,44 @@ export const AdminEstablishmentPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchListInputsValues = async () => {
-        const values = await getListInputsValues();
-        setListInputsValues(values.establishment);
-        setRefreshKey(prevKey => prevKey + 1);  // Force le re-rendu
+    const fetchEstablishmentInfo = async () => {
+      try {
+        const establishment = await getAdminInfo();
+        setListInputsValues(establishment.establishment);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des informations d'établissement :", error);
+      }
     };
-    fetchListInputsValues();
+  
+    const fetchMapInfo = async () => {
+      try {
+        const map = await getAdminMap();
+        setFloors(map.floors);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des informations de la carte :", error);
+      }
+    };
+  
+    const fetchData = async () => {
+      await fetchEstablishmentInfo();
+      await fetchMapInfo();
+      setSelectedFloor(floors[0]);
+      setRefreshKey((prevKey) => prevKey + 1); // Force le re-rendu
+    };
+  
+    fetchData();
   }, []);
 
   useEffect(() => {
-    console.log(listInputsValues);
+    console.log(floors);
+    if (floors.length > 0) {
+        setSelectedFloor(floors[0]); // Sélectionne le premier étage lorsque les données sont disponibles
+        console.log(floors, floors[0]);
+      }
+  }, [floors]);
+  
+
+  useEffect(() => {
     setListInputs([
       {
         name: "name",
@@ -151,8 +192,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         form={listInputs}
         addAccount={handleSaveForm}
 
-        mapName={selectedFloor?.floor_name}
-        mapImageSrc={selectedFloor?.floor_plan}  
+        mapName={selectedFloor?.name ?? "undefined"}
         onMapClick={handleMapClick} 
 
         floors={floors}
