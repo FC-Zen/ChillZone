@@ -222,13 +222,13 @@
   },
 
   "days": {
-    "sunday": "Dimanche",
     "monday": "Lundi",
     "tuesday": "Mardi",
     "wednesday": "Mercredi",
     "thursday": "Jeudi",
     "friday": "Vendredi",
-    "saturday": "Samedi"
+    "saturday": "Samedi",
+    "sunday": "Dimanche"
   },
 
   "timeUnit": {

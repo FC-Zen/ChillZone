@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React from 'react';
+import { TouchableOpacityProps, View } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
 import { styles } from './style';
-import { CalendarHeader, TopBar } from '@components';
+import { Button, CalendarCell, CalendarHeader, Select, TopBar } from '@components';
 import 'dayjs/locale/fr';
 import { CalendarEvent } from '@services';
+import { useTranslation } from 'react-i18next';
+import { colors, typography } from '@theme';
 
 export type CalendarTemplateProps = {
     events: CalendarEvent[];
@@ -13,6 +15,11 @@ export type CalendarTemplateProps = {
     selectedDate: Date;
     setSelectedDate: (date: Date) => void;
     setStartOfWeek: (date: Date) => void;
+    selectState: 'open' | 'closed';
+    setSelectState: () => void;
+    selectedMonth: string;
+    setSelectedMonth: (month: string) => void;
+    monthNames: string[];
 };
 
 export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({ 
@@ -21,6 +28,11 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
     startOfWeek,
     selectedDate,
     setStartOfWeek,
+    selectState,
+    setSelectState,
+    selectedMonth,
+    setSelectedMonth,
+    monthNames,
 }) => {
     const customHeader = () => {
         return (
@@ -30,11 +42,29 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                 selectedDate={selectedDate}
             />
         );
-    }
+    };
 
     return (
         <>
             <TopBar />
+            <View style={styles.rowContainer}>
+                <Select
+                    items={monthNames}
+                    selectedValue={selectedMonth}
+                    setSelectedValue={setSelectedMonth}
+                    state={selectState}
+                    setState={setSelectState}
+                />
+                <Button
+                    title="ADE"
+                    onPress={() => console.log('open overlay')}
+                    variant='icon'
+                    icon={{ name: 'Chain', color: colors.white, width: 16, height: 16 }}
+                    style={styles.calendarLinkButton}
+                    textFont={typography.h2.fontFamily}
+                    textSize={typography.h3.fontSize}
+                />
+            </View>
             <View style={styles.container}>
                 <View style={styles.calendar}>
                     <Calendar
@@ -53,11 +83,11 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                         hourStyle={styles.hourStyle}
                         minHour={7}
                         maxHour={20}
-                        onPressEvent={(event) => console.log(event)}
+                        onPressEvent={(event) => { console.log(event) }}
                         renderHeader={customHeader}
-                        // On change la date de début de la semaine lorsqu'on swipe vers la gauche ou la droite
-                        // On soustrait 2 jours pour obtenir le début de la semaine (peut-être à changer)
-                        onSwipeEnd={(date) => setStartOfWeek(new Date(date.setDate(date.getDate() - 2)))}
+                        eventCellTextColor={colors.white}
+                        renderEvent={(event, TouchableOpacityProps) => <CalendarCell event={event} touchableOpacityProps={TouchableOpacityProps} brutEvents={events} />}
+                        onSwipeEnd={(date) => setStartOfWeek(date)}
                     />
                 </View>
             </View>

@@ -19,11 +19,35 @@ export const styles = StyleSheet.create({
     },
     calendarEvent: { 
         backgroundColor: colors.resolutionBlue, 
-        borderRadius: 5,
+        borderRadius: 8,
+        fontSize: 28,
     },
     calendarCell: { 
         borderColor: "white", 
         backgroundColor: "white" ,
         marginBottom: 0,
+    },
+    eventText: {
+        fontSize: typography.h1.fontSize,
+        fontFamily: typography.h1.fontFamily,
+    },
+    eventCell: {
+        backgroundColor: colors.resolutionBlue,
+        padding: 10,
+    },
+    calendarLinkButton: {
+        width: 'auto',
+        borderRadius: 8,
+        backgroundColor: colors.resolutionBlue,
+        paddingVertical: 0,
+        paddingHorizontal: 20,
+    },
+    rowContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        height: 'auto',
+        width: '100%',
     },
 });
