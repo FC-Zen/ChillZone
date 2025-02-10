@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Image, Platform } from 'react-native';
+import React from 'react';
+import { View, Image, Platform, TouchableWithoutFeedback } from 'react-native';
 import { IconWithText, NavigationBar } from '@components/molecules';
 import { styles } from './style';
 import { colors } from '@theme';
@@ -11,30 +11,59 @@ type NavigationTemplateProps = {
   imageSource: any;
   selectedFloor: string;
   onSelectFloor: (floor: string) => void;
+  onImagePress?: (event: any) => void;
+  imageRef?: React.RefObject<any>;
 };
 
 export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
   imageSource,
   selectedFloor,
   onSelectFloor,
+  onImagePress,
+  imageRef,
 }) => {
   const { t } = useTranslation();
 
   return (
     <View style={styles.cont}>
-      <GestureHandlerRootView style={styles.zoomableContainer}>
-        <Zoomable
-          isDoubleTapEnabled
-          minScale={1}
-          maxScale={3}
-          style={styles.image}
+      <GestureHandlerRootView
+        style={[
+          styles.zoomableContainer,
+          Platform.OS === 'android' && {
+            overflow: 'hidden',
+          },
+        ]}
+      >
+        <View
+          style={[
+            styles.zoomableWrapper,
+            Platform.OS === 'android' && {
+              overflow: 'hidden',
+            },
+          ]}
         >
-          <Image
-            source={imageSource}
-            style={styles.image}
-            resizeMode="contain"
-          />
-        </Zoomable>
+          <Zoomable
+            isDoubleTapEnabled
+            minScale={1}
+            maxScale={3}
+            style={[styles.image, { overflow: 'hidden' }]}
+          >
+            <TouchableWithoutFeedback onPress={onImagePress}>
+              <Image
+                ref={imageRef}
+                source={imageSource}
+                style={[
+                  styles.image,
+                  Platform.OS === 'android' && {
+                    width: '100%',
+                    height: '100%',
+                  },
+                ]}
+                resizeMode="contain"
+              />
+            </TouchableWithoutFeedback>
+          </Zoomable>
+        </View>
       </GestureHandlerRootView>
 
       <View style={styles.bottomContainer}>

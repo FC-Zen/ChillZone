@@ -54,4 +54,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  zoomableWrapper: {
+    flex: 1,
+    position: 'relative',
+  },
 });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View } from 'react-native';
 import { styles } from './style';
 import {
@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 export const NavigationScreen = () => {
   const [selectedFloor, setSelectedFloor] = useState('RDC');
-
+  const imageRef = useRef(null);
   const { t } = useTranslation();
 
   const floorImages: { [key: string]: any } = {
@@ -20,6 +20,15 @@ export const NavigationScreen = () => {
     Floor1: floor1,
     Floor2: floor2,
     Floor3: floor3,
+  };
+
+  const handleImagePress = (event: any) => {
+    const { locationX, locationY } = event.nativeEvent;
+
+    console.log('Coordonnées du clic :', {
+      x: Math.round(locationX),
+      y: Math.round(locationY),
+    });
   };
 
   return (
@@ -35,6 +44,8 @@ export const NavigationScreen = () => {
         imageSource={floorImages[selectedFloor]}
         selectedFloor={selectedFloor}
         onSelectFloor={setSelectedFloor}
+        onImagePress={handleImagePress}
+        imageRef={imageRef}
       />
 
       <BottomNavbar activeIcon="Navigation" />
