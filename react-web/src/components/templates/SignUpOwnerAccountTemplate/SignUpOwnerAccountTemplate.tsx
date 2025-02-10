@@ -69,8 +69,7 @@ export const SignUpOwnerAccountTemplate: React.FC<SignUpOwnerAccountTemplateProp
       <Input icon="Envelope" name={fields.email.name} label={fields.email.label} required={true} onInputChange={handleInputChange} value={formData.email}/>
       <Input icon="Phone" name={fields.phone.name} label={fields.phone.label} required={true} onInputChange={handleInputChange} value={formData.phone}/>
       <Input icon="User" type="password" name={fields.password.name} label={fields.password.label} required={true} onInputChange={handleInputChange} value={formData.password}/>
-      <Input icon="User" type="password" name={fields.verify_password.name} label={fields.verify_password.label} required={true} onInputChange={handleInputChange} value={formData.verify_password}/>
-
+      <Input icon="User" type="password" name={fields.password_verified.name} label={fields.password_verified.label} required={true} onInputChange={handleInputChange} value={formData.password_verified}/>
 
       <Button title={buttonTitle} onclick={onSubmitButton} variant="primary" />
     </Container>

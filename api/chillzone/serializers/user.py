@@ -238,7 +238,7 @@ class OwnerCreateSerializer(serializers.Serializer):
     restauration_type = serializers.ChoiceField(choices=RestaurationPlace.TYPE_CHOICES)
     opening_time = serializers.TimeField()
     closing_time = serializers.TimeField()
-    email_restaurant = serializers.EmailField()
+    phone_restaurant = serializers.CharField(max_length=10, required=False, allow_null=True, allow_blank=True)
     photo_link = serializers.ImageField(required=False, allow_null=True)
 
     # Établissements affiliés

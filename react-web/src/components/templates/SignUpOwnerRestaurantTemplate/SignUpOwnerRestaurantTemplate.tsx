@@ -4,6 +4,7 @@ import { Logo, Header } from '@components/atoms';
 import { Box, Container } from '@mui/material';
 import { RadioButtons } from '@components/organisms/RadioButtons';
 import { FileInput } from '@components/molecules/FileInput';
+import { StyledSelect } from '@components/molecules';
 
 type SignUpOwnerRestaurantTemplateProps = {
   title: string; 
@@ -11,10 +12,12 @@ type SignUpOwnerRestaurantTemplateProps = {
   buttonBackTitle : string;
   onSubmitButton: () => void;
   onBackButton: () => void;
-  handleInputChange: (name: string, value: string) => void;
+  handleInputChange: (name: string, value: any) => void;
+  handleFileChange: (file: File) => void;
   fields: any;
   formData : any;
   options : { value: string; label: string }[]; 
+  optionsEstablishments : { id : number ; name : string }[]; 
 };
 
 export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTemplateProps> = ({
@@ -24,9 +27,11 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
   onSubmitButton,
   onBackButton,
   handleInputChange,
+  handleFileChange,
   fields,
   formData,
-  options
+  options,
+  optionsEstablishments
 }) => {
   return (
     <div
@@ -75,57 +80,57 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
 
       <Input
         icon="User"
-        name={fields.restauration_place_name.name}
-        label={fields.restauration_place_name.label}
+        name={fields.name.name}
+        label={fields.name.label}
         required={true}
         onInputChange={handleInputChange}
-        value={formData.restauration_place_name}
+        value={formData.name}
       />
 
       <Input
         icon="Browser"
         type="textarea"
-        name={fields.restauration_place_description.name}
-        label={fields.restauration_place_description.label}
+        name={fields.description.name}
+        label={fields.description.label}
         required={true}
         onInputChange={handleInputChange}
-        value={formData.restauration_place_description}
+        value={formData.description}
       />
 
       <Box sx={{ display: 'flex', gap: 2, width : '100%' }}>
         <Input
           icon="Phone"
           type="time"
-          name={fields.restauration_place_opening_time.name}
-          label={fields.restauration_place_opening_time.label}
+          name={fields.opening_time.name}
+          label={fields.opening_time.label}
           required={true}
           onInputChange={handleInputChange}
-          value={formData.restauration_place_opening_time}
+          value={formData.opening_time}
         />
 
         <Input
           icon="Phone"
           type="time"
-          name={fields.restauration_place_closing_time.name}
-          label={fields.restauration_place_closing_time.label}
+          name={fields.closing_time.name}
+          label={fields.closing_time.label}
           required={true}
           onInputChange={handleInputChange}
-          value={formData.restauration_place_closing_time}
+          value={formData.closing_time}
         />
       </Box>
 
       <Input
         icon="Location"
-        name={fields.restauration_place_location.name}
-        label={fields.restauration_place_location.label}
+        name={fields.location.name}
+        label={fields.location.label}
         required={true}
         onInputChange={handleInputChange}
-        value={formData.restauration_place_location}
+        value={formData.location}
       />
 
       <RadioButtons 
-          label={fields.restauration_place_type.label} 
-          name={fields.restauration_place_type.name} 
+          label={fields.restauration_type.label} 
+          name={fields.restauration_type.name} 
           options={options} 
           onInputChange={handleInputChange} 
       />
@@ -133,23 +138,29 @@ export const SignUpOwnerRestaurantTemplate: React.FC<SignUpOwnerRestaurantTempla
       <Input
         icon="Phone"
         type="tel"
-        name={fields.restauration_place_phone.name}
-        label={fields.restauration_place_phone.label}
+        name={fields.phone_restaurant.name}
+        label={fields.phone_restaurant.label}
         required={true}
         onInputChange={handleInputChange}
-        value={formData.restauration_place_photo_phone}
+        value={formData.phone_restaurant}
       />
 
-      <Input
-        icon="Location"
-        name={fields.link_to_establishment.name}
-        label={fields.link_to_establishment.label}
-        required={true}
-        onInputChange={handleInputChange}
-        value={formData.link_to_establishment}
+      <StyledSelect
+          icon="Location"
+          name={fields.establishments.name}
+          label={fields.establishments.label}
+          required={true}
+          onValueChange={handleInputChange}
+          value={formData.establishments}
+          options={optionsEstablishments}
       />
 
-
+      <FileInput
+          key={0}
+          id={0}   
+          value={formData.photo_link}
+          onFileChange={handleFileChange}    
+      />
 
 
       <Box sx={{ display: 'flex', gap: 2, width : '100%', justifyContent: 'center' }}>

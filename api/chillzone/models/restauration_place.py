@@ -21,7 +21,7 @@ class RestaurationPlace(models.Model):
 
     status = models.BooleanField(default=False)
 
-    email = models.EmailField()
+    phone = models.CharField(max_length=10, blank=True, null=True)
 
     photo_link = models.ImageField(null=True, blank=True) 
     
