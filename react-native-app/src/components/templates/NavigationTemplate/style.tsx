@@ -1,4 +1,4 @@
-import { colors } from '@theme';
+import { colors, layout } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -6,20 +6,16 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     width: '100%',
   },
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   image: {
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.black,
     width: 350,
-    height: 530,
+    height: layout.window.height * 0.6,
   },
   iconContainer: {
     position: 'absolute',
-    bottom: -5,
+    bottom: -25,
     right: 0,
     width: '38%',
     paddingVertical: 6,
@@ -30,7 +26,10 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 8,
     paddingHorizontal: 10,
   },
-  scrollView: { marginTop: -40, marginBottom: 40 },
+  scrollView: {
+    position: 'relative',
+    width: '100%',
+  },
   scrollContainer: {
     alignItems: 'center',
     justifyContent: 'center',

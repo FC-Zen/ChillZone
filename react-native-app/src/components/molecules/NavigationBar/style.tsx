@@ -29,9 +29,7 @@ export const styles = StyleSheet.create({
     fontFamily: typography.h1.fontFamily,
   },
   navBarBottom: {
-    position: 'absolute',
-    bottom: -10,
-    left: 0,
-    right: 0,
+    position: 'relative',
+    bottom: -34,
   },
 });

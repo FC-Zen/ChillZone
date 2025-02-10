@@ -25,7 +25,11 @@ export const NavigationScreen = () => {
   return (
     <View style={styles.container}>
       <TopBar />
-      <PageHeader title={t('headers.map')} variant="default" />
+      <PageHeader
+        title={t('headers.map')}
+        variant="default"
+        style={{ marginBottom: -30 }}
+      />
 
       <NavigationTemplate
         imageSource={floorImages[selectedFloor]}
