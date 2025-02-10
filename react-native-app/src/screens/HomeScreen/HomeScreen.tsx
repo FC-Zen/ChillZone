@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { TopBar } from '@components/molecules/TopBar';
 import { BottomNavbar, SnackBar } from '@components/molecules';
-import { useNextBooking, useUser } from '@contexts';
+import { useNextBooking, UserContext } from '@contexts';
 import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
 import { styles } from './style';
 import { transformBookings } from '@services';
@@ -13,7 +13,8 @@ import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 
 export const HomeScreen: React.FC = () => {
-  const { userName } = useUser();
+  const userContext = UserContext.getInstance();
+  const userName = userContext.getUsername();
   let items = [transformBookings()];
   const { t } = useTranslation();
   const navigation = useNavigation();

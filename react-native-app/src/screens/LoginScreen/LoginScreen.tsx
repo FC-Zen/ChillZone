@@ -7,7 +7,7 @@ import { logoIUT } from '@assets/Images';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
-import { useUser } from '@contexts/AppContrext';
+import { UserContext } from '@contexts';
 
 export const LoginScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -15,7 +15,6 @@ export const LoginScreen: React.FC = () => {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [isChecked, setChecked] = useState(false);
-  const { setUserName } = useUser();
 
   const [authResult, setAuthResult] = useState<{
     severity: 'success' | 'error';
@@ -43,7 +42,10 @@ export const LoginScreen: React.FC = () => {
       setAuthResult({ severity: 'success', message: result.message });
 
       const userName = inputEmail;
-      setUserName(userName);
+      if(result.data) {
+        const userContext = UserContext.getInstance();
+        userContext.setUser(result.data);
+      }
       navigation.navigate(ROUTE.HOME);
     } catch (error) {
       const errorMessage =
