@@ -21,6 +21,7 @@ import {
 } from '@pages';
 import { UserProvider } from '@hooks/UserContext/UserContext';
 import { ProtectedRoute } from '@navigation';
+import 'leaflet/dist/leaflet.css';
 
 function App() {
 

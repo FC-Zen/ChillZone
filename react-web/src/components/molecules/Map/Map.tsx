@@ -1,12 +1,24 @@
+import { Floor } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
 import { colors } from '@theme';
 import React, { useState, useRef, useEffect } from 'react';
 
 type MapProps = {
-    imageSrc: string;
+    selectedFloor: Floor | null;
     onClick: (x: number, y: number) => void;
 };
 
-export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
+export type MapLocation = {
+    id: number;
+    name: string;
+    description: string;
+    capacity: number;
+    status: boolean;
+    photo_link: string | null;
+    position_x: number;
+    position_y: number;
+};
+
+export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
     // sur l'image
     const [initialScale, setInitialScale] = useState(1);
     const [zoomScale, setZoomScale] = useState(1);
@@ -17,7 +29,17 @@ export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
     const imageRef = useRef<HTMLImageElement>(null);
     const dragging = useRef(false);
     const startCoords = useRef({ x: 0, y: 0 });
+
+    const [photoLink, setPhotoLink] = useState<string>("");
+    const [locations, setLocations] = useState<MapLocation[]>([])
     
+    useEffect(() => {
+        if (selectedFloor) {
+            setPhotoLink(selectedFloor.photo_link ? `http://localhost:3000${selectedFloor.photo_link}` : "");
+            setLocations(selectedFloor.locations);
+        }
+    }, [selectedFloor]);
+
     useEffect(() => {
         if (containerRef.current && imageRef.current) {
             // DELIMITER LA TAILLE DE LIMAGE SELON LA DIV PARENT
@@ -34,7 +56,7 @@ export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
 
             setZoomScale(initialScale); 
         }
-    }, [imageSrc]); 
+    }, [photoLink]); 
     
     // Gestion du zoom
     const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -85,10 +107,10 @@ export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
     };
-    
 
     // Récupération des coordonnées X, Y sur l'image
     const handleImageClick = (e: React.MouseEvent<HTMLImageElement>) => {
+        console.log(imageRef);
         if (!imageRef.current || !containerRef.current) return;
 
         const rect = imageRef.current.getBoundingClientRect();
@@ -114,29 +136,29 @@ export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
             border : "solid 3px",
             borderColor : colors.resolutionBlue
         }}
-        >
-        <div
-            style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            transformOrigin: 'top left',
-            transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoomScale})`,
-            }}
-        >
-            <img
-            ref={imageRef}
-            src={imageSrc}
-            alt="Map"
-            onClick={handleImageClick}
-            style={{
-                display: 'block',
-                userSelect: 'none',
-                maxWidth: 'none',
-                maxHeight: 'none',
-            }}
-            />
-        </div>
+            >
+            <div
+                style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                transformOrigin: 'top left',
+                transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoomScale})`,
+                }}
+            >
+                <img
+                ref={imageRef}
+                src={photoLink}
+                alt="Map"
+                onClick={handleImageClick}
+                style={{
+                    display: 'block',
+                    userSelect: 'none',
+                    maxWidth: 'none',
+                    maxHeight: 'none',
+                }}
+                />
+            </div>
         </div>
     );
 };
