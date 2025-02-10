@@ -1,5 +1,5 @@
 export { translationService } from './translationService';
-export { authenticateUser } from './AuthentificationServices';
+export { authenticateUser, logoutUser } from './AuthentificationServices';
 export {
   transformBookings,
   BookingOverlay,

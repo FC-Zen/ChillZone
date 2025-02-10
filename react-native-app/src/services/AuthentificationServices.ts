@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { z } from 'zod';
+import { SessionContext } from '@contexts';
 
 // Exemples d'authentification
 const validEmail = 'user@example.com';
@@ -14,28 +15,110 @@ const validEmails = ['user@example.com', 'admin@example.com'];
  *
  * @returns {Promise<Object>} résultat de l'authentification.
  */
-export const authenticateUser = async (formData: {
-  login: string;
-  password: string;
-}) => {
+export const authenticateUser = async (formData: { login: string; password: string; }) => {console.log("🔴 Application en arrière-plan ou fermée. Déconnexion...");
   try {
-    /* Envoi des données d'authentification à l'API
-    const response = await axios.post( URL , {
-      login: formData.login,
-      password: formData.password,
-    });
-    */
-    // Vérifie si la réponse indique une réussite - SIMULATION
-    if (formData.login == validEmail && formData.password == validPassword) {
-      console.log('Authentification réussie pour:', formData.login);
-      return { success: true, message: 'Connexion réussie !' };
+    const response = await axios.post(
+      "http://192.168.1.80:3000/login/",
+      { login: formData.login, password: formData.password },
+      { withCredentials: true }
+    );
+
+    console.log("Réponse API : ",response);
+    console.log("Type d'utilisateur : ",response.data.type);
+    console.log("Data User: ", response.data);
+
+    if (response.status === 200) {
+      if (response.data.type !== "user") {
+        return { success: false, message: "Connexion non autorisée", data: null };
+      } else {
+        // 🔹 Récupérer les cookies `sessionid` et `csrftoken`
+        const setCookieHeader = response.headers["set-cookie"]?.[0].split(/[,;]\s*/);
+        console.log("Set-Cookie Header:", setCookieHeader);
+
+        let sessionId: string | null = null;
+        let csrfToken: string | null = null;
+
+        if (setCookieHeader && Array.isArray(setCookieHeader)) {
+          setCookieHeader.forEach((cookie) => {
+            // Vérification du cookie "sessionid"
+            if (cookie.startsWith("sessionid=")) {
+              sessionId = cookie.split(";")[0].split("=")[1];
+            }
+
+            // Vérification du cookie "csrftoken"
+            if (cookie.startsWith("csrftoken=")) {
+              csrfToken = cookie.split(";")[0].split("=")[1];
+            }
+          });
+        }
+
+        console.log("Session ID:", sessionId);
+        console.log("CSRF Token:", csrfToken);
+
+        // 🔹 Stocker les valeurs dans le `SessionContext`
+        if (sessionId && csrfToken) {
+          const sessionContext = SessionContext.getInstance();
+          sessionContext.setSession(sessionId, csrfToken);
+        }
+
+        return { success: true, message: "Connexion réussie !", data: response.data };
+      }
+    } else if (response.status === 403) {
+      return { success: false, message: "Vous êtes déjà connectés", data: null };
+    } else if (response.status === 404) {
+      return { success: false, message: "Identifiants incorrects", data: null };
     } else {
-      throw new Error('Email ou mot de passe incorrect');
+      throw new Error("Erreur de connexion");
     }
   } catch (error: any) {
+    console.error("Erreur lors de l'authentification:", error.message);
     throw new Error(error.message);
   }
 };
+
+/**
+ * Déconecte un utilisateur.
+ *
+ * @throws {Error} Si le CSRF Token est manquant ou qu'il y a un problème lors de la déconnexion.
+ *
+ * @returns {Promise<Object>} résultat de la déconnexion.
+ */
+export const logoutUser = async () => {
+  try {
+    // 🔹 Récupération du CSRF Token depuis le SessionContext
+    const sessionContext = SessionContext.getInstance();
+    const csrfToken = sessionContext.getCsrfToken();
+
+    console.log("CSRF Token:", csrfToken); 
+
+    if (!csrfToken) {
+      return { success: false, message: "CSRF Manquant." };
+    }
+
+    // 🔹 Requête DELETE pour la déconnexion
+    const response = await axios.delete("http://192.168.1.80:3000/login/", {
+      withCredentials: true,
+      headers: {
+        "X-CSRFToken": csrfToken,
+      },
+    });
+
+    if (response.status === 204) {
+      console.log("Utilisateur déconnecté avec succès.");
+
+      // 🔹 Suppression des valeurs stockées dans SessionContext
+      sessionContext.clearSession();
+
+      return { success: true, message: "Déconnexion réussie." };
+    } else {
+      throw new Error("Échec de la déconnexion.");
+    }
+  } catch (error: any) {
+    console.error("Erreur lors de la déconnexion :", error.message);
+    throw new Error(error.message);
+  }
+};
+
 
 /**
  * Envoie un email pour la récupération du mot de passe.
