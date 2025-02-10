@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './style';
 import { Icon } from '@components/atoms';
-import { date } from 'zod';
 
 export type NotificationPopupProps = {
   title: string;

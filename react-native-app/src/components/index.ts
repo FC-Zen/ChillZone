@@ -63,4 +63,5 @@ export {
   CartTemplate,
   CommandSummaryTemplate,
   NavigationTemplate,
+  CalendarTemplate,
 } from './templates';
