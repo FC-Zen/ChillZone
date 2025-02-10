@@ -1,3 +1,4 @@
+import { Pin } from '@components';
 import { Floor } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
 import { colors } from '@theme';
 import React, { useState, useRef, useEffect } from 'react';
@@ -17,6 +18,8 @@ export type MapLocation = {
     position_x: number;
     position_y: number;
 };
+
+
 
 export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
     // sur l'image
@@ -52,11 +55,15 @@ export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
 
             const scaleWidth = containerWidth / imageWidth;
             const scaleHeight = containerHeight / imageHeight;
-            setInitialScale(Math.min(scaleWidth, scaleHeight));
+            const newInitialScale = Math.min(scaleWidth, scaleHeight);
 
-            setZoomScale(initialScale); 
+            setInitialScale(newInitialScale);
         }
     }, [photoLink]); 
+
+    useEffect(() => {
+        setZoomScale(initialScale);
+    }, [initialScale]);
     
     // Gestion du zoom
     const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -122,43 +129,57 @@ export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
 
     return (
         <div
-        ref={containerRef}
-        onWheel={handleWheel}
-        onMouseDown={handleMouseDown}
-        style={{
-            position: 'relative',
-            width: '100%',
-            height: '70vh',
-            overflow: 'hidden',
-            cursor: 'grab',
-            background: '#f0f0f0',
-            borderRadius : "20px",
-            border : "solid 3px",
-            borderColor : colors.resolutionBlue
-        }}
-            >
+            ref={containerRef}
+            onWheel={handleWheel}
+            onMouseDown={handleMouseDown}
+            style={{
+                position: 'relative',
+                width: '100%',
+                height: '70vh',
+                overflow: 'hidden',
+                cursor: 'grab',
+                background: '#f0f0f0',
+                borderRadius: "20px",
+                border: "solid 3px",
+                borderColor: colors.resolutionBlue
+            }}
+        >
             <div
                 style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                transformOrigin: 'top left',
-                transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoomScale})`,
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    transformOrigin: 'top left',
+                    transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoomScale})`,
                 }}
             >
                 <img
-                ref={imageRef}
-                src={photoLink}
-                alt="Map"
-                onClick={handleImageClick}
-                style={{
-                    display: 'block',
-                    userSelect: 'none',
-                    maxWidth: 'none',
-                    maxHeight: 'none',
-                }}
+                    ref={imageRef}
+                    src={photoLink}
+                    alt="Map"
+                    onClick={handleImageClick}
+                    style={{
+                        display: 'block',
+                        userSelect: 'none',
+                        maxWidth: 'none',
+                        maxHeight: 'none',
+                    }}
                 />
             </div>
+            {locations.map(location => {
+                const pinX = (location.position_x * zoomScale) + offsetX;
+                const pinY = (location.position_y * zoomScale) + offsetY;
+
+                return (
+                    <Pin
+                        key={location.id}
+                        x={pinX}
+                        y={pinY}
+                        name={location.name}
+                        onClick={() => console.log(`Clicked on ${location.name}`)} // Handle pin click
+                    />
+                );
+            })}
         </div>
     );
 };

@@ -6,6 +6,7 @@ export { SnackBar } from './SnackBar';
 export { CustomSwitch } from './Switch';
 export { StatCard } from './StatCard';
 export { NavigationButton } from './NavigationButton';
+export { Pin } from './Pin';
 export { ModalHeader } from './ModalHeader';
 export { Map } from './Map';
 export { StyledSelect } from './Select';
