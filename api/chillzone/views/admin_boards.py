@@ -243,7 +243,7 @@ class AdminLocationView(generics.ListAPIView):
             
             floor = MapFloor.objects.filter(id=request.data.get("id_floor")).first()
             if not floor:
-                return Response({"error": f"Type '{request.data.get("id_floor")}' not found."}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": f"Type '{request.data.get('id_floor')}' not found."}, status=status.HTTP_404_NOT_FOUND)
 
             location = Location.objects.create(
                 name=serializer.validated_data['name'],
