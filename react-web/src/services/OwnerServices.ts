@@ -203,3 +203,41 @@ export const updateMenu = async (formData: FormData): Promise<any> => {
     throw new Error(error.message);
   }
 };
+
+/**
+ * Récupère la liste des établissements depuis l'API.
+ * 
+ * @throws {Error} Si la requête échoue.
+ * @returns {Promise<Array>} Liste des commandes.
+ */
+export const getEstablishments = async () => {
+  try {
+      const response = await axios.get('http://localhost:3000/create-owner-account/', 
+      );
+      if (response.status == 200) {
+          return response.data;
+      }
+  } catch (error: any) {
+    console.error('Erreur lors de la récupération des commandes:', error.message);
+    throw new Error(error.message);
+  }
+};
+
+/**
+ * Ajoute une salle en envoyant une requête POST à l'API.
+ *
+ * @param {Object} formData - Les informations de la salle à ajouter.
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Object>} Réponse de l'API.
+ */
+export const addOwnerInscription = async (formData: FormData): Promise<any> => {
+  try {
+      const response = await axios.post('http://localhost:3000/create-owner-account/', formData);
+      console.log('Réponse de l\'API:', response);
+      return response.data;
+  } catch (error: any) {
+    console.error('Erreur lors de la récupération des repas:', error.message);
+    throw new Error(error.message);
+  }
+};

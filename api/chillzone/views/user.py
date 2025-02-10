@@ -212,7 +212,7 @@ class OwnerCreateView(APIView):
     def get(self, request):
         establishments = Establishment.objects.all()
         serializer = OwnerEstablishmentSerializer(establishments, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"establishments" : serializer.data}, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = OwnerCreateSerializer(data=request.data)
@@ -241,7 +241,7 @@ class OwnerCreateView(APIView):
                 restauration_type=validated_data['restauration_type'],
                 opening_time=validated_data['opening_time'],
                 closing_time=validated_data['closing_time'],
-                email=validated_data['email_restaurant'],
+                phone=validated_data['phone_restaurant'],
                 photo_link=validated_data.get('photo_link', None),
                 status=False,
                 is_valid=False
