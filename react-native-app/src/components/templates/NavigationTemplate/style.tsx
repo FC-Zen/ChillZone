@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: 30,
   },
   image: {
     borderRadius: 10,
@@ -30,5 +29,10 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
     paddingHorizontal: 10,
+  },
+  scrollView: { marginTop: -40, marginBottom: 40 },
+  scrollContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

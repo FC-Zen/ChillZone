@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, ScrollView } from 'react-native';
 import { IconWithText, NavigationBar } from '@components/molecules';
 import { styles } from './style';
 import { colors } from '@theme';
@@ -20,9 +20,13 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
 
   return (
     <View style={styles.cont}>
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContainer}
+      >
         <Image source={imageSource} style={styles.image} />
-      </View>
+      </ScrollView>
+
       <NavigationBar
         onSelectFloor={onSelectFloor}
         selectedFloor={selectedFloor}
