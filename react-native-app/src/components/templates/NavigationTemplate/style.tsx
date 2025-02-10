@@ -3,9 +3,19 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   cont: {
-    backgroundColor: colors.white,
     width: '100%',
+    backgroundColor: colors.white,
     gap: 20,
+  },
+  zoomableContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: layout.window.height * 0.6,
+    gap: 10,
+    overflow: 'hidden',
+    maxHeight: layout.window.height * 0.6,
+    maxWidth: '100%',
   },
   image: {
     borderRadius: 10,
@@ -13,6 +23,13 @@ export const styles = StyleSheet.create({
     borderColor: colors.black,
     width: 350,
     height: layout.window.height * 0.6,
+    overflow: 'hidden',
+  },
+  zoomable: {
+    width: 'auto',
+    height: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   iconContainer: {
     width: 'auto',
