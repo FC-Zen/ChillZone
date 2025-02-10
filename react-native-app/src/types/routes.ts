@@ -24,6 +24,7 @@ export type RootStackParamList = {
   [ROUTE.CART]: undefined;
   [ROUTE.ALERT]: undefined;
   [ROUTE.COMMAND_SUMMARY]: undefined;
+  [ROUTE.CALENDAR]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
@@ -48,6 +49,7 @@ export type RouteParamList = {
   CartScreen: undefined;
   AlertScreen: undefined;
   CommandSummaryScreen: undefined;
+  CalendarScreen: undefined;
 };
 
 // Typage des propriétés des écrans

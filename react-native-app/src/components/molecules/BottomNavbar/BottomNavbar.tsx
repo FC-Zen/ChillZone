@@ -56,7 +56,7 @@ export const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeIcon }) => {
         break;
       case 'Calendar':
         console.log('Calendar');
-        // navigation.navigate(ROUTE.CALENDAR);
+        navigation.navigate(ROUTE.CALENDAR);
         break;
       case 'Navigation':
         console.log('Navigation');

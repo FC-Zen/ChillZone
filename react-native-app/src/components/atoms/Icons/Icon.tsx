@@ -30,9 +30,11 @@ export const Icon: FC<IconProps> = ({
     return null;
   }
 
-  return (
+  return onPress ? (
     <TouchableOpacity onPress={onPress}>
-      <SelectedIcon {...props} width={width} height={height} />
+      <SelectedIcon height={height} width={width} {...props} />
     </TouchableOpacity>
+  ) : (
+    <SelectedIcon height={height} width={width} {...props} />
   );
 };

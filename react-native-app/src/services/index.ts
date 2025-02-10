@@ -32,3 +32,8 @@ export {
   getCommands,
   getCommandById,
  } from './CommandServices';
+export { 
+  getCalendarEvents, 
+  Calendar, 
+  CalendarEvent 
+} from './CalendarServices';
