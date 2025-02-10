@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
   cont: {
     backgroundColor: colors.white,
     width: '100%',
+    gap: 20,
   },
   image: {
     borderRadius: 10,
@@ -14,11 +15,8 @@ export const styles = StyleSheet.create({
     height: layout.window.height * 0.6,
   },
   iconContainer: {
-    position: 'absolute',
-    bottom: -25,
-    right: 0,
-    width: '38%',
-    paddingVertical: 6,
+    width: 'auto',
+    paddingVertical: 8,
     backgroundColor: colors.resolutionBlue,
     justifyContent: 'center',
     alignItems: 'center',
@@ -27,11 +25,16 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   scrollView: {
-    position: 'relative',
     width: '100%',
   },
   scrollContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bottomContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

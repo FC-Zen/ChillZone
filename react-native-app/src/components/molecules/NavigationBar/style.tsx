@@ -7,16 +7,15 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: '100%',
   },
-  navigationBarContainer: {
-    position: 'absolute',
-  },
   navBar: {
     flexDirection: 'row',
-    width: '60%',
+    width: 'auto',
     backgroundColor: colors.resolutionBlue,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     borderTopRightRadius: 8,
+    gap: 14,
+    paddingHorizontal: 10,
   },
   navItem: {
     color: colors.white,
@@ -30,6 +29,5 @@ export const styles = StyleSheet.create({
   },
   navBarBottom: {
     position: 'relative',
-    bottom: -34,
   },
 });

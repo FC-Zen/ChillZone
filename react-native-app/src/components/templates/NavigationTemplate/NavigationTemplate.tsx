@@ -27,21 +27,23 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
         <Image source={imageSource} style={styles.image} />
       </ScrollView>
 
-      <NavigationBar
-        onSelectFloor={onSelectFloor}
-        selectedFloor={selectedFloor}
-      />
-      <View style={styles.iconContainer}>
-        <IconWithText
-          icon="AR"
-          text={t('rooms.AR')}
-          variant="horizontal"
-          textColor={colors.white}
-          textStyle={{ fontSize: 12 }}
-          iconWidth={16}
-          iconHeight={16}
-          onPress={() => {}}
+      <View style={styles.bottomContainer}>
+        <NavigationBar
+          onSelectFloor={onSelectFloor}
+          selectedFloor={selectedFloor}
         />
+        <View style={styles.iconContainer}>
+          <IconWithText
+            icon="AR"
+            text={t('rooms.AR')}
+            variant="horizontal"
+            textColor={colors.white}
+            textStyle={{ fontSize: 12 }}
+            iconWidth={16}
+            iconHeight={16}
+            onPress={() => {}}
+          />
+        </View>
       </View>
     </View>
   );
