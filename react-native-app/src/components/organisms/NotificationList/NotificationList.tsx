@@ -29,6 +29,8 @@ export const NotificationList: React.FC<NotificationListProps> = ({
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
+      showsVerticalScrollIndicator={true}
+      persistentScrollbar={true}
     >
       {notifications.map((notification) => (
         <View key={notification.id}>
