@@ -29,7 +29,7 @@ function CustomToolbar() {
         className="custom-quick-filter"
         placeholder={t('fields.search')}
       />
-      <GridToolbarColumnsButton />
+      <GridToolbarColumnsButton/>
       <GridToolbarFilterButton />
       <GridToolbarDensitySelector />
       <GridToolbarExport />

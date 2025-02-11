@@ -4,7 +4,7 @@ import { AdminEstablishmentLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import { getAdminInfo, getAdminMap } from '@services/AdminServices';
+import { getAdminInfo, getAdminMap, updateAdminInfo } from '@services/AdminServices';
 
 
 export type Floor = {
@@ -33,10 +33,10 @@ export const AdminEstablishmentPage: React.FC = () => {
 
   const [listInputsValues, setListInputsValues] = useState<Record<string, string>>({});
   const [listInputs, setListInputs] = useState<InputField[]>([]);
-  const [isModalOpen, setModalOpen] = useState(false);
   const [floors, setFloors] = useState<Floor[]>([]);
   const [selectedFloor, setSelectedFloor] = useState<Floor | null>(null);
   const [selectedCoords, setSelectedCoords] = useState<{ x: number, y: number } | null>(null);
+  const [openModal, setOpenModal] = useState<string | null>(null);
 
   // Ajoutez un état pour forcer le re-rendu lors du fetch
   const [refreshKey, setRefreshKey] = useState<number>(0);
@@ -45,7 +45,7 @@ export const AdminEstablishmentPage: React.FC = () => {
     {
       name: "number",
       label: t('fields.map_floor.number'),
-      type: "text",
+      type: "number",
       icon: "Box",
       required: true,
     },
@@ -65,11 +65,54 @@ export const AdminEstablishmentPage: React.FC = () => {
     }
   ] as InputField[];
 
-  const handleOpenModal = () => setModalOpen(true);
-  const handleCloseModal = () => setModalOpen(false);
+  const modalInputsWithValues = [
+    {
+      name: "number",
+      label: t('fields.map_floor.number'),
+      type: "number",
+      icon: "Box",
+      value: selectedFloor?.number ?? 4,
+      required: true,
+    },
+    {
+      name: "name",
+      label: t('fields.map_floor.name'),
+      type: "text",
+      icon: "Box",
+      value: selectedFloor?.name,
+      required: true,
+    },
+    {
+      name: "file",
+      label: t('fields.common.file'),
+      type: "file",
+      icon: "User",
+      value: selectedFloor?.photo_link,
+      required: true,
+    }
+  ] as InputField[];
 
-  const handleSaveForm = (formData: FormData) => {
+  const handleOpenModal = (modalType: string) => {
+    setOpenModal(modalType);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(null);
+  };
+
+  const handleSaveForm = async (formData: FormData) => {
     console.log(formData);
+    const postalCode = formData.get("postalcode");
+    try {
+      if (postalCode !== null) {
+        formData.append("postalCode", postalCode);
+        formData.delete("postalcode");
+      }
+      const res = await updateAdminInfo(formData);
+      setListInputsValues(res.establishment);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des informations d'établissement :", error);
+    }
   };
 
   const handleFloorClick = (id: number) => {
@@ -81,10 +124,13 @@ export const AdminEstablishmentPage: React.FC = () => {
   };
 
   const handleAddFloorClick = () => {
-    console.log("Add");
-    handleOpenModal();
+    handleOpenModal("createFloor");
   };
 
+  const handleChangeFloorClick = () => {
+    handleOpenModal("updateFloor");
+  };
+  
   const handleMapClick = (x: number, y: number) => {
     setSelectedCoords({ x, y });
     console.log(`Coordonnées sélectionnées: X=${x}, Y=${y}`);
@@ -190,7 +236,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         part={t('headers.map')}
 
         form={listInputs}
-        addAccount={handleSaveForm}
+        onSubmit={handleSaveForm}
 
         mapName={selectedFloor?.name ?? "undefined"}
         onMapClick={handleMapClick} 
@@ -199,14 +245,23 @@ export const AdminEstablishmentPage: React.FC = () => {
         selectedFloor={selectedFloor}
         handleFloorClick={handleFloorClick}
         handleAddFloorClick={handleAddFloorClick}
+        handleChangeFloorClick={handleChangeFloorClick}
       />
 
       {/* Modale pour la création d’un étage */}
       <Modal
-        isOpen={isModalOpen}
+        isOpen={openModal === 'createFloor'}
         onClose={handleCloseModal}
         handleForm={handleCloseModal}
         listInputs={modalInputs}
+        title={t('modals.create.floor')}
+      />
+
+      <Modal
+        isOpen={openModal === 'updateFloor'}
+        onClose={handleCloseModal}
+        handleForm={handleCloseModal}
+        listInputs={modalInputsWithValues}
         title={t('modals.create.floor')}
       />
     </>
