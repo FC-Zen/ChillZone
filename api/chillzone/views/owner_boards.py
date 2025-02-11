@@ -1,13 +1,11 @@
-from rest_framework import generics
 from rest_framework import status
 from rest_framework.views import APIView
-from django.http import QueryDict
 from django.db.models import Count, Q, F
 from django.utils.timezone import timedelta
 from django.utils import timezone
 from rest_framework.response import Response
-from collections import defaultdict
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission
+from rest_framework.permissions import IsAuthenticated, BasePermission
+from django.db.models.functions import TruncMonth
 from django.contrib.auth.models import User
 from chillzone.models import RestaurationPlace, Menu, Meal, Type, Category, Associate, LineContent, Command, CommandLine, CommandComposition, WorkIn, Tag
 from chillzone.serializers import MenuWithOptionsSerializer, TagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer, CreateMenuSerializer, UpdateMenuSerializer
@@ -19,6 +17,52 @@ class IsOwner(BasePermission):
 
     def has_permission(self, request, view):
         return request.user.is_authenticated and hasattr(request.user, 'usermeta') and request.user.usermeta.is_owner
+    
+class AdminDashboardView(APIView):
+    permission_classes = [IsAuthenticated & IsOwner]
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+
+        try:
+            work_in = WorkIn.objects.get(user=user)
+            restaurant = work_in.restaurant
+        except WorkIn.DoesNotExist:
+            return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Périodes glissantes
+        today = timezone.now().date()
+        twelve_months_ago = today - timedelta(days=365)
+        thirty_days_ago = today - timedelta(days=30)
+
+        # Définir la plage pour l'année précédente
+        start_of_previous_year = twelve_months_ago - timedelta(days=365)
+        end_of_previous_year = twelve_months_ago
+
+        commands_current_yer = Command.objects.filter(
+            creation_date__gte=twelve_months_ago,
+            restauration_place=restaurant
+        ).annotate(
+            month=F('creation_date__month')
+        ).values(
+            'month'
+        ).annotate(
+            count=Count('id')
+        ).order_by('month')
+
+        commands_previous_year = Command.objects.filter(
+            creation_date__gte=start_of_previous_year,
+            creation_date__lt=end_of_previous_year,
+            restauration_place=restaurant
+        ).annotate(
+            month=F('creation_date__month')
+        ).values(
+            'month'
+        ).annotate(
+            count=Count('id')
+        ).order_by('month')
+
+        return True
     
 class OwnerMenuView(APIView):
     permission_classes = [IsAuthenticated & IsOwner]
