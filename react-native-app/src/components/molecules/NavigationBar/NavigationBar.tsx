@@ -6,15 +6,15 @@ import { useTranslation } from 'react-i18next';
 type NavBarProps = {
   onSelectFloor: (floor: string) => void;
   selectedFloor: string;
+  floors: string[];
 };
 
 export const NavigationBar: React.FC<NavBarProps> = ({
   onSelectFloor,
   selectedFloor,
+  floors,
 }) => {
   const { t } = useTranslation();
-
-  const floors = ['RDC', 'Floor1', 'Floor2', 'Floor3'];
 
   return (
     <View style={[styles.navBar, styles.navBarBottom]}>

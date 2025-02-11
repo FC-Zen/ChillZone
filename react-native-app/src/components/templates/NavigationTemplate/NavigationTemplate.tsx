@@ -1,18 +1,20 @@
 import React from 'react';
-import { View, Image, Platform, TouchableWithoutFeedback } from 'react-native';
-import { IconWithText, NavigationBar } from '@components/molecules';
+import { View } from 'react-native';
+import { IconWithText, MapZoom, NavigationBar } from '@components/molecules';
 import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
-import { Zoomable } from '@likashefqet/react-native-image-zoom';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 type NavigationTemplateProps = {
   imageSource: any;
   selectedFloor: string;
   onSelectFloor: (floor: string) => void;
-  onImagePress?: (event: any) => void;
+  onImagePress?: (x: number, y: number) => void;
   imageRef?: React.RefObject<any>;
+  floors: string[];
+  zoomScale: number;
+  offsetX: number;
+  offsetY: number;
 };
 
 export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
@@ -21,55 +23,29 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
   onSelectFloor,
   onImagePress,
   imageRef,
+  floors,
+  zoomScale,
+  offsetX,
+  offsetY,
 }) => {
   const { t } = useTranslation();
 
   return (
     <View style={styles.cont}>
-      <GestureHandlerRootView
-        style={[
-          styles.zoomableContainer,
-          Platform.OS === 'android' && {
-            overflow: 'hidden',
-          },
-        ]}
-      >
-        <View
-          style={[
-            styles.zoomableWrapper,
-            Platform.OS === 'android' && {
-              overflow: 'hidden',
-            },
-          ]}
-        >
-          <Zoomable
-            isDoubleTapEnabled
-            minScale={1}
-            maxScale={3}
-            style={[styles.image, { overflow: 'hidden' }]}
-          >
-            <TouchableWithoutFeedback onPress={onImagePress}>
-              <Image
-                ref={imageRef}
-                source={imageSource}
-                style={[
-                  styles.image,
-                  Platform.OS === 'android' && {
-                    width: '100%',
-                    height: '100%',
-                  },
-                ]}
-                resizeMode="contain"
-              />
-            </TouchableWithoutFeedback>
-          </Zoomable>
-        </View>
-      </GestureHandlerRootView>
+      <MapZoom
+        imageSource={imageSource}
+        onImagePress={onImagePress}
+        imageRef={imageRef}
+        zoomScale={zoomScale}
+        offsetX={offsetX}
+        offsetY={offsetY}
+      />
 
       <View style={styles.bottomContainer}>
         <NavigationBar
           onSelectFloor={onSelectFloor}
           selectedFloor={selectedFloor}
+          floors={floors}
         />
         <View style={styles.iconContainer}>
           <IconWithText

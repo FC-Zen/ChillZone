@@ -26,6 +26,7 @@ export {
   CalendarCell,
   Select,
   SelectProps,
+  MapZoom,
 } from './molecules';
 export {
   AccountOptionsList,
