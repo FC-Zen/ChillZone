@@ -117,7 +117,6 @@ export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
 
     // Récupération des coordonnées X, Y sur l'image
     const handleImageClick = (e: React.MouseEvent<HTMLImageElement>) => {
-        console.log(imageRef);
         if (!imageRef.current || !containerRef.current) return;
 
         const rect = imageRef.current.getBoundingClientRect();

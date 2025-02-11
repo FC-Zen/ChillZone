@@ -1,13 +1,17 @@
-.css-1ccsd5i-MuiButtonBase-root-MuiButton-root{
-    display: flex!important;
+.custom-tool-bar button  {
+    display: flex !important;
     background-color: #2e2a85 !important;
-    color: white!important;
-    border-radius: 5px!important;
-    padding: 8px 19px!important;
-    gap: 5px!important;
+    color: white !important;
+    border-radius: 5px !important;
+    padding: 8px 19px !important;
+    gap: 5px !important;
     justify-content: center;
     align-items: center;
-}  
+}
+
+.custom-tool-bar button:hover {
+    background-color: #007a5e !important;
+}
 
 .customBtnDataTable {
     padding: 7px 12px!important;
@@ -43,35 +47,36 @@
     color: #aaa;
 }
 
-.css-5h82ro-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before {
-    border-bottom : 1px solid #d3d3d3!important;
+[role="textbox"]:hover:not(.Mui-disabled, .Mui-error):before {
+    border-bottom: 1px solid #d3d3d3 !important;
 }
 
-.css-5h82ro-MuiInputBase-root-MuiInput-root::after {
-    border-bottom : none!important;
+[role="textbox"]::after {
+    border-bottom: none !important;
 }
 
 .custom-tool-bar {
     margin: 5px;
 }
 
-.css-1ggwzv-MuiDataGrid-root .MuiDataGrid-withBorderColor {
+[role="grid"] .MuiDataGrid-withBorderColor {
     background-color: #2e2a85 !important;
-    color: white!important;
+    color: white !important;
 }
 
-.css-1ggwzv-MuiToolbar-root-MuiTablePagination-toolbar {
-    color: white!important;
+[role="toolbar"] {
+    color: white !important;
 }
-
 .css-cdtzx3-MuiButtonBase-root-MuiIconButton-root.Mui-disabled {
     background-color: transparent;
     color: white!important;
 }
 
-.css-1ggwzv-MuiDataGrid-root .MuiDataGrid-row--borderBottom .MuiDataGrid-columnHeader, .css-1ggwzv-MuiDataGrid-root .MuiDataGrid-row--borderBottom .MuiDataGrid-filler, .css-1ggwzv-MuiDataGrid-root .MuiDataGrid-row--borderBottom .MuiDataGrid-scrollbarFiller {
+[role="grid"] .MuiDataGrid-row--borderBottom [role="columnheader"],
+[role="grid"] .MuiDataGrid-row--borderBottom .MuiDataGrid-filler,
+[role="grid"] .MuiDataGrid-row--borderBottom .MuiDataGrid-scrollbarFiller {
     background-color: #2e2a85 !important;
-    color: white!important;
+    color: white !important;
 }
 
 .wrap-text {
