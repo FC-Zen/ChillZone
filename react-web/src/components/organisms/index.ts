@@ -13,5 +13,6 @@ export { ModalForm } from './ModalForm';
 export { FloorSelection } from './FloorSelection';
 export {CommandModal} from './CommandModal';
 export {Modal} from './Modal';
+export {ModalInfo} from './ModalInfo';
 export {AdminDashboardStatsCards} from './AdminDashboardStatsCards';
 

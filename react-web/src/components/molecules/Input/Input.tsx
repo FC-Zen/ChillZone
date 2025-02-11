@@ -140,7 +140,7 @@ export const Input = ({
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Icon name={icon} />
+                    <Icon name={icon} width='20px' height='20px' />
                   </InputAdornment>
                 ),
               },

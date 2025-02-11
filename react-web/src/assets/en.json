@@ -50,7 +50,11 @@
       "infoPwd": "If the account exists, you will receive an email shortly.",
       "recoverPwd": "I forgot my password.",
       "signIn": "I want to register as a restaurateur.",
-      "rememberMe": "Remember me."
+      "rememberMe": "Remember me.",
+      "warningDelete": "Attention, vous êtes sur le point de supprimer un étage entier du bâtiment. Êtes-vous sûr ?"
+    },
+    "delete" : {
+      "floor" : "Delete a floor"
     },
 
     "rooms": {
@@ -122,7 +126,8 @@
       "confirm": "Confirm",
       "back": "Back",
       "reset": "Reset",
-      "changeMap": "Change map",
+      "changeMap": "Update the floor",
+      "deleteMap": "Delete the floor",
       "delete" : "Delete"
     },
     "add": {

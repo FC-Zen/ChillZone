@@ -17,10 +17,16 @@ class UpdateMapFloorSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=False)
     photo_link = serializers.ImageField(required=False, allow_null=True)
 
-class AdminLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        fields = ['id', 'name', 'description', 'capacity', 'status', 'photo_link', 'position_x', 'position_y']
+        fields = ['id', 'number', 'name', 'photo_link']
+
+class AdminLocationSerializer(serializers.ModelSerializer):
+    room_type = serializers.CharField(source='id_type.label', read_only=True)
+
+    class Meta:
+        model = Location
+        fields = ['id', 'name', 'description', 'capacity', 'status', 'photo_link', 'room_type', 'position_x', 'position_y']
 
 class AdminMapFloorSerializer(serializers.ModelSerializer):
     locations = serializers.SerializerMethodField()

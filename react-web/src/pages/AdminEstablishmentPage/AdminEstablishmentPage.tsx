@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Modal } from '@components/organisms';
+import { Modal, ModalInfo } from '@components/organisms';
 import { AdminEstablishmentLayout } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
-import { getAdminInfo, getAdminMap, updateAdminInfo } from '@services/AdminServices';
+import { addFloor, deleteFloor, getAdminInfo, getAdminMap, updateAdminInfo, updateFloor } from '@services/AdminServices';
+import { SnackBar } from '@components';
 
 
 export type Floor = {
@@ -24,6 +25,7 @@ export type MapLocation = {
   photo_link: string | null;
   position_x: number;
   position_y: number;
+  room_type: string;
 };
 
 
@@ -37,6 +39,17 @@ export const AdminEstablishmentPage: React.FC = () => {
   const [selectedFloor, setSelectedFloor] = useState<Floor | null>(null);
   const [selectedCoords, setSelectedCoords] = useState<{ x: number, y: number } | null>(null);
   const [openModal, setOpenModal] = useState<string | null>(null);
+
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    severity: 'success' | 'error';
+    message: string;
+  }>({
+    open: false,
+    severity: 'success',
+    message: '',
+  });
+
 
   // Ajoutez un état pour forcer le re-rendu lors du fetch
   const [refreshKey, setRefreshKey] = useState<number>(0);
@@ -109,7 +122,14 @@ export const AdminEstablishmentPage: React.FC = () => {
         formData.delete("postalcode");
       }
       const res = await updateAdminInfo(formData);
-      setListInputsValues(res.establishment);
+      if (res.status == 200) {
+        setSnackbar({
+          open: true,
+          severity: 'success',
+          message: 'Données modifiées avec succès !',
+        });
+      }
+      setListInputsValues(res.data.establishment);
     } catch (error) {
       console.error("Erreur lors de la récupération des informations d'établissement :", error);
     }
@@ -129,6 +149,10 @@ export const AdminEstablishmentPage: React.FC = () => {
 
   const handleChangeFloorClick = () => {
     handleOpenModal("updateFloor");
+  };
+
+  const handleDeleteFloorClick = () => {
+    handleOpenModal("deleteFloor");
   };
   
   const handleMapClick = (x: number, y: number) => {
@@ -171,6 +195,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         setSelectedFloor(floors[0]); // Sélectionne le premier étage lorsque les données sont disponibles
         console.log(floors, floors[0]);
       }
+    setRefreshKey((prevKey) => prevKey + 1);
   }, [floors]);
   
 
@@ -180,7 +205,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         name: "name",
         label: t('fields.common.last_name'),
         type: "text",
-        icon: "User",
+        icon: "Document",
         required: true,
         value: listInputsValues?.name,
       },
@@ -188,7 +213,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         name: "address",
         label: t('fields.address.address'),
         type: "text",
-        icon: "User",
+        icon: "Map",
         required: true,
         value: listInputsValues?.address,
       },
@@ -196,7 +221,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         name: "city",
         label: t('fields.address.city'),
         type: "text",
-        icon: "User",
+        icon: "Location",
         required: true,
         value: listInputsValues?.city,
       },
@@ -204,7 +229,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         name: "postalCode",
         label: t('fields.address.postal_code'),
         type: "text",
-        icon: "User",
+        icon: "Text",
         required: true,
         value: listInputsValues?.postalCode,
       },
@@ -212,7 +237,7 @@ export const AdminEstablishmentPage: React.FC = () => {
         name: "phone",
         label: t('fields.common.phone'),
         type: "text",
-        icon: "User",
+        icon: "Phone",
         required: true,
         value: listInputsValues?.phone,
       },
@@ -220,15 +245,64 @@ export const AdminEstablishmentPage: React.FC = () => {
         name: "mail",
         label: t('fields.common.mail'),
         type: "text",
-        icon: "User",
+        icon: "Envelope",
         required: true,
         value: listInputsValues?.mail,
       },
     ]);
   }, [listInputsValues]);
 
+  const closeSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+  
+  const handleAddFloor = async (formData: FormData) => {
+  console.log("FormData avant soumission : ", Array.from(formData.entries()));
+  try {
+        const res = await addFloor(formData);
+        setFloors(res.data.floors);
+        handleCloseModal();
+    } catch (error) {
+        console.error(error);
+  }
+  };
+
+  const handleUpdateFloor = async (formData: FormData) => {
+    if (selectedFloor) {
+      formData.append("id",String(selectedFloor.id));
+      console.log("FormData avant soumission : ", Array.from(formData.entries()));
+      try {
+            const res = await updateFloor(formData);
+            setFloors(res.data.floors);
+            handleCloseModal();
+        } catch (error) {
+            console.error(error);
+      }
+    }
+  };
+
+  const handleDeleteFloor = async () => {
+    if (selectedFloor) {
+      const id = selectedFloor?.id;
+      try {
+            const res = await deleteFloor(id);
+            setFloors(res.data.floors);
+            handleCloseModal();
+        } catch (error) {
+            console.error(error);
+      }
+    }
+  };
+
   return (
     <>
+      <SnackBar
+        visible={snackbar.open}
+        message={snackbar.message} 
+        severity={snackbar.severity}
+        onDismiss={closeSnackbar}      
+      />
+
       {/* Layout principal contenant le tableau */}
       <AdminEstablishmentLayout
         key={refreshKey}
@@ -246,13 +320,14 @@ export const AdminEstablishmentPage: React.FC = () => {
         handleFloorClick={handleFloorClick}
         handleAddFloorClick={handleAddFloorClick}
         handleChangeFloorClick={handleChangeFloorClick}
+        handleDeleteFloorClick={handleDeleteFloorClick}
       />
 
       {/* Modale pour la création d’un étage */}
       <Modal
         isOpen={openModal === 'createFloor'}
         onClose={handleCloseModal}
-        handleForm={handleCloseModal}
+        handleForm={handleAddFloor}
         listInputs={modalInputs}
         title={t('modals.create.floor')}
       />
@@ -260,10 +335,19 @@ export const AdminEstablishmentPage: React.FC = () => {
       <Modal
         isOpen={openModal === 'updateFloor'}
         onClose={handleCloseModal}
-        handleForm={handleCloseModal}
+        handleForm={handleUpdateFloor}
         listInputs={modalInputsWithValues}
         title={t('modals.create.floor')}
       />
+
+      <ModalInfo 
+          isOpen={openModal === 'deleteFloor'}
+          onClose={handleCloseModal}
+          handleForm={handleDeleteFloor}
+          info={t('info.warningDelete')}
+          title={t('modals.delete.floor')}
+      />
+      
     </>
   );
 };

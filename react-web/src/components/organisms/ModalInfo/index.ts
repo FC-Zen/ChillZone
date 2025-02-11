@@ -1,0 +1,1 @@
+export {ModalInfo} from './ModalInfo';

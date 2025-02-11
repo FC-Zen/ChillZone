@@ -12,12 +12,17 @@ class AdminLocationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Location
-        fields = ['id', 'name', 'description', 'capacity', 'floor_name', 'status', 'photo_link', 'room_type']
+        fields = ['id', 'name', 'description', 'capacity', 'floor_name', 'status', 'photo_link', 'room_type', 'position_x', 'position_y']
 
 class AdminAvailableFloorsSerializer(serializers.ModelSerializer):
     class Meta:
         model = MapFloor
         fields = ['id', 'name']
+
+class AdminFloorsWithPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MapFloor
+        fields = ['id', 'number', 'name', 'photo_link']
 
 class AdminCreateLocationSerializer(serializers.ModelSerializer):
         class Meta:

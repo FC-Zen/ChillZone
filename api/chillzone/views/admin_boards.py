@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.models import User
 from chillzone.services import EmailService
 from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo, Tag, TagCategory, IsLocated, Map
-from chillzone.serializers import UpdateMapFloorSerializer, CreateMapFloorSerializer, AdminCreateLocationSerializer, TagSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
+from chillzone.serializers import AdminFloorsWithPhotoSerializer, UpdateMapFloorSerializer, CreateMapFloorSerializer, AdminCreateLocationSerializer, TagSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
 
 import random
 import string
@@ -211,6 +211,7 @@ class AdminLocationView(generics.ListAPIView):
 
         floors = MapFloor.objects.filter(map__establishment=establishment)
         floor_serializer = AdminAvailableFloorsSerializer(floors, many=True)
+        floor_photo_serializer = AdminFloorsWithPhotoSerializer(floors, many=True)
 
         try:
             location_category = TagCategory.objects.get(label="Location")
@@ -223,6 +224,7 @@ class AdminLocationView(generics.ListAPIView):
         return Response({
             "locations": location_serializer.data,
             "available_floors": floor_serializer.data,
+            "floor_with_photo": floor_photo_serializer.data,
             "available_types": serializer.data
         })
     

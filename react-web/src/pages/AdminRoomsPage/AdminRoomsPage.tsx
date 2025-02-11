@@ -5,6 +5,7 @@ import { useUser } from '@hooks';
 import { Modal } from '@components/organisms';
 import { InputField } from '@components/organisms/ModalForm/ModalForm';
 import { addRoom, getRooms, toggleRoom, updateRoom } from '@services/AdminServices';
+import { Floor } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
 
 type Room = {
   id: number;
@@ -15,6 +16,8 @@ type Room = {
   room_type: string;
   status: boolean;
   photo_link: string;
+  position_x: number;
+  position_y: number;
 }
 
 export const AdminRoomsPage: React.FC = () => {
@@ -24,6 +27,7 @@ export const AdminRoomsPage: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [roomsData, setRoomsData] = useState<Room[]>([]);
   const [availableFloors, setAvailableFloors] = useState<{ id: number; name: string }[]>([]);
+  const [availableFloorsMaps, setAvailableFloorsMaps] = useState<Floor[]>([]);
   const [availableTypes, setAvailableTypes] = useState<{ id: number; label: string }[]>([]);
 
   useEffect(() => {
@@ -32,6 +36,7 @@ export const AdminRoomsPage: React.FC = () => {
         const data = await getRooms();
         setRoomsData(data.locations);
         setAvailableFloors(data.available_floors);
+        setAvailableFloorsMaps(data.floor_with_photo);
         setAvailableTypes(data.available_types);
       }
     };
@@ -99,6 +104,18 @@ export const AdminRoomsPage: React.FC = () => {
     },
   ] as InputField[];
 
+  const listInputs2 = [
+    {
+      name: "map",
+      label: t("fields.common.map"),
+      type: "map",
+      icon: "User", 
+      floors : availableFloorsMaps,
+      value : {position_x : selectedRoom?.position_x , position_y : selectedRoom?.position_y},
+      required: true,
+    }
+  ] as InputField[];
+
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -121,8 +138,6 @@ export const AdminRoomsPage: React.FC = () => {
   const handleUpdateRoom = async (formData: FormData) => {
     if (!selectedRoom) return;
     formData.append("id", String(selectedRoom.id));    
-    formData.append("position_x",'14'); // Données de tests
-    formData.append("position_y",'14'); // Données de tests
     try {
       const res = await updateRoom(formData);
       setRoomsData(res);
@@ -133,8 +148,6 @@ export const AdminRoomsPage: React.FC = () => {
   };
 
   const handleAddRoom = async (formData: FormData) => {
-    formData.append("position_x",'14'); // Données de tests
-    formData.append("position_y",'14'); // Données de tests
     console.log("FormData avant soumission : ", Array.from(formData.entries()));
     try {
           const res = await addRoom(formData);
@@ -162,6 +175,7 @@ export const AdminRoomsPage: React.FC = () => {
         onClose={handleCloseModal}
         handleForm={selectedRoom ? handleUpdateRoom : handleAddRoom}
         listInputs={listInputs}
+        listInputs2={listInputs2}
         title={selectedRoom ?  t("modals.edit.room") : t("modals.create.room")}
       />
     </div>
