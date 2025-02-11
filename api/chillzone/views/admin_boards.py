@@ -27,6 +27,7 @@ def generate_random_password():
     return ''.join(password)
 
 class AdminDashboardView(APIView):
+    permission_classes = [IsAuthenticated & IsAdminUser]
 
     def get(self, request, *args, **kwargs):
 
