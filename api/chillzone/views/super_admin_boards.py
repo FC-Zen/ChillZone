@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from django.contrib.auth.models import User
 from chillzone.models import WorkIn, LinkTo
+from chillzone.services import EmailService
 from chillzone.serializers import SuperAdminUserSerializer, SuperAdminRequestAdminSerializer, RestaurantRegisterRequestSerializer
 
 import random
@@ -70,6 +71,9 @@ class SuperAdminRequestsView(APIView):
         
         user.usermeta.save()
         user.save()    
+
+        if not EmailService.send_account_approval_email(user.email):
+                return Response({"error": "Failed to send email."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         return self.get(request)
     
@@ -101,6 +105,9 @@ class SuperAdminRequestsView(APIView):
         user_meta.delete()
 
         user.delete()
+
+        if not EmailService.send_account_rejection_email(user.email):
+                return Response({"error": "Failed to send email."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return self.get(request)
     

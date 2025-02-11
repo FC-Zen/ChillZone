@@ -34,3 +34,7 @@ export { default as ShoppingBag } from './ShoppingBag';
 export { default as AddCircle } from './AddCircle';
 export { default as CrossCircle } from './CrossCircle';
 export { default as Download } from './Download';
+export { default as FaqQuestion } from './FaqQuestion';
+export { default as Trash } from './Trash';
+export { default as Map } from './Map';
+export { default as Text } from './Text';

@@ -21,7 +21,7 @@ export const fonts = {
   extraBold: 'Montserrat-ExtraBold',
 };
 
-type TypographyKey =  'title1' | 'h1' | 'h2' | 'h3' | 'h4';
+type TypographyKey =  'title1' | 'h1' | 'h2' | 'h3' | 'h4' | 'calendarEvent';
 
 export const typography: {
   [key in TypographyKey]: TextStyle;
@@ -52,4 +52,9 @@ export const typography: {
     fontSize: 14,
     lineHeight: 20,
   },
+  calendarEvent: {
+    fontFamily: fonts.semiBold,
+    fontSize: 10,
+    lineHeight: 12,
+  }
 };

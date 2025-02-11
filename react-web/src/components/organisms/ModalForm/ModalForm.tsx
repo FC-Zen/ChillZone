@@ -1,9 +1,10 @@
 import { Input } from '@components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconProps } from '@components/atoms';
-import { AutoCompleteInput, CustomSwitch, FileInput, StyledSelect } from '@components/molecules';
+import { AutoCompleteInput, CustomSwitch, FileInput, MapInput, StyledSelect } from '@components/molecules';
 import { Typography } from '@mui/material';
+import { Floor } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
 
 export type InputField = {
   name: string;
@@ -16,6 +17,7 @@ export type InputField = {
   step?: string;
   options?: { id: number; name?: string; label?: string }[];
   optionsTags?: { id: number; label: string }[];
+  floors?: Floor[];
 };
 
 export type OptionTag = {
@@ -36,10 +38,13 @@ export const ModalForm: React.FC<ModalFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const [selectedTags, setSelectedTags] = React.useState<{ id: number; label: string }[]>([]);
-  const [file, setFile] = React.useState<File | null>(null);
-  const [currentInputs, setCurrentInputs] = React.useState<InputField[]>(listInputs);
-  const [formData, setFormData] = React.useState<Record<string, any>>({});
+  const [selectedTags, setSelectedTags] = useState<{ id: number; label: string }[]>([]);
+  const [file, setFile] = useState<File | null>(null);
+  const [currentInputs, setCurrentInputs] = useState<InputField[]>(listInputs);
+  const [formData, setFormData] = useState<Record<string, any>>({});
+
+  const [selectedFloor, setSelectedFloor] = useState<Floor | null>(null);
+  const [selectedCoords, setSelectedCoords] = useState<{ x: number, y: number } | null>(null);
 
   useEffect(() => {
     const initialData: Record<string, any> = {};
@@ -51,6 +56,8 @@ export const ModalForm: React.FC<ModalFormProps> = ({
       } else if (input.type === 'autocomplete' && Array.isArray(input.value)) {
         // Pour autocomplete, stocker uniquement les IDs des tags
         initialData[input.name.toLowerCase()] = input.value.map((tag: { id: number; label: string }) => tag.id);
+      } else if (input.type === 'number') {
+        initialData[input.name.toLowerCase()] = input.value === 0 ? 0 : (Number(input.value) || '');      
       } else {
         initialData[input.name.toLowerCase()] = input.value || '';
       }
@@ -101,6 +108,15 @@ export const ModalForm: React.FC<ModalFormProps> = ({
       }
     });
   
+    if (formData['map'] || formData['map'] == "") {
+      if (selectedCoords?.x !== undefined && selectedCoords?.y !== undefined) {
+        updatedFormData.append("position_x", String(selectedCoords.x));
+        updatedFormData.append("position_y", String(selectedCoords.y));
+      }
+      updatedFormData.delete("map");
+    }
+  
+
     // Si un fichier est sélectionné, on l'ajoute également
     updatedFormData.delete('photo_link');
     if (file) {
@@ -116,19 +132,45 @@ export const ModalForm: React.FC<ModalFormProps> = ({
     console.log("FormData avant soumission : ", Array.from(updatedFormData.entries()));
     onSubmit(updatedFormData);
   };
+
+  const handleMapClick = (x: number, y: number) => {
+    setSelectedCoords({ x, y });
+    console.log(`Coordonnées sélectionnées: X=${x}, Y=${y}`);
+  };
   
 
   const handleNext = () => {
-    // Log de formData pour voir son contenu avant la mise à jour
-    console.log(formData);
+    console.log("FormData actuel :", formData);
   
-    // Combine listInputs et listInputs2
     const combinedInputs = [...listInputs, ...(listInputs2 || [])];
   
-    // Crée un nouvel objet formData avec les nouvelles valeurs
+    const mapInput = listInputs2?.find((input) => input.type === "map");
+  
+    const idFloor = formData["id_floor"];
+    if (mapInput) {
+      if (!idFloor) {
+        alert("Veuillez sélectionner un étage avant de continuer.");
+        return;
+      }
+  
+      const selectedFloor = mapInput.floors?.find((floor) => floor.id === Number(idFloor));
+      if (!selectedFloor) {
+        alert("L'étage sélectionné est introuvable dans la liste des étages.");
+        return;
+      }
+  
+      setSelectedFloor(selectedFloor);
+      
+      if (mapInput.value) {
+        console.log(mapInput.value);
+        setSelectedCoords({x : mapInput.value.position_x, y : mapInput.value.position_y});
+      }
+      console.log("Étage sélectionné :", selectedFloor);
+    }
+  
     const updatedFormData: Record<string, any> = { ...formData };
   
-    combinedInputs.forEach(input => {
+    combinedInputs.forEach((input) => {
       const inputElement = document.querySelector(`[name=${input.name.toLowerCase()}]`) as HTMLInputElement;
       if (inputElement) {
         // Ajoute les valeurs des inputs au formData
@@ -136,14 +178,14 @@ export const ModalForm: React.FC<ModalFormProps> = ({
       }
     });
   
-    // Met à jour l'état avec les nouvelles valeurs
+    // Met à jour l'état de formData
     setFormData(updatedFormData);
   
-    // Gère les étapes suivantes
+    // Passe à la liste suivante d'inputs (listInputs2)
     if (listInputs2) {
       setCurrentInputs(listInputs2);
     }
-  };
+  };  
   
   return (
     <form className="flex flex-col space-y-4 justify-center items-center" 
@@ -197,6 +239,15 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 />
               </div>
             );
+          case 'map':
+            return (
+              <MapInput 
+                key={index}
+                selectedFloor={selectedFloor} 
+                selectedCoords={selectedCoords}
+                onClick={handleMapClick} 
+              />
+            );
           default:
             return (
               <Input
@@ -206,7 +257,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 label={input.label.toLowerCase()}
                 required={input.required ?? false}
                 type={input.type}
-                value={formData[input.name.toLowerCase()] || ''}
+                value={formData[input.name.toLowerCase()] !== undefined ? formData[input.name.toLowerCase()] : ''}
                 step={input.step}
                 disabled={input.disabled ?? false}
                 onInputChange={(name, value) => handleInputChange(name, value)}

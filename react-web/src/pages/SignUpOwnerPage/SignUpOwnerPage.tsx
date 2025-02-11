@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CssBaseline } from '@mui/material';
 import { SnackBar } from '@components';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { SignUpOwnerAccountTemplate, SignUpOwnerFinishTemplate, SignUpOwnerRestaurantTemplate } from '@components/templates';
 import { ROUTE } from '@enums';
+import { addOwnerInscription, getEstablishments } from '@services/OwnerServices';
 
 type PageState = 'restaurant' | 'final' | 'account';
 
@@ -20,15 +21,15 @@ export const SignUpOwnerPage: React.FC = () => {
         email : "",
         phone : "",
         password : "",
-        verify_password : "",
-        restauration_place_name : "",
-        restauration_place_description : "",
-        restauration_place_opening_time : "",
-        restauration_place_closing_time : "",
-        restauration_place_location : "",
-        restauration_place_type : "",
-        restauration_place_phone : "",
-        link_to_establishment : "",
+        password_verified : "",
+        name : "",
+        description : "",
+        opening_time : "",
+        closing_time : "",
+        location : "",
+        restauration_type : "",
+        phone_restaurant : "",
+        establishments : "",
     });
 
     const fieldsFormData = {
@@ -38,25 +39,49 @@ export const SignUpOwnerPage: React.FC = () => {
         email: { name: 'email', label: t('fields.common.mail') },
         phone: { name: 'phone', label: t('fields.common.phone') },
         password: { name: 'password', label: t('fields.auth.password') },
-        verify_password: { name: 'verify_password', label: t('fields.auth.verifyNewPassword') },
-        restauration_place_name: { name: 'restauration_place_name', label: t('fields.common.last_name') },
-        restauration_place_description: { name: 'restauration_place_description', label: t('fields.common.description') },
-        restauration_place_opening_time: { name: 'restauration_place_opening_time', label: t('fields.hours.opening_time') },
-        restauration_place_closing_time: { name: 'restauration_place_closing_time', label: t('fields.hours.closing_time') },
-        restauration_place_location: { name: 'restauration_place_location', label: t('fields.common.location') },
-        restauration_place_type: { name: 'restauration_place_type', label: t('fields.common.category') },
-        restauration_place_phone: { name: 'restauration_place_phone', label: t('fields.common.phone') },
-        link_to_establishment: { name: 'link_to_establishment', label: t('fields.common.establishment') },
+        password_verified: { name: 'password_verified', label: t('fields.auth.verifyNewPassword') },
+        name: { name: 'name', label: t('fields.common.last_name') },
+        description: { name: 'description', label: t('fields.common.description') },
+        opening_time: { name: 'opening_time', label: t('fields.hours.opening_time') },
+        closing_time: { name: 'closing_time', label: t('fields.hours.closing_time') },
+        location: { name: 'location', label: t('fields.common.location') },
+        restauration_type: { name: 'restauration_type', label: t('fields.common.category') },
+        phone_restaurant: { name: 'phone_restaurant', label: t('fields.common.phone') },
+        establishments: { name: 'establishments', label: t('fields.common.establishment') },
     };      
 
     const options = [
-        { value: 'Fridge', label: t('categories.fridge') },
-        { value: 'Restaurant', label: t('categories.restaurant') },
+        { value: 'fridge', label: t('categories.fridge') },
+        { value: 'restaurant', label: t('categories.restaurant') },
     ];
+
+    const [establishments, setEstablishments] = useState<{ id: number; name: string }[]>([]);
+
+    const fetchUserData = async () => {
+        try {
+        const res = await getEstablishments(); // SERVICES
+        if (res) {
+            setEstablishments(res.establishments); 
+        }
+        } catch (error) {
+        console.error('Erreur lors du chargement des données utilisateurs:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
 
     const handleInputChange = (name: string, value: string) => {
         setFormData({ ...formData, [name]: value });
         //console.log(formData);
+    };
+
+    const [file, setFile] = React.useState<File | null>(null);
+
+    const handleFileChange = (filedata: File) => {
+        setFile(filedata);
+        console.log(file);
     };
 
     const [snackbar, setSnackbar] = useState<{
@@ -71,7 +96,7 @@ export const SignUpOwnerPage: React.FC = () => {
 
     const handlePress = async () => {
         if (statePage == "account") {
-            if (formData.password != formData.verify_password) {
+            if (formData.password != formData.password_verified) {
                 setSnackbar({
                     open: true,
                     severity: 'error',
@@ -84,7 +109,25 @@ export const SignUpOwnerPage: React.FC = () => {
         }        
         else if (statePage == "restaurant") {
             console.log(formData);
-            setStatePage("final");
+            const formDataToSend = new FormData();
+            (Object.keys(formData) as Array<keyof typeof formData>).forEach((key) => {
+                formDataToSend.append(key, formData[key]);
+            });
+            if (file) {
+                formDataToSend.append("photo_link", file);
+            } 
+            console.log(formDataToSend);
+            const res = await addOwnerInscription(formDataToSend);
+            if (res) {
+                setStatePage("final");
+            } else {
+                setStatePage("account");
+                setSnackbar({
+                    open: true,
+                    severity: 'error',
+                    message: "Erreur d'inscription",
+                });
+            }
         } else if (statePage == "final") {
             setStatePage("restaurant");
             //navigation.navigate(ROUTE.LOGIN)
@@ -133,9 +176,11 @@ export const SignUpOwnerPage: React.FC = () => {
                         onBackButton={handleBackPress}
                         onSubmitButton={handlePress}
                         handleInputChange={handleInputChange}
+                        handleFileChange={handleFileChange}
                         fields={fieldsFormData}
                         formData={formData}
                         options={options}
+                        optionsEstablishments={establishments}
                     />
                     );
                 case 'final':

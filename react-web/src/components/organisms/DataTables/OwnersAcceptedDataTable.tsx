@@ -75,7 +75,7 @@ export const OwnersAcceptedDataTable = ({
       renderCell: (params) => (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
           <IconButton color="secondary" onClick={() => handleClickDelete(params.row.id)}>
-            <Icon name="Cross" color={colors.red} />
+            <Icon name="Trash" color={colors.red} />
           </IconButton>
         </div>
       ),

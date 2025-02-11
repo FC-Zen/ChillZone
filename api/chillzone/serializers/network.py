@@ -4,7 +4,7 @@ from chillzone.models import Network
 class NetworkSerializer(serializers.ModelSerializer) :
     class Meta:
         model = Network
-        fields = ['pk', 'type', 'link_network']
+        fields = ['id', 'type', 'link_network']
 
 class AdminNetworkSerializer(serializers.ModelSerializer):
     type = serializers.CharField(max_length=30)
@@ -12,4 +12,4 @@ class AdminNetworkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Network
-        fields = ['pk', 'type', 'link_network']
+        fields = ['id', 'type', 'link_network']

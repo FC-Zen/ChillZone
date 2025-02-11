@@ -45,6 +45,7 @@ urlpatterns = [
     path('network/', network.NetworkView.as_view(), name='Client List Network'),
 
     # ======================== WEB ========================= #
+    path('create-owner-account/', user.OwnerCreateView.as_view(), name='Create account and restaurant for owner'),
 
     # -------------------- Super Admin --------------------- #
     path('superadmin-requests/', super_admin_boards.SuperAdminRequestsView.as_view(), name='Super Admin Requests'),
@@ -56,6 +57,7 @@ urlpatterns = [
     path('admin-rooms/', admin_boards.AdminLocationView.as_view(), name='Admin List / Create / Update Location'),
     path('admin-booking/', admin_boards.AdminReservationConflictView.as_view(), name='Admin List Reservation / Conflict'),
     path('admin-map/', admin_boards.AdminMapView.as_view(), name='Admin List / Create / Update / Delete Map'),
+    path('admin-info/', admin_boards.AdminInfoView.as_view(), name='Admin List / Update Info'),
     path('admin-restaurants/', admin_boards.AdminRestaurantView.as_view(), name='Admin List / Create / Update / Delete Restaurant'),
     path('admin-faq/', faq.AdminFAQView.as_view(), name='Admin List / Create / Update / Delete FAQ'),
     path('admin-network/', network.AdminNetworkView.as_view(), name='Admin List / Create / Update / Delete Network'),

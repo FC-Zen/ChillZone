@@ -15,3 +15,5 @@ export { AdminEstablishmentPage } from './AdminEstablishmentPage';
 export { SuperAdminPage } from './SuperAdminPage';
 export { OwnerMenusPage } from './OwnerMenusPage';
 export { SuperUsersAdminPage } from './SuperUsersAdminPage';
+export { AdminFAQPage } from './AdminFAQPage';
+

@@ -1,12 +1,14 @@
+import { Pin } from '@components';
+import { Floor, MapLocation } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
 import { colors } from '@theme';
 import React, { useState, useRef, useEffect } from 'react';
 
 type MapProps = {
-    imageSrc: string;
+    selectedFloor: Floor | null;
     onClick: (x: number, y: number) => void;
 };
 
-export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
+export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
     // sur l'image
     const [initialScale, setInitialScale] = useState(1);
     const [zoomScale, setZoomScale] = useState(1);
@@ -17,7 +19,17 @@ export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
     const imageRef = useRef<HTMLImageElement>(null);
     const dragging = useRef(false);
     const startCoords = useRef({ x: 0, y: 0 });
+
+    const [photoLink, setPhotoLink] = useState<string>("");
+    const [locations, setLocations] = useState<MapLocation[]>([])
     
+    useEffect(() => {
+        if (selectedFloor) {
+            setPhotoLink(selectedFloor.photo_link ? `http://localhost:3000${selectedFloor.photo_link}` : "");
+            setLocations(selectedFloor.locations);
+        }
+    }, [selectedFloor]);
+
     useEffect(() => {
         if (containerRef.current && imageRef.current) {
             // DELIMITER LA TAILLE DE LIMAGE SELON LA DIV PARENT
@@ -30,11 +42,15 @@ export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
 
             const scaleWidth = containerWidth / imageWidth;
             const scaleHeight = containerHeight / imageHeight;
-            setInitialScale(Math.min(scaleWidth, scaleHeight));
+            const newInitialScale = Math.min(scaleWidth, scaleHeight);
 
-            setZoomScale(initialScale); 
+            setInitialScale(newInitialScale);
         }
-    }, [imageSrc]); 
+    }, [photoLink]); 
+
+    useEffect(() => {
+        setZoomScale(initialScale);
+    }, [initialScale]);
     
     // Gestion du zoom
     const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -85,7 +101,6 @@ export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
     };
-    
 
     // Récupération des coordonnées X, Y sur l'image
     const handleImageClick = (e: React.MouseEvent<HTMLImageElement>) => {
@@ -100,43 +115,60 @@ export const Map: React.FC<MapProps> = ({ imageSrc, onClick }) => {
 
     return (
         <div
-        ref={containerRef}
-        onWheel={handleWheel}
-        onMouseDown={handleMouseDown}
-        style={{
-            position: 'relative',
-            width: '100%',
-            height: '70vh',
-            overflow: 'hidden',
-            cursor: 'grab',
-            background: '#f0f0f0',
-            borderRadius : "20px",
-            border : "solid 3px",
-            borderColor : colors.resolutionBlue
-        }}
-        >
-        <div
+            ref={containerRef}
+            onWheel={handleWheel}
+            onMouseDown={handleMouseDown}
             style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            transformOrigin: 'top left',
-            transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoomScale})`,
+                position: 'relative',
+                width: '100%',
+                height: '70vh',
+                overflow: 'hidden',
+                cursor: 'grab',
+                background: '#f0f0f0',
+                borderRadius: "20px",
+                border: "solid 3px",
+                borderColor: colors.resolutionBlue
             }}
         >
-            <img
-            ref={imageRef}
-            src={imageSrc}
-            alt="Map"
-            onClick={handleImageClick}
-            style={{
-                display: 'block',
-                userSelect: 'none',
-                maxWidth: 'none',
-                maxHeight: 'none',
-            }}
-            />
-        </div>
+            <div
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    transformOrigin: 'top left',
+                    transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoomScale})`,
+                }}
+            >
+                <img
+                    ref={imageRef}
+                    src={photoLink}
+                    alt="Map"
+                    onClick={handleImageClick}
+                    style={{
+                        display: 'block',
+                        userSelect: 'none',
+                        maxWidth: 'none',
+                        maxHeight: 'none',
+                    }}
+                />
+            </div>
+            {locations.map(location => {
+                const pinX = (location.position_x * zoomScale) + offsetX;
+                const pinY = (location.position_y * zoomScale) + offsetY;
+
+                return (
+                    <Pin
+                        key={location.id}
+                        x={pinX}
+                        y={pinY}
+                        name={location.name}
+                        description={location.description}
+                        capacity={location.capacity}
+                        type={location.room_type}
+                        onClick={() => console.log(`Clicked on ${location.name}`)} // Handle pin click
+                    />
+                );
+            })}
         </div>
     );
 };

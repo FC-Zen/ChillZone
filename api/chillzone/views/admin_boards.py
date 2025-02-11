@@ -8,8 +8,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.models import User
 from chillzone.services import EmailService
-from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo, Tag, TagCategory, IsLocated
-from chillzone.serializers import AdminCreateLocationSerializer, TagSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
+from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo, Tag, TagCategory, IsLocated, Map
+from chillzone.serializers import AdminFloorsWithPhotoSerializer, UpdateMapFloorSerializer, CreateMapFloorSerializer, AdminCreateLocationSerializer, TagSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
 
 import random
 import string
@@ -125,8 +125,6 @@ class AdminDashboardView(APIView):
 
         return Response(data, status=200)
 
-
-
 class AdminUserView(generics.ListAPIView):
     serializer_class = AdminUserSerializer
     permission_classes = [IsAuthenticated & IsAdminUser]
@@ -214,6 +212,7 @@ class AdminLocationView(generics.ListAPIView):
 
         floors = MapFloor.objects.filter(map__establishment=establishment)
         floor_serializer = AdminAvailableFloorsSerializer(floors, many=True)
+        floor_photo_serializer = AdminFloorsWithPhotoSerializer(floors, many=True)
 
         try:
             location_category = TagCategory.objects.get(label="Location")
@@ -226,6 +225,7 @@ class AdminLocationView(generics.ListAPIView):
         return Response({
             "locations": location_serializer.data,
             "available_floors": floor_serializer.data,
+            "floor_with_photo": floor_photo_serializer.data,
             "available_types": serializer.data
         })
     
@@ -322,20 +322,114 @@ class AdminReservationConflictView(APIView):
             "reservations": reservation_serializer.data,
             "conflicts": conflict_serializer.data
         })
+    
+class AdminInfoView(APIView):
+    permission_classes = [IsAuthenticated & IsAdminUser]
+
+    def get(self, request, *args, **kwargs):
+        establishment = request.user.usermeta.establishment
+        establishment_serializer = AdminEstablishmentSerializer(establishment)
+
+        return Response({
+            "establishment": establishment_serializer.data,
+        })
+    
+    def put(self, request, *args, **kwargs):
+            """Update establishment details."""
+            establishment = request.user.usermeta.establishment
+
+            if not establishment:
+                return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
+
+            serializer = AdminEstablishmentSerializer(establishment, data=request.data, partial=True)
+
+            if serializer.is_valid():
+                serializer.save()
+                return self.get(request)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AdminMapView(APIView):
     permission_classes = [IsAuthenticated & IsAdminUser]
 
     def get(self, request, *args, **kwargs):
         establishment = request.user.usermeta.establishment
-        establishment_serializer = AdminEstablishmentSerializer(establishment)
+
         floors = MapFloor.objects.filter(map__establishment=establishment)
         floors_serializer = AdminMapFloorSerializer(floors, many=True)
 
         return Response({
-            "establishment": establishment_serializer.data,
             "floors": floors_serializer.data
         })
+    
+    def post(self, request):
+        user = request.user
+
+        establishment = user.usermeta.establishment
+        if not establishment:
+            return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
+
+        map_instance, created = Map.objects.get_or_create(establishment=establishment, defaults={"name": f"Carte de {establishment.name}"})
+
+        serializer = CreateMapFloorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(map=map_instance)
+            return self.get(request)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        user = request.user
+
+        establishment = user.usermeta.establishment
+        if not establishment:
+            return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = UpdateMapFloorSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        map_floor_id = serializer.validated_data.get("id")
+
+        try:
+            map_floor = MapFloor.objects.get(id=map_floor_id, map__establishment=establishment)
+        except MapFloor.DoesNotExist:
+            return Response({"error": "MapFloor not found or does not belong to your establishment."}, status=status.HTTP_404_NOT_FOUND)
+
+        for field in ['number', 'name', 'photo_link']:
+            if field in serializer.validated_data:
+                setattr(map_floor, field, serializer.validated_data[field])
+
+        map_floor.save()
+
+        return self.get(request)
+    
+    def delete(self, request):
+        user = request.user
+
+        establishment = user.usermeta.establishment
+        if not establishment:
+            return Response({"error": "No establishment associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
+
+        map_floor_id = request.data.get("id")
+        if not map_floor_id:
+            return Response({"error": "MapFloor ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            map_floor = MapFloor.objects.get(id=map_floor_id, map__establishment=establishment)
+        except MapFloor.DoesNotExist:
+            return Response({"error": "MapFloor not found or does not belong to your establishment."}, status=status.HTTP_404_NOT_FOUND)
+
+        Location.objects.filter(id_floor=map_floor).update(id_floor=None)
+
+        associated_map = map_floor.map
+
+        map_floor.delete()
+
+        if not MapFloor.objects.filter(map=associated_map).exists():
+            associated_map.delete()
+
+        return self.get(request)
     
 class AdminRestaurantView(APIView):
     permission_classes = [IsAuthenticated & IsAdminUser]

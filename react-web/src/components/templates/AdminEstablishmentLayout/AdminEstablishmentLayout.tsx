@@ -6,48 +6,39 @@ import { Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { HeaderIcon, Icon } from '@components/atoms';
 import { User } from '@hooks';
-
-type Floor = {
-  floor_id: number;
-  floor_number: number;
-  floor_name: string;
-  floor_plan: string;
-};
+import { Floor } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
+import { colors } from '@theme';
 
 type AdminEstablishmentLayoutProps = {
   user : User | null;
   part: string;
   form: InputField[];
-  addAccount: (formData: FormData) => void;
+  onSubmit: (formData: FormData) => void;
   mapName: string;
-  mapImageSrc: string;
   onMapClick: (x: number, y: number) => void; 
-  floors: {
-    floor_id: number;
-    floor_number: number;
-    floor_name: string;
-    floor_plan: string;
-  }[];
+  floors: Floor[];
   selectedFloor: Floor | null;
   handleFloorClick: (id : number) => void;
   handleAddFloorClick: () => void;
+  handleChangeFloorClick: () => void;
+  handleDeleteFloorClick: () => void;
 };
 
 export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> = ({
   user,
   part,
   form,
-  addAccount,
+  onSubmit,
   mapName,
-  mapImageSrc,
   onMapClick,
   floors,
   selectedFloor,
   handleFloorClick,
-  handleAddFloorClick
+  handleAddFloorClick,
+  handleChangeFloorClick,
+  handleDeleteFloorClick
 }) => {
   const { t } = useTranslation();
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <AdminSideBar />
@@ -78,11 +69,11 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
               <Button
                       variant="contained"
                       className="customAddBtnEsta"
-                      onClick={() => (console.log("charger le fichier en intégration"))} 
+                      onClick={handleChangeFloorClick} 
                       style={{
-                          width: '22%',
+                          width: '50%',
                           padding: '7px 12px',
-                          backgroundColor: '#005745',
+                          backgroundColor: colors.aquaDeep,
                           cursor: 'pointer',
                           gap: "5px"
                       }}
@@ -90,8 +81,26 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
                       <Icon name="Download" />
                       {t('buttons.actions.changeMap')}
               </Button>
+              <Button
+                      variant="contained"
+                      className="customAddBtnEsta"
+                      onClick={handleDeleteFloorClick} 
+                      style={{
+                          width: '50%',
+                          padding: '7px 12px',
+                          backgroundColor: colors.red,
+                          cursor: 'pointer',
+                          gap: "5px"
+                      }}
+                  >
+                      <Icon name="Trash" />
+                      {t('buttons.actions.deleteMap')}
+              </Button>
             </div>
-            <Map imageSrc={mapImageSrc} onClick={(onMapClick)} />
+            <Map 
+              onClick={(onMapClick)} 
+              selectedFloor={selectedFloor} 
+            />
           </div>
 
 
@@ -109,7 +118,7 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
             </Typography>
 
             <ModalForm 
-              onSubmit={addAccount} 
+              onSubmit={onSubmit} 
               listInputs={form} 
             />
           </div>

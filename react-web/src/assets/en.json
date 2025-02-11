@@ -16,7 +16,9 @@
     "affiliates": "Affiliated dining locations",
     "products": "Products",
     "commands": "Orders",
-    "menus": "Menus"
+    "menus": "Menus",
+    "faq": "Frequently Asked Questions Management",
+    "network" : "Networks'Establishment"
   },
 
   "userGreeting": {
@@ -28,7 +30,8 @@
       "product": "Edit product",
       "menu": "Edit menu",
       "room": "Edit room",
-      "stock": "Edit product stock"
+      "stock": "Edit product stock",
+      "faq" : "Edit a question"
     },
     "create": {
       "account": "Create a student test account",
@@ -36,7 +39,9 @@
       "room": "Create a room",
       "floor": "Create a floor",
       "product": "Create a product",
-      "menu": "Create a menu"
+      "menu": "Create a menu",
+      "faq" : "Create a question",
+      "network" : "Link a network"
     },
     "info": {
       "command": "Order details",
@@ -45,7 +50,11 @@
       "infoPwd": "If the account exists, you will receive an email shortly.",
       "recoverPwd": "I forgot my password.",
       "signIn": "I want to register as a restaurateur.",
-      "rememberMe": "Remember me."
+      "rememberMe": "Remember me.",
+      "warningDelete": "Attention, vous êtes sur le point de supprimer un étage entier du bâtiment. Êtes-vous sûr ?"
+    },
+    "delete" : {
+      "floor" : "Delete a floor"
     },
 
     "rooms": {
@@ -117,15 +126,18 @@
       "confirm": "Confirm",
       "back": "Back",
       "reset": "Reset",
-      "changeMap": "Change map"
+      "changeMap": "Update the floor",
+      "deleteMap": "Delete the floor",
+      "delete" : "Delete"
     },
     "add": {
-      "generic": "Add {{ entity }}",
+      "generic": "Add",
       "user": "Add a user account",
       "room": "Add a room",
       "floor": "Add a floor",
       "menu": "Add a menu",
-      "product": "Add a product"
+      "product": "Add a product",
+      "faq" : "Add a question"
     },
     "commands": {
       "stateReady": "Order is ready",
@@ -174,7 +186,8 @@
       "room": "Room Name",
       "floor": "Floor",
       "roomtype": "RoomType",
-      "isadmin" : "Establishment Administrator ?"
+      "isadmin" : "Establishment Administrator ?",
+      "link" : "Link"
     },
     "auth": {
       "password": "Password",
@@ -230,7 +243,8 @@
     "infoPwd": "If the account exists, you will receive an email shortly.",
     "recoverPwd": "I forgot my password",
     "singin": "I want to register as a restaurateur",
-    "rememberMe": "Remember me"
+    "rememberMe": "Remember me",
+    "nolinks": "You do not have any network linked"
   },
 
   "tables": {
@@ -326,6 +340,11 @@
         "acceptAccount": "Accept or Decline account",
         "declineAccount": "Decline account",
         "deleteRestaurantAccount": "Manage account"
+      },
+      "faq" : {
+        "category": "Category",
+        "question": "Question",
+        "answer": "Answer"
       }
     }
   },

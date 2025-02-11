@@ -1,6 +1,6 @@
 export { Button, Checkbox, Icon,  } from './atoms';
 export type { IconProps } from './atoms';
-export { Input, SnackBar, VectorHeader, VectorBottom, Map } from './molecules';
+export { Input, SnackBar, VectorHeader, VectorBottom, Map, Pin } from './molecules';
 export {
   Connection,
   ForgotMdp,

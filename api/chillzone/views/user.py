@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
+from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
-from chillzone.serializers import UserLoginSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer
-from chillzone.models import Token
+from chillzone.serializers import UserLoginSerializer, OwnerEstablishmentSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, OwnerCreateSerializer
+from chillzone.models import Token, LinkTo, WorkIn, RestaurationPlace, UserMeta, Establishment
 from rest_framework.permissions import IsAuthenticated
 from django.utils.timezone import now, timedelta
 from chillzone.services import EmailService
@@ -204,3 +205,66 @@ class UserInfoUpdateView(APIView):
             return Response({"message": "User information updated successfully."}, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class OwnerCreateView(APIView):
+    serializer_class = OwnerCreateSerializer
+
+    def get(self, request):
+        establishments = Establishment.objects.all()
+        serializer = OwnerEstablishmentSerializer(establishments, many=True)
+        return Response({"establishments" : serializer.data}, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = OwnerCreateSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        validated_data = serializer.validated_data
+
+        with transaction.atomic():
+            user = User.objects.create(
+                username=validated_data['email'],
+                first_name=validated_data['first_name'],
+                last_name=validated_data['last_name'],
+                email=validated_data['email'],
+                is_staff=False,
+                is_active=False,
+                is_superuser=False
+            )
+            user.set_password(validated_data['password'])
+            user.save()
+
+            restaurant = RestaurationPlace.objects.create(
+                name=validated_data['name'],
+                description=validated_data['description'],
+                location=validated_data['location'],
+                restauration_type=validated_data['restauration_type'],
+                opening_time=validated_data['opening_time'],
+                closing_time=validated_data['closing_time'],
+                phone=validated_data['phone_restaurant'],
+                photo_link=validated_data.get('photo_link', None),
+                status=False,
+                is_valid=False
+            )
+
+            user_meta = UserMeta.objects.create(
+                user=user,
+                is_owner=True,
+                is_verified=False,
+                role=f"Restaurateur chez {restaurant.name}",
+                phone=validated_data.get('phone', None),
+            )
+
+            WorkIn.objects.create(
+                user=user,
+                restaurant=restaurant,
+                role="Chef.fe du restaurant"
+            )
+
+            link_to_objects = [
+                LinkTo(establishment_id=est_id, restaurant=restaurant, status=False)
+                for est_id in validated_data['establishments']
+            ]
+            LinkTo.objects.bulk_create(link_to_objects)
+
+        return Response({"message": "Votre demande a bien été envoyé."}, status=status.HTTP_201_CREATED)
