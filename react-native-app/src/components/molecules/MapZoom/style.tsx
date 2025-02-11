@@ -20,8 +20,6 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.black,
-    width: 350,
-    height: layout.window.height * 0.6,
     overflow: 'hidden',
   },
 });

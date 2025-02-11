@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import { styles } from './style';
 import {
   BottomNavbar,
@@ -28,12 +28,38 @@ export const NavigationScreen = () => {
   };
 
   const handleImagePress = (x: number, y: number) => {
-    if (imageRef.current) {
-      const realX = (x - offsetX) / zoomScale;
-      const realY = (y - offsetY) / zoomScale;
-      console.log('Coordonnées réelles :', { x: realX, y: realY });
+    const imageSource = floorImages[selectedFloor];
+
+    if (imageSource) {
+      const resolvedSource = Image.resolveAssetSource(imageSource);
+
+      if (resolvedSource) {
+        Image.getSize(
+          resolvedSource.uri,
+          (width, height) => {
+            // Dimensions réelles de l'image
+            console.log("Dimensions de l'image :", { width, height });
+
+            // Calcul des coordonnées réelles
+            const realX =
+              ((x - offsetX) / zoomScale) * (width / resolvedSource.width);
+            const realY =
+              ((y - offsetY) / zoomScale) * (height / resolvedSource.height);
+
+            console.log('Coordonnées réelles :', { x: realX, y: realY });
+          },
+          (error) => {
+            console.error(
+              "Erreur lors de la récupération des dimensions de l'image :",
+              error
+            );
+          }
+        );
+      } else {
+        console.error("Source d'image non résolue");
+      }
     } else {
-      console.error('Image ref is undefined');
+      console.error("Source d'image non trouvée");
     }
   };
 
