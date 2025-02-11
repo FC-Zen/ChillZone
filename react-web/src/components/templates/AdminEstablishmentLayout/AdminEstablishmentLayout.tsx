@@ -12,26 +12,28 @@ type AdminEstablishmentLayoutProps = {
   user : User | null;
   part: string;
   form: InputField[];
-  addAccount: (formData: FormData) => void;
+  onSubmit: (formData: FormData) => void;
   mapName: string;
   onMapClick: (x: number, y: number) => void; 
   floors: Floor[];
   selectedFloor: Floor | null;
   handleFloorClick: (id : number) => void;
   handleAddFloorClick: () => void;
+  handleChangeFloorClick: () => void;
 };
 
 export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> = ({
   user,
   part,
   form,
-  addAccount,
+  onSubmit,
   mapName,
   onMapClick,
   floors,
   selectedFloor,
   handleFloorClick,
-  handleAddFloorClick
+  handleAddFloorClick,
+  handleChangeFloorClick
 }) => {
   const { t } = useTranslation();
   return (
@@ -64,7 +66,7 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
               <Button
                       variant="contained"
                       className="customAddBtnEsta"
-                      onClick={() => (console.log("charger le fichier en intégration"))} 
+                      onClick={handleChangeFloorClick} 
                       style={{
                           width: '22%',
                           padding: '7px 12px',
@@ -98,7 +100,7 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
             </Typography>
 
             <ModalForm 
-              onSubmit={addAccount} 
+              onSubmit={onSubmit} 
               listInputs={form} 
             />
           </div>

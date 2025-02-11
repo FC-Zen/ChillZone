@@ -361,6 +361,32 @@ export const getAdminInfo = async () => {
     }
 };
 
+/**
+ * Met à jour une les informations de l'établissement en envoyant une requête PUT à l'API.
+ *
+ * @param {FormData} formData - Les nouvelles informations de la FAQ.
+ * @throws {Error} Si la requête échoue.
+ *
+ * @returns {Promise<Object>} Réponse de l'API contenant les FAQ mises à jour.
+ */
+export const updateAdminInfo = async (formData: FormData): Promise<any> => {
+    try {
+        const response = await axios.put('http://localhost:3000/admin-info/', formData, {
+        withCredentials: true,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFToken': getCSRFToken(),
+        },
+        });
+        console.log('Réponse de l\'API (mise à jour FAQ):', response);
+        return response.data; // Renvoie les FAQ mises à jour
+    } catch (error: any) {
+        console.error('Erreur lors de la mise à jour de la FAQ:', error.message);
+        throw new Error(error.response?.data?.message || error.message);
+    }
+};
+
+
 
 /**
  * Récupère la liste des restaurants affiliés

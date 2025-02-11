@@ -51,6 +51,8 @@ export const ModalForm: React.FC<ModalFormProps> = ({
       } else if (input.type === 'autocomplete' && Array.isArray(input.value)) {
         // Pour autocomplete, stocker uniquement les IDs des tags
         initialData[input.name.toLowerCase()] = input.value.map((tag: { id: number; label: string }) => tag.id);
+      } else if (input.type === 'number') {
+        initialData[input.name.toLowerCase()] = input.value === 0 ? 0 : (Number(input.value) || '');      
       } else {
         initialData[input.name.toLowerCase()] = input.value || '';
       }
@@ -206,7 +208,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 label={input.label.toLowerCase()}
                 required={input.required ?? false}
                 type={input.type}
-                value={formData[input.name.toLowerCase()] || ''}
+                value={formData[input.name.toLowerCase()] !== undefined ? formData[input.name.toLowerCase()] : ''}
                 step={input.step}
                 disabled={input.disabled ?? false}
                 onInputChange={(name, value) => handleInputChange(name, value)}
