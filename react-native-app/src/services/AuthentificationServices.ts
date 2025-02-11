@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { z } from 'zod';
 import { SessionContext } from '@contexts';
+import { API_URL } from '@env';
 
 // Exemples d'authentification
 const validEmail = 'user@example.com';
@@ -18,7 +19,7 @@ const validEmails = ['user@example.com', 'admin@example.com'];
 export const authenticateUser = async (formData: { login: string; password: string; }) => {console.log("🔴 Application en arrière-plan ou fermée. Déconnexion...");
   try {
     const response = await axios.post(
-      "http://192.168.1.80:3000/login/",
+      `${API_URL}login/`,
       { login: formData.login, password: formData.password },
       { withCredentials: true }
     );
@@ -96,7 +97,7 @@ export const logoutUser = async () => {
     }
 
     // 🔹 Requête DELETE pour la déconnexion
-    const response = await axios.delete("http://192.168.1.80:3000/login/", {
+    const response = await axios.delete(`${API_URL}login/`, {
       withCredentials: true,
       headers: {
         "X-CSRFToken": csrfToken,
