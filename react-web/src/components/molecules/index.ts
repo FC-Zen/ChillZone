@@ -9,6 +9,7 @@ export { NavigationButton } from './NavigationButton';
 export { Pin } from './Pin';
 export { ModalHeader } from './ModalHeader';
 export { Map } from './Map';
+export { MapInput } from './MapInput';
 export { StyledSelect } from './Select';
 export { CommandInfo } from './CommandInfo';
 export { CustomCard } from './CustomCard';

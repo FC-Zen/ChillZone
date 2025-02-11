@@ -1,14 +1,26 @@
 import { Pin } from '@components';
-import { Floor, MapLocation } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
+import { Floor } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
 import { colors } from '@theme';
 import React, { useState, useRef, useEffect } from 'react';
 
-type MapProps = {
+type MapInputProps = {
     selectedFloor: Floor | null;
+    selectedCoords : { x: number, y: number } | null ;
     onClick: (x: number, y: number) => void;
 };
 
-export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
+export type MapLocation = {
+    id: number;
+    name: string;
+    description: string;
+    capacity: number;
+    status: boolean;
+    photo_link: string | null;
+    position_x: number;
+    position_y: number;
+};
+
+export const MapInput: React.FC<MapInputProps> = ({ selectedFloor, selectedCoords, onClick }) => {
     // sur l'image
     const [initialScale, setInitialScale] = useState(1);
     const [zoomScale, setZoomScale] = useState(1);
@@ -21,37 +33,62 @@ export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
     const startCoords = useRef({ x: 0, y: 0 });
 
     const [photoLink, setPhotoLink] = useState<string>("");
-    const [locations, setLocations] = useState<MapLocation[]>([])
-    
+    const [pin, setPin] = useState<MapLocation | null>(null);
+
     useEffect(() => {
+        console.log(selectedFloor);
+        if (selectedCoords) {
+            const newPin: MapLocation = {
+                id: Date.now(),
+                name: "Pin",
+                description: "Description du pin",
+                capacity: 10,
+                status: true,
+                photo_link: null,
+                position_x: selectedCoords.x,
+                position_y: selectedCoords.y,
+            };
+            setPin(newPin); // Définit le pin initial basé sur selectedCoords
+        }
         if (selectedFloor) {
             setPhotoLink(selectedFloor.photo_link ? `http://localhost:3000${selectedFloor.photo_link}` : "");
-            setLocations(selectedFloor.locations);
         }
-    }, [selectedFloor]);
+    }, []);
 
     useEffect(() => {
-        if (containerRef.current && imageRef.current) {
-            // DELIMITER LA TAILLE DE LIMAGE SELON LA DIV PARENT
-
-            const containerWidth = containerRef.current.offsetWidth;
-            const containerHeight = containerRef.current.offsetWidth;
-
-            const imageWidth = imageRef.current.naturalWidth;
-            const imageHeight = imageRef.current.naturalHeight;
-
-            const scaleWidth = containerWidth / imageWidth;
-            const scaleHeight = containerHeight / imageHeight;
-            const newInitialScale = Math.min(scaleWidth, scaleHeight);
-
-            setInitialScale(newInitialScale);
+        if (!photoLink || !imageRef.current) return;
+    
+        const handleImageLoad = () => {
+            if (containerRef.current && imageRef.current) {
+                const containerWidth = containerRef.current.offsetWidth;
+                const containerHeight = containerRef.current.offsetHeight;
+    
+                const imageWidth = imageRef.current.naturalWidth;
+                const imageHeight = imageRef.current.naturalHeight;
+    
+                if (imageWidth > 0 && imageHeight > 0) {
+                    const scaleWidth = containerWidth / imageWidth;
+                    const scaleHeight = containerHeight / imageHeight;
+                    const newInitialScale = Math.min(scaleWidth, scaleHeight);
+    
+                    setInitialScale(newInitialScale);
+                }
+            }
+        };
+    
+        const img = imageRef.current;
+        if (img.complete) {
+            handleImageLoad();
+        } else {
+            img.addEventListener("load", handleImageLoad);
+            return () => img.removeEventListener("load", handleImageLoad);
         }
-    }, [photoLink]); 
-
+    }, [photoLink]);
+    
     useEffect(() => {
         setZoomScale(initialScale);
     }, [initialScale]);
-    
+
     // Gestion du zoom
     const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
         const scaleFactor = 0.1;
@@ -62,42 +99,43 @@ export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
 
     // Déplacement de l'image
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        console.log("Je gère le déplacement ici");
         e.preventDefault();
         dragging.current = true;
         startCoords.current = { x: e.clientX - offsetX, y: e.clientY - offsetY };
-    
+
         const handleMouseMove = (moveEvent: MouseEvent) => {
             if (!dragging.current || !imageRef.current || !containerRef.current) return;
-    
+
             const container = containerRef.current;
             const image = imageRef.current;
-    
+
             // Taille réelle de l'image après le zoom
             const imageWidth = image.naturalWidth * zoomScale;
             const imageHeight = image.naturalHeight * zoomScale;
-    
+
             // Taille du conteneur
             const containerWidth = container.offsetWidth;
             const containerHeight = container.offsetHeight;
-    
+
             // Calcul des limites pour empêcher l'image de sortir
             const maxX = Math.max(0, (imageWidth - containerWidth));
             const maxY = Math.max(0, (imageHeight - containerHeight));
-    
+
             // Nouveaux offsets limités aux bords
             const newX = moveEvent.clientX - startCoords.current.x;
             const newY = moveEvent.clientY - startCoords.current.y;
-    
+
             setOffsetX(Math.min(0, Math.max(-maxX, newX)));
             setOffsetY(Math.min(0, Math.max(-maxY, newY)));
         };
-    
+
         const handleMouseUp = () => {
             dragging.current = false;
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
         };
-    
+
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
     };
@@ -110,11 +148,28 @@ export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
         const x = ((e.clientX - rect.left) / zoomScale);
         const y = ((e.clientY - rect.top) / zoomScale);
 
-        onClick(Math.round(x), Math.round(y));
+        if (x !== 0 && y !== 0) {
+            
+            const newPin: MapLocation = {
+                id: Date.now(), // Utilisation de Date.now() pour une ID unique
+                name: "Pin", 
+                description: "Description du pin",
+                capacity: 10, // Exemple de capacité
+                status: true,
+                photo_link: null,
+                position_x: Math.round(x),
+                position_y: Math.round(y),
+            };
+
+            console.log(newPin);
+            setPin(newPin); // Met à jour le pin unique
+            onClick(Math.round(x), Math.round(y)); // Passer les coordonnées au parent
+        }
     };
 
     return (
         <div
+            key={photoLink}
             ref={containerRef}
             onWheel={handleWheel}
             onMouseDown={handleMouseDown}
@@ -152,25 +207,17 @@ export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
                     }}
                 />
             </div>
-            {locations.map(location => {
-                const pinX = (location.position_x * zoomScale) + offsetX;
-                const pinY = (location.position_y * zoomScale) + offsetY;
-
-                return (
-                    <Pin
-                        key={location.id}
-                        x={pinX}
-                        y={pinY}
-                        name={location.name}
-                        description={location.description}
-                        capacity={location.capacity}
-                        type={location.room_type}
-                        onClick={() => console.log(`Clicked on ${location.name}`)} // Handle pin click
-                    />
-                );
-            })}
+            {pin && (
+                <Pin
+                    key={pin.id}
+                    x={(pin.position_x * zoomScale) + offsetX}
+                    y={(pin.position_y * zoomScale) + offsetY}
+                    name={pin.name}
+                    onClick={() => console.log(`Clicked on ${pin.name}`)} // Handle pin click
+                />
+            )}
         </div>
     );
 };
 
-export default Map;
+export default MapInput;

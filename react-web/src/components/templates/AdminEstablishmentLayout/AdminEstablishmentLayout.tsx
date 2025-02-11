@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { HeaderIcon, Icon } from '@components/atoms';
 import { User } from '@hooks';
 import { Floor } from '@pages/AdminEstablishmentPage/AdminEstablishmentPage';
+import { colors } from '@theme';
 
 type AdminEstablishmentLayoutProps = {
   user : User | null;
@@ -20,6 +21,7 @@ type AdminEstablishmentLayoutProps = {
   handleFloorClick: (id : number) => void;
   handleAddFloorClick: () => void;
   handleChangeFloorClick: () => void;
+  handleDeleteFloorClick: () => void;
 };
 
 export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> = ({
@@ -33,7 +35,8 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
   selectedFloor,
   handleFloorClick,
   handleAddFloorClick,
-  handleChangeFloorClick
+  handleChangeFloorClick,
+  handleDeleteFloorClick
 }) => {
   const { t } = useTranslation();
   return (
@@ -68,15 +71,30 @@ export const AdminEstablishmentLayout: React.FC<AdminEstablishmentLayoutProps> =
                       className="customAddBtnEsta"
                       onClick={handleChangeFloorClick} 
                       style={{
-                          width: '22%',
+                          width: '50%',
                           padding: '7px 12px',
-                          backgroundColor: '#005745',
+                          backgroundColor: colors.aquaDeep,
                           cursor: 'pointer',
                           gap: "5px"
                       }}
                   >
                       <Icon name="Download" />
                       {t('buttons.actions.changeMap')}
+              </Button>
+              <Button
+                      variant="contained"
+                      className="customAddBtnEsta"
+                      onClick={handleDeleteFloorClick} 
+                      style={{
+                          width: '50%',
+                          padding: '7px 12px',
+                          backgroundColor: colors.red,
+                          cursor: 'pointer',
+                          gap: "5px"
+                      }}
+                  >
+                      <Icon name="Trash" />
+                      {t('buttons.actions.deleteMap')}
               </Button>
             </div>
             <Map 

@@ -379,13 +379,87 @@ export const updateAdminInfo = async (formData: FormData): Promise<any> => {
         },
         });
         console.log('Réponse de l\'API (mise à jour FAQ):', response);
-        return response.data; // Renvoie les FAQ mises à jour
+        return response; // Renvoie les FAQ mises à jour
     } catch (error: any) {
         console.error('Erreur lors de la mise à jour de la FAQ:', error.message);
         throw new Error(error.response?.data?.message || error.message);
     }
 };
 
+/**
+ * Ajoute un étage en envoyant une requête POST à l'API.
+ *
+ * @param {FormData} formData - Les informations de l'étage à ajouter.
+ * @throws {Error} Si la requête échoue.
+ *
+ * @returns {Promise<Object>} Réponse de l'API contenant les étages mis à jour.
+ */
+export const addFloor = async (formData: FormData): Promise<any> => {
+    try {
+    const response = await axios.post('http://localhost:3000/admin-map/', formData, {
+        withCredentials: true,
+        headers: {
+        'Content-Type': 'multipart/form-data',
+        'X-CSRFToken': getCSRFToken(),
+        },
+    });
+    console.log("Réponse de l'API (ajout étage):", response);
+    return response; // Renvoie les étages mis à jour
+    } catch (error: any) {
+    console.error("Erreur lors de l'ajout de l'étage:", error.message);
+    throw new Error(error.response?.data?.message || error.message);
+    }
+};
+
+/**
+   * Met à jour un étage en envoyant une requête PUT à l'API.
+   *
+   * @param {FormData} formData - Les nouvelles informations de l'étage.
+   * @throws {Error} Si la requête échoue.
+   *
+   * @returns {Promise<Object>} Réponse de l'API contenant les étages mis à jour.
+   */
+export const updateFloor = async (formData: FormData): Promise<any> => {
+    try {
+    const response = await axios.put('http://localhost:3000/admin-map/', formData, {
+        withCredentials: true,
+        headers: {
+        'Content-Type': 'multipart/form-data',
+        'X-CSRFToken': getCSRFToken(),
+        },
+    });
+    console.log("Réponse de l'API (mise à jour étage):", response);
+    return response; // Renvoie les étages mis à jour
+    } catch (error: any) {
+    console.error("Erreur lors de la mise à jour de l'étage:", error.message);
+    throw new Error(error.response?.data?.message || error.message);
+    }
+};
+
+/**
+   * Supprime un étage en envoyant une requête DELETE à l'API.
+   *
+   * @param {number} id - L'ID de l'étage à supprimer.
+   * @throws {Error} Si la requête échoue.
+   *
+   * @returns {Promise<Object>} Réponse de l'API contenant les étages mis à jour.
+   */
+export const deleteFloor = async (id: number): Promise<any> => {
+    try {
+    const response = await axios.delete('http://localhost:3000/admin-map/', {
+        data: { id },
+        withCredentials: true,
+        headers: {
+        'X-CSRFToken': getCSRFToken(),
+        },
+    });
+    console.log("Réponse de l'API (suppression étage):", response);
+    return response; // Renvoie les étages mis à jour
+    } catch (error: any) {
+    console.error("Erreur lors de la suppression de l'étage:", error.message);
+    throw new Error(error.response?.data?.message || error.message);
+    }
+};
 
 
 /**

@@ -52,6 +52,9 @@
       "singin": "Je veux m’inscrire en tant que restaurateur",
       "rememberMe": "Se souvenir de moi"
     },
+    "delete" : {
+      "floor" : "Suppression d'un étage"
+    },
 
     "navbar": {
       "home": "Acceuil",
@@ -174,7 +177,8 @@
       "confirm": "Confirmer",
       "back": "Retour",
       "reset": "Réinitialiser",
-      "changeMap": "Changer de plan",
+      "changeMap": "Modifier l'étage",
+      "deleteMap": "Supprimer l'étage",
       "delete" : "Supprimer"
     },
     "add": {
@@ -291,7 +295,8 @@
     "recoverPwd": "J’ai oublié mon mot de passe",
     "singin": "Je veux m’inscrire en tant que restaurateur",
     "rememberMe": "Se souvenir de moi",
-    "nolinks": "Vous n'avez pas configuré de réseau"
+    "nolinks": "Vous n'avez pas configuré de réseau",
+    "warningDelete": "Attention, vous êtes sur le point de supprimer un étage entier du bâtiment. Êtes-vous sûr ?"
   },
 
   "tables": {

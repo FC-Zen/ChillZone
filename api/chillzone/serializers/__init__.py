@@ -12,7 +12,7 @@ from .faq import FAQSerializer, AdminFAQSerializer
 from .is_located import IsLocatedSerializer
 from .line_content import LineContentSerializer
 from .link_to import LinkToSerializer
-from .location import LocationSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminCreateLocationSerializer
+from .location import LocationSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminCreateLocationSerializer, AdminFloorsWithPhotoSerializer
 from .location_reservation import LocationReservationSerializer, AdminLocationReservationSerializer
 from .log import LogSerializer
 from .map import MapSerializer
