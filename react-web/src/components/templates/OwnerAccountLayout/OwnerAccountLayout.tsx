@@ -1,19 +1,21 @@
 import React from 'react';
-import { OwnerSidebar, Header } from '@components/organisms';
+import { OwnerSidebar, Header, OwnerDashboardGraphs } from '@components/organisms';
 import { User } from '@hooks';
+import { OwnerDashboardData } from '@services';
+import { AdminDashboardStatsCards, StatItem } from '@components/organisms/AdminDashboardStatsCards';
 
 type OwnerHomeLayoutProps = {
   user : User | null;
   part: string;
-  statsSection: React.ReactNode;
-  mainContent: React.ReactNode;
+  data: OwnerDashboardData | null;
+  stats: StatItem[];
 };
 
 export const OwnerHomeLayout: React.FC<OwnerHomeLayoutProps> = ({
   user,
   part,
-  statsSection,
-  mainContent,
+  data,
+  stats,
 }) => (
   <div className="flex min-h-screen bg-gray-100">
     {/* Sidebar du propriétaire */}
@@ -24,14 +26,17 @@ export const OwnerHomeLayout: React.FC<OwnerHomeLayoutProps> = ({
         user={user}
         part={part}
       />
-      {/* Contenu principal */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
-        {/* Section principale */}
-        <div className="lg:col-span-2 space-y-6">{mainContent}</div>
+    <div className="flex p-6 gap-6">
+          <div className="flex-1 space-y-6">
+            <div className="space-y-6">
+              {data && <OwnerDashboardGraphs data={data} />}
+            </div>
+          </div>
 
-        {/* Section des statistiques */}
-        <div className="space-y-6">{statsSection}</div>
+          <div className="flex flex-col gap-6">
+            <AdminDashboardStatsCards stats={stats} />
+          </div>
+        </div>
       </div>
-    </div>
   </div>
 );

@@ -13,7 +13,7 @@ import { z } from 'zod';
  */
 export const authenticateUser = async (formData: { login: string; password: string }) => {
   try {
-    const response = await axios.post( 'http://localhost:3000/login/' , {
+    const response = await axios.post( `${import.meta.env.VITE_REACT_APP_API_URL}login/` , {
       login: formData.login,
       password: formData.password,
     },
@@ -55,7 +55,7 @@ export const authenticateUser = async (formData: { login: string; password: stri
 export const sendPasswordRecoveryEmail = async (formData: { email: string }) => {
   // Exemple d'une liste d'emails valides pour la simulation
   try {
-    const response = await axios.post( 'http://localhost:3000/forget-password/' , {
+    const response = await axios.post( `${import.meta.env.VITE_REACT_APP_API_URL}forget-password/` , {
       email: formData.email
     },
     {
@@ -103,7 +103,7 @@ export const changePassword = async (
     }
     // Validation des mots de passe via Zod
     passwordSchema(t).parse(formData.inputPassword);
-    const response = await axios.put( 'http://localhost:3000/reset-password/' + formData.uuid , {
+    const response = await axios.put( `${import.meta.env.VITE_REACT_APP_API_URL}reset-password/` + formData.uuid , {
       password: formData.inputPassword,
       password_verified: formData.inputVerifyPassword,
     },
@@ -134,7 +134,7 @@ export const changePassword = async (
 export const logoutUser = async (setUser: React.Dispatch<React.SetStateAction<User | null>>) => {
   try {
     console.log("Cookies avant la requête DELETE:", document);
-    const response = await axios.delete('http://localhost:3000/login/', 
+    const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}login/`, 
     { 
       withCredentials: true,
       headers: {

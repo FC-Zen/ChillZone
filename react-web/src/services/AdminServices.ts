@@ -32,7 +32,7 @@ export type DashboardData = {
  */
 export const getAccounts = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-accounts/', 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-accounts/`, 
             { withCredentials: true,
                 headers: {
                     'X-CSRFToken': getCSRFToken(),
@@ -59,7 +59,7 @@ export const getAccounts = async () => {
  */
 export const getDashboardData = async (): Promise<DashboardData> => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-dashboard/', {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-dashboard/`, {
             withCredentials: true,
             headers: {
                 'X-CSRFToken': getCSRFToken(),
@@ -89,7 +89,7 @@ export const getDashboardData = async (): Promise<DashboardData> => {
  */
 export const toggleAccountBlock = async (id: number, is_block: boolean) => {
     try {
-        const response = await axios.put('http://localhost:3000/admin-accounts/', 
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-accounts/`, 
             {
                 id : id,
                 is_block : is_block,
@@ -121,7 +121,7 @@ export const toggleAccountBlock = async (id: number, is_block: boolean) => {
  */
 export const toggleAccountActive = async (id: number, is_active: boolean) => {
     try {
-        const response = await axios.put('http://localhost:3000/admin-accounts/', 
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-accounts/`, 
             {
                 id : id,
                 is_active : is_active
@@ -154,7 +154,7 @@ export const toggleAccountActive = async (id: number, is_active: boolean) => {
    */
 export const addAccount = async (formData: FormData): Promise<any> => {
     try {
-        const response = await axios.post('http://localhost:3000/admin-accounts/', formData, {
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-accounts/`, formData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -180,7 +180,7 @@ export const addAccount = async (formData: FormData): Promise<any> => {
  */
 export const getRooms = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-rooms/', 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, 
         { 
             withCredentials: true,
             headers: {
@@ -207,7 +207,7 @@ export const getRooms = async () => {
  */
 export const addRoom = async (formData: FormData): Promise<any> => {
     try {
-        const response = await axios.post('http://localhost:3000/admin-rooms/', formData, {
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, formData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -234,7 +234,7 @@ export const addRoom = async (formData: FormData): Promise<any> => {
  */
 export const updateRoom = async (formData: FormData): Promise<any> => {
     try {
-        const response = await axios.put('http://localhost:3000/admin-rooms/', formData, {
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, formData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -260,7 +260,7 @@ export const updateRoom = async (formData: FormData): Promise<any> => {
  */
 export const toggleRoom = async (id: number, status: boolean) => {
     try {
-        const response = await axios.put('http://localhost:3000/admin-rooms/', 
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, 
             {
                 id : id,
                 status : status,
@@ -291,7 +291,7 @@ export const toggleRoom = async (id: number, status: boolean) => {
  */
 export const getConflictsaAndReservations = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-booking/', 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-booking/`, 
             { 
                 withCredentials: true,
                 headers: {
@@ -318,7 +318,7 @@ export const getConflictsaAndReservations = async () => {
  */
 export const getAdminMap = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-map/', 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, 
             { 
                 withCredentials: true,
                 headers: {
@@ -344,7 +344,7 @@ export const getAdminMap = async () => {
  */
 export const getAdminInfo = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-info/', 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-info/`, 
             { 
                 withCredentials: true,
                 headers: {
@@ -371,7 +371,7 @@ export const getAdminInfo = async () => {
  */
 export const updateAdminInfo = async (formData: FormData): Promise<any> => {
     try {
-        const response = await axios.put('http://localhost:3000/admin-info/', formData, {
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-info/`, formData, {
         withCredentials: true,
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -396,7 +396,7 @@ export const updateAdminInfo = async (formData: FormData): Promise<any> => {
  */
 export const addFloor = async (formData: FormData): Promise<any> => {
     try {
-    const response = await axios.post('http://localhost:3000/admin-map/', formData, {
+    const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, formData, {
         withCredentials: true,
         headers: {
         'Content-Type': 'multipart/form-data',
@@ -421,7 +421,7 @@ export const addFloor = async (formData: FormData): Promise<any> => {
    */
 export const updateFloor = async (formData: FormData): Promise<any> => {
     try {
-    const response = await axios.put('http://localhost:3000/admin-map/', formData, {
+    const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, formData, {
         withCredentials: true,
         headers: {
         'Content-Type': 'multipart/form-data',
@@ -446,7 +446,7 @@ export const updateFloor = async (formData: FormData): Promise<any> => {
    */
 export const deleteFloor = async (id: number): Promise<any> => {
     try {
-    const response = await axios.delete('http://localhost:3000/admin-map/', {
+    const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, {
         data: { id },
         withCredentials: true,
         headers: {
@@ -471,7 +471,7 @@ export const deleteFloor = async (id: number): Promise<any> => {
  */
 export const getAffiliations = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-restaurants/', 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-restaurants/`, 
             { 
                 withCredentials: true,
                 headers: {
@@ -497,7 +497,7 @@ export const getAffiliations = async () => {
  */
 export const acceptAffiliations = async (id: number) => {
     try {
-        const response = await axios.post('http://localhost:3000/admin-restaurants/', 
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-restaurants/`, 
             {
                 id : id
             },
@@ -526,7 +526,7 @@ export const acceptAffiliations = async (id: number) => {
  */
 export const deleteAffiliations = async (id: number) => {
     try {
-        const response = await axios.delete('http://localhost:3000/admin-restaurants/', 
+        const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-restaurants/`, 
             { 
                 data: { id: id },
                 withCredentials: true,
@@ -553,7 +553,7 @@ export const deleteAffiliations = async (id: number) => {
  */
 export const getFAQ = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-faq/', 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-faq/`, 
             { 
                 withCredentials: true,
                 headers: {
@@ -580,7 +580,7 @@ export const getFAQ = async () => {
  */
 export const addFAQ = async (formData: FormData): Promise<any> => {
     try {
-        const response = await axios.post('http://localhost:3000/admin-faq/', formData, {
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-faq/`, formData, {
         withCredentials: true,
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -605,7 +605,7 @@ export const addFAQ = async (formData: FormData): Promise<any> => {
  */
 export const updateFAQ = async (formData: FormData): Promise<any> => {
     try {
-        const response = await axios.put('http://localhost:3000/admin-faq/', formData, {
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-faq/`, formData, {
         withCredentials: true,
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -630,7 +630,7 @@ export const updateFAQ = async (formData: FormData): Promise<any> => {
  */
 export const deleteFAQ = async (id: number): Promise<any> => {
     try {
-        const response = await axios.delete('http://localhost:3000/admin-faq/', 
+        const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-faq/`, 
             { 
                 data: { id: id },
                 withCredentials: true,
@@ -657,7 +657,7 @@ export const deleteFAQ = async (id: number): Promise<any> => {
  */
 export const getNetworks = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/admin-network/', 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-network/`, 
             { 
                 withCredentials: true,
                 headers: {
@@ -684,7 +684,7 @@ export const getNetworks = async () => {
  */
 export const addNetwork = async (formData: FormData): Promise<any> => {
     try {
-        const response = await axios.post('http://localhost:3000/admin-network/', formData, {
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-network/`, formData, {
         withCredentials: true,
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -709,7 +709,7 @@ export const addNetwork = async (formData: FormData): Promise<any> => {
  */
 export const updateNetwork= async (id: number, link_network: string): Promise<any> => {
     try {
-        const response = await axios.put('http://localhost:3000/admin-network/', 
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-network/`, 
             {
                 id : id,
                 link_network : link_network,
@@ -739,7 +739,7 @@ export const updateNetwork= async (id: number, link_network: string): Promise<an
  */
 export const deleteNetwork = async (id: number): Promise<any> => {
     try {
-        const response = await axios.delete('http://localhost:3000/admin-network/', 
+        const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-network/`, 
             { 
                 data: { id: id },
                 withCredentials: true,

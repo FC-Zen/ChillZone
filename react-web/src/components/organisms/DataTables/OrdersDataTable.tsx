@@ -13,28 +13,12 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@components/atoms';
 import { IconButton } from '@mui/material';
 import { colors } from '@theme';
-
-type CommandLine = {
-  line_id: number;
-  quantity: number;
-  meal_name: string;
-  menu_name: string;
-}
+import { Command } from '@pages/OwnerOrdersPage/OwnerOrdersPage';
 
 type OrdersDataTableProps = {
-  data: {
-    id: number;
-    user_name: string;
-    command_status: "Livrée" | "En cours" | "Annulée";
-    creation_date: string;
-    total_amount: number;
-    pickup_time: string;
-    final_pickup_time: string;
-    lines: CommandLine[];
-  }[];
+  data: Command[];
   handleClick : (id: number) => void;
 };
-
 
 function CustomToolbar() {  
   const { t } = useTranslation();
@@ -62,7 +46,7 @@ export const OrdersDataTable = ({
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", flex: 0.4 },
-    { field: "user_name", headerName: t("tables.headers.command.user"), flex: 1 },
+    { field: "customer_name", headerName: t("tables.headers.command.user"), flex: 1 },
     { field: "creation_date", headerName: t("tables.headers.reservation.day_reservation"), flex: 1, 
       valueFormatter: (params) => {
         const date = new Date(params);
@@ -70,7 +54,7 @@ export const OrdersDataTable = ({
       },
     },
     {
-      field: "command_status",
+      field: "status",
       headerName: t("tables.headers.reservation.status"),
       flex: 0.8,
       renderCell: (params: any) => {
@@ -91,7 +75,7 @@ export const OrdersDataTable = ({
       }
     },
     {
-      field: "total_amount",
+      field: "total_price",
       headerName: t("tables.headers.command.total_amount"),
       flex: 0.8,
       valueFormatter: (params) => `${params} €`
@@ -100,10 +84,12 @@ export const OrdersDataTable = ({
       field: "pickup_time",
       headerName: t("tables.headers.command.collectionStartTime"),
       flex: 1,
-      valueFormatter: (params) => {
-        const date = new Date(params);
-        return `${date.getHours()} h ${date.getMinutes().toString().padStart(2, "0")}`;
-      },
+      valueFormatter: (params : any) => {
+        const time = params as string | undefined; // Type explicite pour inclure undefined
+        if (!time) return ""; // Retourne une chaîne vide si la valeur est undefined ou null
+        const [hours, minutes] = time.split(":"); // Divise les heures et minutes
+        return `${hours}h${minutes}`; // Reformate en "18h00"
+      }
     },
     {
       field: 'actions',

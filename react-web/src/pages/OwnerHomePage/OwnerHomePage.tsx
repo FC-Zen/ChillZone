@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { OwnerHomeLayout } from '@components/templates';
 import { OwnerDashboardGraphs } from '@components/organisms';
 import { CustomSwitch, StatCard } from '@components/molecules'; // Réutilisation du StatCard d'Admin
@@ -7,12 +7,45 @@ import OwnerCardData from '@assets/fr.json'; // Import des données FR (renommé
 import OwnerCardDataValues from '@assets/data/stat_card_value.json'; // Import des données FR (renommées)
 import { useUser } from '@hooks';
 import { useTranslation } from 'react-i18next';
+import { getDashboardDataOwner, OwnerDashboardData } from '@services';
+import { StatItem } from '@components/organisms/AdminDashboardStatsCards';
 
 export const OwnerHomePage: React.FC = () => {
   const { user } = useUser();
   const { t } = useTranslation();
   const [restaurantOpen, setRestaurantOpen] = useState<boolean>(false);
+  const [dashboardData, setDashboardData] = React.useState<OwnerDashboardData | null>(null);
+  const [statsData, setStatsData] = React.useState<StatItem[]>([]);
     
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getDashboardDataOwner();
+        setDashboardData(data); // Stocke un tableau de `DashboardData`
+        setStatsData([
+          {
+            icon: 'User',
+            title: t('dashboard.info.users'),
+            value: data.users_current_year ?? 0,
+            trend: { value: data.users_percentage_change ?? 0, isPositive: true, duration: '1 month' },
+          },
+          {
+            icon: 'User',
+            title: t('dashboard.info.users'),
+            value: data.users_current_year ?? 0,
+            trend: { value: data.users_percentage_change ?? 0, isPositive: true, duration: '1 month' },
+          }
+        ]); 
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données du dashboard:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+
+  
   // Section des statistiques
   const statsSection = (
     <div className="space-y-6">
@@ -49,32 +82,12 @@ export const OwnerHomePage: React.FC = () => {
     </div>
   );
 
-  // Contenu principal
-  const mainContent = (
-    <div className="space-y-6">
-      {/* Graphiques */}
-      <OwnerDashboardGraphs />
-
-      {/* Placeholder pour les tableaux */}
-      <div className="bg-white border rounded-lg p-4 shadow-md">
-        <p className="text-gray-400 text-center">
-          [Placeholder pour {OwnerCardData.tables.titles.currentcommands}]
-        </p>
-      </div>
-      <div className="bg-white border rounded-lg p-4 shadow-md">
-        <p className="text-gray-400 text-center">
-          [Placeholder pour {OwnerCardData.tables.titles.restauration_place}]
-        </p>
-      </div>
-    </div>
-  );
-
   return (
     <OwnerHomeLayout
       user={user}
       part={t('navbar.home')}
-      statsSection={statsSection}
-      mainContent={mainContent}
+      data={dashboardData}
+      stats={statsData}
     />
   );
 };

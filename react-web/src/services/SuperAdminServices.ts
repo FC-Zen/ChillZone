@@ -10,7 +10,7 @@ import { getCSRFToken } from '@utils';
  */
 export const getUsersSuperAdmin = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/superadmin-users/',  // A MODIF
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-users/`,  // A MODIF
             { 
                 withCredentials: true,
                 headers: {
@@ -37,7 +37,7 @@ export const getUsersSuperAdmin = async () => {
  */
 export const getRequestsSuperAdmin = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/superadmin-requests/',  // A MODIF
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-requests/`,  // A MODIF
             { 
                 withCredentials: true,
                 headers: {
@@ -65,7 +65,7 @@ export const getRequestsSuperAdmin = async () => {
  */
 export const toggleAccountActive = async (id: number, is_active: boolean) => {
     try {
-        const response = await axios.put('http://localhost:3000/superadmin-users/', 
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-users/`, 
             {
                 id : id,
                 is_active : is_active
@@ -95,7 +95,7 @@ export const toggleAccountActive = async (id: number, is_active: boolean) => {
  */
 export const manageOwnerRegistration = async (id: number) => {
     try {
-        const response = await axios.put('http://localhost:3000/superadmin-requests/',  // A MODIF
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-requests/`,  // A MODIF
             {
                 id : id
             },
@@ -125,7 +125,7 @@ export const manageOwnerRegistration = async (id: number) => {
  */
 export const deleteOwnerRegistration = async (id: number) => {
     try {
-        const response = await axios.delete('http://localhost:3000/superadmin-requests/',  // A MODIF
+        const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-requests/`,  // A MODIF
             { 
                 data: { id: id },
                 withCredentials: true,
