@@ -3,6 +3,7 @@ import { OwnerSidebar, Header, OrdersDataTable } from "@components/organisms";
 import { StatCard } from "@components/molecules";
 import "./style.css"; // Importation du fichier CSS
 import { User } from "@hooks";
+import { Command } from "@pages/OwnerOrdersPage/OwnerOrdersPage";
 
 type OwnerHomeLayoutProps = {
   user : User | null;
@@ -12,7 +13,7 @@ type OwnerHomeLayoutProps = {
     commandsToday: { name: string; value: string | number };
     commandsTodo: { name: string; value: string | number };
   };
-  data: any;
+  data: Command[];
   handleClick : (id: number) => void;
 };
 

@@ -1,11 +1,10 @@
-View Owner - Meals
+View Owner - Commands
 
 Renvoie (fais un serializer) :
 Json qui renvoie : 
 {
-    meals : #tous les plats du restaurants ou travaille le owner (avec tags la catégorie associés)
-    availables_catagories : #toutes les catégories possibles
-    availables_tags : #tous les tags de tag_catégorie Meals (id = 1)
+    commands : #tous les commandes du restaurants ou travaille le owner (Avec les plats et les menus associés + la quantité associés) order par creation_date les plus récentes.
+    available_status : #les status disponibles pour les commandes
 }
 
 class UserMeta(models.Model):
@@ -75,6 +74,55 @@ class RestaurationPlace(models.Model):
     
     modification_date = models.DateTimeField(auto_now=True)
 
+class Command(models.Model):
+
+    STATUS_CHOICES = [
+        ('in progress', 'In progress'),
+        ('ready', 'Ready'),
+        ('completed', 'Completed'),
+    ]
+    
+    payment_method = models.CharField(max_length=50)
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='in progress')
+    qrcode_link = models.ImageField(upload_to='qrcodes/', blank=True)
+    pickup_time = models.TimeField(null=False, default="00:00:00")
+    creation_date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    restauration_place = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
+
+class CommandComposition(models.Model):
+
+    command = models.ForeignKey(Command, on_delete=models.CASCADE)
+
+    line = models.ForeignKey(CommandLine, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['command', 'line'], name='unique_command_line'
+            )
+        ]
+
+class CommandLine(models.Model):
+
+    quantity = models.IntegerField()
+
+class LineContent(models.Model):
+
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True, blank=True)
+
+    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+
+    command_line = models.ForeignKey(CommandLine, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['menu', 'meal', 'command_line'], name='unique_menu_meal_line'
+            )
+        ]
+
+
 class Meal(models.Model):
 
     name = models.CharField(max_length=254)
@@ -97,50 +145,28 @@ class Meal(models.Model):
 
     tag = models.ManyToManyField('Tag',through='Tagging', related_name='tag')
 
-class Category(models.Model):
-    
-    label = models.CharField(max_length=50)
+class Menu(models.Model):
 
-    description = models.CharField(max_length=254, null=True)
+    name = models.CharField(max_length=254)
 
-class Tagging(models.Model):
+    description = models.TextField()
 
-    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+    photo_link = models.ImageField(null=True, blank=True)
 
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    price = models.FloatField()
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['meal', 'tag'], name='unique_meal_tag'
-            )
-        ]
+    creation_date = models.DateTimeField(auto_now_add=True)
 
-class Tag(models.Model) :
-    
-    label = models.CharField(max_length= 50)
+    modification_date = models.DateTimeField(auto_now=True)
 
-    description = models.TextField(blank=True, null=True)
+    restaurant = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)
 
-    id_tag_category = models.ForeignKey(TagCategory, on_delete=models.CASCADE)
-
-class TagCategory(models.Model) :
-    
-    label = models.CharField(max_length= 254)
-
-class OwnerMealView(APIView): #A completer
-    permission_classes = [IsAuthenticated & IsOwner]
-
-    def get(self, request):
-
-        user = request.user
-
-        try:
-            work_in = WorkIn.objects.get(user=user)
-            restaurant = work_in.restaurant
-        except WorkIn.DoesNotExist:
-            return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
+    meal = models.ManyToManyField('Meal',through='LineContent', related_name='meal')
 
 Permission :
 être connecté
 être owner
+
+A savoir : 
+Si on veut un menu 1 avec boisson plat dessert par exemple alors on aura 3 line content qui pointeront sur le menu 1 et command line en question pour montrer que les 3 produits sont pris dans le menu, = (1 command line)
+si on prend 1 plat à la carte alors on a 1 line content avec un menu à vide et juste le plat et line de défini (= 1 command line)

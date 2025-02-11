@@ -1,25 +1,27 @@
+from .tag import TagSerializer
+from .meal import MealSerializer, MealWithTagSerializer, CreateMealSerializer
+from .menu import MenuWithOptionsSerializer, CreateMenuSerializer, UpdateMenuSerializer, MenuMealSerializer
+from .line_content import LineContentSerializer
+from .command_line import CommandLineSerializer
+from .command_composition import CommandCompositionSerializer
+from .command import CommandSerializer, CommandUpdateSerializer
+
 from .associate import AssociateSerializer
 from .calendar import CalendarSerializer
 from .category import CategorySerializer
-from .command import CommandSerializer
-from .command_composition import CommandCompositionSerializer
-from .command_line import CommandLineSerializer
 from .conflict import ConflictSerializer, AdminConflictSerializer
 from .dashboard import DashboardSerializer
 from .establishment import AdminEstablishmentSerializer, OwnerEstablishmentSerializer
 from .event import EventSerializer
 from .faq import FAQSerializer, AdminFAQSerializer
 from .is_located import IsLocatedSerializer
-from .line_content import LineContentSerializer
 from .link_to import LinkToSerializer
 from .location import LocationSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminCreateLocationSerializer, AdminFloorsWithPhotoSerializer
 from .location_reservation import LocationReservationSerializer, AdminLocationReservationSerializer
 from .log import LogSerializer
 from .map import MapSerializer
 from .map_floor import MapFloorSerializer, AdminMapFloorSerializer, CreateMapFloorSerializer, UpdateMapFloorSerializer
-from .tag import TagSerializer
-from .meal import MealSerializer, CreateMealSerializer
-from .menu import MenuWithOptionsSerializer, CreateMenuSerializer, UpdateMenuSerializer
+
 from .navigate import NavigateSerializer
 from .network import NetworkSerializer, AdminNetworkSerializer
 from .notification import NotificationSerializer

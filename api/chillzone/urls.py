@@ -63,8 +63,10 @@ urlpatterns = [
     path('admin-network/', network.AdminNetworkView.as_view(), name='Admin List / Create / Update / Delete Network'),
 
     # ----------------------- Owner ------------------------ #
-    path('owner-menus/', owner_boards.OwnerMenuView.as_view(), name='Admin'),
-    path('owner-meals/', owner_boards.OwnerMealView.as_view(), name='Admin'),
+    path('owner-dashboard/', owner_boards.OwnerDashboardView.as_view(), name='Owner Dashboard'),
+    path('owner-menus/', owner_boards.OwnerMenuView.as_view(), name='Owner List / Create / Update Menu'),
+    path('owner-meals/', owner_boards.OwnerMealView.as_view(), name='Owner List / Create / Update Meal'),
+    path('owner-commands/', owner_boards.OwnerCommandsView.as_view(), name='Owner List / Update Command'),
 
 
     # Endpoint pour le schéma OpenAPI JSON

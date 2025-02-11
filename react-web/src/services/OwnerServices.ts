@@ -1,18 +1,69 @@
 import axios from 'axios';
-import menus from '@assets/data/menus.json';
 import { getCSRFToken } from '@utils';
 
+/* Types specifiques au dashboards owner  */
+export type MonthlyData = {
+  month: number;
+  count: number;
+}
+
+export type OwnerDashboardData = {
+  commands_per_month_current_year: MonthlyData[];
+  commands_per_month_previous_year: MonthlyData[];
+  users_current_year: number;
+  users_previous_year: number;
+  users_percentage_change: number;
+}
+
 /**
- * Récupère la liste des commandes depuis l'API.
+ * Récupère le JSON concernant les données des dashboards admin pour les graphiques.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getDashboardDataOwner = async (): Promise<OwnerDashboardData> => {
+  try {
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-dashboard/`, {
+          withCredentials: true,
+          headers: {
+              'X-CSRFToken': getCSRFToken(),
+          },
+      });
+
+      if (response.status === 200) {
+          const data: OwnerDashboardData = response.data;
+          return data; // Retourne un tableau contenant l'objet
+      } else {
+          throw new Error('Erreur lors de la récupération des comptes');
+      }
+  } catch (error: any) {
+      console.error("Erreur lors de la récupération des données de Dashboards:", error.message);
+      throw new Error(error.message);
+  }
+};
+
+/**
+ * Récupère la liste des plats depuis l'API.
  * 
  * @throws {Error} Si la requête échoue.
  * @returns {Promise<Array>} Liste des commandes.
  */
 export const fetchCommands = async () => {
   try {
-    //AXIOS
+    const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-commands/`, 
+      { 
+          withCredentials: true,
+          headers: {
+              'X-CSRFToken': getCSRFToken(),
+          },
+      } 
+      );
+      if (response.status == 200) {
+          return response.data;
+      }
   } catch (error: any) {
-    console.error('Erreur lors de la récupération des commandes:', error.message);
+    console.error('Erreur lors de la récupération des repas:', error.message);
     throw new Error(error.message);
   }
 };
@@ -30,25 +81,26 @@ export const fetchCommands = async () => {
 
 export const updateCommandStatus = async (id: number, status: string) => {
     try {
-/*       const response = await fetch(`${API_BASE_URL}/commands/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ command_status: status }),
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Erreur lors de la mise à jour du statut de la commande: ${response.statusText}`);
-      }
-      
-      const updatedCommand = await response.json();
-      return updatedCommand; // Retourne la commande mise à jour */
-    } catch (error: any) {
-      console.error('Erreur lors de la mise à jour de la commande:', error.message);
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}owner-commands/`, 
+          {
+              id : id,
+              status : status,
+          },
+          { 
+              withCredentials: true,
+              headers: {
+                  'X-CSRFToken': getCSRFToken(),
+              },
+          } 
+          );
+          if (response.status == 200) {
+              return response.data;
+          }
+  } catch (error: any) {
+      console.error('Erreur lors de la mise à jour du statut de l\'utilisateur:', error.message);
       throw new Error(error.message);
-    }
-  };
+  }
+};
   
 /**
  * Récupère la liste des plats depuis l'API.
@@ -58,7 +110,7 @@ export const updateCommandStatus = async (id: number, status: string) => {
  */
 export const fetchMeals = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/owner-meals/', 
+    const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, 
       { 
           withCredentials: true,
           headers: {
@@ -85,7 +137,7 @@ export const fetchMeals = async () => {
  */
 export const addMeal = async (formData: FormData): Promise<any> => {
   try {
-      const response = await axios.post('http://localhost:3000/owner-meals/', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, formData, {
           withCredentials: true,
           headers: {
               'Content-Type': 'multipart/form-data',
@@ -111,7 +163,7 @@ export const addMeal = async (formData: FormData): Promise<any> => {
  */
 export const updateMeal = async (formData: FormData): Promise<any> => {
   try {
-      const response = await axios.put('http://localhost:3000/owner-meals/', formData, {
+      const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, formData, {
           withCredentials: true,
           headers: {
               'Content-Type': 'multipart/form-data',
@@ -136,7 +188,7 @@ export const updateMeal = async (formData: FormData): Promise<any> => {
  */
 export const fetchMenus = async () => {
   try {
-      const response = await axios.get('http://localhost:3000/owner-menus/', 
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, 
       { 
           withCredentials: true,
           headers: {
@@ -163,7 +215,7 @@ export const fetchMenus = async () => {
  */
 export const addMenu = async (formData: FormData): Promise<any> => {
   try {
-      const response = await axios.post('http://localhost:3000/owner-menus/', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, formData, {
           withCredentials: true,
           headers: {
               'Content-Type': 'multipart/form-data',
@@ -189,7 +241,7 @@ export const addMenu = async (formData: FormData): Promise<any> => {
  */
 export const updateMenu = async (formData: FormData): Promise<any> => {
   try {
-      const response = await axios.put('http://localhost:3000/owner-menus/', formData, {
+      const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, formData, {
           withCredentials: true,
           headers: {
               'Content-Type': 'multipart/form-data',
@@ -212,7 +264,7 @@ export const updateMenu = async (formData: FormData): Promise<any> => {
  */
 export const getEstablishments = async () => {
   try {
-      const response = await axios.get('http://localhost:3000/create-owner-account/', 
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}create-owner-account/`, 
       );
       if (response.status == 200) {
           return response.data;
@@ -233,7 +285,7 @@ export const getEstablishments = async () => {
  */
 export const addOwnerInscription = async (formData: FormData): Promise<any> => {
   try {
-      const response = await axios.post('http://localhost:3000/create-owner-account/', formData);
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}create-owner-account/`, formData);
       console.log('Réponse de l\'API:', response);
       return response.data;
   } catch (error: any) {
@@ -241,3 +293,4 @@ export const addOwnerInscription = async (formData: FormData): Promise<any> => {
     throw new Error(error.message);
   }
 };
+

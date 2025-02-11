@@ -39,7 +39,7 @@ export const SuperAdminLayout = ({
             <Button
               title={t('buttons.admin')}
               onclick={() => {
-                window.location.href = 'http://localhost:3000/admin/';
+                window.location.href = `${import.meta.env.VITE_REACT_APP_API_URL}admin/`;
               }}
             />
           </div>

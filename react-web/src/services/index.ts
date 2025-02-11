@@ -1,3 +1,4 @@
-export { translationService } from './translationService';
-export { authenticateUser } from './AuthentificationServices';
-export {logoutUser} from './AuthentificationServices';
+export * from './translationService';
+export * from './AuthentificationServices';
+export  * from './AdminServices';
+export  * from './OwnerServices';

@@ -1,0 +1,53 @@
+{
+    "commands": [
+        {
+            "id": 1,
+            "payment_method": "Card",
+            "status": "in progress",
+            "qrcode_link": "media/qrcodes/qrcode1.png",
+            "pickup_time": "12:30:00",
+            "creation_date": "2024-02-11T15:00:00Z",
+            "lines": [
+                {
+                    "1": {
+                        "quantity": 1,
+                        "menu": {
+                            "id": 1,
+                            "name": "Menu 1",
+                            "description": "Menu complet",
+                            "photo_link": "media/menus/menu1.png",
+                            "price": 15.0,
+                            "meals": [
+                                {
+                                    "id": 3,
+                                    "name": "Steak",
+                                    "description": "Steak grillé",
+                                    "photo_link": "media/meals/steak.png",
+                                    "price": 10.0
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "Limonade",
+                                    "description": "Limonade",
+                                    "photo_link": "media/Limonade/Limonade.png",
+                                    "price": 10.0
+                                }
+                            ]
+                        }
+                    },
+                    "2": {
+                        "quantity": 2,
+                        "meal": {
+                            "id": 3,
+                            "name": "Steak",
+                            "description": "Steak grillé",
+                            "photo_link": "media/meals/steak.png",
+                            "price": 10.0
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "available_status": ["in progress", "ready", "completed"]
+}

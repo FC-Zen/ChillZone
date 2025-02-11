@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from chillzone.models import Menu, Associate, Type, Category
 from collections import defaultdict
+from chillzone.serializers import MealSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -115,3 +116,9 @@ class UpdateMenuSerializer(serializers.Serializer):
         child=serializers.IntegerField(), required=False, allow_empty=True
     )
     
+class MenuMealSerializer(serializers.ModelSerializer):
+    meals = MealSerializer(many=True, source='meal')
+
+    class Meta:
+        model = Menu
+        fields = ['id', 'name', 'description', 'photo_link', 'price', 'meals']
