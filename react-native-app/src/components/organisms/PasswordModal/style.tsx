@@ -11,11 +11,11 @@ export const styles = StyleSheet.create({
   modal: {
     backgroundColor: colors.resolutionBlue,
     borderRadius: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     paddingTop: 60,
     paddingBottom: 10,
     width: '90%',
-    position: 'relative', // Nécessaire pour positionner la croix
+    position: 'relative',
   },
   closeIcon: {
     position: 'absolute',
@@ -44,8 +44,8 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
   },
   validationTag: {
-    flexDirection: 'row', // Alignement horizontal
-    alignItems: 'center', // Centrer verticalement
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: 16,
     paddingVertical: 4,
     marginVertical: 4,

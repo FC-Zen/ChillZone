@@ -13,7 +13,6 @@ export type EditInfoModalProps = {
     firstName: string;
     lastName: string;
     phone: string;
-    email: string;
   };
   onChange: (field: keyof EditInfoModalProps['data'], value: string) => void;
   onConfirm: () => void;
@@ -65,13 +64,6 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({
             icon="Phone"
             value={data.phone}
             onChangeText={(text) => onChange('phone', text)}
-          />
-          <Input
-            style={styles.input}
-            placeholder={t('fields.common.mail')}
-            icon="Mail"
-            value={data.email}
-            onChangeText={(text) => onChange('email', text)}
           />
           <Button
             onPress={onConfirm}

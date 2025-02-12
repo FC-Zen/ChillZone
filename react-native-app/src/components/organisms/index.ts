@@ -17,3 +17,4 @@ export { CommandList, ItemProps } from './CommandList';
 export { OverlayCommandList } from './OverlayCommandList';
 export { CalendarHeader } from './CalendarHeader';
 export { ChangeProfilePictureModal } from './ChangeProfilePictureModal';
+export { AccountOptionsList } from './AccountOptionsList';

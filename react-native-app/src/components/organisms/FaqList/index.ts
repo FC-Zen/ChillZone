@@ -1,1 +1,1 @@
-export { FaqList, FaqListProps } from './FaqList';
+export { FaqList } from './FaqList';

@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Alert } from 'react-native';
 import { AccountTemplate } from '@components/templates';
-import {
-  PasswordModal,
-  ResetPasswordModal,
-  EditInfoModal,
-} from '@components/organisms';
 import { styles } from './style';
 import { translationService } from '@services';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import { accountServices } from '@services/AccountServices';
+import { useUser } from '@contexts/AppContrext';
 
 export const AccountScreen: React.FC = () => {
   // États pour les modales
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
   const [isResetModalOpen, setResetModalOpen] = useState(false);
   const [isEditInfoModalOpen, setEditInfoModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   // Navigation
   const navigation = useNavigation();
@@ -38,6 +35,8 @@ export const AccountScreen: React.FC = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const { userName } = useUser();
+
   // Validation du mot de passe
   const newPasswordValidation = {
     minLength: newPassword.length >= 12,
@@ -48,8 +47,11 @@ export const AccountScreen: React.FC = () => {
   };
 
   // Gestion des champs d'input
-  const handleInputChange = (field: keyof typeof userData, value: string) => {
-    setUserData((prev) => ({ ...prev, [field]: value }));
+  const handleInputChange = (data: {
+    field: keyof typeof userData;
+    value: string;
+  }) => {
+    setUserData((prev) => ({ ...prev, [data.field]: data.value }));
   };
 
   // Actions pour les modales
@@ -140,20 +142,18 @@ export const AccountScreen: React.FC = () => {
         currentLanguage={translationService.getCurrentLanguage()}
         onChangeLanguage={() => translationService.toggleLanguage()}
         onOpenPasswordModal={() => setPasswordModalOpen(true)}
+        onClosePasswordModal={() => setPasswordModalOpen(false)}
         onOpenResetPasswordModal={() => setResetModalOpen(true)}
+        onCloseResetModal={() => setResetModalOpen(false)}
         onOpenEditInfoModal={() => setEditInfoModalOpen(true)}
+        onCloseEditInfoModal={() => setEditInfoModalOpen(false)}
         onNavigateToReservations={() =>
           navigation.navigate(ROUTE.RESERVATION_SUMMARY)
         }
         onNavigateToCommand={() => navigation.navigate(ROUTE.COMMAND_SUMMARY)}
-        onChangePicture={handleChangePicture} // Ajouté ici
-        onDeletePicture={handleDeletePicture} // Ajouté ici
-      />
-
-      {/* Modales */}
-      <PasswordModal
-        isOpen={isPasswordModalOpen}
-        onClose={() => setPasswordModalOpen(false)}
+        onChangePicture={handleChangePicture}
+        onDeletePicture={handleDeletePicture}
+        isPasswordModalOpen={isPasswordModalOpen}
         oldPassword={oldPassword}
         setOldPassword={setOldPassword}
         newPassword={newPassword}
@@ -161,21 +161,20 @@ export const AccountScreen: React.FC = () => {
         confirmPassword={confirmPassword}
         setConfirmPassword={setConfirmPassword}
         newPasswordValidation={newPasswordValidation}
-        onSubmit={handleSubmitPasswordChange}
-      />
-      <ResetPasswordModal
-        isOpen={isResetModalOpen}
-        onClose={() => setResetModalOpen(false)}
+        onSubmitPasswordChange={handleSubmitPasswordChange}
+        isResetModalOpen={isResetModalOpen}
         email={email}
         setEmail={setEmail}
         handleResetPassword={handleResetPassword}
-      />
-      <EditInfoModal
-        isOpen={isEditInfoModalOpen}
-        onClose={() => setEditInfoModalOpen(false)}
-        data={userData}
-        onChange={handleInputChange}
-        onConfirm={handleConfirmEditInfo}
+        isEditInfoModalOpen={isEditInfoModalOpen}
+        userData={userData}
+        handleInputChange={handleInputChange}
+        handleConfirmEditInfo={handleConfirmEditInfo}
+        isModalOpen={isModalOpen}
+        onOpenModal={() => setModalOpen(true)}
+        onCloseModal={() => setModalOpen(false)}
+        onBackPress={() => navigation.navigate(ROUTE.HOME)}
+        userName={userName}
       />
     </SafeAreaView>
   );

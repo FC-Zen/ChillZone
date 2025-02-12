@@ -1,14 +1,15 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '@theme';
+import { colors, typography } from '@theme';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    padding: 16,
+    paddingVertical: 80,
   },
   linksContainer: {
-    marginTop: 40,
+    marginVertical: 40,
+    marginHorizontal: 20,
   },
   linkContainer: {
     flexDirection: 'row',
@@ -17,15 +18,13 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 12,
     paddingVertical: 10,
-    paddingHorizontal: 12,
-    marginBottom: 10,
+    paddingHorizontal: 10,
+    marginBottom: 15,
     borderWidth: 1,
     borderColor: colors.silver,
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3, // Pour Android
+    elevation: 3,
   },
   linkContent: {
     flexDirection: 'row',
@@ -33,15 +32,8 @@ export const styles = StyleSheet.create({
   },
   linkText: {
     marginLeft: 10,
-    fontSize: 16,
-    fontWeight: '600',
-    color: colors.black,
-  },
-  iconContainer: {
-    width: 42,
-    height: 42,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 16,
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h3.fontFamily,
+    color: colors.resolutionBlue,
   },
 });

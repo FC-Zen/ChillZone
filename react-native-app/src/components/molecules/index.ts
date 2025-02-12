@@ -23,3 +23,4 @@ export { PickupSlot, PickupSlotProps } from './PickupSlot';
 export { CommandOverlay } from './CommandOverlay';
 export { CalendarCell } from './CalendarCell';
 export { Select, SelectProps } from './Select';
+export { ProfileHeader } from './ProfileHeader';

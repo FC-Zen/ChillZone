@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { ToggleSwitch } from '@components/atoms/ToggleSwitch';
 import { Button } from '@components/molecules';
-import { colors, typography } from '@theme';
+import { colors } from '@theme';
 import { SelectorPolygon } from '@components/atoms/Icons';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
@@ -175,14 +175,12 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity>
-        <Button
-          title={t('buttons.profile.actus')}
-          onPress={() => navigation.navigate(ROUTE.LINKS)}
-          variant="news"
-          textColor={colors.resolutionBlue}
-        />
-      </TouchableOpacity>
+      <Button
+        title={t('buttons.profile.actus')}
+        onPress={() => navigation.navigate(ROUTE.LINKS)}
+        variant="news"
+        textColor={colors.resolutionBlue}
+      />
     </View>
   );
 };
