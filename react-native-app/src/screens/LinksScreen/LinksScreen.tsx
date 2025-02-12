@@ -6,18 +6,7 @@ import { colors } from '@theme';
 import { styles } from './style';
 import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
-import { Icon, IconProps } from '@components/atoms/Icons';
-
-import {
-  Facebook,
-  Instagram,
-  X,
-  Youtube,
-  LinkendIn,
-  Ent,
-  Web,
-  ArrowRight,
-} from '@components/atoms/Icons';
+import { Icon } from '@components/atoms/Icons';
 import { useTranslation } from 'react-i18next';
 
 export const LinksScreen: React.FC = () => {
@@ -33,31 +22,30 @@ export const LinksScreen: React.FC = () => {
   const getIconForType = (type: string) => {
     switch (type) {
       case 'Facebook':
-        return <Facebook width={42} height={42} />;
+        return <Icon name="Facebook" width={42} height={42} />;
       case 'X':
-        return <X width={42} height={42} />;
+        return <Icon name="X" width={42} height={42} />;
       case 'Instagram':
-        return <Instagram width={42} height={42} />;
+        return <Icon name="Instagram" width={42} height={42} />;
       case 'Youtube':
-        return <Youtube width={42} height={42} />;
+        return <Icon name="Youtube" width={42} height={42} />;
       case 'LinkedIn':
-        return <LinkendIn width={42} height={42} />;
+        return <Icon name="LinkendIn" width={42} height={42} />;
       case 'ENT':
-        return <Ent width={42} height={42} />;
+        return <Icon name="Ent" width={42} height={42} />;
       case "Site de l'université":
-        return <Web width={42} height={42} />;
+        return <Icon name="Web" width={42} height={42} />;
       default:
-        return <Web width={42} height={42} />;
+        return <Icon name="Web" width={42} height={42} />;
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* En-tête de la page */}
       <PageHeader
-        title={t('headers.links')} // Titre traduit
-        variant="back" // Variante avec flèche de retour
-        onBackPress={() => navigation.navigate(ROUTE.ACCOUNT)} // Action de retour
+        title={t('headers.links')}
+        variant="back"
+        onBackPress={() => navigation.navigate(ROUTE.ACCOUNT)}
       />
 
       {/* Liste des liens */}
@@ -69,14 +57,9 @@ export const LinksScreen: React.FC = () => {
             onPress={() => handleOpenLink(link.link_network)}
           >
             <View style={styles.linkContent}>
-              {/* Icône avec fond rond */}
-              <View style={styles.iconContainer}>
-                {getIconForType(link.type)}
-              </View>
-              {/* Texte sans traduction pour les types */}
+              <View>{getIconForType(link.type)}</View>
               <Text style={styles.linkText}>{link.type}</Text>
             </View>
-            {/* Flèche à droite */}
             <Icon
               name="ArrowRight"
               width={24}

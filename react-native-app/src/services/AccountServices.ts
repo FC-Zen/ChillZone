@@ -120,36 +120,33 @@ export const accountServices = {
     }
   },
 
-  resetPassword: async (newPassword: string, confirmPassword: string): Promise<void> => {
-    // Vérifiez si les mots de passe correspondent
-    if (newPassword !== confirmPassword) {
-      throw new Error('Les mots de passe ne correspondent pas.');
-    }
-  
-    // Vérifiez si le mot de passe respecte les critères
-    if (!accountServices.validatePassword(newPassword)) {
-      throw new Error('Le nouveau mot de passe ne respecte pas les critères.');
+  resetPassword: async (email: string): Promise<void> => {
+    if (!email) {
+      throw new Error("L'adresse e-mail est requise.");
     }
   
     try {
+      // Effectuer un appel API pour initier la réinitialisation
       const response = await fetch('https://api.example.com/user/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ password: newPassword }),
+        body: JSON.stringify({ email }), // Envoi de l'email à l'API
       });
   
       if (!response.ok) {
-        throw new Error('Échec de la réinitialisation du mot de passe.');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Échec de la réinitialisation du mot de passe.');
       }
   
-      console.log('Mot de passe réinitialisé avec succès.');
-    } catch (error) {
-      console.error('Erreur lors de la réinitialisation du mot de passe :', error);
-      throw error;
+      console.log('Email de réinitialisation envoyé avec succès.');
+    } catch (error: any) {
+      console.error('Erreur lors de la demande de réinitialisation :', error.message || error);
+      throw new Error(error.message || 'Une erreur est survenue.');
     }
   },
+  
   /**
    * Change l'image de profil de l'utilisateur.
    * @param {File | string} profilePicture - Fichier ou URL de l'image.

@@ -6,30 +6,30 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond semi-transparent
+    backgroundColor: 'rgba(0, 0, 0, 0.70)',
   },
   modal: {
     backgroundColor: colors.resolutionBlue,
     borderRadius: 15,
-    padding: 20,
-    width: '90%',
-    maxWidth: 400,
+    paddingVertical: 50,
+    paddingHorizontal: 20,
+    width: '85%',
     alignItems: 'center',
   },
   closeButton: {
     position: 'absolute',
-    top: 15,
-    right: 15,
+    top: 20,
+    right: 20,
     zIndex: 10,
   },
   avatarContainer: {
     backgroundColor: colors.white,
     borderRadius: 50,
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 28,
   },
   avatarIcon: {
     fontSize: 40,
@@ -47,7 +47,6 @@ export const styles = StyleSheet.create({
   primaryButtonText: {
     fontSize: typography.h3.fontSize,
     fontFamily: typography.h2.fontFamily,
-    lineHeight: 16, // 100% de la taille de la police
     color: colors.resolutionBlue,
     textAlign: 'center',
   },
@@ -62,7 +61,6 @@ export const styles = StyleSheet.create({
   secondaryButtonText: {
     fontSize: typography.h3.fontSize,
     fontFamily: typography.h2.fontFamily,
-    lineHeight: 16, // 100% de la taille de la police
     color: colors.white,
     textAlign: 'center',
   },

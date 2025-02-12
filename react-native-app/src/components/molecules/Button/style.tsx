@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { colors, layout, typography } from '@theme/index';
+import { colors, layout, typography } from '@theme';
 import { ButtonProps } from './Button';
-import { fonts } from '@theme/typography';
 import { Icon } from '@components/atoms';
 
 export const ButtonWrapper: FC<ButtonProps> = ({
@@ -24,6 +23,7 @@ export const ButtonWrapper: FC<ButtonProps> = ({
         variant === 'primary' && { backgroundColor: colors.resolutionBlue },
         variant === 'secondary' && { backgroundColor: colors.white },
         variant === 'icon' && styles.iconVariant,
+        variant === 'news' && styles.newsVariant,
         color && { backgroundColor: color },
         style,
       ]}
@@ -33,10 +33,11 @@ export const ButtonWrapper: FC<ButtonProps> = ({
         style={[
           styles.text,
           { color: textColor, fontFamily: textFont, fontSize: textSize },
+          variant === 'icon' && styles.iconText, // Style spécifique pour le texte avec icône
         ]}
       >
         {title}
-      </Text>{' '}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -63,8 +64,29 @@ const styles = StyleSheet.create({
   },
   iconVariant: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'center', // Contenu aligné à gauche
     alignItems: 'center',
-    gap: 10,
+    paddingHorizontal: 10, // Espace intérieur horizontal
+  },
+  iconText: {
+    textAlign: 'left', // Alignement du texte à gauche
+    marginLeft: 10, // Espacement entre l'icône et le texte
+  },
+  newsVariant: {
+    display: 'flex',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: colors.resolutionBlue,
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  newsText: {
+    color: colors.resolutionBlue,
+    fontSize: typography.h4.fontSize,
+    fontFamily: typography.h2.fontFamily,
+    textAlign: 'center',
   },
 });

@@ -72,6 +72,8 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
           icon={{
             name: 'BookMark',
             color: colors.white,
+            width: 24,
+            height: 24,
           }}
           variant="icon"
           color={colors.resolutionBlue}
@@ -84,11 +86,17 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
       <View style={styles.card}>
         <Button
           title={t('buttons.profile.commands')}
-          icon={{ name: 'Hamburger', color: colors.white }}
+          icon={{
+            name: 'Hamburger',
+            color: colors.white,
+            width: 24,
+            height: 20,
+          }}
           variant="icon"
           color={colors.resolutionBlue}
           textColor={colors.white}
           onPress={onNavigateToCommand} // Remplacer par le screen
+          style={styles.commandsButton}
         />
       </View>
 
@@ -111,6 +119,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
             title={t('modals.pwdChange')}
             icon={{ name: 'Lock', color: colors.white }}
             variant="icon"
+            style={styles.resetButton}
             color={colors.resolutionBlue}
             textColor={colors.white}
             onPress={onOpenPasswordModal}
@@ -119,6 +128,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
             title={t('buttons.auth.resetPwd')}
             icon={{ name: 'Refresh', color: colors.white }}
             variant="icon"
+            style={styles.resetButton}
             color={colors.resolutionBlue}
             textColor={colors.white}
             onPress={onOpenResetPasswordModal}
@@ -165,12 +175,12 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        style={styles.newsButton}
+      <Button
+        title={t('buttons.profile.actus')}
         onPress={() => navigation.navigate(ROUTE.LINKS)}
-      >
-        <Text style={styles.newsText}>{t('buttons.profile.actus')}</Text>
-      </TouchableOpacity>
+        variant="news"
+        textColor={colors.resolutionBlue}
+      />
     </View>
   );
 };

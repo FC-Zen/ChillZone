@@ -20,6 +20,9 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 10,
   },
+  commandsButton: {
+    marginVertical: 3
+  },
   card2: {
     backgroundColor: colors.resolutionBlue,
     borderRadius: 20,
@@ -57,22 +60,21 @@ export const styles = StyleSheet.create({
     marginRight: 5,
   },
 
-  newsButton: {
-    display: 'flex',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: colors.resolutionBlue,
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-
   newsText: {
     color: colors.resolutionBlue,
     fontFamily: typography.h3.fontFamily,
     fontSize: typography.h3.fontSize,
     textAlign: 'center',
     lineHeight: 16,
+  },
+
+  resetButton: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingHorizontal: 20, // Ajuste l'espacement
+    paddingVertical: 10,
+    color: colors.white,
+    fontFamily: typography.h3.fontFamily,
+    fontSize: typography.h3.fontSize,
   },
 });
