@@ -51,6 +51,7 @@
       "recoverPwd": "J’ai oublié mon mot de passe",
       "singin": "Je veux m’inscrire en tant que restaurateur",
       "rememberMe": "Se souvenir de moi"
+      
     },
     "delete" : {
       "floor" : "Suppression d'un étage"
@@ -71,30 +72,8 @@
         "commands": "Commandes"
       }
     },
+    
 
-    "dashboard": {
-        "graph" : {
-            "reservation" : "Nombre de réservation par mois",
-            "commands" : "Nombre de commandes par mois",
-            "cnx" : "Nombre de connexions par mois"
-        },
-        "info" : {
-            "users" : "Utilisateurs",
-            "conflict" : "Signalements reçus",
-            "openRooms" : "Salles / box disponibles",
-            "occupationTime" : "Taux d’occupation des box/salles",
-            "mostWantedProduct" : "Produit le plus vendu",
-            "mostWantedMenu" : "Menu le plus vendu",
-            "commandsNow" : "Commandes à faire",
-            "commandsToday" : "Commandes réalisées",
-            "commandsTodo" : "Commandes prévues",
-            "actives" : "actifs",
-            "onMonth" : "sur le mois",
-            "onHour" : "sur l’heure actuelle",
-            "now" : "actuellement",
-            "today" : "aujourd'hui"
-        }
-    },
 
     "rooms": {
       "baseFloor": "RDC",
@@ -156,6 +135,36 @@
       "specialChar": "Le mot de passe doit contenir au moins un caractère spécial.",
       "passwordMismatch": "Les deux mots de passes doivent être identiques"
     }
+  },
+
+  "dashboard": {
+    "graph" : {
+        "reservation" : "Nombre de réservations par mois",
+        "commands" : "Nombre de commandes par mois",
+        "cnx" : "Nombre de nouveaux utilisateurs par mois",
+        "revenu" : "Revenu par mois"
+    },
+    "info" : {
+        "users" : "Connexions dans le mois",
+        "conflict" : "Signalements reçus",
+        "openRooms" : "Salles / box disponibles",
+        "occupationTime" : "Taux d’occupation des box/salles",
+        "mostWantedProduct" : "Produit le plus vendu",
+        "mostWantedMenu" : "Menu le plus vendu",
+        "commandsNow" : "Commandes à faire",
+        "commandsToday" : "Commandes réalisées",
+        "commandsTodo" : "Commandes prévues",
+        "actives" : "actifs",
+        "onMonth" : "sur le mois",
+        "onHour" : "sur l’heure actuelle",
+        "yesterday" : "Hier",
+        "now" : "actuellement",
+        "today" : "aujourd'hui",
+        "previousYear" : "Année précédente",
+        "currentYear" : "Année en cours",
+        "openRestaurant" : "Nombre de restaurants affiliés"
+    },
+    "restaurant" : "Restaurant"
   },
 
   "type": {
@@ -263,30 +272,6 @@
     },
     "search": "Chercher dans la table",
     "search2": "Chercher"
-  },
-
-  "dashboard": {
-    "graph": {
-      "reservation": "Nombre de réservation par mois",
-      "commands": "Nombre de commandes par mois",
-      "cnx": "Nombre de connexions par mois"
-    },
-    "info": {
-      "users": "Utilisateurs",
-      "conflict": "Signalements reçus",
-      "openRooms": "Salles / box disponibles",
-      "openrestaurants": "Restaurants disponibles",
-      "mostWantedProduct": "Produit le plus vendu",
-      "mostWantedMenu": "Menu le plus vendu",
-      "commandsNow": "Commandes à faire",
-      "commandsToday": "Commandes réalisées",
-      "commandsTodo": "Commandes prévues",
-      "actives": "actifs",
-      "onMonth": "sur le mois",
-      "onHour": "sur l’heure actuelle",
-      "now": "actuellement",
-      "today": "aujourd'hui"
-    }
   },
 
   "info": {

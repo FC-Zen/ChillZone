@@ -107,6 +107,36 @@
     }
   },
 
+  "dashboard": {
+    "graph": {
+      "reservation": "Number of reservations per month",
+      "commands": "Number of orders per month",
+      "cnx": "Number of new users per month",
+      "revenu": "Revenue per month"
+    },
+    "info": {
+      "users": "Connections this month",
+      "conflict": "Reports received",
+      "openRooms": "Available rooms/boxes",
+      "occupationTime": "Box/room occupancy rate",
+      "mostWantedProduct": "Most sold product",
+      "mostWantedMenu": "Most sold menu",
+      "commandsNow": "Orders to be made",
+      "commandsToday": "Orders completed",
+      "commandsTodo": "Orders planned",
+      "actives": "active",
+      "onMonth": "for the month",
+      "onHour": "for the current hour",
+      "yesterday": "Yesterday",
+      "now": "currently",
+      "today": "today",
+      "previousYear": "Previous year",
+      "currentYear": "Current year",
+      "openRestaurant": "Number of affiliated restaurants"
+    },
+    "restaurant": "Restaurant"
+  },
+
   "type": {
     "user": "User",
     "admin": "Administrator",
@@ -212,30 +242,6 @@
     },
     "search": "Search in the table",
     "search2": "Search"
-  },
-
-  "dashboard": {
-    "graph": {
-      "reservation": "Number of reservations per month",
-      "commands": "Number of orders per month",
-      "cnx": "Number of logins per month"
-    },
-    "info": {
-      "users": "Users",
-      "conflict": "Reports received",
-      "openRooms": "Available rooms / boxes",
-      "openrestaurants": "Available dining locations",
-      "mostWantedProduct": "Best-selling product",
-      "mostWantedMenu": "Best-selling menu",
-      "commandsNow": "Orders to process",
-      "commandsToday": "Orders completed",
-      "commandsTodo": "Orders planned",
-      "actives": "active",
-      "onMonth": "this month",
-      "onHour": "this hour",
-      "now": "now",
-      "today": "today"
-    }
   },
 
   "info": {

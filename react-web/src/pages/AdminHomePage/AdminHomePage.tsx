@@ -20,8 +20,8 @@ export const AdminHomePage: React.FC = () => {
           {
             icon: 'User',
             title: t('dashboard.info.users'),
-            value: data.users_current_year ?? 0,
-            trend: { value: data.users_percentage_change ?? 0, isPositive: true, duration: '1 month' },
+            value: data.connections_current_year ?? 0,
+            trend: { value: data.connections_percentage_change ?? 0, isPositive: true, duration: '1 month' },
           },
           {
             icon: 'Flag',
@@ -35,8 +35,8 @@ export const AdminHomePage: React.FC = () => {
             value: data.available_locations ?? 0,
           },
           {
-            icon: 'Dashboard',
-            title: t('dashboard.info.openrestaurants'),
+            icon: 'Shop',
+            title: t('dashboard.info.openRestaurant'),
             value: data.available_restaurants ?? 0,
           },
         ]); // Créer les données pour les cartes de statistiques

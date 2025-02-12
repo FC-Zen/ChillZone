@@ -1,6 +1,5 @@
 import React from "react";
 import { OwnerSidebar, Header, OrdersDataTable } from "@components/organisms";
-import { StatCard } from "@components/molecules";
 import "./style.css"; // Importation du fichier CSS
 import { User } from "@hooks";
 import { Command } from "@pages/OwnerOrdersPage/OwnerOrdersPage";
@@ -8,11 +7,6 @@ import { Command } from "@pages/OwnerOrdersPage/OwnerOrdersPage";
 type OwnerHomeLayoutProps = {
   user : User | null;
   part: string;
-  statsSection: {
-    commandsNow: { name: string; value: string | number };
-    commandsToday: { name: string; value: string | number };
-    commandsTodo: { name: string; value: string | number };
-  };
   data: Command[];
   handleClick : (id: number) => void;
 };
@@ -20,7 +14,6 @@ type OwnerHomeLayoutProps = {
 export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
   user,
   part,
-  statsSection,
   data,
   handleClick
 }) => (
@@ -34,28 +27,8 @@ export const OwnerOrdersTemplate: React.FC<OwnerHomeLayoutProps> = ({
       />
 
       <div className="main-content">
-        <div className="table-container">
           <OrdersDataTable data={data} 
           handleClick={handleClick}/>
-        </div>
-
-        <div className="stats-section">
-          <StatCard
-            icon='User'
-            title={statsSection.commandsNow.name}
-            value={statsSection.commandsNow.value}
-          />
-          <StatCard
-            icon='User'
-            title={statsSection.commandsToday.name}
-            value={statsSection.commandsToday.value}
-          />
-          <StatCard
-            icon='User'
-            title={statsSection.commandsTodo.name}
-            value={statsSection.commandsTodo.value}
-          />
-        </div>
       </div>
     </div>
   </div>

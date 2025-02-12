@@ -3,12 +3,14 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from django.db.models import Count, Q, F
 from django.utils.timezone import timedelta
+from collections import defaultdict
+from django.db.models import Sum
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from django.db.models.functions import TruncMonth
 from django.contrib.auth.models import User
-from chillzone.models import Menu, Meal, Type, Category, Associate, Command, CommandComposition, WorkIn, Tag
+from chillzone.models import Menu, Meal, Type, Category, Associate, Command, CommandComposition, WorkIn, Tag, LineContent
 from chillzone.serializers import CommandUpdateSerializer, CommandLineSerializer, CommandSerializer, MenuWithOptionsSerializer, TagSerializer, MenuMealSerializer, MealWithTagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer, CreateMenuSerializer, UpdateMenuSerializer
 
 class IsOwner(BasePermission):
@@ -22,6 +24,35 @@ class IsOwner(BasePermission):
 class OwnerDashboardView(APIView):
     permission_classes = [IsAuthenticated & IsOwner]
 
+    def calculate_revenue_per_month(self, commands):
+        revenue_per_month = defaultdict(float)
+
+        for command in commands:
+            month = command["month"]
+            revenue_per_month[month] += self.calculate_command_total(get_object_or_404(Command, id=command["id"]))
+
+        return [{'month': month, 'count': round(revenue, 2)} for month, revenue in revenue_per_month.items()]
+
+    def calculate_command_total(self, command):
+        total = 0
+        command_compositions = CommandComposition.objects.filter(command=command)
+        
+        for composition in command_compositions:
+            command_line = composition.line
+            quantity = command_line.quantity
+            
+            line_contents = LineContent.objects.filter(command_line=command_line)
+            
+            menu_found = False
+            for line_content in line_contents:
+                if line_content.menu and not menu_found:
+                    total += line_content.menu.price * quantity
+                    menu_found = True
+                elif line_content.meal and not menu_found:
+                    total += line_content.meal.price * quantity
+        
+        return round(total, 2)
+
     def get(self, request, *args, **kwargs):
         user = request.user
 
@@ -32,17 +63,15 @@ class OwnerDashboardView(APIView):
             return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
 
         # Périodes glissantes
-        today = timezone.now().date()
+        today = timezone.now()
         twelve_months_ago = today - timedelta(days=365)
-        thirty_days_ago = today - timedelta(days=30)
-
-        # Définir la plage pour l'année précédente
         start_of_previous_year = twelve_months_ago - timedelta(days=365)
         end_of_previous_year = twelve_months_ago
 
         commands_current_yer = Command.objects.filter(
             creation_date__gte=twelve_months_ago,
-            restauration_place=restaurant
+            restauration_place=restaurant,
+            status='completed'
         ).annotate(
             month=F('creation_date__month')
         ).values(
@@ -54,7 +83,8 @@ class OwnerDashboardView(APIView):
         commands_previous_year = Command.objects.filter(
             creation_date__gte=start_of_previous_year,
             creation_date__lt=end_of_previous_year,
-            restauration_place=restaurant
+            restauration_place=restaurant,
+            status='completed'
         ).annotate(
             month=F('creation_date__month')
         ).values(
@@ -63,12 +93,75 @@ class OwnerDashboardView(APIView):
             count=Count('id')
         ).order_by('month')
 
+        commands_current_year_for_revenue = Command.objects.filter(
+            creation_date__gte=twelve_months_ago,
+            restauration_place=restaurant
+        ).annotate(
+            month=F('creation_date__month')
+        ).values(
+            'month', 'id'
+        )
+        
+        commands_previous_year_for_revenue = Command.objects.filter(
+            creation_date__gte=start_of_previous_year,
+            creation_date__lt=end_of_previous_year,
+            restauration_place=restaurant
+        ).annotate(
+            month=F('creation_date__month')
+        ).values(
+            'month', 'id'
+        )
+        
+        revenue_current_year = self.calculate_revenue_per_month(commands_current_year_for_revenue)
+        revenue_previous_year = self.calculate_revenue_per_month(commands_previous_year_for_revenue)
+
+        most_sold_meal = Meal.objects.filter(restaurant=restaurant).annotate(
+            total_sold=Sum('linecontent__command_line__quantity')
+        ).order_by('-total_sold').first()
+
+        most_sold_menu = Menu.objects.filter(restaurant=restaurant).annotate(
+            total_sold=Sum('linecontent__command_line__quantity')
+        ).order_by('-total_sold').first()
+
+        completed_today = Command.objects.filter(creation_date__date=today, restauration_place=restaurant, status='completed').count()
+        completed_yesterday = Command.objects.filter(creation_date__date=today - timedelta(days=1), restauration_place=restaurant, status='completed').count()
+        percentage_change = ((completed_today - completed_yesterday) / completed_yesterday * 100) if completed_yesterday else 0
+        
+        in_progress = Command.objects.filter(status='in progress', restauration_place=restaurant).count()
+
         data = {
             'commands_per_month_current_year': list(commands_current_yer),
             'commands_per_month_previous_year': list(commands_previous_year),
+            'revenue_per_month_current_year': revenue_current_year,
+            'revenue_per_month_previous_year': revenue_previous_year,
+            'most_sold_meal': most_sold_meal.name if most_sold_meal else None,
+            'most_sold_menu': most_sold_menu.name if most_sold_menu else None,
+            'commands_completed_today': completed_today,
+            'percentage_commands_completed_yesterday': percentage_change,
+            'commands_in_progress': in_progress,
+            'status': restaurant.status
         }
 
-        return Response(data, status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
+    
+    def put(self, request, *args, **kwargs):
+        user = request.user
+
+        try:
+            work_in = WorkIn.objects.get(user=user)
+            restaurant = work_in.restaurant
+        except WorkIn.DoesNotExist:
+            return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        status_value = request.data.get("status")
+        if status_value not in [True, False]:
+            return Response({"error": "Invalid status value."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        restaurant.status = status_value
+        restaurant.save()
+        
+        return Response({"message": "Restaurant status updated successfully."}, status=status.HTTP_200_OK)
+
     
 class OwnerMenuView(APIView):
     permission_classes = [IsAuthenticated & IsOwner]
@@ -246,8 +339,8 @@ class OwnerMealView(APIView):
             except Category.DoesNotExist:
                 return Response({"error": "Category not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        meal.tag.clear()
         if "tags" in serializer.validated_data:
+            meal.tag.clear()
             meal.tag.set(Tag.objects.filter(id__in=serializer.validated_data["tags"]))
 
         meal.save()

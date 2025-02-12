@@ -15,10 +15,10 @@ export const StatCard: React.FC<StatCardProps> = ({
   value,
   trend,
 }) => (
-  <div className="p-4 bg-white rounded-lg shadow-md flex items-center space-x-4 relative">
+  <div className="pl-6 bg-white rounded-lg shadow-md flex items-center space-x-4 relative flex-1">
     {/* Icône avec fond bleu */}
     <div
-      className="p-3 rounded-full"
+      className="px-4 py-3 rounded-full"
       style={{
         backgroundColor: colors.resolutionBlue, // Couleur bleu foncé du fichier colors.ts
         color: colors.white, // Icône en blanc
@@ -27,7 +27,7 @@ export const StatCard: React.FC<StatCardProps> = ({
       <Icon name={icon} color={colors.white} />
     </div>
     <div>
-      <p className="text-sm text-gray-500">{title}</p>
+      <p className="text-lg text-gray-500">{title}</p>
       <h3 className="text-lg font-semibold">{value}</h3>
       {trend && (
         <div className="flex items-center space-x-1">

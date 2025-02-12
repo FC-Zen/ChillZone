@@ -10,9 +10,14 @@ export type MonthlyData = {
 export type OwnerDashboardData = {
   commands_per_month_current_year: MonthlyData[];
   commands_per_month_previous_year: MonthlyData[];
-  users_current_year: number;
-  users_previous_year: number;
-  users_percentage_change: number;
+  revenue_per_month_current_year : MonthlyData[];
+  revenue_per_month_previous_year : MonthlyData[];
+  most_sold_meal : string;
+  most_sold_menu : string;
+  commands_completed_today: number;
+  percentage_commands_completed_yesterday : number;
+  commands_in_progress : number;
+  status : boolean;
 }
 
 /**
@@ -42,6 +47,37 @@ export const getDashboardDataOwner = async (): Promise<OwnerDashboardData> => {
       throw new Error(error.message);
   }
 };
+
+/**
+ * Met à jour le statut d'une commande dans l'API.
+ * 
+ * @param {boolean} status 
+ * @throws {Error} Si la requête échoue.
+ * @returns {Promise<any>} Réponse de l'API.
+ */
+
+export const updateRestaurantStatus = async (status: boolean) => {
+  try {
+      const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}owner-dashboard/`, 
+        {
+            status : status,
+        },
+        { 
+            withCredentials: true,
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+            },
+        } 
+        );
+        if (response.status == 200) {
+            return response.status;
+        }
+} catch (error: any) {
+    console.error('Erreur lors de la mise à jour du statut de l\'utilisateur:', error.message);
+    throw new Error(error.message);
+}
+};
+
 
 /**
  * Récupère la liste des plats depuis l'API.

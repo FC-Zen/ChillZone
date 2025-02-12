@@ -1,6 +1,5 @@
 import React from 'react';
-import fr from '@assets/fr.json';
-import { BarGraph } from '@components/atoms';
+import { BarGraph, LineGraph } from '@components/atoms';
 import { useTranslation } from 'react-i18next';
 import { OwnerDashboardData } from '@services';
 
@@ -13,7 +12,7 @@ export const OwnerDashboardGraphs: React.FC<OwnerDashboardGraphsprops> = ({ data
   const { t } = useTranslation();
 
   const prepareMonthData = (data: Array<{ month: number; count: number }>) => {
-    // Mois de l'année en français
+    // Mois de l'année selon la traduction
     const months = [
       t('months.january'), 
       t('months.february'),
@@ -29,7 +28,6 @@ export const OwnerDashboardGraphs: React.FC<OwnerDashboardGraphsprops> = ({ data
       t('months.december'),
     ];
   
-    // Crée un tableau avec les mois, chaque mois a un count de 0 par défaut
     const allMonths = months.map((month, index) => {
       const existingData = data.find((d) => d.month === index + 1); // On cherche si le mois est dans les données
       return {
@@ -43,20 +41,34 @@ export const OwnerDashboardGraphs: React.FC<OwnerDashboardGraphsprops> = ({ data
 
   const months = prepareMonthData(data.commands_per_month_current_year).map((d) => d.month);
 
-  const currentYearReservationCounts = prepareMonthData(data.commands_per_month_current_year).map((d) => d.count);
-  const previousYearReservationCounts = prepareMonthData(data.commands_per_month_previous_year).map((d) => d.count);
+  const currentYearCommandsCounts = prepareMonthData(data.commands_per_month_current_year).map((d) => d.count);
+  const previousYearCommandsCounts = prepareMonthData(data.commands_per_month_previous_year).map((d) => d.count);
+
+  const currentYearRevenu = prepareMonthData(data.revenue_per_month_current_year).map((d) => d.count);
+  const previousYearRevenu = prepareMonthData(data.revenue_per_month_previous_year).map((d) => d.count);
 
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-lg font-semibold mb-4">
-          {fr.dashboard.graph.reservation}
+          {t('dashboard.graph.commands')}  
         </h2>
         <BarGraph 
-          data={currentYearReservationCounts}
-          previousData={previousYearReservationCounts} 
+          data={currentYearCommandsCounts}
+          previousData={previousYearCommandsCounts} 
           xLabels={months} 
-          yAxisLabel={t('dashboard.graph.reservation')}        
+          yAxisLabel={t('dashboard.graph.commands')}        
+        />
+      </div>
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-lg font-semibold mb-4">
+        {t('dashboard.graph.revenu')}    
+        </h2>
+        <LineGraph 
+          data={currentYearRevenu}
+          previousData={previousYearRevenu} 
+          xLabels={months} 
+          yAxisLabel={t('dashboard.graph.revenu')}          
         />
       </div>
     </div>

@@ -6,7 +6,7 @@ import { IconList } from '@components/atoms';
 export type StatItem = {
   icon: keyof typeof IconList;
   title: string;
-  value: number;
+  value: number | string;
   trend?: {
     value: number;
     isPositive: boolean;
@@ -21,7 +21,7 @@ type AdminDashboardStatsCardsProps = {
 export const AdminDashboardStatsCards: React.FC<AdminDashboardStatsCardsProps> = ({ stats }) => {
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 h-full">
       {stats.map((stat, index) => (
         <StatCard
           key={index}

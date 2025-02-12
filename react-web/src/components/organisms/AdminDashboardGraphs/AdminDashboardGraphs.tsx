@@ -41,19 +41,19 @@ export const AdminDashboardGraphs: React.FC<AdminDashboardGraphsprops> = ({ data
     return allMonths;
   };
 
-  const months = prepareMonthData(data.connections_per_month_current_year).map((d) => d.month);
+  const months = prepareMonthData(data.users_per_month_current_year).map((d) => d.month);
 
   const currentYearReservationCounts = prepareMonthData(data.reservations_per_month_current_year).map((d) => d.count);
   const previousYearReservationCounts = prepareMonthData(data.reservations_per_month_previous_year).map((d) => d.count);
 
-  const currentYearConnexionCounts = prepareMonthData(data.connections_per_month_current_year).map((d) => d.count);
-  const previousYearConnexionCounts = prepareMonthData(data.connections_per_month_previous_year).map((d) => d.count);
+  const currentYearConnexionCounts = prepareMonthData(data.users_per_month_current_year).map((d) => d.count);
+  const previousYearConnexionCounts = prepareMonthData(data.users_per_month_previous_year).map((d) => d.count);
 
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-lg font-semibold mb-4">
-          {fr.dashboard.graph.reservation}
+        {t('dashboard.graph.reservation')}  
         </h2>
         <BarGraph 
           data={currentYearReservationCounts}
@@ -64,7 +64,7 @@ export const AdminDashboardGraphs: React.FC<AdminDashboardGraphsprops> = ({ data
       </div>
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-lg font-semibold mb-4">
-          {fr.dashboard.graph.cnx}
+        {t('dashboard.graph.cnx')}    
         </h2>
         <LineGraph 
           data={currentYearConnexionCounts}

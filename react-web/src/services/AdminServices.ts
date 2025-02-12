@@ -1,5 +1,4 @@
 import axios from 'axios';
-import maps from '@assets/data/maps.json';
 import { getCSRFToken } from '@utils';
 
 /* Types specifiques au dashboards admins  */
@@ -11,13 +10,11 @@ export type MonthlyData = {
 export type DashboardData = {
     reservations_per_month_current_year: MonthlyData[];
     reservations_per_month_previous_year: MonthlyData[];
-    connections_per_month_current_year: MonthlyData[];
-    connections_per_month_previous_year: MonthlyData[];
-    users_current_year: number;
-    users_previous_year: number;
-    users_percentage_change: number;
+    users_per_month_current_year: MonthlyData[];
+    users_per_month_previous_year: MonthlyData[];
+    connections_current_year: number;
+    connections_percentage_change: number;
     reports_current_month: number;
-    reports_previous_month: number;
     reports_percentage_change: number;
     available_locations: number;
     available_restaurants: number;
