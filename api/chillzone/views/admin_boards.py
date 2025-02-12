@@ -63,21 +63,21 @@ class AdminDashboardView(APIView):
         ).order_by('month')
 
         # 2. Connexions par mois
-        connections_current_year = User.objects.filter(
-            last_login__gte=twelve_months_ago
+        users_current_year = User.objects.filter(
+            date_joined__gte=twelve_months_ago
         ).annotate(
-            month=F('last_login__month')
+            month=F('date_joined__month')
         ).values(
             'month'
         ).annotate(
             count=Count('id')
         ).order_by('month')
 
-        connections_previous_year = User.objects.filter(
-            last_login__gte=start_of_previous_year,
-            last_login__lt=end_of_previous_year
+        users_previous_year = User.objects.filter(
+            date_joined__gte=start_of_previous_year,
+            date_joined__lt=end_of_previous_year
         ).annotate(
-            month=F('last_login__month')
+            month=F('date_joined__month')
         ).values(
             'month'
         ).annotate(
@@ -85,12 +85,12 @@ class AdminDashboardView(APIView):
         ).order_by('month')
 
         # 3. Nombre de nouveaux utilisateurs
-        users_current_year = User.objects.filter(date_joined__gte=twelve_months_ago).count()
-        users_previous_year = User.objects.filter(
-            date_joined__gte=start_of_previous_year,
-            date_joined__lt=end_of_previous_year
+        connections_current_year = User.objects.filter(last_login__gte=twelve_months_ago).count()
+        connections_previous_year = User.objects.filter(
+            last_login__gte=start_of_previous_year,
+            last_login__lt=end_of_previous_year
         ).count()
-        users_percentage_change = ((users_current_year - users_previous_year) / users_previous_year) * 100 if users_previous_year else 0
+        connections_percentage_change = ((connections_current_year - connections_previous_year) / connections_previous_year) * 100 if connections_previous_year else 0
 
         # 4. Nombre de signalements reçus
         reports_current_month = Conflict.objects.filter(
@@ -111,13 +111,11 @@ class AdminDashboardView(APIView):
         data = {
             'reservations_per_month_current_year': list(reservations_current_year),
             'reservations_per_month_previous_year': list(reservations_previous_year),
-            'connections_per_month_current_year': list(connections_current_year),
-            'connections_per_month_previous_year': list(connections_previous_year),
-            'users_current_year': users_current_year,
-            'users_previous_year': users_previous_year,
-            'users_percentage_change': users_percentage_change,
+            'users_per_month_current_year': list(users_current_year),
+            'users_per_month_previous_year': list(users_previous_year),
+            'connections_current_year': connections_current_year,
+            'connections_percentage_change': connections_percentage_change,
             'reports_current_month': reports_current_month,
-            'reports_previous_month': reports_previous_month,
             'reports_percentage_change': reports_percentage_change,
             'available_locations': available_locations,
             'available_restaurants': available_restaurants,

@@ -1,3 +1,13 @@
+.custom-tool-bar .customBtnDataTable:hover {
+    background-color: #007a5e !important;
+}
+
+.custom-tool-bar .customBtnDataTable {
+    padding: 7px 12px!important;
+    background-color: #005745 !important;
+    gap: 5px;
+}
+
 .custom-tool-bar button  {
     display: flex !important;
     background-color: #2e2a85 !important;
@@ -7,16 +17,6 @@
     gap: 5px !important;
     justify-content: center;
     align-items: center;
-}
-
-.custom-tool-bar button:hover {
-    background-color: #007a5e !important;
-}
-
-.customBtnDataTable {
-    padding: 7px 12px!important;
-    background-color: #005745 !important;
-    gap: 5px;
 }
 
 .custom-quick-filter {

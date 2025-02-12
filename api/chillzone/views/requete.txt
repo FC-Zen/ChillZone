@@ -1,11 +1,60 @@
-View Owner - Commands
+View Owner - Dashboard
 
-Renvoie (fais un serializer) :
-Json qui renvoie : 
-{
-    commands : #tous les commandes du restaurants ou travaille le owner (Avec les plats et les menus associés + la quantité associés) order par creation_date les plus récentes.
-    available_status : #les status disponibles pour les commandes
-}
+Ajouter dans le get
+renvoie la somme gagné par mois 12 mois glissants et les 12 mois glissants de l'année précédente
+le produit le plus vendu
+le menu le plus vendu
+nombre de commande réalisé (complted en statut) aujourddh'ui et renvoyé le pourcentage par rapport à hier
+nombre de commande en attente (in progress)
+
+class OwnerDashboardView(APIView):
+    permission_classes = [IsAuthenticated & IsOwner]
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+
+        try:
+            work_in = WorkIn.objects.get(user=user)
+            restaurant = work_in.restaurant
+        except WorkIn.DoesNotExist:
+            return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Périodes glissantes
+        today = timezone.now().date()
+        twelve_months_ago = today - timedelta(days=365)
+        thirty_days_ago = today - timedelta(days=30)
+
+        # Définir la plage pour l'année précédente
+        start_of_previous_year = twelve_months_ago - timedelta(days=365)
+        end_of_previous_year = twelve_months_ago
+
+        commands_current_yer = Command.objects.filter(
+            creation_date__gte=twelve_months_ago,
+            restauration_place=restaurant
+        ).annotate(
+            month=F('creation_date__month')
+        ).values(
+            'month'
+        ).annotate(
+            count=Count('id')
+        ).order_by('month')
+
+        commands_previous_year = Command.objects.filter(
+            creation_date__gte=start_of_previous_year,
+            creation_date__lt=end_of_previous_year,
+            restauration_place=restaurant
+        ).annotate(
+            month=F('creation_date__month')
+        ).values(
+            'month'
+        ).annotate(
+            count=Count('id')
+        ).order_by('month')
+
+        data = {
+            'commands_per_month_current_year': list(commands_current_yer),
+            'commands_per_month_previous_year': list(commands_previous_year),
+        }
 
 class UserMeta(models.Model):
 
