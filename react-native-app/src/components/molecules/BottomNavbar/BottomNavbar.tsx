@@ -60,7 +60,7 @@ export const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeIcon }) => {
         break;
       case 'Navigation':
         console.log('Navigation');
-        // navigation.navigate(ROUTE.NAVIGATION);
+        navigation.navigate(ROUTE.NAVIGATION);
         break;
       default:
         break;

@@ -24,3 +24,5 @@ export { CommandOverlay } from './CommandOverlay';
 export { CalendarCell } from './CalendarCell';
 export { Select, SelectProps } from './Select';
 export { ProfileHeader } from './ProfileHeader';
+export { NavigationBar } from './NavigationBar';
+export { MapZoom } from './MapZoom';

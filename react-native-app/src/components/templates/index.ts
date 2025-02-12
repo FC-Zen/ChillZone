@@ -20,4 +20,5 @@ export { AlertCancelReservationTemplate } from './AlertCancelReservationTemplate
 export { ReportingFormTemplate } from './ReportingFormTemplate';
 export { ReportingFinalFormTemplate } from './ReportingFinalTemplate';
 export { CommandSummaryTemplate } from './CommandSummaryTemplate';
+export { NavigationTemplate } from './NavigationTemplate';
 export { CalendarTemplate } from './CalendarTemplate';

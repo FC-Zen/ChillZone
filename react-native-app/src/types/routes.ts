@@ -3,7 +3,6 @@ import { RouteProp } from '@react-navigation/native';
 import { ROUTE } from '@enums';
 import { MealProps } from '@services/DispenserServices';
 import { MenuProps } from '@services/MenusServices';
-import { NavItem } from '@components/molecules/BookingInfo';
 
 export type RootStackParamList = {
   [ROUTE.HOME]: { userName: string };
@@ -25,6 +24,7 @@ export type RootStackParamList = {
   [ROUTE.ALERT]: undefined;
   [ROUTE.COMMAND_SUMMARY]: undefined;
   [ROUTE.CALENDAR]: undefined;
+  [ROUTE.NAVIGATION]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
@@ -50,6 +50,7 @@ export type RouteParamList = {
   AlertScreen: undefined;
   CommandSummaryScreen: undefined;
   CalendarScreen: undefined;
+  NavigationScreen: undefined;
 };
 
 // Typage des propriétés des écrans

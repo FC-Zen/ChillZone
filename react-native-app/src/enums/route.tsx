@@ -20,4 +20,5 @@ export enum ROUTE {
   ALERT = 'AlertScreen',
   COMMAND_SUMMARY = 'CommandSummaryScreen',
   CALENDAR = 'CalendarScreen',
+  NAVIGATION = 'NavigationScreen',
 }

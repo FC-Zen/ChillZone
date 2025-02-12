@@ -50,3 +50,4 @@ export { default as CrossCircle } from './CrossCircle';
 export { default as Check } from './Check';
 export { default as Trash } from './Trash';
 export { default as Chain } from './Chain';
+export { default as AR } from './AR';

@@ -1,0 +1,33 @@
+import { colors, typography } from '@theme';
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    width: '100%',
+  },
+  navBar: {
+    flexDirection: 'row',
+    width: 'auto',
+    backgroundColor: colors.resolutionBlue,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    borderTopRightRadius: 8,
+    gap: 14,
+    paddingHorizontal: 10,
+  },
+  navItem: {
+    color: colors.white,
+    textAlign: 'center',
+    fontFamily: typography.h3.fontFamily,
+    fontSize: 12,
+    paddingVertical: 9,
+  },
+  active: {
+    fontFamily: typography.h1.fontFamily,
+  },
+  navBarBottom: {
+    position: 'relative',
+  },
+});

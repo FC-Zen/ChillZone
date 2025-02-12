@@ -12,6 +12,7 @@ export type IconWithTextProps = {
   iconHeight?: number;
   textStyle?: StyleProp<TextStyle>;
   style?: StyleProp<ViewStyle>;
+  onPress?: () => void;
 };
 
 export const IconWithText: React.FC<IconWithTextProps> = ({
@@ -24,6 +25,7 @@ export const IconWithText: React.FC<IconWithTextProps> = ({
   iconHeight = 24,
   textStyle,
   style,
+  onPress,
 }) => {
   return (
     <View style={[styles.container, styles[variant], style]}>
@@ -32,8 +34,14 @@ export const IconWithText: React.FC<IconWithTextProps> = ({
         width={iconWidth}
         height={iconHeight}
         color={iconColor}
+        onPress={onPress}
       />{' '}
-      <Text style={[styles.text, { color: textColor }, textStyle]}>{text}</Text>{' '}
+      <Text
+        onPress={onPress}
+        style={[styles.text, { color: textColor }, textStyle]}
+      >
+        {text}
+      </Text>{' '}
     </View>
   );
 };

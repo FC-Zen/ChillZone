@@ -6,6 +6,7 @@ export {
   FoodCard,
   Input,
   IconWithText,
+  NavigationBar,
   NotificationItem,
   NotificationPopup,
   Overlay,
@@ -25,6 +26,7 @@ export {
   CalendarCell,
   Select,
   SelectProps,
+  MapZoom,
 } from './molecules';
 export {
   AccountOptionsList,
@@ -61,5 +63,6 @@ export {
   MenuTemplate,
   CartTemplate,
   CommandSummaryTemplate,
+  NavigationTemplate,
   CalendarTemplate,
 } from './templates';

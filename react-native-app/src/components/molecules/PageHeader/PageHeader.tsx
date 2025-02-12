@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ViewStyle } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { ROUTE } from '@enums';
@@ -13,6 +13,7 @@ export type PageHeaderProps = {
   noMargin?: boolean; // Suppression des marges (optionnel)
   colorTitle?: string;
   colorArrow?: string;
+  style?: ViewStyle;
 };
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
@@ -23,6 +24,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   icon = { name: 'BackArrow', color: colorArrow || 'black' }, // Icône par défaut
   onBackPress,
   noMargin,
+  style,
 }) => {
   const headerHeight = 60;
   const navigation = useNavigation();
@@ -34,6 +36,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         variant === 'back' ? styles.back : styles.default,
         variant === 'back' &&
           !noMargin && { top: headerHeight > 0 ? headerHeight : '5%' },
+        style,
       ]}
     >
       {variant === 'back' && icon && (
@@ -46,7 +49,6 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         />
       )}
 
-      {/* Titre de la page */}
       <Text
         style={[
           styles.title,
@@ -57,7 +59,6 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         {title}
       </Text>
 
-      {/* Spacer pour équilibrer l'espace */}
       {variant !== 'default' && <View style={styles.spacer} />}
     </View>
   );
