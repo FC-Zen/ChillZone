@@ -9,9 +9,9 @@ class OpenRestaurantSerializer(serializers.ModelSerializer):
 class AdminConfirmedRestaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = RestaurationPlace
-        fields = ['id', 'name', 'restauration_type', 'location', 'email', 'status']
+        fields = ['id', 'name', 'restauration_type', 'location', 'phone', 'status']
 
 class AdminPendingRestaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = RestaurationPlace
-        fields = ['id', 'name', 'restauration_type', 'location', 'email']
+        fields = ['id', 'name', 'restauration_type', 'location', 'phone']

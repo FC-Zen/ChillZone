@@ -12,14 +12,14 @@ type AdminOwnerLayoutProps = {
     name : string; 
     type : string; 
     location: string;
-    email: string;
+    phone: string;
   }[];
   restaurationPlacesAcceptedData : {
     id: number;
     name: string;
     type: string;
     location: string;
-    email: string;
+    phone: string;
     status: boolean;
   }[];
   handleClickDelete: (id: number) => void;

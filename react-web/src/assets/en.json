@@ -302,7 +302,7 @@
         "name": "Dining location name",
         "type": "Type of dining location",
         "location": "Dining location address",
-        "email": "Dining location email",
+        "phone": "Dining location phone",
         "isCurrentlyOpen": "Currently open",
         "unlinkRestaurant": "Unlink dining location",
         "actionAffiliation": "Accept or Decline affiliation"

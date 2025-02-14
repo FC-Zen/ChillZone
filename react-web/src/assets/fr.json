@@ -333,7 +333,7 @@
         "name": "Nom du lieu de restauration",
         "type": "Type de lieu de restauration",
         "location": "Emplacement du lieu de restauration",
-        "email": "Adresse mail du lieu de restauration",
+        "phone": "Téléphone du lieu de restauration",
         "isCurrentlyOpen": "Ouvert actuellement",
         "unlinkRestaurant": "Supprimer le lien",
         "actionAffiliation": "Accepter ou Refuser l’affiliation"
