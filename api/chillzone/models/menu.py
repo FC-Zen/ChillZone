@@ -7,7 +7,7 @@ class Menu(models.Model):
 
     description = models.TextField()
 
-    photo_link = models.ImageField(null=True, blank=True)
+    photo_link = models.ImageField(upload_to='menu/', null=True, blank=True)
 
     price = models.FloatField()
 

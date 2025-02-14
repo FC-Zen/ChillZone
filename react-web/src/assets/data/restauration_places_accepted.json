@@ -4,7 +4,7 @@
         "name": "Frigo 125",
         "type": "Fridge",
         "location": "Rez-de-chaussée, près de l'entrée",
-        "email": "contact@cafeducoin.fr",
+        "phone": "0451855103",
         "status": true
     },
     {
@@ -12,7 +12,7 @@
         "name": "Restaurant Le Gourmet",
         "type": "Restaurant",
         "location": "1er étage, vue sur le jardin",
-        "email": "info@restaurantlegourmet.fr",
+        "phone": "0451855103",
         "status": true
     },
     {
@@ -20,7 +20,7 @@
         "name": "Snack Express",
         "type": "Restaurant",
         "location": "Sous-sol, près de la salle de pause",
-        "email": "contact@snackexpress.fr",
+        "phone": "0451855103",
         "status": false
     },
     {
@@ -28,7 +28,7 @@
         "name": "Pizzeria Bella Italia",
         "type": "Restaurant",
         "location": "2ème étage, à côté de la salle de réunion",
-        "email": "info@bellaitalia.fr",
+        "phone": "0451855103",
         "status": true
     },
     {
@@ -36,7 +36,7 @@
         "name": "Frigo 125",
         "type": "Fridge",
         "location": "Rez-de-chaussée, près de l'ascenseur",
-        "email": "contact@barasalades.fr",
+        "phone": "0451855103",
         "status": false
     }
 ]

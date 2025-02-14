@@ -21,7 +21,7 @@ type OwnersAcceptedDataTableProps = {
     name: string;
     type: string;
     location: string;
-    email: string;
+    phone: string;
     status: boolean;
   }[];
 };
@@ -56,7 +56,7 @@ export const OwnersAcceptedDataTable = ({
     { field: "name", headerName: t("tables.headers.restaurant.name"), flex: 1 },
     { field: "restauration_type", headerName: t("tables.headers.restaurant.type"), flex: 0.7 },
     { field: "location", headerName: t("tables.headers.restaurant.location"), flex: 1.5 },
-    { field: "email", headerName: t("tables.headers.restaurant.email"), flex: 1.2 },
+    { field: "phone", headerName: t("tables.headers.restaurant.phone"), flex: 1.2 },
     { 
       field: "status", 
       headerName: t("tables.headers.restaurant.isCurrentlyOpen"), 

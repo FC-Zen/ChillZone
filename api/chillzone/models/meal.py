@@ -7,7 +7,7 @@ class Meal(models.Model):
 
     description = models.TextField()
 
-    photo_link = models.ImageField(null=True, blank=True)
+    photo_link = models.ImageField(upload_to='meal/', null=True, blank=True)
 
     price = models.FloatField(default=0.0)
 

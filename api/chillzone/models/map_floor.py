@@ -7,7 +7,7 @@ class MapFloor(models.Model):
 
     name = models.CharField(max_length=100)
 
-    photo_link = models.ImageField(blank=True, null=False)
+    photo_link = models.ImageField(upload_to='floor/', blank=True, null=False)
 
     creation_date = models.DateTimeField(auto_now_add=True) 
 

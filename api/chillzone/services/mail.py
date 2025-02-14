@@ -72,6 +72,9 @@ class EmailService:
                 <p><strong>Mot de passe :</strong> {password}</p>
             </div>
             <p><strong>Important :</strong> Veuillez vous connecter et modifier votre mot de passe immédiatement.</p>
+            <p style="text-align: center;">
+                <a href="https://localhost:3000/login" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Accéder à mon espace</a>
+            </p>
             <p>Cordialement,<br> L'équipe ChillZone - Mon IUT</p>
             <div style="margin-top: 30px; text-align: center; font-size: 0.9em; color: #777;">
                 <p>&copy; 2025 <a href="https://github.com/FC-Zen">FC-Zen</a>. Tous droits réservés.</p>
@@ -111,7 +114,7 @@ class EmailService:
             <p>Nous avons le plaisir de vous informer que votre demande de création de restaurant et de votre compte <strong>ChillZone - Mon IUT</strong> a été approuvée.</p>
             <p>Vous pouvez maintenant accéder à votre espace de gestion et commencer à gérer votre établissement.</p>
             <p style="text-align: center;">
-                <a href="https://localhost:5000/login" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Accéder à mon espace</a>
+                <a href="https://localhost:3000/login" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Accéder à mon espace</a>
             </p>
             <p>Cordialement,<br> L'équipe ChillZone - Mon IUT</p>
             <div style="margin-top: 30px; text-align: center; font-size: 0.9em; color: #777;">
