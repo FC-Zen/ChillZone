@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
 import { styles } from './style';
@@ -6,6 +6,8 @@ import { Button, CalendarCell, CalendarHeader, Select, TopBar } from '@component
 import 'dayjs/locale/fr';
 import { CalendarEvent } from '@services';
 import { colors, typography } from '@theme';
+import { AdeModal, CourseDetailsModal, HelpModal } from '@components/organisms';
+import { set } from 'zod';
 
 export type CalendarTemplateProps = {
     events: CalendarEvent[];
@@ -19,6 +21,15 @@ export type CalendarTemplateProps = {
     selectedMonth: string;
     setSelectedMonth: (month: string) => void;
     monthNames: string[];
+    courseModal: boolean;
+    setCourseModal: (value: boolean) => void;
+    adeModal: boolean;
+    setAdeModal: (value: boolean) => void;
+    adeLink: string;
+    setAdeLink: (value: string) => void;
+    helpModal: boolean;
+    setHelpModal: (value: boolean) => void;
+    onSelect: (item: string) => void;
 };
 
 export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({ 
@@ -32,6 +43,15 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
     selectedMonth,
     setSelectedMonth,
     monthNames,
+    courseModal,
+    setCourseModal,
+    adeModal,
+    setAdeModal,
+    adeLink,
+    setAdeLink,
+    helpModal,
+    setHelpModal,
+    onSelect,
 }) => {
     const customHeader = () => {
         return (
@@ -43,6 +63,8 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
         );
     };
 
+    const [actualEvent, setActualEvent] = useState<CalendarEvent | null>(null);
+
     return (
         <>
             <TopBar />
@@ -50,13 +72,13 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                 <Select
                     items={monthNames}
                     selectedValue={selectedMonth}
-                    setSelectedValue={setSelectedMonth}
                     state={selectState}
                     setState={setSelectState}
+                    onSelect={onSelect}
                 />
                 <Button
                     title="ADE"
-                    onPress={() => console.log('open overlay')}
+                    onPress={() => setAdeModal(true)}
                     variant='icon'
                     icon={{ name: 'Chain', color: colors.white, width: 16, height: 16 }}
                     style={styles.calendarLinkButton}
@@ -73,6 +95,7 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                             start: event.start,
                             end: event.end,
                         }))}
+                        date={startOfWeek}
                         height={600}
                         mode="week"
                         locale="fr"
@@ -82,14 +105,39 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                         hourStyle={styles.hourStyle}
                         minHour={7}
                         maxHour={20}
-                        onPressEvent={(event) => { console.log(event) }}
+                        onPressEvent={(event) => { setCourseModal(true); setActualEvent(events.find((e) => e.id === event.id) || null); }}
                         renderHeader={customHeader}
                         eventCellTextColor={colors.white}
                         renderEvent={(event, TouchableOpacityProps) => <CalendarCell event={event} touchableOpacityProps={TouchableOpacityProps} brutEvents={events} />}
-                        onSwipeEnd={(date) => setStartOfWeek(date)}
+                        onSwipeEnd={(date) => {setStartOfWeek(date); setSelectedMonth(monthNames[date.getMonth()]);}}
+                        weekStartsOn={1}
+                        activeDate={selectedDate}
                     />
                 </View>
             </View>
+            <CourseDetailsModal 
+                isOpen={courseModal}
+                onClose={() => {setAdeModal(false); setCourseModal(false);}}
+                courseDetails={{
+                    title: actualEvent?.title || '',
+                    date: actualEvent?.start.toLocaleDateString() || '',
+                    time: `${actualEvent?.start.toLocaleTimeString().replace(/:\d\d/, '')} - ${actualEvent?.end.toLocaleTimeString().replace(/:\d\d/, '')}`,
+                    room: actualEvent?.location || '',
+                    instructor: actualEvent?.professor.toString().replaceAll(',', ', ') || '',
+                }}
+            />
+            <AdeModal  
+                isOpen={adeModal}
+                onClose={() => {setCourseModal(false); setAdeModal(false);}}
+                onOpenHelp={() => {setHelpModal(true); setAdeModal(false); setCourseModal(false);}}
+                adeLink={adeLink}
+                setAdeLink={setAdeLink}
+                onSubmit={() => console.log('submit')}
+            />
+            <HelpModal 
+                isOpen={helpModal}
+                onClose={() => { setHelpModal(false); setAdeModal(true); setCourseModal(false); }}
+            />
         </>
     );
 };

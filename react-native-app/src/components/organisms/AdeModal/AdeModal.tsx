@@ -16,7 +16,7 @@ export type AdeModalProps = {
   onSubmit: () => void;
 };
 
-export const AdeModal = ({
+export const AdeModal: React.FC<AdeModalProps> = ({
   isOpen,
   onClose,
   onOpenHelp,
@@ -39,7 +39,6 @@ export const AdeModal = ({
           <View style={styles.helpButtonContainer}>
             <Button
               title={t('modals.AdeHelpButton')}
-              variant="icon"
               style={styles.helpButton}
               textColor={colors.aquaDeep}
               onPress={onOpenHelp} // Passé par le parent

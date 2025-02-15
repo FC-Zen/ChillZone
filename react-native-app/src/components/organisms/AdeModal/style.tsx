@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
   },
   helpButton: {
     backgroundColor: colors.white,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     paddingVertical: 5,
     color: colors.aquaDeep,
     justifyContent: 'center',

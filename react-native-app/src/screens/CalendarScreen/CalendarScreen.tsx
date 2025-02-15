@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { styles } from './style';
 import { BottomNavbar, CalendarTemplate } from '@components';
@@ -31,14 +31,33 @@ export const CalendarScreen = () => {
     t('days.sunday'),
   ].map((day) => day[0].toUpperCase());
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [startOfWeek, setStartOfWeek] = React.useState(new Date());
-  const [selectState, setSelectState] = React.useState<'open' | 'closed'>(
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [startOfWeek, setStartOfWeek] = useState(new Date());
+  const [selectState, setSelectState] = useState<'open' | 'closed'>(
     'closed'
   );
-  const [selectedMonth, setSelectedMonth] = React.useState(monthsName[0]);
+  const [selectedMonth, setSelectedMonth] = useState(monthsName[new Date().getMonth()]);
 
-  const [events, setEvents] = React.useState<Calendar>({ events: [] });
+  const [events, setEvents] = useState<Calendar>({ events: [] });
+  const [adeModal, setAdeModal] = useState(false);
+  const [adeLink, setAdeLink] = useState('');
+  const [helpModal, setHelpModal] = useState(false);
+  const [courseModal, setCourseModal] = useState(false);
+  
+  const determineYear = (month: string) => {
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth();
+      const selected = monthsName.indexOf(month);
+      return currentMonth >= selected ? currentYear : currentYear - 1;
+  }
+
+  const determineDate = (month: string) => {
+      const year = determineYear(month);
+      const monthIndex = monthsName.indexOf(month);
+      return new Date(year, monthIndex, 1);
+  }
+
+  const eventsMemo = useMemo(() => events, [events]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +65,14 @@ export const CalendarScreen = () => {
       setEvents(events);
     };
     fetchData();
+    eventsMemo;
   }, []);
+
+  const handleSelect = useCallback((item: string) => {
+    setSelectedMonth(item);
+    setSelectState(selectState === 'open' ? 'closed' : 'open');
+    setStartOfWeek(determineDate(item));
+  }, [selectedMonth, selectState]);
 
   return (
     <View style={styles.container}>
@@ -64,6 +90,15 @@ export const CalendarScreen = () => {
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
         monthNames={monthsName}
+        courseModal={courseModal}
+        setCourseModal={setCourseModal}
+        adeModal={adeModal}
+        setAdeModal={setAdeModal}
+        adeLink={adeLink}
+        setAdeLink={setAdeLink}
+        helpModal={helpModal}
+        setHelpModal={setHelpModal}
+        onSelect={handleSelect}
       />
       <BottomNavbar activeIcon="Calendar" />
     </View>
