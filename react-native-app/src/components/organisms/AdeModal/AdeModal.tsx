@@ -29,12 +29,24 @@ export const AdeModal: React.FC<AdeModalProps> = ({
   return (
     <Modal
       animationType="slide"
-      transparent={true}
       visible={isOpen}
       onRequestClose={onClose}
+      statusBarTranslucent={true}
+      transparent={true}
+      presentationStyle='overFullScreen'
     >
       <View style={styles.overlay}>
         <View style={styles.modal}>
+
+          <TouchableOpacity onPress={onClose} style={styles.closeIcon}>
+            <Icon
+              name="Cross"
+              width={15}
+              height={15}
+              color={colors.white}
+            />
+          </TouchableOpacity>
+
           {/* Bouton d'Aide */}
           <View style={styles.helpButtonContainer}>
             <Button
@@ -62,22 +74,10 @@ export const AdeModal: React.FC<AdeModalProps> = ({
           {/* Bouton Valider */}
           <Button
             title={t('modals.AdeValidateButton')}
-            variant="icon"
-            style={styles.validateButton}
             textColor={colors.white}
             onPress={onSubmit}
+            color={colors.aquaDeep}
           />
-
-          {/* Bouton Fermer */}
-          <TouchableOpacity style={styles.closeIcon}>
-            <Icon
-              name="Cross"
-              width={15}
-              height={15}
-              color={colors.white}
-              onPress={onClose}
-            />
-          </TouchableOpacity>
         </View>
       </View>
     </Modal>

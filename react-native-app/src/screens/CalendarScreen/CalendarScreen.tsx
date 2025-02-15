@@ -4,6 +4,7 @@ import { styles } from './style';
 import { BottomNavbar, CalendarTemplate } from '@components';
 import { Calendar, getCalendarEvents } from '@services/CalendarServices';
 import { useTranslation } from 'react-i18next';
+import { set } from 'zod';
 
 export const CalendarScreen = () => {
   const { t } = useTranslation();
@@ -59,11 +60,12 @@ export const CalendarScreen = () => {
 
   const eventsMemo = useMemo(() => events, [events]);
 
+  const fetchData = async () => {
+    const events = await getCalendarEvents(adeLink);
+    if (events !== null) setEvents(events);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const events = await getCalendarEvents();
-      setEvents(events);
-    };
     fetchData();
     eventsMemo;
   }, []);
@@ -99,6 +101,11 @@ export const CalendarScreen = () => {
         helpModal={helpModal}
         setHelpModal={setHelpModal}
         onSelect={handleSelect}
+        onSubmitLink={() => {
+          fetchData();
+          setAdeModal(false);
+          setAdeLink('');
+        }}
       />
       <BottomNavbar activeIcon="Calendar" />
     </View>

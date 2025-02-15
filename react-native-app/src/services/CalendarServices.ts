@@ -67,8 +67,11 @@ export type Calendar = {
     events: CalendarEvent[];
 }
 
-export const getCalendarEvents = async () => {
-    const url = 'https://edt.univ-eiffel.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=1510&projectId=26&calType=ical&nbWeeks=100';
+export const getCalendarEvents = async (url: string) => {
+    if (url === '') {
+        console.log("❌ URL du calendrier non fournie !");
+        return null;
+    }
     let formatedCalendar: Calendar = { events: [] };
     let events = await loadICSFromURL(url);
     events = extractEvents(events);

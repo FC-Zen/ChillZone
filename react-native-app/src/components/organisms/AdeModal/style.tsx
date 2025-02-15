@@ -12,9 +12,10 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.resolutionBlue, // Couleur principale
     borderRadius: 10,
     padding: 20,
-    width: '90%',
+    width: '92%',
     maxWidth: 400,
     alignItems: 'center',
+    position: 'relative',
   },
   helpButtonContainer: {
     alignSelf: 'flex-start', // Positionne le bouton "Aide" à gauche
@@ -41,26 +42,21 @@ export const styles = StyleSheet.create({
     color: colors.white,
     marginBottom: 10,
     textAlign: 'center',
-    fontFamily: typography.h3.fontFamily,
+    fontFamily: typography.h2.fontFamily,
     fontSize: typography.h3.fontSize,
-    width: '100%',
+    paddingHorizontal: 10,
   },
   input: {
     backgroundColor: colors.white,
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 15,
     width: '100%',
   },
-  validateButton: {
-    backgroundColor: colors.aquaDeep,
-    borderRadius: 50,
-    padding: 10,
-    width: '60%',
-    alignItems: 'center',
-  },
   closeIcon: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: 0,
+    right: 0,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
   },
 });

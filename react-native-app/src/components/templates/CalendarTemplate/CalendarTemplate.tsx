@@ -30,6 +30,7 @@ export type CalendarTemplateProps = {
     helpModal: boolean;
     setHelpModal: (value: boolean) => void;
     onSelect: (item: string) => void;
+    onSubmitLink: () => void;
 };
 
 export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({ 
@@ -52,6 +53,7 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
     helpModal,
     setHelpModal,
     onSelect,
+    onSubmitLink,
 }) => {
     const customHeader = () => {
         return (
@@ -132,7 +134,7 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                 onOpenHelp={() => {setHelpModal(true); setAdeModal(false); setCourseModal(false);}}
                 adeLink={adeLink}
                 setAdeLink={setAdeLink}
-                onSubmit={() => console.log('submit')}
+                onSubmit={onSubmitLink}
             />
             <HelpModal 
                 isOpen={helpModal}
