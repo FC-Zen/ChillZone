@@ -28,7 +28,7 @@ export const typography: {
 } = {
   //**   TITLE   **//
   title1: {
-    fontFamily: fonts.bold,
+    fontFamily: fonts.extraBold,
     fontSize: 48,
     lineHeight: 56,
   },

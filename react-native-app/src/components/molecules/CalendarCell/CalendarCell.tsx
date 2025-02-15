@@ -27,8 +27,7 @@ export const CalendarCell: React.FC<CalendarCellProps> = ({
     }
 
     return (
-      <TouchableOpacity
-        {...touchableOpacityProps}
+      <TouchableOpacity {...touchableOpacityProps} key={touchableOpacityProps.key}
         style={[
           ...(touchableOpacityProps.style as RecursiveArray<ViewStyle>), 
           styles.container

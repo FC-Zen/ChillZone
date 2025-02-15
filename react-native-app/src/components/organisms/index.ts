@@ -18,3 +18,6 @@ export { OverlayCommandList } from './OverlayCommandList';
 export { CalendarHeader } from './CalendarHeader';
 export { ChangeProfilePictureModal } from './ChangeProfilePictureModal';
 export { AccountOptionsList } from './AccountOptionsList';
+export {CourseDetailsModal } from './CourseDetailsModal';
+export {AdeModal} from './AdeModal';
+export {HelpModal} from './HelpModal';

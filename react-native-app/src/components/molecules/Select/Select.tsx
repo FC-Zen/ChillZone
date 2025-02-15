@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { TouchableOpacity, Text, ViewStyle, TextStyle, View, StyleProp } from "react-native";
 import { styles } from "./style";
 import { IconWithText } from "@components";
@@ -7,9 +7,9 @@ import { colors } from "@theme";
 export type SelectProps = {
     items: string[];
     selectedValue: string;
-    setSelectedValue: (value: string) => void;
     state: 'open' | 'closed';
     setState: () => void;
+    onSelect: (item: string) => void;
     containerStyle?: StyleProp<ViewStyle>;
     itemStyle?: StyleProp<ViewStyle>;
     textStyle?: StyleProp<TextStyle>;
@@ -24,9 +24,9 @@ export type SelectProps = {
 export const Select: React.FC<SelectProps> = ({
     items,
     selectedValue,
-    setSelectedValue,
     state,
     setState,
+    onSelect = (item) => {},
     containerStyle,
     itemStyle,
     textStyle,
@@ -54,7 +54,7 @@ export const Select: React.FC<SelectProps> = ({
             </TouchableOpacity>
             <View style={[styles.selectMenu, state === 'open' ? styles.active : styles.inactive]} >
             {items.map((item) => (
-                <TouchableOpacity key={item} onPress={() => { setSelectedValue(item); setState(); }} style={[styles.selectItem, itemStyle]} activeOpacity={activeOpacity}>
+                <TouchableOpacity key={item} onPress={() => onSelect(item)} style={[styles.selectItem, itemStyle]} activeOpacity={activeOpacity}>
                     <Text style={[styles.text, textStyle, { color: textColor }]}>{item}</Text>
                 </TouchableOpacity>
             ))}

@@ -21,5 +21,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.black,
     overflow: 'hidden',
+    width: 350,
+    height: layout.window.height * 0.6,
   },
 });
