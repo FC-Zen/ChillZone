@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status
-from chillzone.models import FAQ
 from django.shortcuts import get_object_or_404
+from chillzone.models import FAQ
 from chillzone.serializers import FAQSerializer, AdminFAQSerializer
 from collections import defaultdict
 

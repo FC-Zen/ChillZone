@@ -1,15 +1,13 @@
-from rest_framework import generics
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.views import APIView
-from django.db.models import Count, Q, F
-from django.utils.timezone import timedelta
-from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from django.db.models import Count, Q, F
+from django.utils.timezone import timedelta, now
 from django.contrib.auth.models import User
 from chillzone.services import EmailService
-from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo, Tag, TagCategory, IsLocated, Map
-from chillzone.serializers import AdminFloorsWithPhotoSerializer, UpdateMapFloorSerializer, CreateMapFloorSerializer, AdminCreateLocationSerializer, TagSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer, DashboardSerializer
+from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo, Tag, TagCategory, IsLocated, Map, Notification
+from chillzone.serializers import AdminFloorsWithPhotoSerializer, UpdateMapFloorSerializer, CreateMapFloorSerializer, AdminCreateLocationSerializer, TagSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer
 
 import random
 import string
@@ -32,7 +30,7 @@ class AdminDashboardView(APIView):
     def get(self, request, *args, **kwargs):
 
         # Périodes glissantes
-        today = timezone.now().date()
+        today = now().date()
         twelve_months_ago = today - timedelta(days=365)
         thirty_days_ago = today - timedelta(days=30)
 
@@ -162,6 +160,9 @@ class AdminUserView(generics.ListAPIView):
                 role=serializer.validated_data['role'],
                 establishment=request.user.usermeta.establishment
             )
+
+            if not serializer.validated_data['is_admin'] :
+                Notification.objects.create(user=user)
 
             if not EmailService.send_create_account_mail(user.email, user.first_name, user.last_name, user.username, random_password):
                 return Response({"error": "Failed to send email."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -1,8 +1,8 @@
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.utils.timezone import now
-from rest_framework import status
 from chillzone.models import Reservation, LocationReservation
 from chillzone.serializers import ReservationSerializer
 
