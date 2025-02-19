@@ -1,12 +1,8 @@
-from rest_framework import generics
 from rest_framework import status
 from rest_framework.views import APIView
-from django.db.models import Count, Q, F
-from django.utils.timezone import timedelta
-from django.utils import timezone
-from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, BasePermission
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from chillzone.models import WorkIn, LinkTo
 from chillzone.services import EmailService

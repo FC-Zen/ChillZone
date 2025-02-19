@@ -1,15 +1,11 @@
 from rest_framework import status
-from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
-from django.db.models import Count, Q, F
-from django.utils.timezone import timedelta
-from collections import defaultdict
-from django.db.models import Sum
-from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from django.db.models.functions import TruncMonth
-from django.contrib.auth.models import User
+from rest_framework.views import APIView
+from django.utils.timezone import timedelta, now
+from django.shortcuts import get_object_or_404
+from django.db.models import Count, F, Sum
+from collections import defaultdict
 from chillzone.models import Menu, Meal, Type, Category, Associate, Command, CommandComposition, WorkIn, Tag, LineContent
 from chillzone.serializers import CommandUpdateSerializer, CommandLineSerializer, CommandSerializer, MenuWithOptionsSerializer, TagSerializer, MenuMealSerializer, MealWithTagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer, CreateMenuSerializer, UpdateMenuSerializer
 
@@ -63,7 +59,7 @@ class OwnerDashboardView(APIView):
             return Response({"error": "You are not associated with any restaurant."}, status=status.HTTP_400_BAD_REQUEST)
 
         # Périodes glissantes
-        today = timezone.now()
+        today = now()
         twelve_months_ago = today - timedelta(days=365)
         start_of_previous_year = twelve_months_ago - timedelta(days=365)
         end_of_previous_year = twelve_months_ago

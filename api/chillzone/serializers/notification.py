@@ -2,6 +2,7 @@ from rest_framework import serializers
 from chillzone.models import Notification
 
 class NotificationSerializer(serializers.ModelSerializer) :
+    
     class Meta:
         model = Notification
-        fields = ['title' , 'description', 'date_notification']
+        fields = ['command' , 'reservation', 'event']

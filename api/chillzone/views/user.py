@@ -1,13 +1,13 @@
-from django.contrib.auth import authenticate, login, logout
-from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth.models import User
-from chillzone.serializers import UserLoginSerializer, OwnerEstablishmentSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, OwnerCreateSerializer
-from chillzone.models import Token, LinkTo, WorkIn, RestaurationPlace, UserMeta, Establishment
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import authenticate, login, logout
+from django.db import transaction
+from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
+from chillzone.serializers import UserLoginSerializer, OwnerEstablishmentSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, OwnerCreateSerializer, NotificationSerializer
+from chillzone.models import Token, LinkTo, WorkIn, RestaurationPlace, UserMeta, Establishment, Notification
 from chillzone.services import EmailService
 
 import uuid
@@ -38,6 +38,10 @@ class UserLogin(APIView) :
                 'photo_link': user_meta.photo_link.url if user_meta and user_meta.photo_link else '/default',
                 'type': type
             }
+
+            if type == 'user':
+                notifications = Notification.objects.filter(user=request.user)
+                response_data['notifications'] = NotificationSerializer(notifications, many=True).data
 
             return Response(response_data, status=status.HTTP_202_ACCEPTED)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
@@ -83,6 +87,10 @@ class UserLogin(APIView) :
             'type': type
         }
         
+        if type == 'user':
+            notifications = Notification.objects.filter(user=user)
+            response_data['notifications'] = NotificationSerializer(notifications, many=True).data
+
         response = Response(response_data, status=status.HTTP_200_OK)
         response.set_cookie('sessionid', request.session.session_key, httponly=False, samesite='Lax', secure=False)
         return response

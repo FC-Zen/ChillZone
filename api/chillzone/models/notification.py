@@ -1,9 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Notification(models.Model):
 
-    title = models.CharField(max_length=254)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
-    description = models.TextField(null=True, blank=True)
+    reservation = models.BooleanField(default=True)
 
-    date_notification = models.DateTimeField(auto_now_add=True)
+    event = models.BooleanField(default=True)
+
+    command = models.BooleanField(default=True)
