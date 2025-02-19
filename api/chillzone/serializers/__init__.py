@@ -5,11 +5,12 @@ from .line_content import LineContentSerializer
 from .command_line import CommandLineSerializer
 from .command import CommandSerializer, CommandUpdateSerializer
 
-from .calendar import CalendarSerializer
+from .associate import AssociateSerializer
+from .event import EventSerializer
+from .calendar import CalendarSerializer, UpdateCalendarSerializer
 from .category import CategorySerializer
 from .conflict import ConflictSerializer, AdminConflictSerializer
 from .establishment import AdminEstablishmentSerializer, OwnerEstablishmentSerializer
-from .event import EventSerializer
 from .faq import FAQSerializer, AdminFAQSerializer
 from .location import LocationSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminCreateLocationSerializer, AdminFloorsWithPhotoSerializer
 from .location_reservation import LocationReservationSerializer, AdminLocationReservationSerializer

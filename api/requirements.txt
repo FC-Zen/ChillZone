@@ -9,3 +9,5 @@ python-decouple
 drf-spectacular
 django-cors-headers
 qrcode
+icalendar
+requests
