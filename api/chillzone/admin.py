@@ -3,7 +3,7 @@ from chillzone.models import Associate, Calendar, Category, CommandComposition, 
 from chillzone.models import Command, Conflict, Establishment, Event, FAQ
 from chillzone.models import IsLocated, LineContent, LinkTo, LocationReservation, Location
 from chillzone.models import MapFloor, Map, Meal, Menu
-from chillzone.models import Navigate, Network, Notification, Reservation
+from chillzone.models import Network, Notification, Reservation
 from chillzone.models import RestaurationPlace, TagCategory, Tag, Tagging, UserMeta, WorkIn
 
 admin.site.register(Associate)
@@ -25,7 +25,6 @@ admin.site.register(MapFloor)
 admin.site.register(Map)
 admin.site.register(Meal)
 admin.site.register(Menu)
-admin.site.register(Navigate)
 admin.site.register(Network)
 admin.site.register(Notification)
 admin.site.register(Reservation)

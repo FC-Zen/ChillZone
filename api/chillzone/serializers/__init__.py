@@ -13,10 +13,8 @@ from .event import EventSerializer
 from .faq import FAQSerializer, AdminFAQSerializer
 from .location import LocationSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminCreateLocationSerializer, AdminFloorsWithPhotoSerializer
 from .location_reservation import LocationReservationSerializer, AdminLocationReservationSerializer
-from .map import MapSerializer
 from .map_floor import MapFloorSerializer, AdminMapFloorSerializer, CreateMapFloorSerializer, UpdateMapFloorSerializer
 
-from .navigate import NavigateSerializer
 from .network import NetworkSerializer, AdminNetworkSerializer
 from .notification import NotificationSerializer
 from .reservation import ReservationSerializer

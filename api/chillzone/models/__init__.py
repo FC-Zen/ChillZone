@@ -26,7 +26,6 @@ from .is_located import IsLocated
 from .line_content import LineContent
 from .link_to import LinkTo
 from .location_reservation import LocationReservation
-from .navigate import Navigate
 from .network import Network
 from .notification import Notification
 from .tagging import Tagging
