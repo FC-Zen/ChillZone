@@ -7,7 +7,7 @@ class Reservation(models.Model):
         ('Confirmed', 'Confirmed'),
         ('Cancelled', 'Cancelled'),
         ('Ongoing', 'Ongoing'),
-        ('Pending', 'Pending')
+        ('Finished', 'Finished')
     ]
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Confirmed')

@@ -16,6 +16,6 @@ class LocationReservation(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['reservation', 'location'], name='unique_rervation_location'
+                fields=['location', 'day_reservation', 'start_time', 'end_time'], name='unique_location_reservation'
             )
         ]
