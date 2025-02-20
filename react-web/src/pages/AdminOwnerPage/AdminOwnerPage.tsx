@@ -2,17 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useUser } from '@hooks';
 import { AdminOwnerLayout } from '@components';
-
-import restauration_places_accepted from '@assets/data/restauration_places_accepted.json';
-import restauration_places_pending from '@assets/data/restauration_places_pending.json';
 import { acceptAffiliations, deleteAffiliations, getAffiliations } from '@services/AdminServices';
+
+export type restaurationPlacesPending = {
+  id: number;
+  name : string; 
+  type : string; 
+  location: string;
+  phone: string;
+};
+
+export type restaurationPlacesAccepted = {
+  id: number;
+  name: string;
+  type: string;
+  location: string;
+  phone: string;
+  status: boolean;
+};
 
 export const AdminOwnerPage: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useUser();
   
-  const [restaurationPlacesAcceptedData, setRestaurationPlacesAcceptedData] = useState(restauration_places_accepted);
-  const [restaurationPlacespendingData, setRestaurationPlacespendingData] = useState(restauration_places_pending);
+  const [restaurationPlacesAcceptedData, setRestaurationPlacesAcceptedData] = useState<restaurationPlacesAccepted[]>([]);
+  const [restaurationPlacespendingData, setRestaurationPlacespendingData] = useState<restaurationPlacesPending[]>([]);
 
   // Demandes d'affiliation des lieux de restauration à l’établissement
   // Si on accepte => on ajoute au dessus
