@@ -16,17 +16,14 @@ const validEmails = ['user@example.com', 'admin@example.com'];
  *
  * @returns {Promise<Object>} résultat de l'authentification.
  */
-export const authenticateUser = async (formData: { login: string; password: string; }) => {console.log("🔴 Application en arrière-plan ou fermée. Déconnexion...");
+export const authenticateUser = async (formData: { login: string; password: string; }) => {
+  console.log("User authentification");
   try {
     const response = await axios.post(
       `${API_URL}login/`,
       { login: formData.login, password: formData.password },
       { withCredentials: true }
     );
-
-    console.log("Réponse API : ",response);
-    console.log("Type d'utilisateur : ",response.data.type);
-    console.log("Data User: ", response.data);
 
     if (response.status === 200) {
       if (response.data.type !== "user") {
@@ -62,6 +59,7 @@ export const authenticateUser = async (formData: { login: string; password: stri
           sessionContext.setSession(sessionId, csrfToken);
         }
 
+        console.log("Email :", response.data.email);
         return { success: true, message: "Connexion réussie !", data: response.data };
       }
     } else if (response.status === 403) {
@@ -132,15 +130,15 @@ export const logoutUser = async () => {
 export const sendPasswordRecoveryEmail = async (formData: {
   email: string;
 }) => {
+  console.log("Envoi de l'email de vérification à ", formData.email);
   // Exemple d'une liste d'emails valides pour la simulation
   try {
-    /* Envoi des données à l'API
-    const response = await axios.post( URL , {
-      email,
-    });
-    */
-    // Vérifie si l'email est valide - SIMULATION
-    if (validEmails.includes(formData.email)) {
+    const response = await axios.post(
+      `${API_URL}forget-password/`,
+      { email: formData.email },
+      { withCredentials: true }
+    );
+    if (response.status === 200) {
       console.log(`Email de récupération envoyé à : ${formData.email}`);
       return {
         success: true,

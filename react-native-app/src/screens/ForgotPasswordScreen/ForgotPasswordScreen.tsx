@@ -5,13 +5,20 @@ import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import { styles } from './style';
 import { t } from 'i18next';
+import { sendPasswordRecoveryEmail } from '@services';
+
 
 export const ForgotPasswordScreen: React.FC = () => {
   const navigation = useNavigation();
   const [inputEmail, setInputEmail] = useState('');
 
-  const handleSendPress = () => {
-    // Logique à exécuter lors de l'envoi
+  const handleSendPress = async () => {
+    try{
+      const response = await sendPasswordRecoveryEmail({email: inputEmail})
+    }catch(error:any){
+      const errorMessage = error instanceof Error ? error.message : 'Une erreur est survenue.'
+    }
+    
     navigation.navigate(ROUTE.FORGOT_MDP);
   };
 
