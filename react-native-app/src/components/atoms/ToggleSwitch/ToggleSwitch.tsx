@@ -16,6 +16,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 }) => {
   return (
     <View
+      testID="toggle-switch-container"
       style={[
         styles.container,
         {

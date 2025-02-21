@@ -9,15 +9,19 @@ cd api
 ```
 
 ### 1 - Créer un environnement virtuel
+
 Créez un environnement virtuel pour isoler les dépendances du projet.
+
 ```bash
 python -m venv <NAME-ENV>
 ```
+
 <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; border-radius: 5px; font-family: Arial, sans-serif; color: #856404;">
     ⚠️&nbsp; Utilisez <strong><code style="color: #b58900;">api</code></strong> comme nom pour l'environnement en local afin que le <strong><code style="color: #b58900;">.gitignore</code></strong> le prenne en compte.
 </div>
 
 ### 2 - Activer l'environnement virtuel
+
 Activez l'environnement virtuel. Utilisez la commande correspondant à votre système d'exploitation :
 
 #### Sur Windows :
@@ -33,6 +37,7 @@ source <NAME-ENV>/bin/activate
 ```
 
 ### 3 - Installer les dépendances
+
 Installez les dépendances nécessaires en utilisant le fichier `requirements.txt`.
 
 ```bash
@@ -114,7 +119,7 @@ api/
 │   └── views           # Dossier contenant les vues qui gèrent les requêtes HTTP
 │       └── __init__.py
 │
-│   ├── __init__.py     
+│   ├── __init__.py
 │   ├── .env            # Fichier contenant les variables d'environnement pour l'environnement
 │   ├── .env-dev        # Template pour les variables d'environnement pour l'environnement
 │   ├── admin.py        # Enregistrement des modèles dans l'interface admin
@@ -132,6 +137,7 @@ api/
 ### 2 - Mode admin
 
 Pour créer un compte admin Django (équivalent au `Superuser` / `Superamin`) vous devez taper cette commande :
+
 ```bash
 python manage.py createsuperuser
 ```
@@ -151,6 +157,7 @@ admin.site.register(...) # Ajouter le nom de la classe du Model
 #### B - Modifier le fichier `urls.py`
 
 Ajouter cette ligne dans le tableau `urlpatterns` :
+
 ```py
 path('admin/', admin.site.urls)
 ```
@@ -201,11 +208,10 @@ Ce qui donne en local :
 python manage.py runserver localhost:3000
 ```
 
-Accédez à l'url ```HOST:PORT``` que vous avez rentré et ajouter les paths que vous avez dans `urls.py` pour tester vos requêtes.
+Accédez à l'url `HOST:PORT` que vous avez rentré et ajouter les paths que vous avez dans `urls.py` pour tester vos requêtes.
 
 <div style="background-color: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin: 10px 0; border-radius: 5px; font-family: Arial, sans-serif; color: #155724;">
     ✔️&nbsp; <strong>Félicitations !</strong> Vous avez installé et démarrer l'API pour le projet <strong><code style="color: #155724;">ChillZone</code></strong>.
 </div>
-
 
 <div align="center" style="margin-top: 50px; font-size: 0.9em;"> <p><strong>&copy; 2024 FC-Zen. Tous droits réservés.</strong></p> <p>Documenté et écrit par <strong>Kellian Bredeau</strong>.</p> </div>
