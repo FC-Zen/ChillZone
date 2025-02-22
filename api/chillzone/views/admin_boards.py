@@ -239,11 +239,11 @@ class AdminLocationView(generics.ListAPIView):
         if serializer.is_valid():
             tag = Tag.objects.filter(id=request.data.get("id_type")).first()
             if not tag:
-                return Response({"error": f"Type '{request.data.get('id_type')}' not found."}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": f"Type not found."}, status=status.HTTP_404_NOT_FOUND)
             
             floor = MapFloor.objects.filter(id=request.data.get("id_floor")).first()
             if not floor:
-                return Response({"error": f"Type '{request.data.get('id_floor')}' not found."}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": f"Type not found."}, status=status.HTTP_404_NOT_FOUND)
 
             location = Location.objects.create(
                 name=serializer.validated_data['name'],
