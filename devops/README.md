@@ -30,7 +30,7 @@ Le port 3000 est attribué par défaut.
 Pour postman, penser à mettre le / de ses morts à la fin de la requête.
 Sinon ça va pas marcher.
 
-![image-20250222123434985](C:\Users\TheIceMagmaCube\Documents\GitHub\ChillZone\devops\assets\image1)
+![image-20250222123434985](.\assets\image1)
 
 ## Informations supplémentaires
 
@@ -44,7 +44,7 @@ Les Common Exploit sont bloqués.
 
 
 
-<img src="https://staticpaws.awooo.fr/icons/blitz/db.png" alt="wompwolf" style="zoom:25%;" /> fabiengilles.tf
+<img src="https://staticpaws.awooo.fr/icons/blitz/db.png" alt="wompwolf" style="width:50px;margin:auto;text-align:center"/> fabiengilles.tf
 
 
 
