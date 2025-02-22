@@ -9,7 +9,7 @@ WORKDIR /api
 COPY . /api
 
 RUN python -m venv /api/venv
-RUN /api/venv/bin/pip install --no-cache-dir Django django-debug-toolbar django-filter djangorestframework Markdown mysqlclient pillow python-decouple drf-spectacular django-cors-headers qrcode
+RUN /api/venv/bin/pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 3000
 CMD ["/api/venv/bin/python", "chillzone/manage.py", "runserver", "0.0.0.0:3000"]

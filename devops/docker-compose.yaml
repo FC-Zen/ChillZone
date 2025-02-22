@@ -1,10 +1,9 @@
 services:
-    web:
-      image: api_chillzone:beta1
-      #build: .
-      volumes:
-        - /docker/chillzone_api/api/:/api/chillzone
-      ports:
-        - "3000:3000"
-      # environment:
-      #   - DEBUG=True
+  web:
+    image: chillzone_api:beta1
+    volumes:
+      - /docker/chillzone_api/api/:/api/chillzone
+    ports:
+      - "3000:3000"
+    environment:
+      - DEBUG=False
