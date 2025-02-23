@@ -41,7 +41,6 @@ export const LoginScreen: React.FC = () => {
       console.log(result.message);
       setAuthResult({ severity: 'success', message: result.message });
 
-      const userName = inputEmail;
       if(result.data) {
         const userContext = UserContext.getInstance();
         userContext.setUser(result.data);
