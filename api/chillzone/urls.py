@@ -20,7 +20,7 @@ from decouple import config
 from django.conf import settings
 from django.conf.urls.static import static
 
-from chillzone.views import admin_boards, home, notification, reservation, user, faq, network, owner_boards, super_admin_boards, calendar
+from chillzone.views import admin_boards, home, notification, reservation, user, faq, network, owner_boards, super_admin_boards, calendar, restaurant
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
@@ -44,6 +44,8 @@ urlpatterns = [
     path('reservation/', reservation.ClientReservationView.as_view(), name='Client List / Cancel Reservation'),
     path('faq/', faq.FAQView.as_view(), name='Client FAQ'),
     path('network/', network.NetworkView.as_view(), name='Client List Network'),
+    path('restaurants/', restaurant.ClientRestaurantView.as_view(), name='Client List Restaurant'),
+    path('restaurant/<int:id>/', restaurant.RestaurantView.as_view(), name='Client Restaurant'),
 
     # ======================== WEB ========================= #
     path('create-owner-account/', user.OwnerCreateView.as_view(), name='Create account and restaurant for owner'),
