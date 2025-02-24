@@ -4,7 +4,7 @@ from chillzone.models import RestaurationPlace
 class OpenRestaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = RestaurationPlace
-        fields = ['name', 'description', 'location', 'restauration_type', 'opening_time', 'closing_time', 'photo_link']
+        fields = ['id', 'name', 'description', 'location', 'restauration_type', 'opening_time', 'closing_time', 'photo_link']
 
 class AdminConfirmedRestaurantSerializer(serializers.ModelSerializer):
     class Meta:

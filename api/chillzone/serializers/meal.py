@@ -8,7 +8,7 @@ class MealSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'photo_link', 'price']
 
 class MealWithTagSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.label')  # Afficher le nom de la catégorie
+    category = serializers.CharField(source='category.label')
     tags = serializers.SerializerMethodField()
 
     class Meta:
