@@ -46,7 +46,14 @@ class ReservationView(APIView):
                 day_reservation=date
             ).exclude(reservation__status='Cancelled')
 
-            booked_intervals = [(res.start_time, res.end_time) for res in reservations]
+            booked_intervals = [
+                (
+                    make_aware(datetime.combine(date, res.start_time)), 
+                    make_aware(datetime.combine(date, res.end_time))
+                ) 
+                for res in reservations
+            ]
+
             available_intervals = []
 
             current_time = opening_time
