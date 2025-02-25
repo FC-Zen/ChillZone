@@ -1,6 +1,6 @@
 from .tag import TagSerializer
 from .meal import MealSerializer, MealWithTagSerializer, CreateMealSerializer
-from .menu import MenuWithOptionsSerializer, CreateMenuSerializer, UpdateMenuSerializer, MenuMealSerializer, MenuSerializer
+from .menu import MenuWithOptionsSerializer, CreateMenuSerializer, UpdateMenuSerializer, MenuMealSerializer, MenuSerializer, MenuCommandSerializer
 from .line_content import LineContentSerializer
 from .command_line import CommandLineSerializer
 from .command import CommandSerializer, CommandUpdateSerializer, CommandCreateSerializer

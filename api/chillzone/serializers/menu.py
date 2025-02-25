@@ -127,3 +127,23 @@ class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = ['id', 'name', 'description', 'photo_link', 'price']
+
+class MenuCommandSerializer(serializers.ModelSerializer):
+    meals = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Menu
+        fields = ['id', 'name', 'description', 'photo_link', 'price', 'meals']
+
+    def get_meals(self, obj):
+        """
+        Ne renvoie que les repas liés à la commande en cours.
+        """
+        if 'command_line' in self.context:
+            command_line = self.context['command_line']
+            meals_in_command = LineContent.objects.filter(
+                command_line=command_line, menu=obj
+            ).values_list('meal', flat=True)
+            return MealSerializer(Meal.objects.filter(id__in=meals_in_command), many=True).data
+        return []
+
