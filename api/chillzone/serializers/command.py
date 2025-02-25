@@ -40,3 +40,8 @@ class CommandSerializer(serializers.ModelSerializer):
 class CommandUpdateSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=True)
     status = serializers.ChoiceField(choices=[status[0] for status in Command.STATUS_CHOICES])
+
+class CommandCreateSerializer(serializers.Serializer):
+    payment_method = serializers.CharField(max_length=50)
+    pickup_time = serializers.TimeField()
+    lines = serializers.ListField(child=serializers.DictField(), required=True)

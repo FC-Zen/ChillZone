@@ -141,9 +141,7 @@ class PasswordForgetView(APIView):
                     }
                 )
 
-                reset_link = f"http://localhost:5173/reset-password?token={token.token}"
-
-                if not EmailService.send_reset_email(user.email, reset_link):
+                if not EmailService.send_reset_email(user.email, token.token):
                     return Response({"error": "Failed to send email."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
                 return Response({"message": "Password reset email sent successfully."}, status=status.HTTP_200_OK)

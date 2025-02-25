@@ -1,10 +1,14 @@
+from django.db import transaction, DatabaseError
 from django.db.models import Q
+from django.utils.timezone import now
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from chillzone.models import RestaurationPlace, Meal, Menu, Associate, Type
-from chillzone.serializers import OpenRestaurantSerializer, MealWithTagSerializer, MenuSerializer
+from chillzone.models import RestaurationPlace, Meal, Menu, Associate, Type, LineContent, Command, CommandLine, CommandComposition
+from chillzone.services import QRCodeService
+from chillzone.serializers import OpenRestaurantSerializer, MealWithTagSerializer, MenuSerializer, CommandCreateSerializer
 
 class ClientRestaurantView(APIView):
     permission_classes = [IsAuthenticated]
@@ -51,6 +55,7 @@ class ClientRestaurantView(APIView):
     
 class RestaurantView(APIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = CommandCreateSerializer
 
     def get(self, request, id):
         if not id:
@@ -81,7 +86,7 @@ class RestaurantView(APIView):
                 category_label = associate.category.label if associate.category else "Uncategorized"
                 if category_label not in meals_by_type[type_label]:
                     meals_by_type[type_label][category_label] = []
-                for meal in Meal.objects.filter(category=associate.category):  # Correction ici pour associer le bon type et catégorie
+                for meal in Meal.objects.filter(category=associate.category):
                     meals_by_type[type_label][category_label].append(MealWithTagSerializer(meal).data)
             
             menu_data["meals_by_type"] = meals_by_type
@@ -94,3 +99,67 @@ class RestaurantView(APIView):
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
+    
+    def post(self, request, id):
+        serializer = CommandCreateSerializer(data=request.data)        
+        user = request.user
+
+        if serializer.is_valid():
+            payment_method = serializer.validated_data['payment_method']
+            pickup_time = serializer.validated_data['pickup_time']
+            lines_data = serializer.validated_data['lines']
+
+            try:   
+                with transaction.atomic():
+
+                    savepoint = transaction.savepoint()
+
+                    try:
+                    
+                        command = Command.objects.create(
+                            payment_method=payment_method,
+                            pickup_time=pickup_time,
+                            user=user,
+                            restauration_place=RestaurationPlace.objects.get(id=id)
+                        )
+
+                        for line_data in lines_data:
+                            for line_id, content in line_data.items():
+                                quantity = content['quantity']
+                                menu_data = content.get('menu')
+                                meal_id = content.get('meal')
+
+                                command_line = CommandLine.objects.create(quantity=quantity)
+                                CommandComposition.objects.create(command=command, line=command_line)
+
+                                if menu_data:
+                                    menu = Menu.objects.get(id=menu_data['id'], restaurant=RestaurationPlace.objects.get(id=id))
+                                    for meal_id in menu_data['meals']:
+                                        meal = Meal.objects.get(id=meal_id)
+                                        if meal.stock < quantity:
+                                            raise ValueError(f"Stock insuffisant pour {meal.name}.")
+                                        meal.stock -= quantity
+                                        meal.save()
+                                        LineContent.objects.create(menu=menu, meal=meal, command_line=command_line)
+                                else:
+                                    meal = Meal.objects.get(id=meal_id, restaurant=RestaurationPlace.objects.get(id=id))
+                                    if meal.stock < quantity:
+                                        raise ValueError(f"Stock insuffisant pour {meal.name}.")
+                                    meal.stock -= quantity
+                                    meal.save()
+                                    LineContent.objects.create(meal=meal, command_line=command_line)
+
+                        # Génération du QR Code si tout est validé
+                        qrcode_filename = f"{user.id}{id}{now().strftime('%Y%m%d_%H%M')}.png"
+                        qrcode_path = QRCodeService.generate_qr_code_command(command_id=command.id, filename=qrcode_filename)
+                        command.qrcode_link = "qrcode/" + qrcode_path
+                        command.save()
+
+                    except (ObjectDoesNotExist, ValueError) as e:
+                        transaction.savepoint_rollback(savepoint)
+                        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+                    
+                    return Response({"qrcode": qrcode_path}, status=status.HTTP_201_CREATED)
+                    
+            except DatabaseError:
+                return Response({"error": "Une erreur est survenue lors de la création de la commande. Veuillez réessayer."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

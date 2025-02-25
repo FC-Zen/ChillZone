@@ -3,7 +3,8 @@ from .meal import MealSerializer, MealWithTagSerializer, CreateMealSerializer
 from .menu import MenuWithOptionsSerializer, CreateMenuSerializer, UpdateMenuSerializer, MenuMealSerializer, MenuSerializer
 from .line_content import LineContentSerializer
 from .command_line import CommandLineSerializer
-from .command import CommandSerializer, CommandUpdateSerializer
+from .command_composition import CommandCompositionSerializer
+from .command import CommandSerializer, CommandUpdateSerializer, CommandCreateSerializer
 
 from .associate import AssociateSerializer
 from .event import EventSerializer
