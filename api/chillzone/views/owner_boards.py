@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Count, F, Sum
 from collections import defaultdict
 from chillzone.models import Menu, Meal, Type, Category, Associate, Command, CommandComposition, WorkIn, Tag, LineContent
-from chillzone.serializers import CommandUpdateSerializer, CommandLineSerializer, CommandSerializer, MenuWithOptionsSerializer, TagSerializer, MenuMealSerializer, MealWithTagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer, CreateMenuSerializer, UpdateMenuSerializer
+from chillzone.serializers import CommandUpdateSerializer, CommandLineSerializer, CommandSerializer, MenuWithOptionsSerializer, TagSerializer, MenuMealSerializer, MealWithTagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer, CreateMenuSerializer, UpdateMenuSerializer, MenuCommandSerializer
 
 class IsOwner(BasePermission):
     """
@@ -364,10 +364,10 @@ class OwnerCommandsView(APIView):
                 line_data = CommandLineSerializer(command_line).data
 
                 line_content_list = []
-                for line_content in command_line.linecontent_set.all():
+                for line_content in LineContent.objects.filter(command_line=command_line):
                     if line_content.menu:
                         line_content_list.append({
-                            "menu": MenuMealSerializer(line_content.menu).data
+                            "menu": MenuCommandSerializer(line_content.menu, context={"command_line": command_line}).data
                         })
                     elif line_content.meal:
                         line_content_list.append({
