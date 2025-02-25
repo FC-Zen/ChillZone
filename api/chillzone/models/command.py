@@ -12,9 +12,15 @@ class Command(models.Model):
     ]
     
     payment_method = models.CharField(max_length=50)
+
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='in progress')
-    qrcode_link = models.ImageField(upload_to='qrcodes/', blank=True)
+
+    qrcode_link = models.ImageField(upload_to='qrcode/', blank=True)
+
     pickup_time = models.TimeField(null=False, default="00:00:00")
+
     creation_date = models.DateTimeField(auto_now_add=True)
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     restauration_place = models.ForeignKey(RestaurationPlace, on_delete=models.CASCADE)

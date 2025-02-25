@@ -1,6 +1,9 @@
 import base64
 import os
 from django.core.mail import EmailMultiAlternatives
+from decouple import config
+
+base_url = config('BASE_URL')
 
 class EmailService:
 
@@ -11,7 +14,7 @@ class EmailService:
             return f"data:image/png;base64,{encoded_string}"
 
     @staticmethod
-    def send_reset_email(user_email, reset_link):
+    def send_reset_email(user_email, token):
         subject = "Demande de réinitialisation de mot de passe"
         from_email = "ChillZone - Mon IUT"
         to_email = [user_email]
@@ -26,7 +29,7 @@ class EmailService:
             <p>Bonjour,</p>
             <p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous pour procéder :</p>
             <p style="text-align: center;">
-                <a href="{reset_link}" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Réinitialiser mon mot de passe</a>
+                <a href="{base_url}/reset-password?token={token}" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Réinitialiser mon mot de passe</a>
             </p>
             <p>Si vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail.</p>
             <p>Cordialement,<br> L'équipe ChillZone - Mon IUT</p>
@@ -72,8 +75,8 @@ class EmailService:
                 <p><strong>Mot de passe :</strong> {password}</p>
             </div>
             <p><strong>Important :</strong> Veuillez vous connecter et modifier votre mot de passe immédiatement.</p>
-            <p style="text-align: center;">
-                <a href="https://localhost:3000/login" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Accéder à mon espace</a>
+            <p style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+                <a href="{base_url}/login" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Accéder à mon espace</a>
             </p>
             <p>Cordialement,<br> L'équipe ChillZone - Mon IUT</p>
             <div style="margin-top: 30px; text-align: center; font-size: 0.9em; color: #777;">
@@ -114,7 +117,7 @@ class EmailService:
             <p>Nous avons le plaisir de vous informer que votre demande de création de restaurant et de votre compte <strong>ChillZone - Mon IUT</strong> a été approuvée.</p>
             <p>Vous pouvez maintenant accéder à votre espace de gestion et commencer à gérer votre établissement.</p>
             <p style="text-align: center;">
-                <a href="https://localhost:3000/login" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Accéder à mon espace</a>
+                <a href="{base_url}/login" style="background-color: #19887E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Accéder à mon espace</a>
             </p>
             <p>Cordialement,<br> L'équipe ChillZone - Mon IUT</p>
             <div style="margin-top: 30px; text-align: center; font-size: 0.9em; color: #777;">
