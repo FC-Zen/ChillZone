@@ -11,3 +11,4 @@ django-cors-headers
 qrcode
 icalendar
 requests
+pytz
