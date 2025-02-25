@@ -62,7 +62,7 @@ class ReservationView(APIView):
                     'name': location.name,
                     'floor': location.id_floor.name,
                     'establishment': location.id_floor.map.establishment.name,
-                    'photo': location.id_floor.photo_link,
+                    'photo': location.photo_link.url,
                     'capacity': location.capacity,
                     'available_slots': available_intervals
                 })
