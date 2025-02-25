@@ -5,9 +5,8 @@ import { BottomNavbar, SnackBar } from '@components/molecules';
 import { useNextBooking, UserContext } from '@contexts';
 import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
 import { styles } from './style';
-import { transformBookings } from '@services';
+import { transformBookings, fetchRestaurantData } from '@services';
 import { useTranslation } from 'react-i18next';
-import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
@@ -25,10 +24,9 @@ export const HomeScreen: React.FC = () => {
     items = nextBooking;
   }
 
-  // Recupère la réservation à venir, la plus proche de la date actuelle
+  // Récupère la réservation à venir, la plus proche de la date actuelle
   const getNextBooking = () => {
-    const nextBooking = items[0];
-    return nextBooking;
+    return items[0];
   };
 
   const [snackbar, setSnackbar] = useState<{
@@ -49,7 +47,7 @@ export const HomeScreen: React.FC = () => {
     HomeScreenTemplateProps['restaurantsData']
   >([]);
 
-  // Annuler une reservation
+  // Annuler une réservation
   const handleCancelReservation = () => {
     updateNextBooking([]);
     setSnackbar({
@@ -62,18 +60,25 @@ export const HomeScreen: React.FC = () => {
   // Chargement des données des restaurants au démarrage
   useEffect(() => {
     const fetchData = async () => {
-      const restaurants = await transformRestaurantData();
+      try {
+        const restaurants = await fetchRestaurantData();
 
-      const transformedRestaurants = restaurants.map((restaurant) => {
-        return {
+        const transformedRestaurants = restaurants.map((restaurant) => ({
           id: restaurant.id,
           name: restaurant.name,
-          photo_link: restaurant.photo_link,
+          photo_link: ImagesMap[restaurant.photo_link] || restaurant.photo_link, // Gestion des images
           status: restaurant.status,
-        };
-      });
+        }));
 
-      setRestaurantsData(transformedRestaurants);
+        setRestaurantsData(transformedRestaurants);
+      } catch (error) {
+        console.error('Erreur lors du chargement des restaurants:', error);
+        setSnackbar({
+          open: true,
+          severity: 'error',
+          message: 'Impossible de charger les restaurants',
+        });
+      }
     };
 
     fetchData();
@@ -85,7 +90,6 @@ export const HomeScreen: React.FC = () => {
     photo_link: any;
     status: 'Ouvert' | 'Fermé';
   }) => {
-    
     if (selectedRestaurant.status == 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER);
     } else {

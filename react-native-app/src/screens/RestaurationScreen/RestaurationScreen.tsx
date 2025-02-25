@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { styles } from './style';
 
-import { transformRestaurantData } from '@services';
+import { fetchRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
-import { BottomNavbar, RestaurationTemplate, SnackBar, TopBar } from '@components';
+import {
+  BottomNavbar,
+  RestaurationTemplate,
+  SnackBar,
+  TopBar,
+} from '@components';
 import { useTranslation } from 'react-i18next';
 import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
@@ -33,7 +38,7 @@ export const RestaurationScreen = () => {
   });
 
   const fetchFirstSet = async () => {
-    const allRestaurants = await transformRestaurantData();
+    const allRestaurants = await fetchRestaurantData();
 
     const firstSet = allRestaurants.filter(
       (restaurant) => restaurant.id === 1 || restaurant.id === 3
@@ -53,7 +58,7 @@ export const RestaurationScreen = () => {
   };
 
   const fetchSecondSet = async () => {
-    const allRestaurants = await transformRestaurantData();
+    const allRestaurants = await fetchRestaurantData();
 
     const secondSet = allRestaurants.filter(
       (restaurant) => restaurant.id === 2
@@ -83,20 +88,19 @@ export const RestaurationScreen = () => {
     photo_link: any;
     status: 'Ouvert' | 'Fermé';
   }) => {
-    console.log(`Le restaurant a été cliqué.`,selectedRestaurant.name);
+    console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
     if (selectedRestaurant.status == 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER);
     } else {
       setSnackbar({
         open: true,
-        severity: "error",
-        message: "Le restaurant est fermé en ce moment",
+        severity: 'error',
+        message: 'Le restaurant est fermé en ce moment',
       });
     }
   };
 
   return (
-    
     <View style={styles.container}>
       <SnackBar
         visible={snackbar.open}
@@ -104,7 +108,7 @@ export const RestaurationScreen = () => {
         onDismiss={() => setSnackbar({ ...snackbar, open: false })}
         severity={snackbar.severity}
       />
-            
+
       <TopBar />
       <RestaurationTemplate
         onPressRestaurant={handleRestaurantPress}
