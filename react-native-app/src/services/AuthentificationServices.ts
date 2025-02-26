@@ -2,6 +2,7 @@ import axios from 'axios';
 import { z } from 'zod';
 import { SessionContext } from '@contexts';
 import { API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Exemples d'authentification
 const validEmail = 'user@example.com';
@@ -57,6 +58,9 @@ export const authenticateUser = async (formData: { login: string; password: stri
         if (sessionId && csrfToken) {
           const sessionContext = SessionContext.getInstance();
           sessionContext.setSession(sessionId, csrfToken);
+
+          await AsyncStorage.setItem('sessionId', csrfToken);
+          await AsyncStorage.setItem('csrfToken', csrfToken);
         }
 
         console.log("Email :", response.data.email);
@@ -87,6 +91,8 @@ export const logoutUser = async () => {
     // 🔹 Récupération du CSRF Token depuis le SessionContext
     const sessionContext = SessionContext.getInstance();
     const csrfToken = sessionContext.getCsrfToken();
+    // Pour récupérer le Token de la session précédente
+    // const crsfToken = await AsyncStorage.getItem('csrfToken');
 
     console.log("CSRF Token:", csrfToken); 
 
