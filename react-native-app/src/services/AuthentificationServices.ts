@@ -4,10 +4,43 @@ import { SessionContext } from '@contexts';
 import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Exemples d'authentification
-const validEmail = 'user@example.com';
-const validPassword = 'password123'; // Exemple de mot de passe
-const validEmails = ['user@example.com', 'admin@example.com'];
+/**
+ * Teste si un utilisateur est déjà connecté.
+ *
+ * @throws {Error} Si les informations de connexion (email ou mot de passe) sont incorrectes.
+ *
+ * @returns {Promise<Object>} résultat de l'authentification.
+ */
+const testAuthenticateUser = async () => {
+  try {
+      const response = await axios.get(
+          `${API_URL}login/`,
+          { withCredentials: true } // important pour les cookies
+      );
+
+      if (response.status === 202) {
+          if (response.data.type !== "user") {
+              return { success: false, message: "Connexion non autorisée", data: null };
+          } else {
+              // Gestion des cookies comme avant...
+              console.log("Email :", response.data.email);
+              return { success: true, message: "Reconnexion réussie !", data: response.data };
+          }
+      }
+
+      // Cas inattendu (juste par sécurité)
+      return { success: false, message: "Statut inattendu", data: null };
+  } catch (error: any) {
+      if (error.response?.status === 401) {
+          // 🔥 Utilisateur non connecté = pas d'erreur bloquante
+          return { success: false, message: "Pas encore identifié", data: null };
+      } else {
+          console.error("Erreur lors de la vérification de session:", error.message);
+          throw error; // autre type d'erreur réseau ou serveur
+      }
+  }
+};
+
 
 /**
  * Authentifie un utilisateur en vérifiant ses informations de connexion.
@@ -19,6 +52,12 @@ const validEmails = ['user@example.com', 'admin@example.com'];
  */
 export const authenticateUser = async (formData: { login: string; password: string; }) => {
   console.log("User authentification");
+  const test = await testAuthenticateUser();
+  
+  if(test.success === true){
+    return test
+  }else{
+
   try {
     const response = await axios.post(
       `${API_URL}login/`,
@@ -66,16 +105,17 @@ export const authenticateUser = async (formData: { login: string; password: stri
         console.log("Email :", response.data.email);
         return { success: true, message: "Connexion réussie !", data: response.data };
       }
-    } else if (response.status === 403) {
-      return { success: false, message: "Vous êtes déjà connectés", data: null };
-    } else if (response.status === 404) {
-      return { success: false, message: "Identifiants incorrects", data: null };
-    } else {
-      throw new Error("Erreur de connexion");
+      } else if (response.status === 403) {
+        return { success: false, message: "Vous êtes déjà connectés", data: null };
+      } else if (response.status === 404) {
+        return { success: false, message: "Identifiants incorrects", data: null };
+      } else {
+        throw new Error("Erreur de connexion");
+      }
+    } catch (error: any) {
+      console.error("Erreur lors de l'authentification:", error.message);
+      throw new Error(error.message);
     }
-  } catch (error: any) {
-    console.error("Erreur lors de l'authentification:", error.message);
-    throw new Error(error.message);
   }
 };
 
