@@ -2,22 +2,12 @@ import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { FoodCard, IconWithText } from '@components/molecules';
 import { styles } from './style';
-import { IconProps } from '@components/atoms';
 import { useTranslation } from 'react-i18next';
-
-export type FoodItemProps = {
-  id: number;
-  title: string;
-  meal_type: string;
-  price?: string;
-  subTitle: string;
-  imageUrl: any;
-  iconName: IconProps['name'];
-};
+import { MealProps } from '@services/DispenserServices';
 
 export type FoodCardListProps = {
-  foodItems: FoodItemProps[];
-  onItemSelect?: (item: FoodItemProps) => void;
+  foodItems: MealProps[];
+  onItemSelect?: (item: MealProps) => void;
   showTitle?: boolean;
 };
 
@@ -28,7 +18,7 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const getMealTypeLabel = (mealType: string): string => {
+  const getMealTypeLabel = (mealType: MealProps['category']): string => {
     switch (mealType) {
       case 'Starter':
         return t('categories.Starter');
@@ -48,14 +38,15 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
   };
 
   const groupedItems = foodItems.reduce(
-    (acc, foodItem) => {
-      if (!acc[foodItem.meal_type]) {
-        acc[foodItem.meal_type] = [];
+    (acc, item) => {
+      const mealType = item.category;
+      if (!acc[mealType]) {
+        acc[mealType] = [];
       }
-      acc[foodItem.meal_type].push(foodItem);
+      acc[mealType].push(item);
       return acc;
     },
-    {} as Record<string, FoodItemProps[]>
+    {} as Record<string, MealProps[]>
   );
 
   return (
@@ -79,11 +70,11 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
           {items.map((foodItem) => (
             <View key={foodItem.id}>
               <FoodCard
-                title={foodItem.title}
-                price={foodItem.price}
-                subTitle={foodItem.subTitle}
-                imageUrl={foodItem.imageUrl}
-                iconName={foodItem.iconName}
+                title={foodItem.name}
+                price={`${foodItem.price} €`}
+                subTitle={foodItem.description}
+                imageUrl={foodItem.photo_link}
+                iconName={foodItem.icon || 'Add'}
                 onPress={() => onItemSelect?.(foodItem)}
               />
             </View>

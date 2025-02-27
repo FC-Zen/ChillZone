@@ -1,28 +1,68 @@
-import mealsData from '@assets/data/meals.json';
 import { IconProps } from '@components/atoms';
-import { ImagesMap } from '@utils'; // Assurez-vous d'importer ImageMap
+import { ImagesMap } from '@utils';
+import { API_URL } from '@env';
+import { SessionContext } from '@contexts';
+import axios from 'axios';
 
 export type MealProps = {
+  category: string;
+  description: string;
   id: number;
-  title: string;
-  meal_type: string;
+  name: string;
+  photo_link: string;
   price: number;
-  subTitle: string;
-  imageUrl: any;
-  iconName: IconProps['name'];
+  stock: number;
+  tags?: [];
+  icon?: IconProps['name'];
 };
 
-export const getAllMeals = (): MealProps[] => {
-  return mealsData.map((meal) => {
-    const image = ImagesMap[meal.meal_photo];
-    return {
-      id: meal.meal_id,
-      title: meal.meal_name,
-      meal_type: meal.meal_type,
-      price: meal.meal_price,
-      subTitle: meal.meal_description,
-      imageUrl: image,
-      iconName: 'Add',
-    };
-  });
+export const fetchAllMeals = async (
+  RestaurantID: number
+): Promise<Record<string, MealProps[]>> => {
+  const sessionContext = SessionContext.getInstance();
+  const crsfToken = sessionContext.getCsrfToken();
+
+  try {
+    const response = await axios.get(`${API_URL}restaurant/${RestaurantID}`, {
+      withCredentials: true,
+      headers: {
+        'X-CSRF-Token': crsfToken,
+      },
+    });
+
+    console.log('Réponse restau à la carte: ', response.data.aLaCarte);
+    console.log('Soup: ', response.data.aLaCarte.Soup);
+
+    const { aLaCarte } = response.data;
+    if (!aLaCarte || typeof aLaCarte !== 'object') {
+      throw new Error(
+        `Les données reçues du restaurant ${RestaurantID} ne sont pas valides.`
+      );
+    }
+
+    const groupedMeals: Record<string, MealProps[]> = {};
+
+    for (const [category, meals] of Object.entries(aLaCarte)) {
+      if (Array.isArray(meals)) {
+        groupedMeals[category] = meals.map((meal) => ({
+          id: meal.id,
+          name: meal.name,
+          description: meal.description,
+          photo_link: meal.photo_link,
+          price: meal.price,
+          stock: meal.stock,
+          category: meal.category,
+          tags: meal.tags,
+          icon: 'Add',
+        }));
+      }
+    }
+
+    console.log('Plats regroupé par catégorie: ', groupedMeals);
+
+    return groupedMeals;
+  } catch (error: any) {
+    console.error('Erreur lors de la récupération des plats:', error.message);
+    throw new Error(error.message);
+  }
 };

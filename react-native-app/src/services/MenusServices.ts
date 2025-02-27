@@ -1,20 +1,12 @@
 import menusData from '@assets/data/menus.json';
 import { IconProps } from '@components/atoms';
+import { MealProps } from '@services/DispenserServices';
 import { ImagesMap } from '@utils';
 // import axios from 'axios';
 
 export type CategoryProps = {
   id: number;
   label: string;
-};
-
-export type MealProps = {
-  id: number;
-  title: string;
-  description: string;
-  price: string;
-  photoUrl: any;
-  category: CategoryProps;
 };
 
 export type MenuProps = {
