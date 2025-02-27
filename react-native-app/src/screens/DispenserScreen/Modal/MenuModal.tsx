@@ -4,9 +4,9 @@ import { Button, PageHeader, FoodCardList } from '@components';
 import { useNavigation } from '@hooks';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
-import { FoodItemProps } from '@components/organisms/FoodCardList';
-import { ModalScreenProps } from '@services';
+import { MenuProps, ModalScreenProps } from '@services';
 import { useCommand } from '@contexts';
+import { MealProps } from '@services/DispenserServices';
 
 export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
   const { menu } = route.params;
@@ -31,7 +31,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
 
   const handleAddToCart = () => {
     const selectedMealsList = transformedMeals.filter(
-      (meal) => selectedMeals[meal.meal_type] === meal.id
+      (meal) => selectedMeals[meal.category] === meal.id
     );
     console.log(
       `Ajouté au panier: ${menu.name}, Quantité: ${quantity}, Total : ${menu.price}`,
@@ -44,8 +44,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
           item.quantity += 1;
         }
       });
-    }
-    else {
+    } else {
       updateListItems([
         ...listItems,
         {
@@ -54,7 +53,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
           price: parseFloat(menu.price.replace('€', '')),
           type: 'meal',
           quantity: 1,
-          meals: selectedMealsList.map((meal) => (meal.title)),
+          meals: selectedMealsList.map((meal) => meal.name),
           onDecrement: handleDecrement,
           onIncrement: handleIncrement,
           onDelete: () => {
@@ -66,9 +65,9 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     navigation.goBack();
   };
 
-  const handleMealSelect = (item: FoodItemProps) => {
+  const handleMealSelect = (item: MealProps) => {
     setSelectedMeals((prev) => {
-      const category = item.meal_type;
+      const category = item.category;
       const isSelected = prev[category] === item.id;
 
       return {
@@ -77,7 +76,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
       };
     });
 
-    if (selectedMeals[item.meal_type] === item.id) {
+    if (selectedMeals[item.category] === item.id) {
       console.log('Decrement');
       handleDecrement();
     } else {
@@ -86,15 +85,17 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     }
   };
 
-  const transformedMeals: FoodItemProps[] = menu.meals.map((meal) => ({
-    id: meal.id,
-    title: meal.title,
-    subTitle: meal.description,
-    imageUrl: meal.photoUrl,
-    meal_type: meal.category.label,
-    iconName: selectedMeals[meal.category.label] === meal.id ? 'Check' : 'Add',
-    isSelected: selectedMeals[meal.id],
-  }));
+  const transformedMeals: MealProps[] = Object.values(menu.meals_by_type || {})
+    .flatMap((category) => Object.values(category).flat())
+    .map((meal) => ({
+      ...meal,
+      title: meal.name,
+      subTitle: meal.description,
+      imageUrl: meal.photo_link,
+      meal_type: meal.category,
+      icon: selectedMeals[meal.category] === meal.id ? 'Check' : 'Add',
+      isSelected: selectedMeals[meal.id],
+    }));
 
   return (
     <View style={styles.container2}>
@@ -108,7 +109,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.cont3}>
-          <Image source={menu.photoUrl} style={styles.image} />
+          <Image source={{ uri: menu.photo_link }} style={styles.image} />
           <Text style={styles.price}>{menu.price}</Text>
           <Text style={styles.subtitle}>{menu.description}</Text>
         </View>

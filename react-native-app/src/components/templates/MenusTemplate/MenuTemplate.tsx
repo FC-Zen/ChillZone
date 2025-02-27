@@ -37,7 +37,7 @@ export const MenuTemplate: React.FC<MenuTemplateProps> = ({
 
         <FoodCardList
           foodItems={foodCardListProps.foodItems}
-          onItemSelect={foodCardListProps.onItemSelect}
+          onItemSelectMenu={foodCardListProps.onItemSelectMenu}
           showTitle={false}
         />
 

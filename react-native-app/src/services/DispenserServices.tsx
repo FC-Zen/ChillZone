@@ -1,5 +1,4 @@
 import { IconProps } from '@components/atoms';
-import { ImagesMap } from '@utils';
 import { API_URL } from '@env';
 import { SessionContext } from '@contexts';
 import axios from 'axios';
@@ -30,9 +29,6 @@ export const fetchAllMeals = async (
       },
     });
 
-    console.log('Réponse restau à la carte: ', response.data.aLaCarte);
-    console.log('Soup: ', response.data.aLaCarte.Soup);
-
     const { aLaCarte } = response.data;
     if (!aLaCarte || typeof aLaCarte !== 'object') {
       throw new Error(
@@ -57,8 +53,6 @@ export const fetchAllMeals = async (
         }));
       }
     }
-
-    console.log('Plats regroupé par catégorie: ', groupedMeals);
 
     return groupedMeals;
   } catch (error: any) {

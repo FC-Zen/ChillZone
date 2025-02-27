@@ -15,7 +15,7 @@ export {
   transformRestaurantsApiResponse,
 } from './RestaurantCardServices';
 export { getFaq } from './FaqServices';
-export { getAllMeals } from './DispenserServices';
+export { fetchAllMeals } from './DispenserServices';
 export { getTotalAmount } from './PaymentServices';
 export { getPaymentId } from './PaymentServices';
 export {
@@ -27,12 +27,13 @@ export {
 } from './Reservation';
 
 export {
-  getAllMenus,
-  CategoryProps,
-  MealProps,
-  MenuProps,
-  ModalScreenProps,
-} from './MenusServices';
+  changeProfilePicture,
+  deleteProfilePicture,
+  getLinksNetworks,
+  updateInfoUser,
+  updatePassword,
+} from './AccountServices';
+export { getAllMenus, MenuProps, ModalScreenProps } from './MenusServices';
 export {
   Command,
   FormattedCommand,

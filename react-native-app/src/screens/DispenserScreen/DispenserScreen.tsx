@@ -8,7 +8,6 @@ import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
 import { fetchAllMeals, MealProps } from '@services/DispenserServices';
 import { getAllMenus, MenuProps } from '@services/MenusServices';
-import { FoodItemProps } from '@components/organisms/FoodCardList';
 
 export const DispenserScreen: React.FC = () => {
   const restaurantId = 1; // rendre dynamiquement le restaurant
@@ -30,7 +29,7 @@ export const DispenserScreen: React.FC = () => {
     };
 
     const fetchMenus = async () => {
-      const menuData = await getAllMenus();
+      const menuData = await getAllMenus(restaurantId);
       setMenus(menuData);
     };
 
@@ -47,7 +46,7 @@ export const DispenserScreen: React.FC = () => {
     setIsProductSelected(isProductButton);
   };
 
-  const handleItemSelect = (item: FoodItemProps) => {
+  const handleItemSelect = (item: MealProps) => {
     const selectedMeal = Object.values(mealsByCategory)
       .flat()
       .find((meal) => meal.id === item.id);
@@ -57,10 +56,10 @@ export const DispenserScreen: React.FC = () => {
     }
   };
 
-  const handleItemSelectMenu = (item: FoodItemProps) => {
+  const handleItemSelectMenu = (item: MenuProps) => {
     const selectedMenu = menus.find((menu) => menu.id === item.id);
+
     if (selectedMenu) {
-      console.log('Item sélectionné:', selectedMenu);
       navigation.navigate(ROUTE.MENU_MODAL, { menu: selectedMenu });
     }
   };
@@ -161,18 +160,13 @@ export const DispenserScreen: React.FC = () => {
           foodCardListProps={{
             foodItems: menus.map((menu) => ({
               id: menu.id,
-              category: menu.categories
-                .map((category) => category.label)
-                .join(', '),
-              description: menu.description,
               name: menu.name,
+              description: menu.description,
               price: menu.price,
-              photo_link: menu.photoUrl,
-              stock: 10,
-              icon: 'Add',
-              tags: 'AHHHHHH',
+              photo_link: menu.photo_link,
+              meals_by_type: menu.meals_by_type,
             })),
-            onItemSelect: handleItemSelectMenu,
+            onItemSelectMenu: handleItemSelectMenu,
           }}
           buttonProps={{
             title: t('buttons.actions.cart'),

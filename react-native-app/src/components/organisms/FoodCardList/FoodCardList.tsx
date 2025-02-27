@@ -4,16 +4,19 @@ import { FoodCard, IconWithText } from '@components/molecules';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
 import { MealProps } from '@services/DispenserServices';
+import { MenuProps } from '@services';
 
 export type FoodCardListProps = {
-  foodItems: MealProps[];
+  foodItems: (MealProps | MenuProps)[];
   onItemSelect?: (item: MealProps) => void;
+  onItemSelectMenu?: (item: MenuProps) => void;
   showTitle?: boolean;
 };
 
 export const FoodCardList: React.FC<FoodCardListProps> = ({
   foodItems,
   onItemSelect,
+  onItemSelectMenu,
   showTitle = true,
 }) => {
   const { t } = useTranslation();
@@ -39,14 +42,22 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
 
   const groupedItems = foodItems.reduce(
     (acc, item) => {
-      const mealType = item.category;
-      if (!acc[mealType]) {
-        acc[mealType] = [];
+      if ('category' in item) {
+        const mealType = item.category;
+        if (!acc[mealType]) {
+          acc[mealType] = [];
+        }
+        acc[mealType].push(item);
+      } else {
+        const menuType = item.name;
+        if (!acc[menuType]) {
+          acc[menuType] = [];
+        }
+        acc[menuType].push(item);
       }
-      acc[mealType].push(item);
       return acc;
     },
-    {} as Record<string, MealProps[]>
+    {} as Record<string, (MealProps | MenuProps)[]>
   );
 
   return (
@@ -56,7 +67,7 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
     >
       {Object.entries(groupedItems).map(([mealType, items]) => (
         <View key={mealType}>
-          {showTitle && ( // Condition pour afficher le titre
+          {showTitle && (
             <IconWithText
               icon="Hamburger"
               iconWidth={24}
@@ -70,12 +81,22 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
           {items.map((foodItem) => (
             <View key={foodItem.id}>
               <FoodCard
-                title={foodItem.name}
-                price={`${foodItem.price} €`}
-                subTitle={foodItem.description}
-                imageUrl={foodItem.photo_link}
-                iconName={foodItem.icon || 'Add'}
-                onPress={() => onItemSelect?.(foodItem)}
+                title={'name' in foodItem ? foodItem.name : 'Untitled'}
+                price={'price' in foodItem ? `${foodItem.price} €` : 'N/A'}
+                subTitle={
+                  'description' in foodItem
+                    ? foodItem.description
+                    : 'No description'
+                }
+                imageUrl={'photo_link' in foodItem ? foodItem.photo_link : ''}
+                iconName={(foodItem as MealProps).icon || 'Add'}
+                onPress={() => {
+                  if ('meals_by_type' in foodItem) {
+                    onItemSelectMenu?.(foodItem as MenuProps);
+                  } else {
+                    onItemSelect?.(foodItem as MealProps);
+                  }
+                }}
               />
             </View>
           ))}
