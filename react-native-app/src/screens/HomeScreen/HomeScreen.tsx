@@ -20,6 +20,9 @@ export const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const { nextBooking, updateNextBooking } = useNextBooking();
 
+  console.log("User data Home screen: ",userContext);
+  console.log("Notification setting Home screen: ",userContext.getNotificationSetting());
+
   if (nextBooking) {
     items = nextBooking;
   }

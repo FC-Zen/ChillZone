@@ -1,3 +1,9 @@
+type NotificationSettings = {
+  command: boolean;
+  reservation: boolean;
+  event: boolean;
+};
+
 type User = {
   email: string;
   establishment: string;
@@ -6,10 +12,12 @@ type User = {
   phone: string;
   photo_link: string;
   type: string;
+  notifications: NotificationSettings;
 };
 
 export class UserContext {
   private static instance: UserContext;
+
   private user: User = {
     email: "",
     establishment: "",
@@ -18,6 +26,11 @@ export class UserContext {
     phone: "",
     photo_link: "",
     type: "",
+    notifications: {
+      command:false,
+      reservation: false,
+      event: false,
+    },
   };
 
   private constructor() {}
@@ -41,6 +54,14 @@ export class UserContext {
     return `${this.user.first_name} ${this.user.last_name}`;
   }
 
+  public getNotificationSetting(): NotificationSettings {
+    return this.user.notifications;
+  }
+
+  public setNotificationSetting(notificationSetting : NotificationSettings) {
+    this.user.notifications = notificationSetting;
+  }
+
   public clearUser(): void {
     this.user = {
       email: "",
@@ -50,6 +71,11 @@ export class UserContext {
       phone: "",
       photo_link: "",
       type: "",
+      notifications: {
+        command:false,
+        reservation: false,
+        event: false,
+      },
     };
   }
 }

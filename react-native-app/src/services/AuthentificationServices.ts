@@ -27,6 +27,7 @@ const testAuthenticateUser = async () => {
               console.log("Set-Cookie Header:", setCookieHeader);
 
               console.log("Headers : ", response.headers);
+              console.log("User data:", response.data); 
 
               let sessionId: string | null = null;
 

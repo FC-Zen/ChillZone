@@ -38,12 +38,14 @@ export const LoginScreen: React.FC = () => {
         password: inputPassword,
       });
 
-      console.log(result.message);
+     
       setAuthResult({ severity: 'success', message: result.message });
 
       if(result.data) {
+        console.log("User data: ",result.data);
         const userContext = UserContext.getInstance();
         userContext.setUser(result.data);
+        userContext.setNotificationSetting(result.data.notifications[0]);
       }
       navigation.navigate(ROUTE.HOME);
     } catch (error) {
