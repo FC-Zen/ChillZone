@@ -22,3 +22,4 @@ export { ReportingFinalFormTemplate } from './ReportingFinalTemplate';
 export { CommandSummaryTemplate } from './CommandSummaryTemplate';
 export { NavigationTemplate } from './NavigationTemplate';
 export { CalendarTemplate } from './CalendarTemplate';
+export { ARNavigationTemplate } from './ARNavigationTemplate';

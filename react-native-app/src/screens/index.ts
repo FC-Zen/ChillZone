@@ -18,3 +18,4 @@ export { AlertScreen } from './AlertScreen';
 export { CommandSummaryScreen } from './CommandSummaryScreen';
 export { CalendarScreen } from './CalendarScreen';
 export { NavigationScreen } from './NavigationScreen';
+export { ARNavigationScreen } from './ARNavigationScreen';
