@@ -199,7 +199,6 @@ class UserInfoUpdateView(APIView):
             user = request.user
             user.first_name = serializer.validated_data.get('first_name', user.first_name)
             user.last_name = serializer.validated_data.get('last_name', user.last_name)
-            user.email = serializer.validated_data.get('email', user.email)
 
             user_meta = request.user.usermeta
             if user_meta:

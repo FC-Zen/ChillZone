@@ -11,6 +11,7 @@ class Network(models.Model) :
         ("linkedin", "LinkedIn"),
         ("workspace", "Workspace"),
         ("website", "Website"),
+        ("bluesky", "Bluesky")
     ]
 
     type = models.CharField(max_length= 30 , choices= TYPE_CHOICES)

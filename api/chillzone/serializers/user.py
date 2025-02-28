@@ -41,14 +41,6 @@ class UserInfoUpdateSerializer(serializers.Serializer):
 
     phone = serializers.CharField(max_length=10, required=False)
 
-    email = serializers.EmailField(required=True)
-
-    def validate_email(self, value):
-        user = self.context['request'].user
-        if User.objects.filter(email=value).exclude(id=user.id).exists():
-            raise serializers.ValidationError("This email is already associated with another account.")
-        return value
-
 class PasswordChangeSerializer(serializers.Serializer):
     password_actual = serializers.CharField(max_length=128)
 
