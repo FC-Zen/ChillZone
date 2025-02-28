@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  *
  * @returns {Promise<Object>} résultat de l'authentification.
  */
-const testAuthenticateUser = async () => {
+export const testAuthenticateUser = async () => {
   try {
       const response = await axios.get(
           `${API_URL}login/`,
