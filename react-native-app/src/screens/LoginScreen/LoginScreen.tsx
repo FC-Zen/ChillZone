@@ -66,9 +66,8 @@ export const LoginScreen: React.FC = () => {
         const userContext = UserContext.getInstance();
         userContext.setUser(response.data);
         userContext.setNotificationSetting(response.data.notifications[0]);
+        navigation.navigate(ROUTE.HOME);
       }
-
-      navigation.navigate(ROUTE.HOME);
     }
 
     testConnectedUser();
