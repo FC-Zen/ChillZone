@@ -54,5 +54,4 @@ export { default as AR } from './AR';
 export { default as Graduation } from './Graduation';
 export { default as Book } from './Book';
 export { default as Bluesky } from './Bluesky';
-
-
+export { default as Github } from './Github';
