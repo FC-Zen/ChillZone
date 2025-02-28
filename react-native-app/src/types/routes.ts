@@ -3,6 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import { ROUTE } from '@enums';
 import { MealProps } from '@services/DispenserServices';
 import { MenuProps } from '@services/MenusServices';
+import { RestaurantData } from '@services';
 
 export type RootStackParamList = {
   [ROUTE.HOME]: { userName: string };
@@ -39,7 +40,10 @@ export type RouteParamList = {
   RestaurationScreen: undefined;
   FaqScreen: undefined;
   PaymentScreen: undefined;
-  DispenserScreen: undefined;
+  DispenserScreen: {
+    restaurantId?: RestaurantData['id'];
+    restaurantName?: RestaurantData['name'];
+  };
   DispenserModal: { meal: MealProps };
   MenuModal: { menu: MenuProps };
   FinalPaymentScreen: undefined;

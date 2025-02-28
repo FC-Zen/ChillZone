@@ -4,7 +4,7 @@ import { Button, PageHeader, FoodCardList } from '@components';
 import { useNavigation } from '@hooks';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
-import { MenuProps, ModalScreenProps } from '@services';
+import { ModalScreenProps } from '@services';
 import { useCommand } from '@contexts';
 import { MealProps } from '@services/DispenserServices';
 
@@ -50,7 +50,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
         {
           id: menu.id,
           name: menu.name,
-          price: parseFloat(menu.price.replace('€', '')),
+          price: parseFloat(menu.price),
           type: 'meal',
           quantity: 1,
           meals: selectedMealsList.map((meal) => meal.name),

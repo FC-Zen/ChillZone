@@ -66,7 +66,7 @@ export const HomeScreen: React.FC = () => {
         const transformedRestaurants = restaurants.map((restaurant) => ({
           id: restaurant.id,
           name: restaurant.name,
-          photo_link: ImagesMap[restaurant.photo_link] || restaurant.photo_link, // Gestion des images
+          photo_link: ImagesMap[restaurant.photo_link] || restaurant.photo_link,
           status: restaurant.status,
         }));
 
@@ -90,15 +90,21 @@ export const HomeScreen: React.FC = () => {
     photo_link: any;
     status: 'Ouvert' | 'Fermé';
   }) => {
-    if (selectedRestaurant.status == 'Ouvert') {
-      navigation.navigate(ROUTE.DISPENSER);
+    if (selectedRestaurant.status === 'Ouvert') {
+      navigation.navigate(ROUTE.DISPENSER, {
+        restaurantId: selectedRestaurant.id,
+        restaurantName: selectedRestaurant.name,
+      });
     } else {
       setSnackbar({
         open: true,
         severity: 'error',
         message: 'Le restaurant est fermé en ce moment',
       });
-      navigation.navigate(ROUTE.DISPENSER);
+      navigation.navigate(ROUTE.DISPENSER, {
+        restaurantId: selectedRestaurant.id,
+        restaurantName: selectedRestaurant.name,
+      });
     }
   };
 

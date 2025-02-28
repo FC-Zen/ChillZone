@@ -8,9 +8,23 @@ import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
 import { fetchAllMeals, MealProps } from '@services/DispenserServices';
 import { getAllMenus, MenuProps } from '@services/MenusServices';
+import { RestaurantData } from '@services';
 
-export const DispenserScreen: React.FC = () => {
-  const restaurantId = 1; // rendre dynamiquement le restaurant
+type DispenserScreenProps = {
+  route: {
+    params: {
+      restaurantId: RestaurantData['id'];
+      restaurantName: RestaurantData['name'];
+    };
+  };
+};
+
+export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
+  const { restaurantId, restaurantName } = route.params;
+
+  console.log('Dispenser screen Restaurant id: ', restaurantId);
+  console.log('🚀 ~ restaurantName:', restaurantName);
+
   const [mealsByCategory, setMealsByCategory] = useState<
     Record<string, MealProps[]>
   >({});

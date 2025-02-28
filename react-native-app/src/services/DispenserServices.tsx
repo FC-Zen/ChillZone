@@ -18,15 +18,12 @@ export type MealProps = {
 export const fetchAllMeals = async (
   RestaurantID: number
 ): Promise<Record<string, MealProps[]>> => {
-  const sessionContext = SessionContext.getInstance();
-  const crsfToken = sessionContext.getCsrfToken();
+  console.log('Fetch meals du restau:', RestaurantID);
 
   try {
+    console.log('URL: ', `${API_URL}restaurant/${RestaurantID}`);
     const response = await axios.get(`${API_URL}restaurant/${RestaurantID}`, {
       withCredentials: true,
-      headers: {
-        'X-CSRF-Token': crsfToken,
-      },
     });
 
     const { aLaCarte } = response.data;
