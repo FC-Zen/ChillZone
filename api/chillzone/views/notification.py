@@ -8,7 +8,7 @@ from chillzone.serializers import NotificationSerializer
 class NotificationView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
-        notifications = Notification.objects.filter(notificationcenter__user=request.user.usermeta)
+    def get(self, request):
+        notifications = Notification.objects.filter(user=request.user)
         serializer = NotificationSerializer(notifications, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

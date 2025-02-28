@@ -1,87 +1,85 @@
 """
 URL configuration for chillzone project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
-from decouple import config
 from django.conf import settings
 from django.conf.urls.static import static
 
-from chillzone.views import admin_boards, home, notification, reservation, user, faq, network, owner_boards, super_admin_boards, calendar, restaurant
-from drf_spectacular.views import (
-    SpectacularAPIView,
-    SpectacularRedocView,
-    SpectacularSwaggerView,
+from chillzone.views import (
+    admin_boards, home, notification, reservation, user, faq, network,
+    owner_boards, super_admin_boards, calendar, restaurant
 )
+from drf_spectacular.views import (
+    SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+)
+
+# ============================ URLS PRINCIPALES ============================= #
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # ====================== GENERIC ======================= #
+    # ============================ AUTHENTIFICATION ============================= #
     path('login/', user.UserLogin.as_view(), name='Sign In and Sign Out'),
-    path('forget-password/', user.PasswordForgetView.as_view(), name='Start reset password processus'),
-    path('reset-password/<uuid:uuid>', user.PasswordResetView.as_view(), name='Reset password processus'),
-    path('change-password/', user.ChangePasswordView.as_view(), name='Update paswword'),
+    path('forget-password/', user.PasswordForgetView.as_view(), name='Start reset password process'),
+    path('reset-password/<uuid:uuid>', user.PasswordResetView.as_view(), name='Reset password process'),
+    path('change-password/', user.ChangePasswordView.as_view(), name='Update password'),
     path('change-information-profil/', user.UserInfoUpdateView.as_view(), name='Update user info'),
 
-    # ======================== APP ========================= #
-    path('home/', home.UserDashboardView.as_view(), name='Sign In and Sign Out'),
-    path('notification/', notification.NotificationView.as_view(), name='Client List Notification'),
+    # ============================ APPLICATION ============================= #
+    path('home/', home.UserDashboardView.as_view(), name='User Dashboard'),
+    path('notification/', notification.NotificationView.as_view(), name='Client Notification'),
     path('calendar/', calendar.CalendarView.as_view(), name='Client Calendar'),
-    path('reservation/', reservation.ReservationView.as_view(), name='Client List / Create / Update Reservation'),
-    path('my-reservation/', reservation.ClientReservationView.as_view(), name='Client List / Cancel Reservation'),
+    path('reservation/', reservation.ReservationView.as_view(), name='Client Reservation'),
+    path('my-reservation/', reservation.ClientReservationView.as_view(), name='Client Reservations'),
     path('faq/', faq.FAQView.as_view(), name='Client FAQ'),
-    path('network/', network.NetworkView.as_view(), name='Client List Network'),
-    path('restaurants/', restaurant.ClientRestaurantView.as_view(), name='Client List Restaurant'),
+    path('network/', network.NetworkView.as_view(), name='Client Network'),
+    path('restaurants/', restaurant.ClientRestaurantView.as_view(), name='Client Restaurant List'),
     path('restaurant/<int:id>/', restaurant.RestaurantView.as_view(), name='Client Restaurant'),
 
-    # ======================== WEB ========================= #
-    path('create-owner-account/', user.OwnerCreateView.as_view(), name='Create account and restaurant for owner'),
+    # ============================ GESTION DES UTILISATEURS ============================= #
+    path('create-owner-account/', user.OwnerCreateView.as_view(), name='Create Owner Account'),
 
-    # -------------------- Super Admin --------------------- #
+    # ============================ SUPER ADMIN ============================= #
     path('superadmin-requests/', super_admin_boards.SuperAdminRequestsView.as_view(), name='Super Admin Requests'),
     path('superadmin-users/', super_admin_boards.SuperAdminUsersView.as_view(), name='Super Admin Users'),
 
-    # ----------------------- Admin ------------------------ #
+    # ============================ ADMIN ============================= #
     path('admin-dashboard/', admin_boards.AdminDashboardView.as_view(), name='Admin Dashboard'),
-    path('admin-accounts/', admin_boards.AdminUserView.as_view(), name='Admin List / Create / Update User'),
-    path('admin-rooms/', admin_boards.AdminLocationView.as_view(), name='Admin List / Create / Update Location'),
-    path('admin-booking/', admin_boards.AdminReservationConflictView.as_view(), name='Admin List Reservation / Conflict'),
-    path('admin-map/', admin_boards.AdminMapView.as_view(), name='Admin List / Create / Update / Delete Map'),
-    path('admin-info/', admin_boards.AdminInfoView.as_view(), name='Admin List / Update Info'),
-    path('admin-restaurants/', admin_boards.AdminRestaurantView.as_view(), name='Admin List / Create / Update / Delete Restaurant'),
-    path('admin-faq/', faq.AdminFAQView.as_view(), name='Admin List / Create / Update / Delete FAQ'),
-    path('admin-network/', network.AdminNetworkView.as_view(), name='Admin List / Create / Update / Delete Network'),
+    path('admin-accounts/', admin_boards.AdminUserView.as_view(), name='Admin User Management'),
+    path('admin-rooms/', admin_boards.AdminLocationView.as_view(), name='Admin Room Management'),
+    path('admin-booking/', admin_boards.AdminReservationConflictView.as_view(), name='Admin Reservations'),
+    path('admin-map/', admin_boards.AdminMapView.as_view(), name='Admin Map Management'),
+    path('admin-info/', admin_boards.AdminInfoView.as_view(), name='Admin Info Management'),
+    path('admin-restaurants/', admin_boards.AdminRestaurantView.as_view(), name='Admin Restaurant Management'),
+    path('admin-faq/', faq.AdminFAQView.as_view(), name='Admin FAQ Management'),
+    path('admin-network/', network.AdminNetworkView.as_view(), name='Admin Network Management'),
 
-    # ----------------------- Owner ------------------------ #
+    # ============================ OWNER ============================= #
     path('owner-dashboard/', owner_boards.OwnerDashboardView.as_view(), name='Owner Dashboard'),
-    path('owner-menus/', owner_boards.OwnerMenuView.as_view(), name='Owner List / Create / Update Menu'),
-    path('owner-meals/', owner_boards.OwnerMealView.as_view(), name='Owner List / Create / Update Meal'),
-    path('owner-commands/', owner_boards.OwnerCommandsView.as_view(), name='Owner List / Update Command'),
+    path('owner-menus/', owner_boards.OwnerMenuView.as_view(), name='Owner Menu Management'),
+    path('owner-meals/', owner_boards.OwnerMealView.as_view(), name='Owner Meal Management'),
+    path('owner-commands/', owner_boards.OwnerCommandsView.as_view(), name='Owner Commands'),
 
-
-    # Endpoint pour le schéma OpenAPI JSON
+    # ============================ API DOC ============================= #
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Documentation Swagger UI
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    # Documentation Redoc UI
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
-if config('DEBUG') :
-    urlpatterns = [
-        path('__debug__/', include('debug_toolbar.urls')),
-    ] + urlpatterns
+# ============================ MEDIA SERVING ============================= #
+# Permet d'accéder aux fichiers médias en production via Django si aucune solution Nginx/Apache n'est utilisée.
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    from django.views.static import serve
+    from django.urls import re_path
+
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    ]
+
+# ============================ DEBUG TOOLBAR ============================= #
+if settings.DEBUG:
+    urlpatterns += [path('__debug__/', include('debug_toolbar.urls'))]
