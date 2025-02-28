@@ -17,16 +17,22 @@ export class SessionContext {
       this.csrfToken = csrfToken;
     }
     
-    // 🔹 Getter pour récupérer le CSRF Token
-    public getCsrfToken(): string | null {
+    // 🔹 Getter pour récupérer le CSRF Token (obligatoirement string)
+    public getCsrfToken(): string {
+      if (!this.csrfToken) {
+          throw new Error("CSRF Token manquant. L'utilisateur doit être connecté.");
+      }
       return this.csrfToken;
     }
-  
-    // 🔹 Getter pour récupérer le Session ID (au cas où)
-    public getSessionId(): string | null {
-      return this.sessionId;
+
+    // 🔹 Getter pour récupérer le Session ID (pareil si tu veux sécuriser)
+    public getSessionId(): string {
+        if (!this.sessionId) {
+            throw new Error("Session ID manquant. L'utilisateur doit être connecté.");
+        }
+        return this.sessionId;
     }
-  
+    
     // 🔹 Supprime les valeurs stockées (Déconnexion)
     public clearSession(): void {
       this.sessionId = null;

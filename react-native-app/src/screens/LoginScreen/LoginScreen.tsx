@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ConnectionTemplate, SnackBar } from '@components';
-import { authenticateUser } from '@services';
+import { authenticateUser, testAuthenticateUser } from '@services';
 import { styles } from './style';
 import { logoIUT } from '@assets/Images';
 import { useTranslation } from 'react-i18next';
@@ -38,12 +38,14 @@ export const LoginScreen: React.FC = () => {
         password: inputPassword,
       });
 
-      console.log(result.message);
+     
       setAuthResult({ severity: 'success', message: result.message });
 
       if(result.data) {
+        console.log("User data: ",result.data);
         const userContext = UserContext.getInstance();
         userContext.setUser(result.data);
+        userContext.setNotificationSetting(result.data.notifications[0]);
       }
       navigation.navigate(ROUTE.HOME);
     } catch (error) {
@@ -52,6 +54,24 @@ export const LoginScreen: React.FC = () => {
       setAuthResult({ severity: 'error', message: errorMessage });
     }
   };
+
+  //Test if the user is already connected in a previous session
+  useEffect(() => {
+    const testConnectedUser = async () => {
+      const response = await testAuthenticateUser();
+      if(response.success == true && response.data){
+
+        setAuthResult({ severity: 'success', message: response.message });
+        console.log("User already connected so we go to the homescreen page directly");
+        const userContext = UserContext.getInstance();
+        userContext.setUser(response.data);
+        userContext.setNotificationSetting(response.data.notifications[0]);
+        navigation.navigate(ROUTE.HOME);
+      }
+    }
+
+    testConnectedUser();
+  }, []);
 
   useEffect(() => {
     if (authResult) {

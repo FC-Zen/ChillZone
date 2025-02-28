@@ -7,8 +7,9 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from '@components/atoms';
 import { colors } from '@theme';
 
-export const FaqList: React.FC<FaqCategory> = ({category, faq_details}) => {
+export const FaqList: React.FC<FaqCategory> = ({category, questions}) => {
   const [expanded, setExpanded] = React.useState(false);
+  console.log("Faq :", questions);
   
   const handlePress = () => setExpanded(!expanded);
 
@@ -24,7 +25,7 @@ export const FaqList: React.FC<FaqCategory> = ({category, faq_details}) => {
         </TouchableOpacity>
       </View>
       <List.Section style={expanded ? {display:'flex'} : { display:'none'}}>
-        {faq_details.map((data) => <Accordion question={data.question} answer={data.answer} /> )}
+        {questions.map((data) => <Accordion question={data.question} answer={data.answer} /> )}
       </List.Section>
     </View>
   );

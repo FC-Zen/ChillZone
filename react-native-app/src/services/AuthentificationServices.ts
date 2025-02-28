@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  *
  * @returns {Promise<Object>} résultat de l'authentification.
  */
-const testAuthenticateUser = async () => {
+export const testAuthenticateUser = async () => {
   try {
       const response = await axios.get(
           `${API_URL}login/`,
@@ -22,7 +22,39 @@ const testAuthenticateUser = async () => {
           if (response.data.type !== "user") {
               return { success: false, message: "Connexion non autorisée", data: null };
           } else {
-              // Gestion des cookies comme avant...
+              /// 🔹 Récupérer les cookies `sessionid` et `csrftoken`
+              const setCookieHeader = response.headers["set-cookie"]?.[0].split(/[,;]\s*/);
+              console.log("Set-Cookie Header:", setCookieHeader);
+
+              console.log("Headers : ", response.headers);
+              console.log("User data:", response.data); 
+
+              let sessionId: string | null = null;
+
+              if (setCookieHeader && Array.isArray(setCookieHeader)) {
+                setCookieHeader.forEach((cookie) => {
+                  // Vérification du cookie "sessionid"
+                  if (cookie.startsWith("sessionid=")) {
+                    sessionId = cookie.split(";")[0].split("=")[1];
+                  }
+                });
+              }
+
+              console.log("Session ID:", sessionId);
+
+              // 🔹 Stocker les valeurs dans le `SessionContext`
+              if (sessionId) {
+                const sessionContext = SessionContext.getInstance();
+                const crsfToken = await AsyncStorage.getItem('csrfToken')
+
+                if(crsfToken){
+                  sessionContext.setSession(sessionId,crsfToken)
+                }else{
+                  throw new Error("Erreur lors de la récupération du dernier token")
+                }
+                await AsyncStorage.setItem('sessionId', sessionId);
+              }
+
               console.log("Email :", response.data.email);
               return { success: true, message: "Reconnexion réussie !", data: response.data };
           }

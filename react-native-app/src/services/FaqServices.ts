@@ -1,8 +1,6 @@
-import axios from 'axios';
-import { z } from 'zod';
-
-//Import des données statiques
-import FAKE_URL from '@assets/data/faq.json';
+import { SessionContext } from "@contexts";
+import { API_URL } from "@env";
+import axios from "axios";
 
 export type FaqDetail = {
     question: string;
@@ -11,7 +9,7 @@ export type FaqDetail = {
   
 export type FaqCategory = {
     category: string;
-    faq_details: FaqDetail[];
+    questions: FaqDetail[];
 }
 
 /**
@@ -23,15 +21,16 @@ export type FaqCategory = {
  */
 export const getFaq = async () => {
   try {
-    //Récupération des données de Faq de l'API
-    //const response = await axios.get(URL);
-    const response = FAKE_URL;
+    const response = await axios.get(
+      `${API_URL}faq/`,
+      { withCredentials: true }
+    );
 
     // Vérifie si la réponse indique une réussite - SIMULATION
     if (response) {
-      console.log('Faq données récupérer');
+      console.log('Faq données récupérer: ',response.data);
 
-      return response as FaqCategory[];
+      return response.data as FaqCategory[];
     } else {
       throw new Error('Erreur Faq');
     }
