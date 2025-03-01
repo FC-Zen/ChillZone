@@ -21,7 +21,7 @@ export const FileInput: React.FC<FileInputProps> = ({
   useEffect(() => {
     if (value) {
       setFileName(value);
-      setFilePreview('http://localhost:3000' + value);
+      setFilePreview('https://chillzone.fabiengilles.tf/' + value);
     }
   }, [value]);
 

@@ -42,48 +42,51 @@ pip install -r requirements.txt
 Si vous n'avez pas de fichier `requirements.txt`, vous pouvez installer les dépendances manuellement :
 
 ```bash
-pip install Django django-debug-toolbar django-filter djangorestframework Markdown mysqlclient pillow python-decouple drf-spectacular django-cors-headers qrcode icalendar requests pytz
-
+pip install Django django-debug-toolbar django-filter djangorestframework djangorestframework-simplejwt Markdown mysqlclient pillow python-decouple drf-spectacular django-cors-headers qrcode icalendar requests pytz
 ```
 
 Une fois executé si vous faites la commande `pip list` vous devriez obtenir quelque chose du style :
 
 ```bash
-Package                   Version
-------------------------- -----------
-asgiref                   3.8.1
-attrs                     24.3.0
-certifi                   2025.1.31
-charset-normalizer        3.4.1
-colorama                  0.4.6
-Django                    5.1.4
-django-cors-headers       4.6.0
-django-debug-toolbar      4.4.6
-django-filter             24.3
-djangorestframework       3.15.2
-drf-spectacular           0.28.0
-icalendar                 6.1.1
-idna                      3.10
-inflection                0.5.1
-jsonschema                4.23.0
-jsonschema-specifications 2024.10.1
-Markdown                  3.7
-mysqlclient               2.2.6
-pillow                    11.0.0
-pip                       25.0
-python-dateutil           2.9.0.post0
-python-decouple           3.8
-pytz                      2025.1
-PyYAML                    6.0.2
-qrcode                    8.0
-referencing               0.35.1
-requests                  2.32.3
-rpds-py                   0.22.3
-six                       1.17.0
-sqlparse                  0.5.3
-tzdata                    2024.2
-uritemplate               4.1.1
-urllib3                   2.3.0
+Package                       Version
+----------------------------- -----------
+asgiref                       3.8.1      
+attrs                         24.3.0
+certifi                       2025.1.31
+charset-normalizer            3.4.1
+colorama                      0.4.6
+Django                        5.1.4
+django-cors-headers           4.6.0
+django-debug-toolbar          4.4.6
+django-filter                 24.3
+djangorestframework           3.15.2
+djangorestframework_simplejwt 5.5.0
+drf-spectacular               0.28.0
+gunicorn                      23.0.0
+icalendar                     6.1.1
+idna                          3.10
+inflection                    0.5.1
+jsonschema                    4.23.0
+jsonschema-specifications     2024.10.1
+Markdown                      3.7
+mysqlclient                   2.2.6
+packaging                     24.2
+pillow                        11.0.0
+pip                           25.0
+PyJWT                         2.9.0
+python-dateutil               2.9.0.post0
+python-decouple               3.8
+pytz                          2025.1
+PyYAML                        6.0.2
+qrcode                        8.0
+referencing                   0.35.1
+requests                      2.32.3
+rpds-py                       0.22.3
+six                           1.17.0
+sqlparse                      0.5.3
+tzdata                        2024.2
+uritemplate                   4.1.1
+urllib3                       2.3.0
 ```
 
 <div style="background-color: #e7f3fe; border-left: 4px solid #2196f3; padding: 10px; margin: 10px 0; border-radius: 5px; font-family: Arial, sans-serif; color: #0c5460;">

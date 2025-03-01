@@ -46,7 +46,7 @@ export const LoginPage: React.FC = () => {
           username: res.data.first_name + " " + res.data.last_name,
           organization: res.data.establishment,
           role : res.data.type,
-          photo_link : 'http://localhost:3000' + res.data.photo_link,
+          photo_link : 'https://chillzone.fabiengilles.tf/' + res.data.photo_link,
         });
         switch (res?.data.type) {
           case 'admin':

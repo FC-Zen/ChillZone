@@ -2,6 +2,7 @@ Django
 django-debug-toolbar
 django-filter
 djangorestframework
+djangorestframework-simplejwt
 Markdown
 mysqlclient
 pillow

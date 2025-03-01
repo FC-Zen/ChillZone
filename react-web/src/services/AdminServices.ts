@@ -306,7 +306,7 @@ export const getConflictsaAndReservations = async () => {
  */
 export const getAdminMap = async () => {
     try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-mapfloor/`, 
             {
                 headers: {
                     Authorization: `Bearer ${getToken()}`,
@@ -331,7 +331,7 @@ export const getAdminMap = async () => {
  */
 export const getAdminInfo = async () => {
     try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-info/`, 
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-information/`, 
             {
                 headers: {
                     Authorization: `Bearer ${getToken()}`,
@@ -357,7 +357,7 @@ export const getAdminInfo = async () => {
  */
 export const updateAdminInfo = async (formData: FormData): Promise<any> => {
     try {
-        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-info/`, formData, {
+        const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-information/`, formData, {
          
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -382,7 +382,7 @@ export const updateAdminInfo = async (formData: FormData): Promise<any> => {
  */
 export const addFloor = async (formData: FormData): Promise<any> => {
     try {
-    const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, formData, {
+    const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-mapfloor/`, formData, {
          
         headers: {
         'Content-Type': 'multipart/form-data',
@@ -407,7 +407,7 @@ export const addFloor = async (formData: FormData): Promise<any> => {
    */
 export const updateFloor = async (formData: FormData): Promise<any> => {
     try {
-    const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, formData, {
+    const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-mapfloor/`, formData, {
          
         headers: {
         'Content-Type': 'multipart/form-data',
@@ -432,7 +432,7 @@ export const updateFloor = async (formData: FormData): Promise<any> => {
    */
 export const deleteFloor = async (id: number): Promise<any> => {
     try {
-    const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, {
+    const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-mapfloor/`, {
         data: { id },
          
         headers: {
