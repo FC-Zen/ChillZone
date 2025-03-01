@@ -1,5 +1,5 @@
+import { getToken } from '@utils';
 import axios from 'axios';
-import { getCSRFToken } from '@utils';
 
 /* Types specifiques au dashboards admins  */
 export type MonthlyData = {
@@ -30,9 +30,9 @@ export type DashboardData = {
 export const getAccounts = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-accounts/`, 
-            { withCredentials: true,
+            {  
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
         );        
@@ -57,9 +57,8 @@ export const getAccounts = async () => {
 export const getDashboardData = async (): Promise<DashboardData> => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-dashboard/`, {
-            withCredentials: true,
             headers: {
-                'X-CSRFToken': getCSRFToken(),
+                Authorization: `Bearer ${getToken()}`,
             },
         });
 
@@ -92,11 +91,10 @@ export const toggleAccountBlock = async (id: number, is_block: boolean) => {
                 is_block : is_block,
             },
             { 
-                withCredentials: true,
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
-            } 
+            }
             );
             if (response.status == 200) {
                 return response.data;
@@ -124,9 +122,8 @@ export const toggleAccountActive = async (id: number, is_active: boolean) => {
                 is_active : is_active
             },
             { 
-                withCredentials: true,
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -152,10 +149,9 @@ export const toggleAccountActive = async (id: number, is_active: boolean) => {
 export const addAccount = async (formData: FormData): Promise<any> => {
     try {
         const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-accounts/`, formData, {
-            withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'X-CSRFToken': getCSRFToken(),
+                Authorization: `Bearer ${getToken()}`,
             },
         });
         if (response.status == 200) {
@@ -179,9 +175,8 @@ export const getRooms = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, 
         { 
-            withCredentials: true,
             headers: {
-                'X-CSRFToken': getCSRFToken(),
+                Authorization: `Bearer ${getToken()}`,
             },
         } 
         );
@@ -205,10 +200,9 @@ export const getRooms = async () => {
 export const addRoom = async (formData: FormData): Promise<any> => {
     try {
         const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, formData, {
-            withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'X-CSRFToken': getCSRFToken(),
+                Authorization: `Bearer ${getToken()}`,
             },
         });
         console.log('Réponse de l\'API:', response);
@@ -232,10 +226,9 @@ export const addRoom = async (formData: FormData): Promise<any> => {
 export const updateRoom = async (formData: FormData): Promise<any> => {
     try {
         const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, formData, {
-            withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'X-CSRFToken': getCSRFToken(),
+                Authorization: `Bearer ${getToken()}`,
             },
         });
         console.log('Réponse de l\'API:', response);
@@ -262,10 +255,9 @@ export const toggleRoom = async (id: number, status: boolean) => {
                 id : id,
                 status : status,
             },
-            { 
-                withCredentials: true,
+            {
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -289,10 +281,9 @@ export const toggleRoom = async (id: number, status: boolean) => {
 export const getConflictsaAndReservations = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-booking/`, 
-            { 
-                withCredentials: true,
+            {  
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -316,10 +307,9 @@ export const getConflictsaAndReservations = async () => {
 export const getAdminMap = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, 
-            { 
-                withCredentials: true,
+            {
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -342,10 +332,9 @@ export const getAdminMap = async () => {
 export const getAdminInfo = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-info/`, 
-            { 
-                withCredentials: true,
+            {
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -369,10 +358,10 @@ export const getAdminInfo = async () => {
 export const updateAdminInfo = async (formData: FormData): Promise<any> => {
     try {
         const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-info/`, formData, {
-        withCredentials: true,
+         
         headers: {
             'Content-Type': 'multipart/form-data',
-            'X-CSRFToken': getCSRFToken(),
+            Authorization: `Bearer ${getToken()}`,
         },
         });
         console.log('Réponse de l\'API (mise à jour FAQ):', response);
@@ -394,10 +383,10 @@ export const updateAdminInfo = async (formData: FormData): Promise<any> => {
 export const addFloor = async (formData: FormData): Promise<any> => {
     try {
     const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, formData, {
-        withCredentials: true,
+         
         headers: {
         'Content-Type': 'multipart/form-data',
-        'X-CSRFToken': getCSRFToken(),
+        Authorization: `Bearer ${getToken()}`,
         },
     });
     console.log("Réponse de l'API (ajout étage):", response);
@@ -419,10 +408,10 @@ export const addFloor = async (formData: FormData): Promise<any> => {
 export const updateFloor = async (formData: FormData): Promise<any> => {
     try {
     const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, formData, {
-        withCredentials: true,
+         
         headers: {
         'Content-Type': 'multipart/form-data',
-        'X-CSRFToken': getCSRFToken(),
+        Authorization: `Bearer ${getToken()}`,
         },
     });
     console.log("Réponse de l'API (mise à jour étage):", response);
@@ -445,9 +434,9 @@ export const deleteFloor = async (id: number): Promise<any> => {
     try {
     const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-map/`, {
         data: { id },
-        withCredentials: true,
+         
         headers: {
-        'X-CSRFToken': getCSRFToken(),
+        Authorization: `Bearer ${getToken()}`,
         },
     });
     console.log("Réponse de l'API (suppression étage):", response);
@@ -469,10 +458,9 @@ export const deleteFloor = async (id: number): Promise<any> => {
 export const getAffiliations = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-restaurants/`, 
-            { 
-                withCredentials: true,
+            {
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -498,10 +486,9 @@ export const acceptAffiliations = async (id: number) => {
             {
                 id : id
             },
-            { 
-                withCredentials: true,
+            {
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -526,9 +513,9 @@ export const deleteAffiliations = async (id: number) => {
         const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-restaurants/`, 
             { 
                 data: { id: id },
-                withCredentials: true,
+                 
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -551,10 +538,9 @@ export const deleteAffiliations = async (id: number) => {
 export const getFAQ = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-faq/`, 
-            { 
-                withCredentials: true,
+            {
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -578,10 +564,10 @@ export const getFAQ = async () => {
 export const addFAQ = async (formData: FormData): Promise<any> => {
     try {
         const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-faq/`, formData, {
-        withCredentials: true,
+         
         headers: {
             'Content-Type': 'multipart/form-data',
-            'X-CSRFToken': getCSRFToken(),
+            Authorization: `Bearer ${getToken()}`,
         },
         });
         console.log('Réponse de l\'API (ajout FAQ):', response);
@@ -603,10 +589,10 @@ export const addFAQ = async (formData: FormData): Promise<any> => {
 export const updateFAQ = async (formData: FormData): Promise<any> => {
     try {
         const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-faq/`, formData, {
-        withCredentials: true,
+         
         headers: {
             'Content-Type': 'multipart/form-data',
-            'X-CSRFToken': getCSRFToken(),
+            Authorization: `Bearer ${getToken()}`,
         },
         });
         console.log('Réponse de l\'API (mise à jour FAQ):', response);
@@ -630,9 +616,9 @@ export const deleteFAQ = async (id: number): Promise<any> => {
         const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-faq/`, 
             { 
                 data: { id: id },
-                withCredentials: true,
+                 
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -656,9 +642,9 @@ export const getNetworks = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-network/`, 
             { 
-                withCredentials: true,
+                 
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -682,10 +668,10 @@ export const getNetworks = async () => {
 export const addNetwork = async (formData: FormData): Promise<any> => {
     try {
         const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-network/`, formData, {
-        withCredentials: true,
+         
         headers: {
             'Content-Type': 'multipart/form-data',
-            'X-CSRFToken': getCSRFToken(),
+            Authorization: `Bearer ${getToken()}`,
         },
         });
         console.log('Réponse de l\'API (ajout FAQ):', response);
@@ -712,9 +698,9 @@ export const updateNetwork= async (id: number, link_network: string): Promise<an
                 link_network : link_network,
             },
             { 
-                withCredentials: true,
+                 
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
         );
@@ -739,9 +725,9 @@ export const deleteNetwork = async (id: number): Promise<any> => {
         const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}admin-network/`, 
             { 
                 data: { id: id },
-                withCredentials: true,
+                 
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );

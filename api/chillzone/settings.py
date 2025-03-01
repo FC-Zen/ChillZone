@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_simplejwt'
 ]
 
 if DEBUG:
@@ -71,18 +72,45 @@ SPECTACULAR_SETTINGS = {
 }
 # ----------------------------- Pour drf-spectacular ---------------------------------------------
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ],
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': config('SECRET_KEY'),
+    
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+    "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
+    "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
+    "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
+    "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -104,28 +132,13 @@ ROOT_URLCONF = 'chillzone.urls'
 
 # ----------------------------- Pour CORS ET SESSIONS  ---------------------------------------------
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_COOKIE_NAME = 'sessionid'  # Le nom du cookie de session
-SESSION_COOKIE_AGE = 86400  # Durée de vie du cookie (1h)
-SESSION_SAVE_EVERY_REQUEST = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-SESSION_COOKIE_HTTPONLY = False  # Empêche l'accès au cookie via JavaScript
-SESSION_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_SECURE = False
 
-CORS_ALLOW_ALL_ORIGINS = False # Sécuriser l'accès  
+CORS_ALLOW_ALL_ORIGINS = False  
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:3000",
+    "http://localhost:3000",
     "http://localhost:5173",
 ]
 CORS_ALLOW_CREDENTIALS = True
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:3000",
-]
-CSRF_COOKIE_NAME = 'csrftoken'  # Assurez-vous que le nom du cookie est le même
-CSRF_COOKIE_HTTPONLY = False  # Cela doit être False pour que le cookie soit accessible côté client
-CSRF_COOKIE_SECURE = False  # Si tu n'utilises pas HTTPS
 
 # FIN PASSAGE CORS et SESSIONS
 

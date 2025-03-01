@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCSRFToken } from '@utils';
+import { getToken } from '@utils';
 
 /* Types specifiques au dashboards owner  */
 export type MonthlyData = {
@@ -30,9 +30,8 @@ export type OwnerDashboardData = {
 export const getDashboardDataOwner = async (): Promise<OwnerDashboardData> => {
   try {
       const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-dashboard/`, {
-          withCredentials: true,
           headers: {
-              'X-CSRFToken': getCSRFToken(),
+              Authorization: `Bearer ${getToken()}`,
           },
       });
 
@@ -62,10 +61,9 @@ export const updateRestaurantStatus = async (status: boolean) => {
         {
             status : status,
         },
-        { 
-            withCredentials: true,
+        {
             headers: {
-                'X-CSRFToken': getCSRFToken(),
+                Authorization: `Bearer ${getToken()}`,
             },
         } 
         );
@@ -88,10 +86,9 @@ export const updateRestaurantStatus = async (status: boolean) => {
 export const fetchCommands = async () => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-commands/`, 
-      { 
-          withCredentials: true,
+      {
           headers: {
-              'X-CSRFToken': getCSRFToken(),
+              Authorization: `Bearer ${getToken()}`,
           },
       } 
       );
@@ -123,9 +120,8 @@ export const updateCommandStatus = async (id: number, status: string) => {
               status : status,
           },
           { 
-              withCredentials: true,
               headers: {
-                  'X-CSRFToken': getCSRFToken(),
+                  Authorization: `Bearer ${getToken()}`,
               },
           } 
           );
@@ -148,9 +144,8 @@ export const fetchMeals = async () => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, 
       { 
-          withCredentials: true,
           headers: {
-              'X-CSRFToken': getCSRFToken(),
+              Authorization: `Bearer ${getToken()}`,
           },
       } 
       );
@@ -173,11 +168,10 @@ export const fetchMeals = async () => {
  */
 export const addMeal = async (formData: FormData): Promise<any> => {
   try {
-      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, formData, {
-          withCredentials: true,
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, formData, { 
           headers: {
               'Content-Type': 'multipart/form-data',
-              'X-CSRFToken': getCSRFToken(),
+              Authorization: `Bearer ${getToken()}`,
           },
       });
       console.log('Réponse de l\'API:', response);
@@ -200,10 +194,9 @@ export const addMeal = async (formData: FormData): Promise<any> => {
 export const updateMeal = async (formData: FormData): Promise<any> => {
   try {
       const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, formData, {
-          withCredentials: true,
           headers: {
               'Content-Type': 'multipart/form-data',
-              'X-CSRFToken': getCSRFToken(),
+              Authorization: `Bearer ${getToken()}`,
           },
       });
       console.log('Réponse de l\'API:', response);
@@ -225,10 +218,9 @@ export const updateMeal = async (formData: FormData): Promise<any> => {
 export const fetchMenus = async () => {
   try {
       const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, 
-      { 
-          withCredentials: true,
+      {
           headers: {
-              'X-CSRFToken': getCSRFToken(),
+              Authorization: `Bearer ${getToken()}`,
           },
       } 
       );
@@ -251,11 +243,10 @@ export const fetchMenus = async () => {
  */
 export const addMenu = async (formData: FormData): Promise<any> => {
   try {
-      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, formData, {
-          withCredentials: true,
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, formData, { 
           headers: {
               'Content-Type': 'multipart/form-data',
-              'X-CSRFToken': getCSRFToken(),
+              Authorization: `Bearer ${getToken()}`,
           },
       });
       console.log('Réponse de l\'API:', response);
@@ -277,11 +268,10 @@ export const addMenu = async (formData: FormData): Promise<any> => {
  */
 export const updateMenu = async (formData: FormData): Promise<any> => {
   try {
-      const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, formData, {
-          withCredentials: true,
+      const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, formData, { 
           headers: {
               'Content-Type': 'multipart/form-data',
-              'X-CSRFToken': getCSRFToken(),
+              Authorization: `Bearer ${getToken()}`,
           },
       });
       console.log('Réponse de l\'API:', response);

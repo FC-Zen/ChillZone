@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCSRFToken } from '@utils';
+import { getToken } from '@utils';
 
 /**
  * Récupère la liste de TOUS LES COMPTES
@@ -12,9 +12,8 @@ export const getUsersSuperAdmin = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-users/`,  // A MODIF
             { 
-                withCredentials: true,
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -38,10 +37,9 @@ export const getUsersSuperAdmin = async () => {
 export const getRequestsSuperAdmin = async () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-requests/`,  // A MODIF
-            { 
-                withCredentials: true,
+            {
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -70,10 +68,9 @@ export const toggleAccountActive = async (id: number, is_active: boolean) => {
                 id : id,
                 is_active : is_active
             },
-            { 
-                withCredentials: true,
+            {
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -99,10 +96,9 @@ export const manageOwnerRegistration = async (id: number) => {
             {
                 id : id
             },
-            { 
-                withCredentials: true,
+            {
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );
@@ -128,9 +124,9 @@ export const deleteOwnerRegistration = async (id: number) => {
         const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-requests/`,  // A MODIF
             { 
                 data: { id: id },
-                withCredentials: true,
+                 
                 headers: {
-                    'X-CSRFToken': getCSRFToken(),
+                    Authorization: `Bearer ${getToken()}`,
                 },
             } 
             );

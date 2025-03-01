@@ -9,20 +9,23 @@ from django.utils.timezone import now, timedelta
 from chillzone.serializers import UserLoginSerializer, OwnerEstablishmentSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, OwnerCreateSerializer, NotificationSerializer
 from chillzone.models import Token, LinkTo, WorkIn, RestaurationPlace, UserMeta, Establishment, Notification
 from chillzone.services import EmailService
+from django.conf import settings
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 import uuid
     
 class UserLogin(APIView) :
-    serializer_class = UserLoginSerializer
 
     def get(self, request):
+
         if request.user.is_authenticated:
+            user = request.user
 
-            user_meta = getattr(request.user, 'usermeta', None)
+            user_meta = user.usermeta
 
-            if request.user.is_superuser :
+            if user.is_superuser :
                 type = 'superadmin'
-            elif request.user.is_staff :
+            elif user.is_staff :
                 type = 'admin'
             elif user_meta.is_owner :
                 type = 'owner'
@@ -30,77 +33,68 @@ class UserLogin(APIView) :
                 type = 'user'
             
             response_data = {
-                'first_name': request.user.first_name,
-                'last_name': request.user.last_name,
-                'email': request.user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
                 'establishment': getattr(user_meta.establishment, 'name', None) if user_meta else None,
                 'phone': user_meta.phone if user_meta else None,
                 'photo_link': user_meta.photo_link.url if user_meta and user_meta.photo_link else '/default',
                 'type': type
             }
-
+            
             if type == 'user':
-                notifications = Notification.objects.filter(user=request.user)
+                notifications = Notification.objects.filter(user=user)
                 response_data['notifications'] = NotificationSerializer(notifications, many=True).data
 
-            return Response(response_data, status=status.HTTP_202_ACCEPTED)
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response(response_data, status=status.HTTP_200_OK)
+        return Response("Vous êtes déjà connecté !", status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
         if request.user.is_authenticated:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response({"detail": "Vous êtes déjà connecté."}, status=status.HTTP_403_FORBIDDEN)
 
-        serializer = UserLoginSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = TokenObtainPairSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.user
+            tokens = serializer.validated_data
 
-        user = authenticate(request, username=serializer.validated_data['login'], password=serializer.validated_data['password'])
-        
-        if user is None:
-            user = User.objects.filter(email=serializer.validated_data['login']).first()
-            if user:
-                user = authenticate(request, username=user.username, password=serializer.validated_data['password'])
+            user_meta = user.usermeta
 
-        if not user:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_403_FORBIDDEN)
-        
-        login(request, user)
-        request.session.set_expiry(None)
-        user_meta = getattr(user, 'usermeta', None)
+            if user.is_superuser :
+                type = 'superadmin'
+            elif user.is_staff :
+                type = 'admin'
+            elif user_meta.is_owner :
+                type = 'owner'
+            else :
+                type = 'user'
+            
+            response_data = {
+                'access': tokens['access'],
+                'refresh': tokens['refresh'],
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'establishment': getattr(user_meta.establishment, 'name', None) if user_meta else None,
+                'phone': user_meta.phone if user_meta else None,
+                'photo_link': user_meta.photo_link.url if user_meta and user_meta.photo_link else '/default',
+                'type': type
+            }
+            
+            if type == 'user':
+                notifications = Notification.objects.filter(user=user)
+                response_data['notifications'] = NotificationSerializer(notifications, many=True).data
 
-        if user.is_superuser :
-            type = 'superadmin'
-        elif user.is_staff :
-            type = 'admin'
-        elif user_meta.is_owner :
-            type = 'owner'
-        else :
-            type = 'user'
-        
-        response_data = {
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'email': user.email,
-            'establishment': getattr(user_meta.establishment, 'name', None) if user_meta else None,
-            'phone': user_meta.phone if user_meta else None,
-            'photo_link': user_meta.photo_link.url if user_meta and user_meta.photo_link else '/default',
-            'type': type
-        }
-        
-        if type == 'user':
-            notifications = Notification.objects.filter(user=user)
-            response_data['notifications'] = NotificationSerializer(notifications, many=True).data
-
-        response = Response(response_data, status=status.HTTP_200_OK)
-        response.set_cookie('sessionid', request.session.session_key, httponly=False, samesite='Lax', secure=False)
-        return response
+            return Response(response_data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        if request.user is None or not request.user.is_authenticated:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+        if not request.user.is_authenticated:
+            return Response({"detail": "Utilisateur non authentifié."}, status=status.HTTP_403_FORBIDDEN)
 
         logout(request)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response({"detail": "Déconnexion réussie."}, status=status.HTTP_204_NO_CONTENT)
     
 class ChangePasswordView(APIView):
     serializer_class = PasswordChangeSerializer

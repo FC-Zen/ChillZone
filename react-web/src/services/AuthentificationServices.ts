@@ -1,5 +1,5 @@
 import { User } from '@hooks';
-import { getCSRFToken } from '@utils';
+import { getToken } from '@utils';
 import axios from 'axios';
 import { z } from 'zod';
 
@@ -14,21 +14,19 @@ import { z } from 'zod';
 export const authenticateUser = async (formData: { login: string; password: string }) => {
   try {
     const response = await axios.post( `${import.meta.env.VITE_REACT_APP_API_URL}login/` , {
-      login: formData.login,
+      username: formData.login,
       password: formData.password,
     },
     {
-      withCredentials: true,
+       
     });
-    // Vérifie si la réponse indique une réussite - SIMULATION
     if (response.status == 200) {
       if (response.data.type == "user") {
-        // Suppression session
-        document.cookie = "sessionid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = "csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         return { success: false, message: 'Connexion non autorisée', data: null};
       } else {
-        //console.log('Authentification réussie pour:', formData.login);
+
+        localStorage.setItem('token', response.data.access);
+
         return { success: true, message: 'Connexion réussie !', data: response.data};
       }
     } else if (response.status == 403) {
@@ -59,7 +57,7 @@ export const sendPasswordRecoveryEmail = async (formData: { email: string }) => 
       email: formData.email
     },
     {
-      withCredentials: true,
+       
     });
     // Vérifie si l'email est valide - SIMULATION
     if (response.status == 200) {
@@ -108,7 +106,7 @@ export const changePassword = async (
       password_verified: formData.inputVerifyPassword,
     },
     {
-      withCredentials: true,
+       
     });
     if (response.status == 200) {
       return { success: true, message: 'Mot de passe changé avec succès pour l’utilisateur.' };
@@ -133,20 +131,17 @@ export const changePassword = async (
  */
 export const logoutUser = async (setUser: React.Dispatch<React.SetStateAction<User | null>>) => {
   try {
-    console.log("Cookies avant la requête DELETE:", document);
     const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}login/`, 
-    { 
-      withCredentials: true,
+    {
       headers: {
-        'X-CSRFToken': getCSRFToken(),
+        Authorization: `Bearer ${getToken()}`,
       },
     } 
     );
     if (response.status === 204) {
-      console.log('Utilisateur déconnecté avec succès.');
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
       setUser(null);
-      document.cookie = "csrftoken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
       return { success: true, message: 'Déconnexion réussie.' };
     } else {
       throw new Error('Échec de la déconnexion.');

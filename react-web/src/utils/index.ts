@@ -1,1 +1,1 @@
-export { getCSRFToken } from './functions';
+export { getToken } from './functions';
