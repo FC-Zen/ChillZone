@@ -33,13 +33,12 @@ export const CourseDetailsModal: React.FC<CourseDetailsModalProps> = ({
     >
       <View style={styles.overlay}>
         <View style={styles.modal}>
-          <TouchableOpacity style={styles.closeIcon}>
+          <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
             <Icon
               name="Cross"
               color={colors.white}
               width={15}
               height={15}
-              onPress={onClose}
             />
           </TouchableOpacity>
           <View style={styles.infoRow}>
