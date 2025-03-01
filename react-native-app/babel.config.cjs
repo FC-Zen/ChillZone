@@ -1,7 +1,8 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo',  '@babel/preset-react'],  
+    presets: ['babel-preset-expo',  '@babel/preset-react', '@babel/preset-typescript'], 
+    
     plugins: [
       [
         'module-resolver',
@@ -29,6 +30,7 @@ module.exports = function (api) {
         },
       ],
       ['module:react-native-dotenv'],
+      '@babel/plugin-transform-modules-commonjs', // ✅ Ajout pour Jest
     ],
   };
 };

@@ -17,6 +17,11 @@ const config: Config = {
   },
   testPathIgnorePatterns: ["/node_modules/", "/android/", "/ios/"],
 
+  // Ajoute transformIgnorePatterns ici
+  transformIgnorePatterns: [
+    "node_modules/(?!(react-native|@react-native|expo-font|expo-modules-core|expo-asset|expo-file-system|expo-notifications)/)"
+  ],
+
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
