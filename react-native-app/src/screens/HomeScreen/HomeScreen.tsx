@@ -5,7 +5,7 @@ import { BottomNavbar, SnackBar } from '@components/molecules';
 import { useNextBooking, UserContext } from '@contexts';
 import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
 import { styles } from './style';
-import { transformBookings, fetchRestaurantData } from '@services';
+import { transformBookings, transformRestaurantData } from '@services';
 import { useTranslation } from 'react-i18next';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
@@ -61,7 +61,7 @@ export const HomeScreen: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const restaurants = await fetchRestaurantData();
+        const restaurants = await transformRestaurantData();
 
         const transformedRestaurants = restaurants.map((restaurant) => ({
           id: restaurant.id,

@@ -19,7 +19,7 @@ type RestaurantsApiResponse = {
   fridges: ApiRestaurant[];
 };
 
-type RestaurantData = {
+export type RestaurantData = {
   id: number;
   name: string;
   photo_link: string;

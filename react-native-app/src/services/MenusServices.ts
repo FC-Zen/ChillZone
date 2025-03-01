@@ -1,6 +1,6 @@
-import { IconProps } from '@components/atoms';
 import { SessionContext } from '@contexts';
 import { API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MealProps } from '@services/DispenserServices';
 import { ImagesMap } from '@utils';
 import axios from 'axios';
@@ -27,13 +27,12 @@ export const getAllMenus = async (
 ): Promise<MenuProps[]> => {
   try {
     const sessionContext = SessionContext.getInstance();
-    const crsfToken = sessionContext.getCsrfToken();
+    const token = sessionContext.getToken();
 
     // Requête pour récupérer les menus
     const response = await axios.get(`${API_URL}restaurant/${RestaurantID}`, {
-      withCredentials: true,
       headers: {
-        'X-CSRF-Token': crsfToken,
+        Authorization: `Bearer ${token}`,
       },
     });
 

@@ -13,6 +13,7 @@ export {
 export {
   transformRestaurantData,
   transformRestaurantsApiResponse,
+  RestaurantData,
 } from './RestaurantCardServices';
 export { getFaq } from './FaqServices';
 export { fetchAllMeals } from './DispenserServices';

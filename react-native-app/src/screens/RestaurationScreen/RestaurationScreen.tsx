@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { styles } from './style';
 
-import { fetchRestaurantData } from '@services';
+import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
 import {
   BottomNavbar,
@@ -38,7 +38,7 @@ export const RestaurationScreen = () => {
   });
 
   const fetchFirstSet = async () => {
-    const allRestaurants = await fetchRestaurantData();
+    const allRestaurants = await transformRestaurantData();
 
     const firstSet = allRestaurants.filter(
       (restaurant) => restaurant.id === 1 || restaurant.id === 3
@@ -58,7 +58,7 @@ export const RestaurationScreen = () => {
   };
 
   const fetchSecondSet = async () => {
-    const allRestaurants = await fetchRestaurantData();
+    const allRestaurants = await transformRestaurantData();
 
     const secondSet = allRestaurants.filter(
       (restaurant) => restaurant.id === 2
@@ -90,7 +90,10 @@ export const RestaurationScreen = () => {
   }) => {
     console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
     if (selectedRestaurant.status == 'Ouvert') {
-      navigation.navigate(ROUTE.DISPENSER);
+      navigation.navigate(ROUTE.DISPENSER, {
+        restaurantId: selectedRestaurant.id,
+        restaurantName: selectedRestaurant.name,
+      });
     } else {
       setSnackbar({
         open: true,

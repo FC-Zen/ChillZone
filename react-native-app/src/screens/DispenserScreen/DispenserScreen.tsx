@@ -22,9 +22,6 @@ type DispenserScreenProps = {
 export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
   const { restaurantId, restaurantName } = route.params;
 
-  console.log('Dispenser screen Restaurant id: ', restaurantId);
-  console.log('🚀 ~ restaurantName:', restaurantName);
-
   const [mealsByCategory, setMealsByCategory] = useState<
     Record<string, MealProps[]>
   >({});
@@ -65,7 +62,6 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
       .flat()
       .find((meal) => meal.id === item.id);
     if (selectedMeal) {
-      console.log('Item sélectionné:', selectedMeal);
       navigation.navigate(ROUTE.DISPENSER_MODAL, { meal: selectedMeal });
     }
   };
@@ -127,7 +123,7 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
             onPress: () => navigation.navigate(ROUTE.CART),
           }}
           pageHeaderProps={{
-            title: t('categories.restaurants'),
+            title: restaurantName,
             variant: 'back',
             icon: {
               name: 'Cross',
@@ -187,7 +183,7 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
             onPress: () => navigation.navigate(ROUTE.CART),
           }}
           pageHeaderProps={{
-            title: t('categories.restaurants'),
+            title: restaurantName,
             variant: 'back',
             icon: {
               name: 'Cross',

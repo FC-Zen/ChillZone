@@ -20,10 +20,17 @@ export const fetchAllMeals = async (
 ): Promise<Record<string, MealProps[]>> => {
   console.log('Fetch meals du restau:', RestaurantID);
 
+  const sessionContext = SessionContext.getInstance();
+  const token = sessionContext.getToken();
+  console.log('🚀 ~ token:', token);
+
   try {
     console.log('URL: ', `${API_URL}restaurant/${RestaurantID}`);
+
     const response = await axios.get(`${API_URL}restaurant/${RestaurantID}`, {
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     const { aLaCarte } = response.data;

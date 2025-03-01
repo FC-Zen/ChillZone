@@ -10,12 +10,15 @@ export default function App() {
   useEffect(() => {
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
       if (nextAppState === 'background' || nextAppState === 'inactive') {
-        console.log("🔴 Application en arrière-plan ou fermée. Déconnexion...");
+        console.log('🔴 Application en arrière-plan ou fermée. Déconnexion...');
         await logoutUser(false);
       }
     };
 
-    const subscription = AppState.addEventListener('change', handleAppStateChange);
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange
+    );
 
     return () => {
       subscription.remove();
