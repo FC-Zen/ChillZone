@@ -1,3 +1,5 @@
+import { API_URL } from "@env";
+import axios from "axios";
 import ICAL from "ical.js";
 
 const loadICSFromURL = async (url: string) => {
@@ -56,46 +58,107 @@ const extractEvents = (jcalData: any) => {
 export type CalendarEvent = {
     id: number;
     title: string;
-    start: Date;
-    end: Date;
+    start_time: Date;
+    end_time: Date;
     location: string;
     group: string;
     professor: string | string[];
 };
 
 export type Calendar = {
+    id: number;
+    title: string;
+    url: string;
     events: CalendarEvent[];
 }
 
-export const getCalendarEvents = async (url: string) => {
-    if (url === '') {
-        console.log("❌ URL du calendrier non fournie !");
-        return null;
+const formatDescription = (description: string) => {
+    let desc = description.split('\n').filter((line: string) => line !== '');
+    let group = '';
+    let professor = '';
+    desc = desc.splice(0, desc.length - 1);
+    for (let i = 0; i < desc.length; i++) {
+        if ((desc[i].includes('TP') || desc[i].includes('TD')) && i != 0) {
+            let temp = desc[i];
+            desc[i] = desc[0];
+            desc[0] = temp;
+            break;
+        }
     }
-    let formatedCalendar: Calendar = { events: [] };
-    let events = await loadICSFromURL(url);
-    events = extractEvents(events);
-    events.forEach((calEvent: any) => {
-        let desc = calEvent.description.split('\n').filter((line: string) => line !== '');
-        desc = desc.splice(0, desc.length - 1);
-        for (let i = 0; i < desc.length; i++) {
-            if ((desc[i].includes('TP') || desc[i].includes('TD')) && i != 0) {
-                let temp = desc[i];
-                desc[i] = desc[0];
-                desc[0] = temp;
-                break;
-            }
+    group = desc[0];
+    professor = desc.splice(1).join('\n');
+    return { group, professor };
+}
+
+/**
+ * Enregistre le lien du calendrier dans la base de données de l'utilisateur
+ * @param {string} url Le lien du calendrier
+ * @throws {Error} Si le lien est vide
+*/
+export const setCalendarLink = async (url: string) => {
+    if (!url) {
+        console.error("❌ Lien du calendrier vide.");
+        throw new Error("Le lien du calendrier ne peut pas être vide.");
+    }
+    try {
+        await axios.post(
+            `${API_URL}/calendar`,
+            { url },
+            { withCredentials: true }
+        );
+    } catch (error: any) {
+        console.error("❌ Erreur lors de la sauvegarde du lien du calendrier :", error);
+    }
+}
+
+/**
+ * Récupère les événements du calendrier
+ * @returns {Promise<Calendar>} Le calendrier
+*/
+export const getCalendarEvents = async () => {
+
+    let formatedCalendar: Calendar = {
+        id: 0,
+        title: "Calendrier",
+        url: "",
+        events: []
+     };
+
+    let description = {
+        group: '',
+        professor: '',
+    };
+
+    try {
+        const response = await axios.get(
+            `${API_URL}/calendar`,
+            { withCredentials: true }
+        );
+
+        formatedCalendar = {
+            id: response.data.id,
+            title: response.data.title,
+            url: response.data.url,
+            events: [],
+        };
+
+        for (const event of response.data.events) {
+            description = formatDescription(event.description);
+            formatedCalendar.events.push({
+                id: event.id,
+                title: event.title,
+                start_time: new Date(event.start_time),
+                end_time: new Date(event.end_time),
+                location: event.location,
+                group: description.group,
+                professor: description.professor,
+            });
         }
 
-        formatedCalendar.events.push({
-            id: calEvent.uid,
-            title: calEvent.summary,
-            start: new Date(calEvent.start),
-            end: new Date(calEvent.end),
-            location: calEvent.location,
-            group: desc[0],
-            professor: desc.splice(1)
-        });
-    });
+    } catch (error: any) {
+        console.error("❌ Erreur lors de la récupération du calendrier :", error);
+        return formatedCalendar;
+    }
+
     return formatedCalendar;
 }

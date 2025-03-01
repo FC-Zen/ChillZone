@@ -94,8 +94,8 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                         events={events.map((event) => ({
                             id: event.id,
                             title: event.title,
-                            start: event.start,
-                            end: event.end,
+                            start: event.start_time,
+                            end: event.end_time,
                         }))}
                         date={startOfWeek}
                         height={600}
@@ -122,8 +122,8 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                 onClose={() => {setAdeModal(false); setCourseModal(false);}}
                 courseDetails={{
                     title: actualEvent?.title || '',
-                    date: actualEvent?.start.toLocaleDateString() || '',
-                    time: `${actualEvent?.start.toLocaleTimeString().replace(/:\d\d/, '')} - ${actualEvent?.end.toLocaleTimeString().replace(/:\d\d/, '')}`,
+                    date: actualEvent?.start_time.toLocaleDateString() || '',
+                    time: `${actualEvent?.start_time.toLocaleTimeString().replace(/:\d\d/, '')} - ${actualEvent?.end_time.toLocaleTimeString().replace(/:\d\d/, '')}`,
                     room: actualEvent?.location || '',
                     instructor: actualEvent?.professor.toString().replaceAll(',', ', ') || '',
                 }}

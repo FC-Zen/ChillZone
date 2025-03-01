@@ -39,7 +39,12 @@ export const CalendarScreen = () => {
   );
   const [selectedMonth, setSelectedMonth] = useState(monthsName[new Date().getMonth()]);
 
-  const [events, setEvents] = useState<Calendar>({ events: [] });
+  const [events, setEvents] = useState<Calendar>({
+    id: 0,
+    title: 'Calendrier',
+    url: '',
+    events: [],
+  });
   const [adeModal, setAdeModal] = useState(false);
   const [adeLink, setAdeLink] = useState('');
   const [helpModal, setHelpModal] = useState(false);
@@ -61,7 +66,7 @@ export const CalendarScreen = () => {
   const eventsMemo = useMemo(() => events, [events]);
 
   const fetchData = async () => {
-    const events = await getCalendarEvents(adeLink);
+    const events = await getCalendarEvents();
     if (events !== null) setEvents(events);
   };
 
