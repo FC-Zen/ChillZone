@@ -2,6 +2,7 @@ import { IconProps } from '@components/atoms';
 import { API_URL } from '@env';
 import { SessionContext } from '@contexts';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type MealProps = {
   category: string;
@@ -20,16 +21,15 @@ export const fetchAllMeals = async (
 ): Promise<Record<string, MealProps[]>> => {
   console.log('Fetch meals du restau:', RestaurantID);
 
-  const sessionContext = SessionContext.getInstance();
-  const token = sessionContext.getToken();
-  console.log('🚀 ~ token:', token);
+  const access = await AsyncStorage.getItem('access');
+  console.log('🚀 ~ token:', access);
 
   try {
-    console.log('URL: ', `${API_URL}restaurant/${RestaurantID}`);
+    console.log('URL: ', `${API_URL}restaurant/${RestaurantID}/`);
 
-    const response = await axios.get(`${API_URL}restaurant/${RestaurantID}`, {
+    const response = await axios.get(`${API_URL}restaurant/${RestaurantID}/`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${access}`,
       },
     });
 

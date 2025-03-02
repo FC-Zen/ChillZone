@@ -29,7 +29,7 @@ export const getAllMenus = async (
     const token = await AsyncStorage.getItem('access');
 
     // Requête pour récupérer les menus
-    const response = await axios.get(`${API_URL}restaurant/${RestaurantID}`, {
+    const response = await axios.get(`${API_URL}restaurant/${RestaurantID}/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
