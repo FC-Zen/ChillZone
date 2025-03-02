@@ -120,7 +120,7 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
           }}
           buttonProps={{
             title: t('buttons.actions.cart'),
-            onPress: () => navigation.navigate(ROUTE.CART),
+            onPress: () => navigation.navigate(ROUTE.CART, { restaurantId }),
           }}
           pageHeaderProps={{
             title: restaurantName,
@@ -180,7 +180,7 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
           }}
           buttonProps={{
             title: t('buttons.actions.cart'),
-            onPress: () => navigation.navigate(ROUTE.CART),
+            onPress: () => navigation.navigate(ROUTE.CART, { restaurantId }),
           }}
           pageHeaderProps={{
             title: restaurantName,

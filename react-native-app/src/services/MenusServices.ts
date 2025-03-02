@@ -26,8 +26,7 @@ export const getAllMenus = async (
   RestaurantID: number
 ): Promise<MenuProps[]> => {
   try {
-    const sessionContext = SessionContext.getInstance();
-    const token = sessionContext.getToken();
+    const token = await AsyncStorage.getItem('access');
 
     // Requête pour récupérer les menus
     const response = await axios.get(`${API_URL}restaurant/${RestaurantID}`, {

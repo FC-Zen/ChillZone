@@ -51,7 +51,7 @@ export type RouteParamList = {
   AccountScreen: undefined;
   LinksScreen: undefined;
   ReservationSummaryScreen: undefined;
-  CartScreen: undefined;
+  CartScreen: { restaurantId?: RestaurantData['id'] };
   AlertScreen: undefined;
   CommandSummaryScreen: undefined;
   CalendarScreen: undefined;
