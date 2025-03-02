@@ -1,6 +1,6 @@
-import base64
 import os
 from django.core.mail import EmailMultiAlternatives
+from email.mime.image import MIMEImage
 from decouple import config
 
 base_url = config('BASE_URL')
@@ -8,19 +8,12 @@ base_url = config('BASE_URL')
 class EmailService:
 
     @staticmethod
-    def encode_image_to_base64(image_path):
-        with open(image_path, "rb") as image_file:
-            encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
-            return f"data:image/png;base64,{encoded_string}"
-
-    @staticmethod
     def send_reset_email(user_email, token):
         subject = "Demande de réinitialisation de mot de passe"
         from_email = "ChillZone - Mon IUT"
         to_email = [user_email]
 
-        logo_path = os.path.join(os.getcwd(), "chillzone/services/img/logo-zen-fill.png")
-        logo_base64 = EmailService.encode_image_to_base64(logo_path)
+        logo_path = os.path.join(os.getcwd(), "chillzone", "services", "img", "logo-zen-fill.png")
 
         html_message = f'''
         <html>
@@ -37,7 +30,7 @@ class EmailService:
                 <p>&copy; 2025 <a href="https://github.com/FC-Zen">FC-Zen</a>. Tous droits réservés.</p>
             </div>
             <div style="text-align: center; margin-bottom: 10px;">
-                <img src="{logo_base64}" alt="Logo Zen" style="width: 100px;">
+                <img src="cid:logo_zen" alt="Logo Zen" style="width: 100px;">
             </div>
         </body>
         </html>
@@ -47,6 +40,12 @@ class EmailService:
         email.attach_alternative(html_message, "text/html")
 
         try:
+            with open(logo_path, "rb") as img:
+                img_data = img.read()
+                image = MIMEImage(img_data)
+                image.add_header("Content-ID", "<logo_zen>")
+                email.attach(image)
+
             email.send()
             return True
         except Exception as e:
@@ -59,8 +58,7 @@ class EmailService:
         from_email = "ChillZone - Mon IUT"
         to_email = [user_mail]
 
-        logo_path = os.path.join(os.getcwd(), "chillzone/services/img/logo-zen-fill.png")
-        logo_base64 = EmailService.encode_image_to_base64(logo_path)
+        logo_path = os.path.join(os.getcwd(), "chillzone", "services", "img", "logo-zen-fill.png")
 
         html_message = f'''
         <html>
@@ -83,7 +81,7 @@ class EmailService:
                 <p>&copy; 2025 <a href="https://github.com/FC-Zen">FC-Zen</a>. Tous droits réservés.</p>
             </div>
             <div style="text-align: center; margin-bottom: 10px;">
-                <img src="{logo_base64}" alt="Logo Zen" style="width: 100px;">
+                <img src="cid:logo_zen" alt="Logo Zen" style="width: 100px;">
             </div>
         </body>
         </html>
@@ -93,6 +91,12 @@ class EmailService:
         email.attach_alternative(html_message, "text/html")
 
         try:
+            with open(logo_path, "rb") as img:
+                img_data = img.read()
+                image = MIMEImage(img_data)
+                image.add_header("Content-ID", "<logo_zen>")
+                email.attach(image)
+
             email.send()
             return True
         except Exception as e:
@@ -106,8 +110,7 @@ class EmailService:
         from_email = "ChillZone - Mon IUT"
         to_email = [user_email]
 
-        logo_path = os.path.join(os.getcwd(), "chillzone/services/img/logo-zen-fill.png")
-        logo_base64 = EmailService.encode_image_to_base64(logo_path)
+        logo_path = os.path.join(os.getcwd(), "chillzone", "services", "img", "logo-zen-fill.png")
 
         html_message = f'''
         <html>
@@ -124,7 +127,7 @@ class EmailService:
                 <p>&copy; 2025 <a href="https://github.com/FC-Zen">FC-Zen</a>. Tous droits réservés.</p>
             </div>
             <div style="text-align: center; margin-bottom: 10px;">
-                <img src="{logo_base64}" alt="Logo Zen" style="width: 100px;">
+                <img src="cid:logo_zen" alt="Logo Zen" style="width: 100px;">
             </div>
         </body>
         </html>
@@ -134,10 +137,16 @@ class EmailService:
         email.attach_alternative(html_message, "text/html")
 
         try:
+            with open(logo_path, "rb") as img:
+                img_data = img.read()
+                image = MIMEImage(img_data)
+                image.add_header("Content-ID", "<logo_zen>")
+                email.attach(image)
+
             email.send()
             return True
         except Exception as e:
-            print(f"Erreur lors de l'envoi de l'email d'approbation : {e}")
+            print(f"Erreur lors de l'envoi de l'email : {e}")
             return False
 
     @staticmethod
@@ -147,8 +156,7 @@ class EmailService:
         from_email = "ChillZone - Mon IUT"
         to_email = [user_email]
 
-        logo_path = os.path.join(os.getcwd(), "chillzone/services/img/logo-zen-fill.png")
-        logo_base64 = EmailService.encode_image_to_base64(logo_path)
+        logo_path = os.path.join(os.getcwd(), "chillzone", "services", "img", "logo-zen-fill.png")
 
         html_message = f'''
         <html>
@@ -163,7 +171,7 @@ class EmailService:
                 <p>&copy; 2025 <a href="https://github.com/FC-Zen">FC-Zen</a>. Tous droits réservés.</p>
             </div>
             <div style="text-align: center; margin-bottom: 10px;">
-                <img src="{logo_base64}" alt="Logo Zen" style="width: 100px;">
+                <img src="cid:logo_zen" alt="Logo Zen" style="width: 100px;">
             </div>
         </body>
         </html>
@@ -173,8 +181,14 @@ class EmailService:
         email.attach_alternative(html_message, "text/html")
 
         try:
+            with open(logo_path, "rb") as img:
+                img_data = img.read()
+                image = MIMEImage(img_data)
+                image.add_header("Content-ID", "<logo_zen>")
+                email.attach(image)
+
             email.send()
             return True
         except Exception as e:
-            print(f"Erreur lors de l'envoi de l'email de refus : {e}")
+            print(f"Erreur lors de l'envoi de l'email : {e}")
             return False
