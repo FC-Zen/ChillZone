@@ -11,6 +11,7 @@ import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen: React.FC = () => {
   const userContext = UserContext.getInstance();
@@ -22,6 +23,8 @@ export const HomeScreen: React.FC = () => {
 
   console.log("User data Home screen: ",userContext);
   console.log("Notification setting Home screen: ",userContext.getNotificationSetting());
+  AsyncStorage.getItem('access').then((access) => console.log("Access Home screen :", access))
+  AsyncStorage.getItem('refresh').then((refresh) => console.log("Refresh Home screen :", refresh))
 
   if (nextBooking) {
     items = nextBooking;

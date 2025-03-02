@@ -44,10 +44,11 @@ export const LoginScreen: React.FC = () => {
         console.log("User data: ",result.data);
         const userContext = UserContext.getInstance();
         userContext.setUser(result.data);
-        console.log("n,otif");
-        //userContext.setNotificationSetting(result.data.notifications[0]);
+        userContext.setNotificationSetting(result.data.notifications[0]);
+        console.log("User: ", userContext.getUser())
+        navigation.navigate(ROUTE.HOME);
       }
-      navigation.navigate(ROUTE.HOME);
+      
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Une erreur est survenue.';
