@@ -117,16 +117,6 @@ export const ReservationScreen = () => {
         onSelect: (selected: string) => setSelectedDuration(selected),
       },
     ],
-    [
-      {
-        placeholder: t('fields.room.schedules'),
-        icon: 'Calendar',
-        variant: 'select',
-        data: timeSlots,
-        onSelect: (selected: string) => setSelectedTimeSlot(selected),
-        disabled: selectedDuration === '',
-      },
-    ],
   ];
 
   const roomSelectorProps = {
