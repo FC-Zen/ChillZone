@@ -161,10 +161,17 @@ class UserInfoUpdateView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request):
+        print(request.data)
         serializer = UserProfilePictureUpdateSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            user_meta = request.user.usermeta  
+            if not user_meta:
+                return Response({"error": "UserMeta introuvable"}, status=status.HTTP_400_BAD_REQUEST)
+            user_meta.photo_link = serializer.validated_data.get('photo_link', user_meta.photo_link)
+            user_meta.save()
+
+            return Response({"photo_link": user_meta.photo_link.url}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         serializer = UserInfoUpdateSerializer(data=request.data)
@@ -184,6 +191,15 @@ class UserInfoUpdateView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    def delete(self, request):
+        user_meta = request.user.usermeta
+        if not user_meta:
+            return Response({"error": "UserMeta introuvable"}, status=status.HTTP_400_BAD_REQUEST)
+        # Remettre l'image par défaut
+        user_meta.photo_link = "user/DefaultProfile.png"
+        user_meta.save()
+        return Response({"photo_link": user_meta.photo_link.url}, status=status.HTTP_200_OK)
+
 class OwnerCreateView(APIView):
     serializer_class = OwnerCreateSerializer
 

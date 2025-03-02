@@ -1,195 +1,169 @@
-export const accountServices = {
-  /**
-   * Met à jour les informations utilisateur.
-   * @param {Object} userInfo - Les informations utilisateur à mettre à jour.
-   * @param {string} userInfo.firstName - Le prénom de l'utilisateur.
-   * @param {string} userInfo.lastName - Le nom de famille de l'utilisateur.
-   * @param {string} userInfo.phone - Le téléphone de l'utilisateur.
-   * @param {string} userInfo.email - L'email de l'utilisateur.
-   * @returns {Promise<void>} - Une promesse qui indique que les informations ont été mises à jour.
-   */
-  updateUserInfo: async (userInfo: {
-    firstName: string;
-    lastName: string;
-    phone: string;
-    email: string;
-  }): Promise<void> => {
+import { getCsrfToken } from "@utils/functions";
+import { API_URL } from '@env';
+import axios from "axios";
+import { z } from "zod";
+import { getAccessToken } from "@utils/functions/Auth";
+
+/**
+ * Récupère la liste des liens de l'établissement depuis l'API.
+ *
+ * @throws {Error} Si la requête échoue.
+ * 
+ * @returns {Promise<Array>} Liste des salles.
+ */
+export const getLinksNetworks = async () => {
     try {
-      // Exemple : envoyer les données mises à jour à une API
-      const response = await fetch('https://api.example.com/user/update', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userInfo),
-      });
+        const token = await getAccessToken(); 
+        const response = await axios.get(`${API_URL}network/`, {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to update user info');
-      }
-
-      console.log('User info updated successfully');
-    } catch (error) {
-      console.error('Error updating user info:', error);
-      throw error;
-    }
-  },
-
-  /**
-   * Valide les informations utilisateur.
-   * @param {Object} userInfo - Les informations utilisateur à valider.
-   * @returns {boolean} - True si les informations sont valides, sinon false.
-   */
-  validateUserInfo: (userInfo: {
-    firstName: string;
-    lastName: string;
-    phone: string;
-    email: string;
-  }): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[0-9]{10}$/;
-
-    if (!userInfo.firstName.trim()) {
-      console.error('First name is required');
-      return false;
-    }
-
-    if (!userInfo.lastName.trim()) {
-      console.error('Last name is required');
-      return false;
-    }
-
-    if (!emailRegex.test(userInfo.email)) {
-      console.error('Invalid email format');
-      return false;
-    }
-
-    if (!phoneRegex.test(userInfo.phone)) {
-      console.error('Invalid phone number format');
-      return false;
-    }
-
-    return true;
-  },
-
-  /**
-   * Vérifie si un mot de passe respecte les critères de validation.
-   * @param {string} password - Le mot de passe à valider.
-   * @returns {boolean} - True si le mot de passe est valide, sinon False.
-   */
-  validatePassword: (password: string): boolean => {
-    const minLength = password.length >= 12;
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasLowercase = /[a-z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasSpecialChar = /[@$!%*?&]/.test(password);
-
-    return (
-      minLength &&
-      hasUppercase &&
-      hasLowercase &&
-      hasNumber &&
-      hasSpecialChar
-    );
-  },
-
-  /**
-   * Met à jour le mot de passe utilisateur.
-   * @param {string} oldPassword - L'ancien mot de passe.
-   * @param {string} newPassword - Le nouveau mot de passe.
-   * @returns {Promise<void>} - Une promesse qui indique que le mot de passe a été mis à jour.
-   */
-  updatePassword: async (oldPassword: string, newPassword: string): Promise<void> => {
-    try {
-      const response = await fetch('https://api.example.com/user/change-password', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ oldPassword, newPassword }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update password');
-      }
-
-      console.log('Password updated successfully');
-    } catch (error) {
-      console.error('Error updating password:', error);
-      throw error;
-    }
-  },
-
-  resetPassword: async (email: string): Promise<void> => {
-    if (!email) {
-      throw new Error("L'adresse e-mail est requise.");
-    }
-  
-    try {
-      // Effectuer un appel API pour initier la réinitialisation
-      const response = await fetch('https://api.example.com/user/reset-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }), // Envoi de l'email à l'API
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Échec de la réinitialisation du mot de passe.');
-      }
-  
-      console.log('Email de réinitialisation envoyé avec succès.');
+        if (response.status === 200) {
+            return { data: response.data };
+        } else {
+            throw new Error('Erreur lors de la récupération des comptes');
+        }
     } catch (error: any) {
-      console.error('Erreur lors de la demande de réinitialisation :', error.message || error);
-      throw new Error(error.message || 'Une erreur est survenue.');
+        console.error("Erreur lors de la récupération des salles:", error.message);
+        throw new Error(error.message);
     }
-  },
-  
-  /**
-   * Change l'image de profil de l'utilisateur.
-   * @param {File | string} profilePicture - Fichier ou URL de l'image.
-   */
-  changeProfilePicture: async (profilePicture: File | string): Promise<void> => {
+};
+
+// Schéma CNIL
+const passwordSchema = (t: Function) =>
+    z.string()
+        .min(12, t('zod.minLength'))
+        .regex(/[A-Z]/, t('zod.uppercase'))
+        .regex(/[a-z]/, t('zod.lowercase'))
+        .regex(/[0-9]/, t('zod.number'))
+        .regex(/[!@#$%^&*(),.?":{}|<>]/, t('zod.specialChar'));
+
+/**
+ * Change le mdp du compte
+ */
+export const updatePassword = async (
+    formData: { password_actual: string; password: string; confirmPassword: string; }, 
+    t: Function 
+) => {
     try {
-      const formData = new FormData();
-      formData.append('profilePicture', profilePicture);
+        if (formData.password !== formData.confirmPassword) {
+            throw new Error(t('zod.passwordMismatch'));
+        }
+        
+        passwordSchema(t).parse(formData.password);
+        
+        const token = await getAccessToken();
+        const response = await axios.put(`${API_URL}change-password/`, {
+            password: formData.password,
+            password_actual: formData.password_actual,
+            password_verified: formData.confirmPassword
+        }, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+            }
+        });
 
-      const response = await fetch('https://api.example.com/profile-picture', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer YOUR_TOKEN`, // Ajoutez le token d'authentification si nécessaire
-        },
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Échec du changement de la photo de profil.');
-      }
-    } catch (error) {
-      throw new Error( 'Une erreur est survenue.');
+        if (response.status === 200) {
+            return { success: true, message: 'Mot de passe changé avec succès.' };
+        } else if (response.status === 404) {
+            return { success: false, message: 'Problème de token' };
+        }
+    } catch (error: any) {
+        if (error instanceof z.ZodError) {
+            console.error('Erreur de validation :', error.errors);
+            throw new Error(error.errors.map((e) => e.message).join(' '));
+        }
+        console.error('Erreur lors du changement de mot de passe:', error.message);
+        throw new Error(error.message);
     }
-  },
+};
 
-  /**
-   * Supprime l'image de profil de l'utilisateur.
-   */
-  deleteProfilePicture: async (): Promise<void> => {
+/**
+ * Met à jour les informations utilisateur
+ */
+export const updateInfoUser = async (
+    formData: { first_name: string; last_name: string; phone: string },
+    t: Function
+) => {
     try {
-      const response = await fetch('https://api.example.com/profile-picture', {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer YOUR_TOKEN`, // Ajoutez le token d'authentification si nécessaire
-        },
-      });
+        const token = await getAccessToken(); 
+        const response = await axios.put(`${API_URL}change-information-profil/`, {
+            first_name: formData.first_name,
+            last_name: formData.last_name,
+            phone: formData.phone,
+        }, 
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+            }
+        });
 
-      if (!response.ok) {
-        throw new Error('Échec de la suppression de la photo de profil.');
-      }
-    } catch (error) {
-      throw new Error( 'Une erreur est survenue.');
+        if (response.status === 200) {
+            return { success: true, message: 'Informations mises à jour avec succès.' };
+        } else if (response.status === 404) {
+            return { success: false, message: 'Problème de token' };
+        }
+    } catch (error: any) {
+        console.error('Erreur lors de la mise à jour du profil:', error.message);
+        throw new Error(error.message);
     }
-  },
-  
+};
+
+/**
+ * Met à jour les informations utilisateur
+ */
+export const changeProfilePicture = async (
+    formData: FormData
+) => {
+    try {
+        console.log(formData);
+        const token = await getAccessToken(); 
+        const response = await axios.post(`${API_URL}change-information-profil/`, 
+        formData,
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        if (response.status === 200) {
+            return { success: true, message: 'Informations mises à jour avec succès.', data : response.data };
+        } else if (response.status === 404) {
+            return { success: false, message: 'Problème de token' };
+        }
+    } catch (error: any) {
+        console.error('Erreur lors de la mise à jour du profil:', error.message);
+        throw new Error(error.message);
+    }
+};
+
+/**
+ * Supprime la photo de profil de l'utilisateur (reste à default profile)
+ */
+export const deleteProfilePicture = async () => {
+    try {
+        const token = await getAccessToken();
+        
+        const response = await axios.delete(`${API_URL}change-information-profil/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        if (response.status === 200) {
+            return { success: true, message: 'Photo de profil supprimée avec succès.', data : response.data };
+        } else if (response.status === 404) {
+            return { success: false, message: 'Utilisateur non trouvé ou token invalide.' };
+        }
+    } catch (error: any) {
+        console.error('Erreur lors de la suppression de la photo de profil:', error.message);
+        throw new Error(error.message);
+    }
 };

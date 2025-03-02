@@ -63,7 +63,7 @@ export const testAuthenticateUser = async () => {
       // Cas inattendu (juste par sécurité)
       return { success: false, message: "Statut inattendu", data: null };
   } catch (error: any) {
-      if (error.response?.status === 401) {
+      if (error.response?.status === 405) {
           // 🔥 Utilisateur non connecté = pas d'erreur bloquante
           return { success: false, message: "Pas encore identifié", data: null };
       } else {
@@ -91,19 +91,20 @@ export const authenticateUser = async (formData: { login: string; password: stri
   }else{
 
   try {
-    const response = await axios.post(
-      `${API_URL}login/`,
-      { login: formData.login, password: formData.password },
-      { withCredentials: true }
-    );
-
+    const response = await axios.post( `${API_URL}login/` , {
+      username: formData.login,
+      password: formData.password,
+    });
     if (response.status === 200) {
-      if (response.data.type !== "user") {
+      if (response.data.type !== "superadmin") {
         return { success: false, message: "Connexion non autorisée", data: null };
       } else {
         // 🔹 Récupérer les cookies `sessionid` et `csrftoken`
         const setCookieHeader = response.headers["set-cookie"]?.[0].split(/[,;]\s*/);
         console.log("Set-Cookie Header:", setCookieHeader);
+
+        await AsyncStorage.setItem('access', response.data.access);
+        await AsyncStorage.setItem('refresh', response.data.refresh);
 
         let sessionId: string | null = null;
         let csrfToken: string | null = null;
@@ -213,9 +214,9 @@ export const sendPasswordRecoveryEmail = async (formData: {
   try {
     const response = await axios.post(
       `${API_URL}forget-password/`,
-      { email: formData.email },
-      { withCredentials: true }
+      { email: formData.email }
     );
+    console.log(response);
     if (response.status === 200) {
       console.log(`Email de récupération envoyé à : ${formData.email}`);
       return {

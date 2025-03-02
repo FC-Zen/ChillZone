@@ -249,6 +249,17 @@
     "day": "jour"
   },
 
+  "networks" : {
+    "facebook": "Facebook",
+    "x": "X",
+    "instagram": "Instagram",
+    "youtube": "Youtube",
+    "linkedin": "LinkedIn",
+    "workspace": "Espace de travail",
+    "website": "Site web",
+    "bluesky": "Bluesky"
+  },
+  
   "notification": {
     "title": "Nouvelle Réservation !",
     "reservation": "Votre réservation pour {{roomName}} a été confirmée.",

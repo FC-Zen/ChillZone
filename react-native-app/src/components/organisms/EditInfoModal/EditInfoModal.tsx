@@ -10,8 +10,8 @@ export type EditInfoModalProps = {
   isOpen: boolean;
   onClose: () => void;
   data: {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     phone: string;
   };
   onChange: (field: keyof EditInfoModalProps['data'], value: string) => void;
@@ -48,15 +48,15 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({
             style={styles.input}
             placeholder={t('fields.common.first_name')}
             icon="User"
-            value={data.firstName}
-            onChangeText={(text) => onChange('firstName', text)}
+            value={data.first_name}
+            onChangeText={(text) => onChange('first_name', text)}
           />
           <Input
             style={styles.input}
             placeholder={t('fields.common.last_name')}
             icon="User"
-            value={data.lastName}
-            onChangeText={(text) => onChange('lastName', text)}
+            value={data.last_name}
+            onChangeText={(text) => onChange('last_name', text)}
           />
           <Input
             style={styles.input}

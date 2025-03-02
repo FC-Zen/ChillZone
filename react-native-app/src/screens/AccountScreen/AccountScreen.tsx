@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { AccountTemplate } from '@components/templates';
 import { styles } from './style';
-import { translationService } from '@services';
+import { sendPasswordRecoveryEmail, translationService } from '@services';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
-import { accountServices } from '@services/AccountServices';
-import { useUser } from '@contexts/AppContrext';
+import * as ImagePicker from 'expo-image-picker';
+import { UserContext } from '@contexts';
+import { changeProfilePicture, deleteProfilePicture, updateInfoUser, updatePassword } from '@services/AccountServices';
+import { useTranslation } from 'react-i18next';
+import { SnackBar } from '@components';
 
 export const AccountScreen: React.FC = () => {
   // États pour les modales
@@ -15,27 +18,38 @@ export const AccountScreen: React.FC = () => {
   const [isEditInfoModalOpen, setEditInfoModalOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    severity: 'success' | 'error';
+    message: string;
+  }>({
+    open: false,
+    severity: 'success',
+    message: '',
+  });
+
   // Navigation
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   // États pour le thème sombre et la langue
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   // Données utilisateur
+  const userContext = UserContext.getInstance().getUser();
   const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
+    first_name: userContext.first_name,
+    last_name: userContext.last_name,
+    phone: userContext.phone,
+    email: userContext.email,
+    photo_link : userContext.photo_link
   });
 
   // État pour le mot de passe et email
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(userData.email);
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  const { userName } = useUser();
 
   // Validation du mot de passe
   const newPasswordValidation = {
@@ -47,95 +61,129 @@ export const AccountScreen: React.FC = () => {
   };
 
   // Gestion des champs d'input
-  const handleInputChange = (data: {
-    field: keyof typeof userData;
-    value: string;
-  }) => {
-    setUserData((prev) => ({ ...prev, [data.field]: data.value }));
+  const handleInputChange = (field: string, value: string) => {
+    setUserData((prev) => ({ ...prev, [field]: value }));
   };
-
+  
   // Actions pour les modales
   const handleConfirmEditInfo = async () => {
     try {
-      if (!accountServices.validateUserInfo(userData)) {
-        Alert.alert('Erreur', 'Veuillez vérifier les informations saisies.');
-        return;
+      const res = await updateInfoUser(
+        {
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          phone: userData.phone,
+        },
+        t
+      );
+      if (res?.success) {
+        setSnackbar({ open: true, severity: 'success', message: res.message });
       }
-      await accountServices.updateUserInfo(userData);
-      Alert.alert('Succès', 'Vos informations ont été mises à jour.');
       setEditInfoModalOpen(false);
     } catch {
-      Alert.alert('Erreur', 'Une erreur est survenue lors de la mise à jour.');
+      setSnackbar({ open: true, severity: 'error', message: 'Une erreur est survenue lors de la mise à jour.' });
     }
   };
 
   const handleResetPassword = async () => {
     try {
-      if (!email) {
-        Alert.alert('Erreur', 'Veuillez entrer une adresse e-mail.');
-        return;
+      if (email) {
+        const res = await sendPasswordRecoveryEmail({ email: email });
+        if (res?.success) {
+          setSnackbar({ open: true, severity: 'success', message: res.message });
+        }
       }
-      await accountServices.resetPassword(email);
-      Alert.alert(
-        'Succès',
-        `Un e-mail de réinitialisation a été envoyé à ${email}.`
-      );
       setResetModalOpen(false);
     } catch {
-      Alert.alert('Erreur', 'Une erreur est survenue.');
+      setSnackbar({ open: true, severity: 'error', message: 'Une erreur est survenue.' });
     }
   };
 
   const handleSubmitPasswordChange = async () => {
     try {
-      if (newPassword !== confirmPassword) {
-        Alert.alert('Erreur', 'Les mots de passe ne correspondent pas.');
-        return;
+      const res = await updatePassword(
+        {
+          password_actual: oldPassword,
+          password: newPassword,
+          confirmPassword: confirmPassword,
+        },
+        t
+      );
+      if (res?.success) {
+        setSnackbar({ open: true, severity: 'success', message: res.message });
       }
-      if (!accountServices.validatePassword(newPassword)) {
-        Alert.alert(
-          'Erreur',
-          'Le nouveau mot de passe ne respecte pas les critères requis.'
-        );
-        return;
-      }
-      await accountServices.updatePassword(oldPassword, newPassword);
-      Alert.alert('Succès', 'Mot de passe modifié avec succès.');
       setPasswordModalOpen(false);
     } catch {
-      Alert.alert('Erreur', 'La mise à jour du mot de passe a échoué.');
+      setSnackbar({ open: true, severity: 'error', message: 'La mise à jour du mot de passe a échoué.' });
     }
   };
+
 
   const handleChangePicture = async () => {
     try {
-      const mockFile = 'file://example-path/profile-picture.png';
-      await accountServices.changeProfilePicture(mockFile);
-      Alert.alert('Succès', 'Votre photo de profil a été mise à jour.');
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert("Permission d'accès aux images refusée !");
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+  
+      if (result.canceled) {
+        console.log('Sélection annulée');
+        return;
+      }
+  
+      const selectedImage = result.assets[0];
+  
+      const formData = new FormData();
+      formData.append('photo_link', {
+        uri: selectedImage.uri,
+        name: selectedImage.fileName || 'profile.jpg',
+        type: 'image/jpeg'
+      } as any);
+      const res = await changeProfilePicture(formData);
+      if (res?.success) {
+        UserContext.getInstance().setUser({ ...userContext, photo_link: res.data.photo_link });
+        setUserData((prev) => ({ ...prev, photo_link: res.data.photo_link }));
+        setSnackbar({ open: true, severity: 'success', message: res.message });
+      }
     } catch (error) {
-      Alert.alert(
-        'Erreur',
-        (error as any).message || 'Une erreur est survenue.'
-      );
+      console.error('Erreur lors de l’envoi de l’image:', error);
+    }
+  };
+  
+  
+  const handleDeletePicture = async () => {
+    try {
+      const res = await deleteProfilePicture();
+      if (res?.success) {
+        UserContext.getInstance().setUser({ ...userContext, photo_link: res.data.photo_link });
+        setUserData((prev) => ({ ...prev, photo_link: res.data.photo_link }));      
+        setSnackbar({ open: true, severity: 'success', message: res.message });
+      }
+    } catch (error) {
+      setSnackbar({ open: true, severity: 'error', message: (error as any).message || 'Une erreur est survenue.' });
     }
   };
 
-  const handleDeletePicture = async () => {
-    try {
-      await accountServices.deleteProfilePicture();
-      Alert.alert('Succès', 'Votre photo de profil a été supprimée.');
-    } catch (error) {
-      Alert.alert(
-        'Erreur',
-        (error as any).message || 'Une erreur est survenue.'
-      );
-    }
-  };
 
   return (
     <SafeAreaView
       style={[styles.container, isDarkTheme && styles.darkContainer]}
     >
+      <SnackBar
+        visible={snackbar.open}
+        message={snackbar.message}
+        onDismiss={() => setSnackbar({ ...snackbar, open: false })}
+        severity={snackbar.severity}
+      />
+
       <AccountTemplate
         isDarkTheme={isDarkTheme}
         onToggleTheme={() => setIsDarkTheme(!isDarkTheme)}
@@ -147,9 +195,7 @@ export const AccountScreen: React.FC = () => {
         onCloseResetModal={() => setResetModalOpen(false)}
         onOpenEditInfoModal={() => setEditInfoModalOpen(true)}
         onCloseEditInfoModal={() => setEditInfoModalOpen(false)}
-        onNavigateToReservations={() =>
-          navigation.navigate(ROUTE.RESERVATION_SUMMARY)
-        }
+        onNavigateToReservations={() => navigation.navigate(ROUTE.RESERVATION_SUMMARY)}
         onNavigateToCommand={() => navigation.navigate(ROUTE.COMMAND_SUMMARY)}
         onChangePicture={handleChangePicture}
         onDeletePicture={handleDeletePicture}
@@ -174,7 +220,6 @@ export const AccountScreen: React.FC = () => {
         onOpenModal={() => setModalOpen(true)}
         onCloseModal={() => setModalOpen(false)}
         onBackPress={() => navigation.navigate(ROUTE.HOME)}
-        userName={userName}
       />
     </SafeAreaView>
   );

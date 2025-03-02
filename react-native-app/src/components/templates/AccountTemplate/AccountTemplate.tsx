@@ -23,7 +23,6 @@ export type AccountTemplateProps = {
   onNavigateToCommand: () => void;
   onChangePicture: () => void;
   onDeletePicture: () => void;
-  userName: string | null;
   isModalOpen: boolean;
   onOpenModal: () => void;
   onCloseModal: () => void;
@@ -52,7 +51,7 @@ export type AccountTemplateProps = {
   isEditInfoModalOpen: boolean;
   onCloseEditInfoModal: () => void;
   userData: any;
-  handleInputChange: (data: any) => void;
+  handleInputChange: (field: string, value: string) => void;
   handleConfirmEditInfo: () => void;
 };
 
@@ -68,7 +67,6 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
   onNavigateToCommand,
   onChangePicture,
   onDeletePicture,
-  userName,
   isModalOpen,
   onOpenModal,
   onCloseModal,
@@ -112,9 +110,10 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
 
       {/* Section du profil avec modale */}
       <View style={styles.container}>
-        <ProfileHeader name={userName ?? ''} onOpenModal={onOpenModal} />
+        <ProfileHeader name={`${userData.first_name || ''} ${userData.last_name || ''}`} onOpenModal={onOpenModal} photo_link={userData.photo_link}/>
 
         <ChangeProfilePictureModal
+          photo_link={userData.photo_link}
           isOpen={isModalOpen}
           onClose={onCloseModal}
           onChangePicture={onChangePicture}

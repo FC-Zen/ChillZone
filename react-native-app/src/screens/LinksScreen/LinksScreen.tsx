@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Linking } from 'react-native';
 import { PageHeader } from '@components/molecules/PageHeader';
-import socialLinks from 'src/assets/data/social_networks.json';
 import { colors } from '@theme';
 import { styles } from './style';
 import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
 import { Icon } from '@components/atoms/Icons';
 import { useTranslation } from 'react-i18next';
+import { getLinksNetworks } from '@services/AccountServices';
+
+export type Links = {
+  id : number;
+  type : string;
+  link_network : string;
+}
 
 export const LinksScreen: React.FC = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const [socialLinks,setSocialLinks] = useState<Links[]>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getLinksNetworks();
+        if (res) {
+          setSocialLinks(res.data);
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleOpenLink = (url: string) => {
     Linking.openURL(url).catch((err) =>
@@ -21,20 +43,22 @@ export const LinksScreen: React.FC = () => {
 
   const getIconForType = (type: string) => {
     switch (type) {
-      case 'Facebook':
+      case 'facebook':
         return <Icon name="Facebook" width={42} height={42} />;
-      case 'X':
+      case 'x':
         return <Icon name="X" width={42} height={42} />;
-      case 'Instagram':
+      case 'instagram':
         return <Icon name="Instagram" width={42} height={42} />;
-      case 'Youtube':
+      case 'youtube':
         return <Icon name="Youtube" width={42} height={42} />;
-      case 'LinkedIn':
+      case 'linkedin':
         return <Icon name="LinkendIn" width={42} height={42} />;
-      case 'ENT':
+      case 'workspace':
         return <Icon name="Ent" width={42} height={42} />;
-      case "Site de l'université":
+      case "website":
         return <Icon name="Web" width={42} height={42} />;
+      case "bluesky":
+        return <Icon name="Bluesky" width={42} height={42} />;
       default:
         return <Icon name="Web" width={42} height={42} />;
     }
@@ -50,7 +74,7 @@ export const LinksScreen: React.FC = () => {
 
       {/* Liste des liens */}
       <View style={styles.linksContainer}>
-        {socialLinks.social_networks.map((link, index) => (
+        {socialLinks.map((link, index) => (
           <TouchableOpacity
             key={index}
             style={styles.linkContainer}
@@ -58,7 +82,7 @@ export const LinksScreen: React.FC = () => {
           >
             <View style={styles.linkContent}>
               <View>{getIconForType(link.type)}</View>
-              <Text style={styles.linkText}>{link.type}</Text>
+              <Text style={styles.linkText}>{t(`networks.${link.type}`)}</Text>
             </View>
             <Icon
               name="ArrowRight"
