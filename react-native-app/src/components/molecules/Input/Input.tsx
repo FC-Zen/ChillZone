@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   StyleProp,
   TextInput,
@@ -17,7 +17,13 @@ export type InputProps = {
   subIcon?: IconProps['name'];
   onChangeText?: (text: string) => void;
   value?: string;
-  variant?: 'default' | 'password' | 'subtitled' | 'search' | 'select';
+  variant?:
+    | 'default'
+    | 'password'
+    | 'subtitled'
+    | 'search'
+    | 'select'
+    | 'modal-select';
   style?: StyleProp<ViewStyle>;
   subtitle?: string;
   subtitleColor?: string;
@@ -25,6 +31,7 @@ export type InputProps = {
   data?: string[];
   onFilter?: (filteredData: string) => void;
   onSelect?: (selected: string) => void;
+  onPress?: () => void;
   disabled?: boolean;
 };
 
@@ -42,6 +49,7 @@ export const Input: FC<InputProps> = ({
   onFilter,
   data = [],
   onSelect,
+  onPress,
   disabled = false,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(
@@ -49,10 +57,14 @@ export const Input: FC<InputProps> = ({
   );
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value || '');
-  const [isIconRotated, setIconRotated] = useState(false); // État pour la rotation de l'icône
+  const [isIconRotated, setIconRotated] = useState(false);
+
+  useEffect(() => {
+    setSelectedValue(value || '');
+  }, [value]);
 
   const handleChange = (text: string) => {
-    if (variant === 'select') return;
+    if (variant === 'select' || variant === 'modal-select') return;
     onChangeText?.(text);
     if (onFilter) {
       onFilter(text);
@@ -91,10 +103,10 @@ export const Input: FC<InputProps> = ({
             <Icon name={icon} />
           </InputIcon>
         )}
-        {variant === 'select' ? (
+        {variant === 'select' || variant === 'modal-select' ? (
           <TouchableOpacity
             style={[InputStyles.input, InputStyles.selectInput]}
-            onPress={toggleDropdown}
+            onPress={variant === 'modal-select' ? onPress : toggleDropdown}
             disabled={disabled}
           >
             <Text

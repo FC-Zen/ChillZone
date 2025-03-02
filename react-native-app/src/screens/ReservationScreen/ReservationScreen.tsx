@@ -8,6 +8,7 @@ import { styles } from './style';
 import { getReservations } from '@services';
 import { getRooms, Room } from '@services/RoomServices';
 import { ReservationModal } from './Modal';
+import { CalendarModal } from './CalendarModal';
 
 export const ReservationScreen = () => {
   const { t } = useTranslation();
@@ -23,6 +24,8 @@ export const ReservationScreen = () => {
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('');
   const [selectedDuration, setSelectedDuration] = useState<string>('');
+
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
   // Calcul de la durée entre le début et la fin
   const calculateDuration = (startTime: string, endTime: string): string => {
@@ -105,9 +108,12 @@ export const ReservationScreen = () => {
       {
         placeholder: t('fields.common.date'),
         icon: 'Calendar',
-        variant: 'select',
-        data: dayReservations,
-        onSelect: (selected: string) => setSelectedDate(selected),
+        variant: 'modal-select',
+        value: selectedDate,
+        onPress: () => {
+          console.log('Clic détecté, ouverture de la modale');
+          setIsCalendarVisible(true);
+        },
       },
       {
         placeholder: t('fields.room.hours'),
@@ -118,6 +124,20 @@ export const ReservationScreen = () => {
       },
     ],
   ];
+
+  const formatDate = (date: string): string => {
+    const d = new Date(date);
+    const day = d.getDate().toString().padStart(2, '0');
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  const handleDateSelect = (date: string) => {
+    const formattedDate = formatDate(date);
+    setSelectedDate(formattedDate);
+    setIsCalendarVisible(false);
+  };
 
   const roomSelectorProps = {
     title: t('filters.roomsOpen'),
@@ -156,6 +176,13 @@ export const ReservationScreen = () => {
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
         data={getModalData()}
+      />
+
+      <CalendarModal
+        visible={isCalendarVisible}
+        onClose={() => setIsCalendarVisible(false)}
+        onSelectDate={handleDateSelect}
+        selectedDate={selectedDate}
       />
     </View>
   );
