@@ -29,9 +29,8 @@ export const authenticateUser = async (formData: { login: string; password: stri
 
         return { success: true, message: 'Connexion réussie !', data: response.data};
       }
-    } else {
-      throw new Error('Erreur de connexion');
-    }
+    } 
+    return { success: false, message: "Erreur lors de la connexion", data: null };
   } catch (error: any) {
     console.error('Erreur lors de l\'authentification:', error.message);
     if (error.status == 401) {
@@ -41,7 +40,7 @@ export const authenticateUser = async (formData: { login: string; password: stri
     } else if (error.status == 404) {
       return { success: false, message: 'Vous n\'êtes plus autorisé à vous connecter. Contactez un administrateur', data: null };
     }
-    throw new Error(error.message);
+    return { success: false, message: "Erreur lors de la connexion", data: null };
   }
 };
 
@@ -89,8 +88,15 @@ export const logoutUser = async () => {
         throw new Error('Échec de la déconnexion.');
       }
   } catch (error: any) {
-    console.error('Erreur lors de la déconnexion :', error.message);
-    throw new Error(error.message);
+    const userContext = UserContext.getInstance();
+
+    if (error.status === 205) {
+      console.error('Déconnexion réussie.');
+      await AsyncStorage.removeItem('access');
+      await AsyncStorage.removeItem('refresh');
+      userContext.clearUser();
+      return { success: true, message: 'Déconnexion réussie.' };
+    }
   }
 };
 
