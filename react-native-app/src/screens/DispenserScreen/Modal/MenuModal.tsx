@@ -14,6 +14,8 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
   const [selectedMeals, setSelectedMeals] = useState<
     Record<string, number | null>
   >({});
+
+  console.log('Menu types : ', menu.meals_by_type);
   const { listItems, updateListItems } = useCommand();
 
   const navigation = useNavigation();
@@ -85,17 +87,20 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     }
   };
 
-  const transformedMeals: MealProps[] = Object.values(menu.meals_by_type || {})
-    .flatMap((category) => Object.values(category).flat())
-    .map((meal) => ({
+  const transformedMeals: MealProps[] = Object.entries(
+    menu.meals_by_type || {}
+  ).flatMap(([category, meals]) =>
+    meals.map((meal) => ({
       ...meal,
       title: meal.name,
       subTitle: meal.description,
       imageUrl: meal.photo_link,
-      meal_type: meal.category,
+      type: category,
+      category: meal.category,
       icon: selectedMeals[meal.category] === meal.id ? 'Check' : 'Add',
       isSelected: selectedMeals[meal.id],
-    }));
+    }))
+  );
 
   return (
     <View style={styles.container2}>
@@ -110,7 +115,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.cont3}>
           <Image source={{ uri: menu.photo_link }} style={styles.image} />
-          <Text style={styles.price}>{menu.price}</Text>
+          <Text style={styles.price}>{menu.price}€</Text>
           <Text style={styles.subtitle}>{menu.description}</Text>
         </View>
 

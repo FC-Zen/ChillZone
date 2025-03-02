@@ -109,6 +109,7 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
             foodItems: filteredMeals.map((meal) => ({
               id: meal.id,
               category: meal.category,
+              type: meal.type,
               description: meal.description,
               name: meal.name,
               price: meal.price,

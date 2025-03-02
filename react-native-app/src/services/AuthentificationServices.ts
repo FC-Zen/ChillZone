@@ -66,7 +66,13 @@ export const authenticateUser = async (
       if (response.data.type !== 'user') {
         return {
           success: false,
-          message: 'Connexion non autorisée',
+          message: 'Vous êtes déjà connectés',
+          data: null,
+        };
+      } else if (response.status === 404) {
+        return {
+          success: false,
+          message: 'Identifiants incorrects',
           data: null,
         };
       } else {

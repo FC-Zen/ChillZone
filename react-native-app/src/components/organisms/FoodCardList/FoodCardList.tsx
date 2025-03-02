@@ -21,7 +21,8 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const getMealTypeLabel = (mealType: MealProps['category']): string => {
+  const getMealTypeLabel = (mealType: MealProps['type']): string => {
+    console.log('mealType : ', mealType);
     switch (mealType) {
       case 'Starter':
         return t('categories.Starter');
@@ -36,14 +37,15 @@ export const FoodCardList: React.FC<FoodCardListProps> = ({
       case 'Other':
         return t('categories.Other');
       default:
-        return mealType;
+        return mealType || '';
     }
   };
 
   const groupedItems = foodItems.reduce(
     (acc, item) => {
-      if ('category' in item) {
-        const mealType = item.category;
+      if ('type' in item) {
+        console.log('item type :', item.type);
+        const mealType = item?.type || 'Other';
         if (!acc[mealType]) {
           acc[mealType] = [];
         }

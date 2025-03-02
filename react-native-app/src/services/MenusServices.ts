@@ -1,4 +1,3 @@
-import { SessionContext } from '@contexts';
 import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MealProps } from '@services/DispenserServices';
@@ -58,6 +57,7 @@ export const getAllMenus = async (
               price: meal.price,
               stock: meal.stock,
               category: meal.category,
+              type: meal.type,
               tags: meal.tags || [],
               photo_link: meal.photo_link,
             }))

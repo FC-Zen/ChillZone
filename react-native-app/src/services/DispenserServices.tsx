@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type MealProps = {
   category: string;
+  type?: string;
   description: string;
   id: number;
   name: string;
@@ -51,7 +52,8 @@ export const fetchAllMeals = async (
           photo_link: meal.photo_link,
           price: meal.price,
           stock: meal.stock,
-          category: meal.category,
+          category: category,
+          type: category,
           tags: meal.tags,
           icon: 'Add',
         }));
