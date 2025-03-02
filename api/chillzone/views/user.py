@@ -2,52 +2,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth import authenticate, login, logout
 from django.db import transaction
 from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
-from chillzone.serializers import UserLoginSerializer, OwnerEstablishmentSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, OwnerCreateSerializer, NotificationSerializer
-from chillzone.models import Token, LinkTo, WorkIn, RestaurationPlace, UserMeta, Establishment, Notification
+from chillzone.serializers import UserProfilePictureUpdateSerializer, OwnerEstablishmentSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, OwnerCreateSerializer, NotificationSerializer
+from chillzone.models import Token, LinkTo, WorkIn, RestaurationPlace, UserMeta, Establishment, Notification, Calendar
 from chillzone.services import EmailService
-from django.conf import settings
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 
 import uuid
     
-class UserLogin(APIView) :
-
-    def get(self, request):
-
-        if request.user.is_authenticated:
-            user = request.user
-
-            user_meta = user.usermeta
-
-            if user.is_superuser :
-                type = 'superadmin'
-            elif user.is_staff :
-                type = 'admin'
-            elif user_meta.is_owner :
-                type = 'owner'
-            else :
-                type = 'user'
-            
-            response_data = {
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'email': user.email,
-                'establishment': getattr(user_meta.establishment, 'name', None) if user_meta else None,
-                'phone': user_meta.phone if user_meta else None,
-                'photo_link': user_meta.photo_link.url if user_meta and user_meta.photo_link else '/default',
-                'type': type
-            }
-            
-            if type == 'user':
-                notifications = Notification.objects.filter(user=user)
-                response_data['notifications'] = NotificationSerializer(notifications, many=True).data
-
-            return Response(response_data, status=status.HTTP_200_OK)
-        return Response("Vous êtes déjà connecté !", status=status.HTTP_400_BAD_REQUEST)
+class LoginView(APIView) :
 
     def post(self, request):
         if request.user.is_authenticated:
@@ -87,14 +53,21 @@ class UserLogin(APIView) :
 
             return Response(response_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    def delete(self, request):
-        if not request.user.is_authenticated:
-            return Response({"detail": "Utilisateur non authentifié."}, status=status.HTTP_403_FORBIDDEN)
+    def post(self, request):
+        try:
+            refresh = request.data["refresh"]
+            token = RefreshToken(refresh)
+            token.blacklist()
 
-        logout(request)
+            return Response("Déconnexion réussite", status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({"detail": "Déconnexion réussie."}, status=status.HTTP_204_NO_CONTENT)
     
 class ChangePasswordView(APIView):
     serializer_class = PasswordChangeSerializer
@@ -186,9 +159,15 @@ class UserInfoUpdateView(APIView):
         user = request.user
         serializer = UserInfoSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        serializer = UserProfilePictureUpdateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request):
-        serializer = UserInfoUpdateSerializer(data=request.data, context={'request': request})
+        serializer = UserInfoUpdateSerializer(data=request.data)
         if serializer.is_valid():
             user = request.user
             user.first_name = serializer.validated_data.get('first_name', user.first_name)
@@ -252,6 +231,11 @@ class OwnerCreateView(APIView):
                 is_verified=False,
                 role=f"Restaurateur chez {restaurant.name}",
                 phone=validated_data.get('phone', None),
+            )
+
+            Calendar.object.create(
+                title="Calendrier de " + user.first_name + " " + user.last_name,
+                user=user
             )
 
             WorkIn.objects.create(

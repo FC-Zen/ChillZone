@@ -10,11 +10,13 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) 
     const { user, setUser } = useUser();
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const access = localStorage.getItem("access");
+        const refresh = localStorage.getItem("access");
     
-        if (!token) {
+        if (!access || !refresh) {
             localStorage.removeItem("user");
-            localStorage.removeItem("token");
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
             setUser(null);
         }
     }, [setUser]);
@@ -27,7 +29,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) 
         // Si l'utilisateur n'est pas connecté et tente d'accéder à une page protégée, redirection vers /login
         return <Navigate to="/login" replace />;
     }
-
+    
     // Si tu veux aller sur le login alors que tu es connecté => NON
     if (allowedRoles.includes('None') && user.role != null) {
         // Rediriger en fonction du rôle de l'utilisateur

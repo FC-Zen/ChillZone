@@ -38,13 +38,22 @@ class CalendarService:
                     formatted_start = start_dt.strftime('%Y-%m-%d %H:%M:%S%z')
                     formatted_end = end_dt.strftime('%Y-%m-%d %H:%M:%S%z')
 
+                    desc = component.get("description").split('\n')
+                    desc = [line for line in desc if line]
+                    desc = desc[:-1]
+
+                    for i in range(1, len(desc)):
+                        if 'TP' in desc[i] or 'TD' in desc[i]:
+                            desc[i], desc[0] = desc[0], desc[i]
+                            break
+
                     event = {
                         'id': str(component.get('UID')),
                         "title": component.get("summary"),
                         "start_time": formatted_start,
                         "end_time": formatted_end,
                         "location": component.get("location"),
-                        "description": component.get("description")
+                        "description": ';'.join(desc)
                     }
                     events.append(event)
             return events

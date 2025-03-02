@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from '@utils';
+import { getTokenAccess } from '@utils';
 
 /**
  * Récupère la liste de TOUS LES COMPTES
@@ -13,7 +13,7 @@ export const getUsersSuperAdmin = async () => {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-users/`,  // A MODIF
             { 
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -39,7 +39,7 @@ export const getRequestsSuperAdmin = async () => {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}superadmin-requests/`,  // A MODIF
             {
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -70,7 +70,7 @@ export const toggleAccountActive = async (id: number, is_active: boolean) => {
             },
             {
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -98,7 +98,7 @@ export const manageOwnerRegistration = async (id: number) => {
             },
             {
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -126,7 +126,7 @@ export const deleteOwnerRegistration = async (id: number) => {
                 data: { id: id },
                  
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );

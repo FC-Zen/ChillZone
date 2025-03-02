@@ -1,5 +1,5 @@
 import { User } from '@hooks';
-import { getToken } from '@utils';
+import { getTokenAccess , getTokenRefresh } from '@utils';
 import axios from 'axios';
 import { z } from 'zod';
 
@@ -25,10 +25,13 @@ export const authenticateUser = async (formData: { login: string; password: stri
         return { success: false, message: 'Connexion non autorisée', data: null};
       } else {
 
-        localStorage.setItem('token', response.data.access);
+        localStorage.setItem('access', response.data.access);
+        localStorage.setItem('refresh', response.data.refresh);
 
         return { success: true, message: 'Connexion réussie !', data: response.data};
       }
+    } else if (response.status == 401) {
+      return { success: false, message: "Vous n'êtes plus autorisé à vous connecter. Contactez un administrateur", data: null };
     } else if (response.status == 403) {
       return { success: false, message: 'Vous êtes déjà connectés', data: null };
     } else if (response.status == 404) {
@@ -131,21 +134,26 @@ export const changePassword = async (
  */
 export const logoutUser = async (setUser: React.Dispatch<React.SetStateAction<User | null>>) => {
   try {
-    const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}login/`, 
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
+    const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}logout/`, 
+      {
+        refresh: `${getTokenRefresh()}`
       },
-    } 
-    );
-    if (response.status === 204) {
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-      setUser(null);
-      return { success: true, message: 'Déconnexion réussie.' };
-    } else {
-      throw new Error('Échec de la déconnexion.');
-    }
+      { 
+        headers: {
+            Authorization: `Bearer ${getTokenAccess()}`,
+        },
+      }
+      );
+      
+      if (response.status === 205) {
+        localStorage.removeItem('user');
+        localStorage.removeItem('access');
+        localStorage.removeItem('refresh');
+        setUser(null);
+        return { success: true, message: 'Déconnexion réussie.' };
+      } else {
+        throw new Error('Échec de la déconnexion.');
+      }
   } catch (error: any) {
     console.error('Erreur lors de la déconnexion :', error.message);
     throw new Error(error.message);

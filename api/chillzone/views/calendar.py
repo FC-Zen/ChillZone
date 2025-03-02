@@ -25,37 +25,38 @@ class CalendarView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
             
     def post(self, request):
+        try:
+            calendar = Calendar.objects.get(user=request.user)
 
-        url = request.data.get('url')
-        user = request.user
+        except Calendar.DoesNotExist:
+            return Response({"error": "Calendar not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        if not url:
-            return Response({'error': 'url is required'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        calendar, created = Calendar.objects.get_or_create(
-            user=user,
-            defaults={"title": f"Calendrier de {user.first_name} {user.last_name}", "url": url}
-        )
+        serializer = UpdateCalendarSerializer(calendar, data=request.data, partial=True)
 
-        if not created:
-            calendar.url = url
-            calendar.save()
+        if serializer.is_valid():
+            serializer.save()
+
+            url = serializer.validated_data.get("url")
+            if not url: 
+                return self.get(request)
+
 
             Event.objects.filter(calendar=calendar).delete()
 
-        events = CalendarService.get_events_from_ical(url)
-        for event in events:
-            Event.objects.create(
-                id=event['id'],
-                title=event['title'],
-                start_time=event['start_time'],
-                end_time=event['end_time'],
-                location=event['location'],
-                description=event['description'],
-                calendar=calendar
-            )
+            events = CalendarService.get_events_from_ical(url)
+            for event in events:
+                Event.objects.create(
+                    id=event['id'],
+                    title=event['title'],
+                    start_time=event['start_time'],
+                    end_time=event['end_time'],
+                    location=event['location'],
+                    description=event['description'],
+                    calendar=calendar
+                )
 
-        return self.get(request)
+            return self.get(request)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         try:

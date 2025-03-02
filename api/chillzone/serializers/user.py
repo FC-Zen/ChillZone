@@ -41,6 +41,10 @@ class UserInfoUpdateSerializer(serializers.Serializer):
 
     phone = serializers.CharField(max_length=10, required=False)
 
+class UserProfilePictureUpdateSerializer(serializers.Serializer):
+
+    photo_link = serializers.ImageField()
+
 class PasswordChangeSerializer(serializers.Serializer):
     password_actual = serializers.CharField(max_length=128)
 

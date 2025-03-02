@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist'
 ]
 
 if DEBUG:
@@ -83,8 +84,8 @@ from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
 
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': config('SECRET_KEY'),
@@ -94,6 +95,8 @@ SIMPLE_JWT = {
 
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
+
+    "JTI_CLAIM": "jti",
 
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=60),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),

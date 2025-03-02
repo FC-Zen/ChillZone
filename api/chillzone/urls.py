@@ -9,19 +9,27 @@ from django.conf.urls.static import static
 
 from chillzone.views import (
     admin_boards, home, notification, reservation, user, faq, network,
-    owner_boards, super_admin_boards, calendar, restaurant
+    owner_boards, super_admin_boards, calendar, restaurant, command, map
 )
 from drf_spectacular.views import (
     SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+)
+
+from rest_framework_simplejwt.views import (
+    TokenVerifyView,
+    TokenRefreshView,
 )
 
 # ============================ URLS PRINCIPALES ============================= #
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('verify', TokenVerifyView.as_view(), name='Verify token'),
+    path('refresh/', TokenRefreshView.as_view(), name='Refresh token'),
 
     # ============================ AUTHENTIFICATION ============================= #
-    path('login/', user.UserLogin.as_view(), name='Sign In and Sign Out'),
+    path('login/', user.LoginView.as_view(), name='Sign In'),
+    path('logout/', user.LogoutView.as_view(), name='Sign Out'),
     path('forget-password/', user.PasswordForgetView.as_view(), name='Start reset password process'),
     path('reset-password/<uuid:uuid>', user.PasswordResetView.as_view(), name='Reset password process'),
     path('change-password/', user.ChangePasswordView.as_view(), name='Update password'),
@@ -32,7 +40,9 @@ urlpatterns = [
     path('notification/', notification.NotificationView.as_view(), name='Client Notification'),
     path('calendar/', calendar.CalendarView.as_view(), name='Client Calendar'),
     path('reservation/', reservation.ReservationView.as_view(), name='Client Reservation'),
+    path('mapfloor/', map.MapView.as_view(), name='Client Map'),
     path('my-reservation/', reservation.ClientReservationView.as_view(), name='Client Reservations'),
+    path('my-commands/', command.UserCommandView.as_view(), name='Client Commands'),
     path('faq/', faq.FAQView.as_view(), name='Client FAQ'),
     path('network/', network.NetworkView.as_view(), name='Client Network'),
     path('restaurants/', restaurant.ClientRestaurantView.as_view(), name='Client Restaurant List'),
@@ -50,8 +60,8 @@ urlpatterns = [
     path('admin-accounts/', admin_boards.AdminUserView.as_view(), name='Admin User Management'),
     path('admin-rooms/', admin_boards.AdminLocationView.as_view(), name='Admin Room Management'),
     path('admin-booking/', admin_boards.AdminReservationConflictView.as_view(), name='Admin Reservations'),
-    path('admin-map/', admin_boards.AdminMapView.as_view(), name='Admin Map Management'),
-    path('admin-info/', admin_boards.AdminInfoView.as_view(), name='Admin Info Management'),
+    path('admin-mapfloor/', admin_boards.AdminMapView.as_view(), name='Admin Map Management'),
+    path('admin-information/', admin_boards.AdminInfoView.as_view(), name='Admin Info Management'),
     path('admin-restaurants/', admin_boards.AdminRestaurantView.as_view(), name='Admin Restaurant Management'),
     path('admin-faq/', faq.AdminFAQView.as_view(), name='Admin FAQ Management'),
     path('admin-network/', network.AdminNetworkView.as_view(), name='Admin Network Management'),

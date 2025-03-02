@@ -1,1 +1,1 @@
-export { getToken } from './functions';
+export { getTokenAccess, getTokenRefresh } from './functions';

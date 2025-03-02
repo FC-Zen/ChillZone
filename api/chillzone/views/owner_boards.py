@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Count, F, Sum
 from collections import defaultdict
 from chillzone.models import Menu, Meal, Type, Category, Associate, Command, CommandComposition, WorkIn, Tag, LineContent
-from chillzone.serializers import CommandUpdateSerializer, CommandLineSerializer, CommandSerializer, MenuWithOptionsSerializer, TagSerializer, MenuMealSerializer, MealWithTagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer, CreateMenuSerializer, UpdateMenuSerializer, MenuCommandSerializer
+from chillzone.serializers import CommandUpdateSerializer, CommandLineSerializer, CommandSerializer, MenuWithOptionsSerializer, TagSerializer, MealWithTagSerializer, MealSerializer, CategorySerializer, CreateMealSerializer, UpdateMealSerializer, CreateMenuSerializer, UpdateMenuSerializer, MenuCommandSerializer
 
 class IsOwner(BasePermission):
     """

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from '@utils';
+import { getTokenAccess } from '@utils';
 
 /* Types specifiques au dashboards owner  */
 export type MonthlyData = {
@@ -31,7 +31,7 @@ export const getDashboardDataOwner = async (): Promise<OwnerDashboardData> => {
   try {
       const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-dashboard/`, {
           headers: {
-              Authorization: `Bearer ${getToken()}`,
+              Authorization: `Bearer ${getTokenAccess()}`,
           },
       });
 
@@ -63,7 +63,7 @@ export const updateRestaurantStatus = async (status: boolean) => {
         },
         {
             headers: {
-                Authorization: `Bearer ${getToken()}`,
+                Authorization: `Bearer ${getTokenAccess()}`,
             },
         } 
         );
@@ -88,7 +88,7 @@ export const fetchCommands = async () => {
     const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-commands/`, 
       {
           headers: {
-              Authorization: `Bearer ${getToken()}`,
+              Authorization: `Bearer ${getTokenAccess()}`,
           },
       } 
       );
@@ -121,7 +121,7 @@ export const updateCommandStatus = async (id: number, status: string) => {
           },
           { 
               headers: {
-                  Authorization: `Bearer ${getToken()}`,
+                  Authorization: `Bearer ${getTokenAccess()}`,
               },
           } 
           );
@@ -145,7 +145,7 @@ export const fetchMeals = async () => {
     const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, 
       { 
           headers: {
-              Authorization: `Bearer ${getToken()}`,
+              Authorization: `Bearer ${getTokenAccess()}`,
           },
       } 
       );
@@ -171,7 +171,7 @@ export const addMeal = async (formData: FormData): Promise<any> => {
       const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, formData, { 
           headers: {
               'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${getToken()}`,
+              Authorization: `Bearer ${getTokenAccess()}`,
           },
       });
       console.log('Réponse de l\'API:', response);
@@ -196,7 +196,7 @@ export const updateMeal = async (formData: FormData): Promise<any> => {
       const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}owner-meals/`, formData, {
           headers: {
               'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${getToken()}`,
+              Authorization: `Bearer ${getTokenAccess()}`,
           },
       });
       console.log('Réponse de l\'API:', response);
@@ -220,7 +220,7 @@ export const fetchMenus = async () => {
       const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, 
       {
           headers: {
-              Authorization: `Bearer ${getToken()}`,
+              Authorization: `Bearer ${getTokenAccess()}`,
           },
       } 
       );
@@ -246,7 +246,7 @@ export const addMenu = async (formData: FormData): Promise<any> => {
       const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, formData, { 
           headers: {
               'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${getToken()}`,
+              Authorization: `Bearer ${getTokenAccess()}`,
           },
       });
       console.log('Réponse de l\'API:', response);
@@ -271,7 +271,7 @@ export const updateMenu = async (formData: FormData): Promise<any> => {
       const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}owner-menus/`, formData, { 
           headers: {
               'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${getToken()}`,
+              Authorization: `Bearer ${getTokenAccess()}`,
           },
       });
       console.log('Réponse de l\'API:', response);

@@ -114,7 +114,8 @@ class SuperAdminUsersView(APIView):
     def get(self, request, *args, **kwargs):
         # ALL USERS
         not_suspended_users = User.objects.filter(
-            usermeta__is_verified=True
+            usermeta__is_verified=True,
+            is_superuser=False
         )
         all_users = SuperAdminUserSerializer(not_suspended_users, many=True)
 

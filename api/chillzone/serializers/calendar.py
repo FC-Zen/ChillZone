@@ -10,7 +10,7 @@ class CalendarSerializer(serializers.ModelSerializer) :
         fields = ['id', 'title', 'url', 'events']
 
 class UpdateCalendarSerializer(serializers.ModelSerializer) :
-    url = serializers.CharField()
+    url = serializers.CharField(allow_null=True, allow_blank=True, required=False)
 
     class Meta:
         model = Calendar

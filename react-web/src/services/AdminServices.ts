@@ -1,4 +1,4 @@
-import { getToken } from '@utils';
+import { getTokenAccess } from '@utils';
 import axios from 'axios';
 
 /* Types specifiques au dashboards admins  */
@@ -32,7 +32,7 @@ export const getAccounts = async () => {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-accounts/`, 
             {  
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
         );        
@@ -58,7 +58,7 @@ export const getDashboardData = async (): Promise<DashboardData> => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-dashboard/`, {
             headers: {
-                Authorization: `Bearer ${getToken()}`,
+                Authorization: `Bearer ${getTokenAccess()}`,
             },
         });
 
@@ -92,7 +92,7 @@ export const toggleAccountBlock = async (id: number, is_block: boolean) => {
             },
             { 
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             }
             );
@@ -123,7 +123,7 @@ export const toggleAccountActive = async (id: number, is_active: boolean) => {
             },
             { 
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -151,7 +151,7 @@ export const addAccount = async (formData: FormData): Promise<any> => {
         const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-accounts/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${getToken()}`,
+                Authorization: `Bearer ${getTokenAccess()}`,
             },
         });
         if (response.status == 200) {
@@ -176,7 +176,7 @@ export const getRooms = async () => {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, 
         { 
             headers: {
-                Authorization: `Bearer ${getToken()}`,
+                Authorization: `Bearer ${getTokenAccess()}`,
             },
         } 
         );
@@ -202,7 +202,7 @@ export const addRoom = async (formData: FormData): Promise<any> => {
         const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${getToken()}`,
+                Authorization: `Bearer ${getTokenAccess()}`,
             },
         });
         console.log('Réponse de l\'API:', response);
@@ -228,7 +228,7 @@ export const updateRoom = async (formData: FormData): Promise<any> => {
         const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}admin-rooms/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${getToken()}`,
+                Authorization: `Bearer ${getTokenAccess()}`,
             },
         });
         console.log('Réponse de l\'API:', response);
@@ -257,7 +257,7 @@ export const toggleRoom = async (id: number, status: boolean) => {
             },
             {
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -283,7 +283,7 @@ export const getConflictsaAndReservations = async () => {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-booking/`, 
             {  
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -309,7 +309,7 @@ export const getAdminMap = async () => {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-mapfloor/`, 
             {
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -334,7 +334,7 @@ export const getAdminInfo = async () => {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-information/`, 
             {
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -361,7 +361,7 @@ export const updateAdminInfo = async (formData: FormData): Promise<any> => {
          
         headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${getToken()}`,
+            Authorization: `Bearer ${getTokenAccess()}`,
         },
         });
         console.log('Réponse de l\'API (mise à jour FAQ):', response);
@@ -386,7 +386,7 @@ export const addFloor = async (formData: FormData): Promise<any> => {
          
         headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${getTokenAccess()}`,
         },
     });
     console.log("Réponse de l'API (ajout étage):", response);
@@ -411,7 +411,7 @@ export const updateFloor = async (formData: FormData): Promise<any> => {
          
         headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${getTokenAccess()}`,
         },
     });
     console.log("Réponse de l'API (mise à jour étage):", response);
@@ -436,7 +436,7 @@ export const deleteFloor = async (id: number): Promise<any> => {
         data: { id },
          
         headers: {
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${getTokenAccess()}`,
         },
     });
     console.log("Réponse de l'API (suppression étage):", response);
@@ -460,7 +460,7 @@ export const getAffiliations = async () => {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-restaurants/`, 
             {
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -488,7 +488,7 @@ export const acceptAffiliations = async (id: number) => {
             },
             {
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -515,7 +515,7 @@ export const deleteAffiliations = async (id: number) => {
                 data: { id: id },
                  
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -540,7 +540,7 @@ export const getFAQ = async () => {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}admin-faq/`, 
             {
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -567,7 +567,7 @@ export const addFAQ = async (formData: FormData): Promise<any> => {
          
         headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${getToken()}`,
+            Authorization: `Bearer ${getTokenAccess()}`,
         },
         });
         console.log('Réponse de l\'API (ajout FAQ):', response);
@@ -592,7 +592,7 @@ export const updateFAQ = async (formData: FormData): Promise<any> => {
          
         headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${getToken()}`,
+            Authorization: `Bearer ${getTokenAccess()}`,
         },
         });
         console.log('Réponse de l\'API (mise à jour FAQ):', response);
@@ -618,7 +618,7 @@ export const deleteFAQ = async (id: number): Promise<any> => {
                 data: { id: id },
                  
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -644,7 +644,7 @@ export const getNetworks = async () => {
             { 
                  
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );
@@ -671,7 +671,7 @@ export const addNetwork = async (formData: FormData): Promise<any> => {
          
         headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${getToken()}`,
+            Authorization: `Bearer ${getTokenAccess()}`,
         },
         });
         console.log('Réponse de l\'API (ajout FAQ):', response);
@@ -700,7 +700,7 @@ export const updateNetwork= async (id: number, link_network: string): Promise<an
             { 
                  
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
         );
@@ -727,7 +727,7 @@ export const deleteNetwork = async (id: number): Promise<any> => {
                 data: { id: id },
                  
                 headers: {
-                    Authorization: `Bearer ${getToken()}`,
+                    Authorization: `Bearer ${getTokenAccess()}`,
                 },
             } 
             );

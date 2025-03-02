@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, BasePermission
 
 from django.utils.timezone import now
 from django.utils.timezone import make_aware
@@ -9,11 +9,19 @@ from django.db import transaction
 
 from datetime import datetime, timedelta
 
-from chillzone.models import Reservation, LocationReservation, Location, Tag
+from chillzone.models import Reservation, LocationReservation, Location, Tag, Event, Calendar
 from chillzone.serializers import ReservationSerializer, FilterReservationSerializer, CreateReservationSerializer
 
+class IsNotBlock(BasePermission):
+    """
+    Custom permission to grant access only to users marked as 'is_block'.
+    """
+
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and hasattr(request.user, 'usermeta') and not request.user.usermeta.is_block
+
 class ReservationView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsNotBlock]
     serializer_class = FilterReservationSerializer
 
     def get(self, request):
@@ -90,6 +98,9 @@ class ReservationView(APIView):
             location = Location.objects.get(id=location_id, status=True)
         except Location.DoesNotExist:
             return Response({"location_id": "Location not found or unavailable."}, status=status.HTTP_404_NOT_FOUND)
+        
+        start_datetime = datetime.combine(day_reservation, start_time)
+        end_datetime = start_datetime + timedelta(minutes=duration)
 
         end_time = (datetime.combine(datetime.today(), start_time) + timedelta(minutes=duration)).time()
 
@@ -102,6 +113,11 @@ class ReservationView(APIView):
 
         if existing_reservations.exists():
             return Response({"error": "This time slot is already booked."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            calendar = Calendar.objects.get(user=request.user)
+        except Calendar.DoesNotExist:
+            return Response({"error": "Calendar not found"}, status=status.HTTP_404_NOT_FOUND)
 
         with transaction.atomic():
             reservation = Reservation.objects.create(
@@ -117,6 +133,18 @@ class ReservationView(APIView):
                 day_reservation=day_reservation
             )
 
+
+
+            Event.objects.create(
+                id=f"RES{request.user.id}{location.id}{start_time.strftime('%H%M')}{end_datetime.strftime('%H%M')}",
+                title='Réservation de ' + location.name,
+                start_time=start_datetime,
+                end_time=end_datetime,
+                location=location.name,
+                description='Réservation de ' + location.name + ' situé au ' + location.id_floor.name,
+                calendar=calendar
+            )
+
         return Response({"message": "Reservation created successfully."}, status=status.HTTP_201_CREATED)
 
 
@@ -129,7 +157,7 @@ class ClientReservationView(APIView):
         user = request.user
         today = now().date()
 
-        reservation_id = request.query_params.get('id')
+        reservation_id = request.data.get('id')
 
         if reservation_id:
             try:

@@ -6,7 +6,7 @@ from django.db.models import Count, Q, F
 from django.utils.timezone import timedelta, now
 from django.contrib.auth.models import User
 from chillzone.services import EmailService
-from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo, Tag, TagCategory, IsLocated, Map, Notification
+from chillzone.models import UserMeta, LocationReservation, Conflict, Location, MapFloor, RestaurationPlace, LinkTo, Tag, TagCategory, IsLocated, Map, Notification, Calendar
 from chillzone.serializers import AdminFloorsWithPhotoSerializer, UpdateMapFloorSerializer, CreateMapFloorSerializer, AdminCreateLocationSerializer, TagSerializer, AdminUserSerializer, AdminLocationSerializer, AdminAvailableFloorsSerializer, AdminEstablishmentSerializer, AdminMapFloorSerializer, AdminLocationReservationSerializer, AdminConflictSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer, UserCreateSerializer
 
 import random
@@ -130,6 +130,7 @@ class AdminUserView(generics.ListAPIView):
             is_active=True,
             usermeta__establishment=self.request.user.usermeta.establishment,
             usermeta__is_verified=True,
+            is_superuser=False
         ).annotate(
             reservation_count=Count('reservation', filter=Q(reservation__status='Confirmed'))
         )
@@ -159,6 +160,11 @@ class AdminUserView(generics.ListAPIView):
                 is_verified=not(serializer.validated_data['is_admin']),
                 role=serializer.validated_data['role'],
                 establishment=request.user.usermeta.establishment
+            )
+
+            Calendar.object.create(
+                title="Calendrier de " + user.first_name + " " + user.last_name,
+                user=user
             )
 
             if not serializer.validated_data['is_admin'] :

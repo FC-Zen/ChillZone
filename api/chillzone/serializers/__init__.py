@@ -19,6 +19,6 @@ from .network import NetworkSerializer, AdminNetworkSerializer
 from .notification import NotificationSerializer
 from .reservation import ReservationSerializer, FilterReservationSerializer, CreateReservationSerializer
 from .restauration_place import OpenRestaurantSerializer, AdminConfirmedRestaurantSerializer, AdminPendingRestaurantSerializer
-from .user import OwnerCreateSerializer, UserCreateSerializer, UserLoginSerializer, UserSerializer, AdminUserSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, SuperAdminUserSerializer, SuperAdminRequestAdminSerializer
+from .user import UserProfilePictureUpdateSerializer, OwnerCreateSerializer, UserCreateSerializer, UserLoginSerializer, UserSerializer, AdminUserSerializer, PasswordChangeSerializer, PasswordResetEmailSerializer, PasswordResetSerializer, UserInfoUpdateSerializer, UserInfoSerializer, SuperAdminUserSerializer, SuperAdminRequestAdminSerializer
 from .work_in import WorkInSerializer, RestaurantRegisterRequestSerializer
 from .meal import UpdateMealSerializer

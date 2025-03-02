@@ -1,13 +1,13 @@
-export const getCSRFToken = () => {
-    const csrfCookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
-    if (csrfCookie) {
-        return csrfCookie.split('=')[1];
+export const getTokenRefresh = () => {
+    const token = localStorage.getItem('refresh')
+    if (token) {
+        return token;
     }
     return null; 
-};
+}
 
-export const getToken = () => {
-    const token = localStorage.getItem('token')
+export const getTokenAccess = () => {
+    const token = localStorage.getItem('access')
     if (token) {
         return token;
     }
