@@ -138,23 +138,6 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
 
       {/* Section Thème et Langue */}
       <View style={styles.card2}>
-        <View style={styles.row}>
-          {/* Bouton Thème */}
-          <Button
-            title={
-              isDarkTheme
-                ? t('buttons.profile.lightTheme')
-                : t('buttons.profile.darkTheme')
-            }
-            icon={{ name: 'Fill', color: colors.white }}
-            variant="icon"
-            color={colors.resolutionBlue}
-            textColor={colors.white}
-          />
-          {/* ToggleSwitch */}
-          <ToggleSwitch value={isDarkTheme} onToggle={onToggleTheme} />
-        </View>
-
         {/* Bouton Langue */}
         <TouchableOpacity style={styles.languageRow} onPress={toggleLanguage}>
           <View style={styles.languageContent}>

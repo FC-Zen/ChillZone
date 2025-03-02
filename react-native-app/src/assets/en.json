@@ -248,6 +248,17 @@
     "day": "day"
   },
 
+  "networks" : {
+    "facebook": "Facebook",
+    "x": "X",
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "linkedin": "LinkedIn",
+    "workspace": "Workspace",
+    "website": "Website",
+    "bluesky": "Bluesky"
+  },
+
   "notification": {
     "title": "New Reservation !",
     "reservation": "Your reservation for {{roomName}} has been confirmed.",

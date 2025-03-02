@@ -32,20 +32,20 @@ export const LoginScreen: React.FC = () => {
   });
 
   const handleLogin = async () => {
+    console.log("LOGIN");
     try {
       const result = await authenticateUser({
         login: inputEmail,
         password: inputPassword,
       });
-
-     
       setAuthResult({ severity: 'success', message: result.message });
 
       if(result.data) {
         console.log("User data: ",result.data);
         const userContext = UserContext.getInstance();
         userContext.setUser(result.data);
-        userContext.setNotificationSetting(result.data.notifications[0]);
+        console.log("n,otif");
+        //userContext.setNotificationSetting(result.data.notifications[0]);
       }
       navigation.navigate(ROUTE.HOME);
     } catch (error) {

@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, Image } from 'react-native';
 import { styles } from './style';
 import { Icon } from '@components/atoms/Icons';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
+import { API_URL } from '@env';
 
 export type ChangeProfilePictureModalProps = {
+  photo_link : string;
   isOpen: boolean;
   onClose: () => void;
   onChangePicture: () => void; // Passé par le parent
@@ -14,7 +16,7 @@ export type ChangeProfilePictureModalProps = {
 
 export const ChangeProfilePictureModal: React.FC<
   ChangeProfilePictureModalProps
-> = ({ isOpen, onClose, onChangePicture, onDeletePicture }) => {
+> = ({ photo_link, isOpen, onClose, onChangePicture, onDeletePicture }) => {
   const { t } = useTranslation();
 
   return (
@@ -39,12 +41,7 @@ export const ChangeProfilePictureModal: React.FC<
 
           {/* Avatar ou icône */}
           <View style={styles.avatarContainer}>
-            <Icon
-              name="User"
-              width={60}
-              height={60}
-              color={colors.resolutionBlue}
-            />
+            <Image source={{ uri: `${API_URL}${photo_link}` }} width={100} height={100} borderRadius={50} />
           </View>
 
           {/* Bouton pour changer la photo */}
