@@ -6,3 +6,4 @@ export {
   formatCommand,
 } from './Reservation';
 export { getAccessToken } from './Auth';
+export { getLastOrder } from './Command';

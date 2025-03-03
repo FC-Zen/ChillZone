@@ -17,8 +17,7 @@ export {
 } from './RestaurantCardServices';
 export { getFaq } from './FaqServices';
 export { fetchAllMeals } from './DispenserServices';
-export { getTotalAmount } from './PaymentServices';
-export { getPaymentId } from './PaymentServices';
+export { getAllOrders, Order, AllOrders } from './PaymentServices';
 export {
   getReservations,
   getReservationById,

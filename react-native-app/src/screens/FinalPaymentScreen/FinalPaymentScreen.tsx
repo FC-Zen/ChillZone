@@ -6,10 +6,11 @@ import { Alert, Platform, View } from 'react-native';
 import { styles } from './style';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
-import { getPaymentId } from '@services/PaymentServices';
 import { useEffect, useState } from 'react';
 import { useCommand } from '@contexts';
 import { API_URL } from '@env';
+import { getLastOrder } from '@utils/functions';
+import { getAllOrders } from '@services';
 
 export type FinalPaymentScreenProps = {
   route: {
@@ -33,9 +34,10 @@ export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
 
   useEffect(() => {
     const fetchPaymentId = async () => {
-      const response = await getPaymentId();
+      const response = await getAllOrders();
       if (response) {
-        setId(response);
+        let last_order = getLastOrder(response);
+        setId(last_order.id);
       }
     };
     fetchPaymentId();

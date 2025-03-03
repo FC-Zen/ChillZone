@@ -1,0 +1,1 @@
+export { getLastOrder } from './Command';

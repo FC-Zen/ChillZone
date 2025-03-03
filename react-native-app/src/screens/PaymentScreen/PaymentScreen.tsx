@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PaymentTemplate } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import { colors } from '@theme';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
-import { useCommand } from '@contexts';
+import { getAllOrders } from '@services';
+import { getLastOrder } from '@utils/functions';
 
 type PaymentProps = {
   route: {
@@ -16,12 +17,23 @@ type PaymentProps = {
 
 export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
   const { t } = useTranslation();
-  const { totalAmount } = useCommand();
+  const [totalAmount, setTotalAmount] = useState(0);
   const [credit, setCredit] = useState('');
   const [cardName, setCardName] = useState('');
   const [cardExpiration, setCardExpiration] = useState('');
   const [cardCVC, setCardCVC] = useState('');
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchTotalAmount = async () => {
+      const response = await getAllOrders();
+      if (response) {
+        let last_order = getLastOrder(response);
+        setTotalAmount(last_order.total_price);
+      }
+    };
+    fetchTotalAmount();
+  }, []);
 
   return (
     <PaymentTemplate
