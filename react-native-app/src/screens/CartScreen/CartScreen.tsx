@@ -154,8 +154,7 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
       const response = await createCommand(restaurantId, command);
 
       //await AsyncStorage.setItem('qrCode', response?.qrImagelink);
-
-      navigation.navigate(ROUTE.PAYMENT);
+      navigation.navigate(ROUTE.PAYMENT, { qrcode: response?.qrcode });
     } catch (error) {
       console.error('createCommand error:', error);
     }

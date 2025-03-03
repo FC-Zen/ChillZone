@@ -5,7 +5,6 @@ import { MenuProps } from './MenusServices';
 import axios from 'axios';
 import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useCommand } from '@contexts';
 
 export type Command = {
   command_id: number;
@@ -68,15 +67,11 @@ export type Order = {
   }[];
 };
 
-export const createCommand = async (
-  restaurantId: number,
-  command: Order
-): Promise<void> => {
+export const createCommand = async (restaurantId: number, command: Order) => {
   console.log('Commande à envoyer : ', command);
   console.log('Commande lines : ', command.lines);
 
   console.log('restaurantId : ', restaurantId);
-  console.log('API_URL : ', API_URL);
 
   try {
     const token = await AsyncStorage.getItem('access');
@@ -100,6 +95,8 @@ export const createCommand = async (
       console.log('Commande créée avec succès');
       return response.data;
     }
+
+    return response.data;
   } catch (error: any) {
     console.error(error);
     throw new Error(

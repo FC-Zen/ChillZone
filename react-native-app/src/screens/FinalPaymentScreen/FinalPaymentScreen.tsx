@@ -1,36 +1,56 @@
 import { FinalPaymentTemplate } from '@components';
 import { ROUTE } from '@enums';
 import { useNavigation, useNotifications } from '@hooks';
-import { ImagesMap } from '@utils';
 import { useTranslation } from 'react-i18next';
 import { Alert, Platform, View } from 'react-native';
 import { styles } from './style';
-// POUR LE DOWNLOAD
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
-import { Asset } from 'expo-asset';
 import { getPaymentId } from '@services/PaymentServices';
 import { useEffect, useState } from 'react';
 import { useCommand } from '@contexts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '@env';
 
-export const FinalPaymentScreen = () => {
-  let qrcode_link: string | null = '';
-  const getQrCodeLink = async () => {
-    qrcode_link = await AsyncStorage.getItem('qrcode_link');
+export type FinalPaymentScreenProps = {
+  route: {
+    params: {
+      qrcode: string;
+    };
   };
+};
 
-  getQrCodeLink();
-
+export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
+  route,
+}) => {
+  const [qrcodeLink, setQrcodeLink] = useState<string | null>(
+    route.params.qrcode
+  );
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const image = `${API_URL}media/qrcode/` + qrcode_link;
   const { scheduleNotification } = useNotifications();
+  const { commandId } = useCommand();
+  const [id, setId] = useState(commandId || 0);
 
-  // Expo Asset pour le télécharger
-  const imageAsset = Asset.fromModule(image);
-  const imageUri = imageAsset.uri;
+  useEffect(() => {
+    /*     const fetchQrCodeLink = async () => {
+      const link = await AsyncStorage.getItem('qrcode_link');
+      if (link) {
+        setQrcodeLink(link);
+      }
+    };
+    fetchQrCodeLink(); */
+
+    const fetchPaymentId = async () => {
+      const response = await getPaymentId();
+      if (response) {
+        setId(response);
+      }
+    };
+    fetchPaymentId();
+  }, []);
+
+  const imageUri = `${API_URL}media/qrcode/` + qrcodeLink;
 
   const saveFile = async (uri: string, filename: string, mimetype: string) => {
     if (Platform.OS === 'android') {
@@ -60,7 +80,6 @@ export const FinalPaymentScreen = () => {
   };
 
   const navigateToHome = async () => {
-    console.log('navigateToHome called');
     navigation.navigate(ROUTE.HOME);
 
     try {
@@ -83,11 +102,13 @@ export const FinalPaymentScreen = () => {
     }
   };
 
-  // Click réponse avec Download et Save
   const onDownloadPress = async () => {
+    if (!imageUri) {
+      Alert.alert('Erreur', 'Le QR code n’est pas encore disponible.');
+      return;
+    }
+
     const fileUri = `${FileSystem.documentDirectory}qrcode.png`;
-    console.log(imageUri);
-    console.log(fileUri);
     try {
       await FileSystem.downloadAsync(imageUri, fileUri);
       await saveFile(fileUri, 'qrcode.png', 'image/png');
@@ -98,26 +119,12 @@ export const FinalPaymentScreen = () => {
     }
   };
 
-  const { commandId } = useCommand();
-  const [id, setId] = useState(commandId || 0);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getPaymentId();
-      console.log(response);
-      if (response) {
-        setId(response);
-      }
-    };
-    fetchData();
-  }, []);
-
   return (
     <View style={styles.container}>
       <FinalPaymentTemplate
         headerTitle={t('headers.finalCommand')}
         navigateToHome={navigateToHome}
-        qrImagelink={image}
+        qrImagelink={imageUri}
         commandConfirmation={t('cart.confirmText')}
         commandId={id}
         downloadButtonTitle={t('buttons.actions.qrCode')}

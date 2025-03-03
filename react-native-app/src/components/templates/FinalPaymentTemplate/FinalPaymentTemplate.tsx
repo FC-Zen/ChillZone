@@ -28,6 +28,8 @@ export const FinalPaymentTemplate: React.FC<FinalPaymentTemplateProps> = ({
 }) => {
   const commandSplit = commandConfirmation.split('{{id}}');
 
+  console.log('QR Code Image URL:', qrImagelink); // ✅ Vérifie que l'URL est bien reçue
+
   return (
     <View style={styles.container}>
       <PageHeader
@@ -41,7 +43,6 @@ export const FinalPaymentTemplate: React.FC<FinalPaymentTemplateProps> = ({
         noMargin={true}
       />
 
-      {/* Afficher le texte de confirmation de commande avec l'id associée à la commande */}
       <Text style={styles.commandMessage}>
         {commandSplit[0]}
         <Text style={{ fontWeight: 'bold', color: colors.resolutionBlue }}>
@@ -50,7 +51,11 @@ export const FinalPaymentTemplate: React.FC<FinalPaymentTemplateProps> = ({
         {commandSplit[1]}
       </Text>
 
-      <Image source={{ uri: qrImagelink }} style={styles.qrcodeImage} />
+      {qrImagelink ? (
+        <Image source={{ uri: qrImagelink }} style={styles.qrcodeImage} />
+      ) : (
+        <Text>Chargement du QR Code...</Text>
+      )}
 
       <Button
         title={downloadButtonTitle}
