@@ -6,6 +6,7 @@ import { styles } from './style';
 import { useTranslation } from 'react-i18next';
 import { useCommand } from '@contexts';
 import { MealProps } from '@services/DispenserServices';
+import { SnackBar } from '@components';
 
 type ModalScreenProps = {
   route: {
@@ -22,6 +23,16 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
   const { t } = useTranslation();
   const { listItems, updateListItems } = useCommand();
 
+  const [snackbar, setSnackbar] = useState<{
+    isAvailable: boolean;
+    severity: 'success' | 'error';
+    message: string;
+  }>({
+    isAvailable: false,
+    severity: 'success',
+    message: '',
+  });
+
   const handleIncrement = () => {
     setQuantity((prev) => prev + 1);
   };
@@ -32,11 +43,24 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
     }
   };
 
+  console.log('Meal:', meal.stock);
+
   const handleAddToCart = () => {
+    if (meal.stock === 0) {
+      console.log("Ce plat n'est plus disponible !");
+      setSnackbar({
+        isAvailable: true,
+        severity: 'error',
+        message: "Nous n'avons plus de stock, désolé !",
+      });
+      return;
+    }
+
     const price = meal.price;
     console.log(
       `Ajouté au panier: ${meal.name}, Quantité: ${quantity}, Total : ${(price * quantity).toFixed(2)} €`
     );
+
     if (listItems.find((item) => item.name === meal.name)) {
       listItems.map((item) => {
         if (item.name === meal.name) {
@@ -60,6 +84,7 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
         },
       ]);
     }
+
     navigation.goBack();
   };
 
@@ -71,6 +96,12 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
         onBackPress={() => navigation.goBack()}
       />
 
+      <SnackBar
+        visible={snackbar.isAvailable}
+        message={snackbar.message}
+        onDismiss={() => setSnackbar({ ...snackbar, isAvailable: false })}
+        severity={snackbar.severity}
+      />
       <View style={styles.contentContainer}>
         <Image source={{ uri: meal.photo_link }} style={styles.image} />
         <Text style={styles.price}>{meal.price} €</Text>

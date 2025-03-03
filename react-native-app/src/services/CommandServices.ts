@@ -67,20 +67,25 @@ export type Order = {
   }[];
 };
 
-export const createCommand = async (restaurantId: number, command: Order) => {
+export const createCommand = async (
+  restaurantId: number,
+  command: Order
+): Promise<any> => {
   console.log('Commande à envoyer : ', command);
   console.log('Commande lines : ', command.lines);
 
   console.log('restaurantId : ', restaurantId);
 
+  console.log('API actuelle : ', API_URL);
+
   try {
-    const token = await AsyncStorage.getItem('access');
+    const [access] = await Promise.all([AsyncStorage.getItem('access')]);
     const response = await axios.post(
       `${API_URL}restaurant/${restaurantId}/`,
       command,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${access}`,
         },
       }
     );

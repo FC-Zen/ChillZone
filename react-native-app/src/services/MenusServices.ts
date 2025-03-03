@@ -25,12 +25,12 @@ export const getAllMenus = async (
   RestaurantID: number
 ): Promise<MenuProps[]> => {
   try {
-    const token = await AsyncStorage.getItem('access');
+    const [access] = await Promise.all([AsyncStorage.getItem('access')]);
 
     // Requête pour récupérer les menus
     const response = await axios.get(`${API_URL}restaurant/${RestaurantID}/`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${access}`,
       },
     });
 

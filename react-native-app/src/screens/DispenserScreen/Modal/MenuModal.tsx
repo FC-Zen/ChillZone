@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
-import { Button, PageHeader, FoodCardList } from '@components';
+import { Button, PageHeader, FoodCardList, SnackBar } from '@components';
 import { useNavigation } from '@hooks';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
@@ -15,8 +15,16 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     Record<string, number | null>
   >({});
 
-  console.log('Menu types : ', menu.meals_by_type);
   const { listItems, updateListItems } = useCommand();
+  const [snackbar, setSnackbar] = useState<{
+    isAvailable: boolean;
+    severity: 'success' | 'error';
+    message: string;
+  }>({
+    isAvailable: false,
+    severity: 'success',
+    message: '',
+  });
 
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -35,11 +43,25 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     const selectedMealsList = transformedMeals.filter(
       (meal) => selectedMeals[meal.category] === meal.id
     );
+
+    const outOfStockMeal = selectedMealsList.find((meal) => meal.stock === 0);
+
+    if (outOfStockMeal) {
+      console.log(`Le plat ${outOfStockMeal.name} n'est plus disponible !`);
+      setSnackbar({
+        isAvailable: true,
+        severity: 'error',
+        message: `Le plat ${outOfStockMeal.name} n'est plus en stock. Désolé !`,
+      });
+      return;
+    }
+
     console.log(
       `Ajouté au panier: ${menu.name}, Quantité: ${quantity}, Total : ${menu.price}`,
       'Repas sélectionnés:',
       selectedMealsList
     );
+
     if (listItems.find((item) => item.name === menu.name)) {
       listItems.map((item) => {
         if (item.name === menu.name) {
@@ -111,6 +133,13 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
           onBackPress={() => navigation.goBack()}
         />
       </View>
+
+      <SnackBar
+        visible={snackbar.isAvailable}
+        message={snackbar.message}
+        onDismiss={() => setSnackbar({ ...snackbar, isAvailable: false })}
+        severity={snackbar.severity}
+      />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.cont3}>

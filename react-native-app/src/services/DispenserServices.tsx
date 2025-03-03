@@ -22,7 +22,7 @@ export const fetchAllMeals = async (
 ): Promise<Record<string, MealProps[]>> => {
   console.log('Fetch meals du restau:', RestaurantID);
 
-  const access = await AsyncStorage.getItem('access');
+  const [access] = await Promise.all([AsyncStorage.getItem('access')]);
   console.log('🚀 ~ token:', access);
 
   try {

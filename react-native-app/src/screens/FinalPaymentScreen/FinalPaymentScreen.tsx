@@ -9,7 +9,6 @@ import * as Sharing from 'expo-sharing';
 import { getPaymentId } from '@services/PaymentServices';
 import { useEffect, useState } from 'react';
 import { useCommand } from '@contexts';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '@env';
 
 export type FinalPaymentScreenProps = {
@@ -33,14 +32,6 @@ export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
   const [id, setId] = useState(commandId || 0);
 
   useEffect(() => {
-    /*     const fetchQrCodeLink = async () => {
-      const link = await AsyncStorage.getItem('qrcode_link');
-      if (link) {
-        setQrcodeLink(link);
-      }
-    };
-    fetchQrCodeLink(); */
-
     const fetchPaymentId = async () => {
       const response = await getPaymentId();
       if (response) {
@@ -50,7 +41,12 @@ export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
     fetchPaymentId();
   }, []);
 
-  const imageUri = `${API_URL}media/qrcode/` + qrcodeLink;
+  let imageUri = '';
+  if (qrcodeLink?.includes('qrcode')) {
+    imageUri = `${API_URL}media/` + qrcodeLink;
+  } else {
+    imageUri = `${API_URL}media/qrcode/` + qrcodeLink;
+  }
 
   const saveFile = async (uri: string, filename: string, mimetype: string) => {
     if (Platform.OS === 'android') {
