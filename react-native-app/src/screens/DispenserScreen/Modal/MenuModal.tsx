@@ -8,12 +8,14 @@ import { ModalScreenProps } from '@services';
 import { useCommand } from '@contexts';
 import { MealProps } from '@services/DispenserServices';
 
+type SelectedMealsType = {
+  [key: string]: number | null;
+};
+
 export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
   const { menu } = route.params;
   const [quantity, setQuantity] = useState(0);
-  const [selectedMeals, setSelectedMeals] = useState<
-    Record<string, number | null>
-  >({});
+  const [selectedMeals, setSelectedMeals] = useState<SelectedMealsType>({});
 
   const { listItems, updateListItems } = useCommand();
   const [snackbar, setSnackbar] = useState<{
@@ -41,7 +43,7 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
 
   const handleAddToCart = () => {
     const selectedMealsList = transformedMeals.filter(
-      (meal) => selectedMeals[meal.category] === meal.id
+      (meal) => meal.type && selectedMeals[meal.type] === meal.id
     );
 
     const outOfStockMeal = selectedMealsList.find((meal) => meal.stock === 0);
@@ -90,17 +92,18 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
   };
 
   const handleMealSelect = (item: MealProps) => {
+    if (!item.type) return;
+
     setSelectedMeals((prev) => {
-      const category = item.category;
-      const isSelected = prev[category] === item.id;
+      const isSelected = item.type ? prev[item.type] === item.id : false;
 
       return {
         ...prev,
-        [category]: isSelected ? null : item.id,
+        [item.type as string]: isSelected ? null : item.id,
       };
     });
 
-    if (selectedMeals[item.category] === item.id) {
+    if (item.type && selectedMeals[item.type] === item.id) {
       console.log('Decrement');
       handleDecrement();
     } else {
@@ -111,16 +114,16 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
 
   const transformedMeals: MealProps[] = Object.entries(
     menu.meals_by_type || {}
-  ).flatMap(([category, meals]) =>
+  ).flatMap(([type, meals]) =>
     meals.map((meal) => ({
       ...meal,
       title: meal.name,
       subTitle: meal.description,
       imageUrl: meal.photo_link,
-      type: category,
+      type: type,
       category: meal.category,
-      icon: selectedMeals[meal.category] === meal.id ? 'Check' : 'Add',
-      isSelected: selectedMeals[meal.id],
+      icon: selectedMeals[type] === meal.id ? 'Check' : 'Add',
+      isSelected: selectedMeals[type] === meal.id,
     }))
   );
 

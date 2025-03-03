@@ -50,13 +50,11 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
   const navigation = useNavigation();
 
   const removeItemFromCart = (itemName: string) => {
-    console.log('Avant suppression:', cartItems);
     updateCartItems((prevCartItems) => {
       const newCart = prevCartItems.filter(
         (cartItem) => cartItem.name !== itemName
       );
-      console.log('Après suppression:', newCart);
-      updateCartItems(newCart);
+      updateListItems(newCart);
       return newCart;
     });
   };
@@ -104,10 +102,7 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
         onDelete: () => removeItemFromCart(menu.name),
       }));
 
-      updateCartItems((prevCartItems) => [
-        ...prevCartItems,
-        ...updatedCartItems,
-      ]);
+      updateCartItems(updatedCartItems);
     } catch (error) {
       console.error('Erreur lors de la récupération des menus :', error);
     }
