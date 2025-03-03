@@ -1,5 +1,5 @@
 export { translationService } from './translationService';
-export { testAuthenticateUser, authenticateUser, logoutUser, sendPasswordRecoveryEmail } from './AuthentificationServices';
+export { testAuthentificate, authenticateUser, logoutUser, sendPasswordRecoveryEmail } from './AuthentificationServices';
 export {
   transformBookings,
   BookingOverlay,
@@ -18,7 +18,6 @@ export {
   Location,
 } from './Reservation';
 
-export { accountServices } from './AccountServices';
 export {
   getAllMenus,
   CategoryProps,
@@ -37,3 +36,8 @@ export {
   Calendar, 
   CalendarEvent 
 } from './CalendarServices';
+
+export {
+  verifyToken,
+  refreshToken
+} from './TokenService';

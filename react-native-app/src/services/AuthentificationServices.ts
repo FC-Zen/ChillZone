@@ -1,9 +1,43 @@
 import axios from 'axios';
 import { z } from 'zod';
-import { SessionContext, UserContext } from '@contexts';
 import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { refreshToken, verifyToken } from '@services';
 
+/**
+ * Test si on a déjà les informations de l'utilisateur en AsyncStorage.
+ *
+ *
+ * @returns {Promise<Object>} résultat de l'authentification.
+ */
+export const testAuthentificate = async () => {
+  const [access, refresh, userString] = await Promise.all([
+      AsyncStorage.getItem('access'),
+      AsyncStorage.getItem('refresh'),
+      AsyncStorage.getItem('user')
+  ]);
+
+  if (access && refresh && userString) {
+      console.log("Access testAuthentificate: ", access)
+      console.log("Refresh testAuthentificate: ", refresh)
+      const user = JSON.parse(userString);
+
+      const isValid = await verifyToken(access);
+      if (!isValid) {
+          // Si le token est expiré, tente de le rafraîchir
+          const refreshResult = await refreshToken(refresh);
+          if (!refreshResult.success) {
+              await AsyncStorage.clear(); // On wipe tout si le refresh échoue
+              return { success: false, message: 'Session expirée, veuillez vous reconnecter', data: null };
+          }
+      }
+
+      // Retourne le user avec un message de succès
+      return { success: true, message: 'Bon retour à vous', data: user };
+  }
+
+  return { success: false, message: 'Pas d\'utilisateur enregistré', data: null };
+};
 
 /**
  * Authentifie un utilisateur en vérifiant ses informations de connexion.
@@ -13,8 +47,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  *
  * @returns {Promise<Object>} résultat de l'authentification.
  */
-export const authenticateUser = async (formData: { login: string; password: string }) => {
-  try {
+export const authenticateUser = async (rememberMe:boolean, formData: { login: string; password: string }) => {
+    try {
     const response = await axios.post( `${API_URL}login/` , {
       username: formData.login,
       password: formData.password,
@@ -26,6 +60,8 @@ export const authenticateUser = async (formData: { login: string; password: stri
 
         await AsyncStorage.setItem('access', response.data.access);
         await AsyncStorage.setItem('refresh', response.data.refresh);
+        await AsyncStorage.setItem('user', JSON.stringify(response.data));
+        await AsyncStorage.setItem('remember', String(rememberMe));
 
         return { success: true, message: 'Connexion réussie !', data: response.data};
       }
@@ -53,51 +89,51 @@ export const authenticateUser = async (formData: { login: string; password: stri
  * @returns {Promise<Object>} résultat de la déconnexion.
  */
 export const logoutUser = async () => {
-  try {
-    const userContext = UserContext.getInstance();
 
-    const [access, refresh] = await Promise.all([
-      AsyncStorage.getItem('access'),
-      AsyncStorage.getItem('refresh')
-    ]);
+  const remember = await AsyncStorage.getItem('remember');
 
-    console.log("Access LogoutUser :", access);
-    console.log("Refresh LogoutUser :", refresh);
+  if(remember && remember === "true"){
+    return { success: true, message: 'On se souvient de l\'utilisateur' };
+  }
 
-    if(!access || !refresh){
-      throw new Error("Pas de token pour acces ou refresh")
-    }
+  const [access, refresh] = await Promise.all([
+    AsyncStorage.getItem('access'),
+    AsyncStorage.getItem('refresh')
+  ]);
 
-    console.log("API url :", `${API_URL}logout/`);
-    const response = await axios.post(`${API_URL}logout/`, 
-      {
-        refresh: `${refresh}`
+  console.log("Access LogoutUser :", access);
+  console.log("Refresh LogoutUser :", refresh);
+
+  if(!access || !refresh){
+    throw new Error("Pas de token pour acces ou refresh")
+  }
+
+  console.log("API url :", `${API_URL}logout/`);
+  const response = await axios.post(`${API_URL}logout/`, 
+    {
+      refresh: `${refresh}`
+    },
+    { 
+      headers: {
+          Authorization: `Bearer ${access}`,
       },
-      { 
-        headers: {
-            Authorization: `Bearer ${access}`,
-        },
-      });
+    });
+    
+    if (response.status === 205) {
+      console.log("Déconnexion réussie");
       
-      if (response.status === 205) {
-        await AsyncStorage.removeItem('access');
-        await AsyncStorage.removeItem('refresh');
-        userContext.clearUser();
-        return { success: true, message: 'Déconnexion réussie.' };
-      } else {
-        throw new Error('Échec de la déconnexion.');
-      }
-  } catch (error: any) {
-    const userContext = UserContext.getInstance();
-
-    if (error.status === 205) {
-      console.error('Déconnexion réussie.');
       await AsyncStorage.removeItem('access');
       await AsyncStorage.removeItem('refresh');
-      userContext.clearUser();
+      await AsyncStorage.removeItem('user');
+      
+      
       return { success: true, message: 'Déconnexion réussie.' };
+    } else if (response.status === 400) {
+      console.error("Erreur de Déconnexion: ", response.data);
+
+    }else {
+      throw new Error('Échec de la déconnexion.');
     }
-  }
 };
 
 

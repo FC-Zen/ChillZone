@@ -1,15 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { ConnectionTemplate, SnackBar } from '@components';
-import { authenticateUser, testAuthenticateUser } from '@services';
-import { styles } from './style';
-import { logoIUT } from '@assets/Images';
+import { authenticateUser, testAuthentificate } from '@services';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import { UserContext } from '@contexts';
+import { View } from 'react-native';
+import { ConnectionTemplate, SnackBar } from '@components';
+import { styles } from './style';
+import { logoIUT } from '@assets/Images';
 
 export const LoginScreen: React.FC = () => {
+
+  useEffect(() => {
+    const checkAuth = async () => {
+        const result = await testAuthentificate();
+        console.dir("Test authentification login screen: ", result )
+
+        if(result.success && result.data) {
+          console.log("User data: ",result.data);
+          const userContext = UserContext.getInstance();
+          userContext.setUser(result.data);
+          userContext.setNotificationSetting(result.data.notifications[0]);
+          console.log("User: ", userContext.getUser())
+          navigation.navigate(ROUTE.HOME);
+        }
+    };
+
+    checkAuth();
+  }, []);
+
+
   const navigation = useNavigation();
   const { t } = useTranslation();
   const [inputEmail, setInputEmail] = useState('');
@@ -34,7 +54,9 @@ export const LoginScreen: React.FC = () => {
   const handleLogin = async () => {
     console.log("LOGIN");
     try {
-      const result = await authenticateUser({
+      const result = await authenticateUser(
+        isChecked,
+        {
         login: inputEmail,
         password: inputPassword,
       });
@@ -55,24 +77,6 @@ export const LoginScreen: React.FC = () => {
       setAuthResult({ severity: 'error', message: errorMessage });
     }
   };
-
-  //Test if the user is already connected in a previous session
-  useEffect(() => {
-    const testConnectedUser = async () => {
-      const response = await testAuthenticateUser();
-      if(response.success == true && response.data){
-
-        setAuthResult({ severity: 'success', message: response.message });
-        console.log("User already connected so we go to the homescreen page directly");
-        const userContext = UserContext.getInstance();
-        userContext.setUser(response.data);
-        userContext.setNotificationSetting(response.data.notifications[0]);
-        navigation.navigate(ROUTE.HOME);
-      }
-    }
-
-    testConnectedUser();
-  }, []);
 
   useEffect(() => {
     if (authResult) {

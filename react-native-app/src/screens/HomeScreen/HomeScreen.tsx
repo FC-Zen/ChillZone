@@ -25,6 +25,7 @@ export const HomeScreen: React.FC = () => {
   console.log("Notification setting Home screen: ",userContext.getNotificationSetting());
   AsyncStorage.getItem('access').then((access) => console.log("Access Home screen :", access))
   AsyncStorage.getItem('refresh').then((refresh) => console.log("Refresh Home screen :", refresh))
+  AsyncStorage.getItem('user').then((user) => console.dir("User Home screen :", user))
 
   if (nextBooking) {
     items = nextBooking;
