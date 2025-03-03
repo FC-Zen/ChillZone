@@ -7,12 +7,14 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: colors.white,
     paddingHorizontal: 20,
+    paddingBlockEnd: 60,
   },
 
   darkContainer: {
     flexGrow: 1,
     backgroundColor: colors.silver,
     paddingHorizontal: 20,
+    paddingBlockEnd: 60,
   },
 
   card: {
@@ -76,5 +78,21 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: typography.h3.fontFamily,
     fontSize: typography.h3.fontSize,
+  },
+
+  deleteButton: {
+    backgroundColor: colors.warn,
+    borderRadius: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    width: '100%',
+  },
+
+  deleteButtonText: {
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h2.fontFamily,
+    color: colors.white,
+    textAlign: 'center',
   },
 });

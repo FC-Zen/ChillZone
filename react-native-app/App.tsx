@@ -11,7 +11,7 @@ export default function App() {
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
       if (nextAppState === 'background' || nextAppState === 'inactive') {
         console.log("🔴 Application en arrière-plan ou fermée. Déconnexion...");
-        await logoutUser();
+        await logoutUser(false);
       }
     };
 

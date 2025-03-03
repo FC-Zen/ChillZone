@@ -88,52 +88,75 @@ export const authenticateUser = async (rememberMe:boolean, formData: { login: st
  *
  * @returns {Promise<Object>} résultat de la déconnexion.
  */
-export const logoutUser = async () => {
-
+export const logoutUser = async (disconnect: boolean) => {
   const remember = await AsyncStorage.getItem('remember');
 
-  if(remember && remember === "true"){
-    return { success: true, message: 'On se souvient de l\'utilisateur' };
+  // Si on veut se souvenir de l'utilisateur et qu'il n'est pas explicitement déconnecté
+  if (!disconnect && remember && remember === "true") {
+    return { success: true, message: "On se souvient de l'utilisateur" };
   }
 
+  // Récupérer les tokens d'accès et de rafraîchissement
   const [access, refresh] = await Promise.all([
-    AsyncStorage.getItem('access'),
-    AsyncStorage.getItem('refresh')
+    AsyncStorage.getItem("access"),
+    AsyncStorage.getItem("refresh"),
   ]);
 
   console.log("Access LogoutUser :", access);
   console.log("Refresh LogoutUser :", refresh);
 
-  if(!access || !refresh){
-    throw new Error("Pas de token pour acces ou refresh")
+  if (!access || !refresh) {
+    // Si on n'a pas de token, l'utilisateur est déjà déconnecté
+    console.log("Pas de token, utilisateur déjà déconnecté");
+    await AsyncStorage.removeItem("access");
+    await AsyncStorage.removeItem("refresh");
+    await AsyncStorage.removeItem("user");
+
+    return { success: true, message: "Déconnexion réussie." };
   }
 
   console.log("API url :", `${API_URL}logout/`);
-  const response = await axios.post(`${API_URL}logout/`, 
-    {
-      refresh: `${refresh}`
-    },
-    { 
-      headers: {
-          Authorization: `Bearer ${access}`,
+
+  try {
+    const response = await axios.post(
+      `${API_URL}logout/`,
+      {
+        refresh: `${refresh}`,
       },
-    });
-    
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+
     if (response.status === 205) {
       console.log("Déconnexion réussie");
-      
-      await AsyncStorage.removeItem('access');
-      await AsyncStorage.removeItem('refresh');
-      await AsyncStorage.removeItem('user');
-      
-      
-      return { success: true, message: 'Déconnexion réussie.' };
-    } else if (response.status === 400) {
-      console.error("Erreur de Déconnexion: ", response.data);
 
-    }else {
-      throw new Error('Échec de la déconnexion.');
+      // Supprime les tokens dans AsyncStorage
+      await AsyncStorage.removeItem("access");
+      await AsyncStorage.removeItem("refresh");
+      await AsyncStorage.removeItem("user");
+
+      return { success: true, message: "Déconnexion réussie." };
+    } else {
+      console.error("Erreur de déconnexion :", response.data);
+      return { success: false, message: "Erreur lors de la déconnexion." };
     }
+  } catch (error: any) {
+    if (error.response && error.response.status === 400) {
+      console.log("Déjà déconnecté");
+      // Supprime les tokens dans AsyncStorage même si la déconnexion a échoué
+      await AsyncStorage.removeItem("access");
+      await AsyncStorage.removeItem("refresh");
+      await AsyncStorage.removeItem("user");
+
+      return { success: true, message: "Déconnexion réussie." };
+    } else {
+      console.error("Erreur lors de la déconnexion :", error.message);
+      return { success: false, message: "Problème lors de la déconnexion." };
+    }
+  }
 };
 
 
