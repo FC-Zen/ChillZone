@@ -5,6 +5,7 @@ import { MenuProps } from './MenusServices';
 import axios from 'axios';
 import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useCommand } from '@contexts';
 
 export type Command = {
   command_id: number;
@@ -75,6 +76,8 @@ export const createCommand = async (
   console.log('Commande lines : ', command.lines);
 
   console.log('restaurantId : ', restaurantId);
+  console.log('API_URL : ', API_URL);
+
   try {
     const token = await AsyncStorage.getItem('access');
     const response = await axios.post(
@@ -87,13 +90,13 @@ export const createCommand = async (
       }
     );
 
-    console.log('response data dans createCommand : ', response.data);
+    console.log('response data createCommand : ', response.data);
 
-    console.log('Méthode utilisée : ', response.config.method);
+    await AsyncStorage.setItem('qrcode_link', response.data.qrcode);
 
-    console.log('Allow methods : ', response.headers['allow']);
+    console.log('Méthodes autorisées : ', response.headers['allow']);
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       console.log('Commande créée avec succès');
       return response.data;
     }

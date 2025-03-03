@@ -1,18 +1,10 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  Alert,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { Button, Input } from '@components/molecules';
 import { Icon } from '@components/atoms/Icons';
 import { colors } from '@theme';
 import styles from './style';
 import { useTranslation } from 'react-i18next';
-import { accountServices } from '@services/AccountServices'; // Import du service
 
 export type ResetPasswordModalProps = {
   isOpen: boolean;

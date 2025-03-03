@@ -14,6 +14,7 @@ import { ROUTE } from '@enums';
 import { useCommand } from '@contexts';
 import { createCommand } from '@services/CommandServices';
 import { RestaurantData } from '@services';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type SlotTime = {
   startTime: number;
@@ -151,6 +152,8 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
       };
 
       const response = await createCommand(restaurantId, command);
+
+      //await AsyncStorage.setItem('qrCode', response?.qrImagelink);
 
       navigation.navigate(ROUTE.PAYMENT);
     } catch (error) {

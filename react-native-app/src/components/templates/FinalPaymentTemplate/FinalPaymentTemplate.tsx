@@ -6,67 +6,67 @@ import { Button } from '@components/molecules';
 import { Trans } from 'react-i18next';
 
 type FinalPaymentTemplateProps = {
-    headerTitle: string;
-    navigateToHome: () => void;
-    qrImagelink: any;
-    commandConfirmation: string;
-    commandId: number;
-    downloadButtonTitle: string;
-    onDownloadPress: () => void;
-    bottomCommandInfo: string;
+  headerTitle: string;
+  navigateToHome: () => void;
+  qrImagelink: any;
+  commandConfirmation: string;
+  commandId: number;
+  downloadButtonTitle: string;
+  onDownloadPress: () => void;
+  bottomCommandInfo: string;
 };
 
 export const FinalPaymentTemplate: React.FC<FinalPaymentTemplateProps> = ({
-    headerTitle,
-    navigateToHome,
-    qrImagelink,
-    commandConfirmation,
-    commandId,
-    downloadButtonTitle,
-    onDownloadPress,
-    bottomCommandInfo,
+  headerTitle,
+  navigateToHome,
+  qrImagelink,
+  commandConfirmation,
+  commandId,
+  downloadButtonTitle,
+  onDownloadPress,
+  bottomCommandInfo,
 }) => {
-    const commandSplit = commandConfirmation.split('{{id}}');
-    
-    return (
-        <View style={styles.container}>
+  const commandSplit = commandConfirmation.split('{{id}}');
 
-            <PageHeader 
-                title={headerTitle} 
-                onBackPress={navigateToHome} 
-                variant='back' 
-                icon={{ 
-                    name: "Cross", 
-                    color: colors.black 
-                }}
-                noMargin={true}
-            />
+  return (
+    <View style={styles.container}>
+      <PageHeader
+        title={headerTitle}
+        onBackPress={navigateToHome}
+        variant="back"
+        icon={{
+          name: 'Cross',
+          color: colors.black,
+        }}
+        noMargin={true}
+      />
 
-            {/* Afficher le texte de confirmation de commande avec l'id associée à la commande */}
-            <Text style={styles.commandMessage}>
-                {commandSplit[0]}
-                <Text style={{ fontWeight: 'bold', color: colors.resolutionBlue }}>{commandId}</Text>
-                {commandSplit[1]}
-            </Text>
+      {/* Afficher le texte de confirmation de commande avec l'id associée à la commande */}
+      <Text style={styles.commandMessage}>
+        {commandSplit[0]}
+        <Text style={{ fontWeight: 'bold', color: colors.resolutionBlue }}>
+          {commandId}
+        </Text>
+        {commandSplit[1]}
+      </Text>
 
-            <Image source={qrImagelink} style={styles.qrcodeImage} />
+      <Image source={{ uri: qrImagelink }} style={styles.qrcodeImage} />
 
-            <Button 
-                title={downloadButtonTitle} 
-                onPress={onDownloadPress} 
-                variant='icon' 
-                color={colors.aquaDeep}
-                textColor={colors.white}
-                icon={{ 
-                    name: 'Download', 
-                    color: colors.white
-                }}
-                style={styles.downloadButton}
-                textSize={11}
-            />
+      <Button
+        title={downloadButtonTitle}
+        onPress={onDownloadPress}
+        variant="icon"
+        color={colors.aquaDeep}
+        textColor={colors.white}
+        icon={{
+          name: 'Download',
+          color: colors.white,
+        }}
+        style={styles.downloadButton}
+        textSize={11}
+      />
 
-            <Text style={styles.commandInfo}>{bottomCommandInfo}</Text>
-
-        </View>
-    );
-}
+      <Text style={styles.commandInfo}>{bottomCommandInfo}</Text>
+    </View>
+  );
+};

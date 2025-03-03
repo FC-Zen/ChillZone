@@ -3,7 +3,7 @@ import { ROUTE } from '@enums';
 import { useNavigation, useNotifications } from '@hooks';
 import { ImagesMap } from '@utils';
 import { useTranslation } from 'react-i18next';
-import { Alert, PermissionsAndroid, Platform, View } from 'react-native';
+import { Alert, Platform, View } from 'react-native';
 import { styles } from './style';
 // POUR LE DOWNLOAD
 import * as FileSystem from 'expo-file-system';
@@ -12,11 +12,20 @@ import { Asset } from 'expo-asset';
 import { getPaymentId } from '@services/PaymentServices';
 import { useEffect, useState } from 'react';
 import { useCommand } from '@contexts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '@env';
 
 export const FinalPaymentScreen = () => {
+  let qrcode_link: string | null = '';
+  const getQrCodeLink = async () => {
+    qrcode_link = await AsyncStorage.getItem('qrcode_link');
+  };
+
+  getQrCodeLink();
+
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const image = ImagesMap['qrcode.png'];
+  const image = `${API_URL}media/qrcode/` + qrcode_link;
   const { scheduleNotification } = useNotifications();
 
   // Expo Asset pour le télécharger
@@ -94,7 +103,7 @@ export const FinalPaymentScreen = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getPaymentId(); // Récup json 1st id
+      const response = await getPaymentId();
       console.log(response);
       if (response) {
         setId(response);
