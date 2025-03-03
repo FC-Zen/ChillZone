@@ -65,4 +65,5 @@ export {
   CommandSummaryTemplate,
   NavigationTemplate,
   CalendarTemplate,
+  ARNavigationTemplate,
 } from './templates';

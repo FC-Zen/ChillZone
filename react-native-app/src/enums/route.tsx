@@ -21,4 +21,5 @@ export enum ROUTE {
   COMMAND_SUMMARY = 'CommandSummaryScreen',
   CALENDAR = 'CalendarScreen',
   NAVIGATION = 'NavigationScreen',
+  AR_NAVIGATION = 'ARNavigationScreen',
 }

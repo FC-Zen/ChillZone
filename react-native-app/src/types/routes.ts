@@ -25,6 +25,7 @@ export type RootStackParamList = {
   [ROUTE.COMMAND_SUMMARY]: undefined;
   [ROUTE.CALENDAR]: undefined;
   [ROUTE.NAVIGATION]: undefined;
+  [ROUTE.AR_NAVIGATION]: undefined;
 };
 
 // Définition des routes et de leurs paramètres
@@ -51,6 +52,7 @@ export type RouteParamList = {
   CommandSummaryScreen: undefined;
   CalendarScreen: undefined;
   NavigationScreen: undefined;
+  ARNavigationScreen: undefined;
 };
 
 // Typage des propriétés des écrans

@@ -4,6 +4,7 @@ import { IconWithText, MapZoom, NavigationBar } from '@components/molecules';
 import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@hooks';
 
 type NavigationTemplateProps = {
   imageSource: any;
@@ -29,6 +30,7 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
   offsetY,
 }) => {
   const { t } = useTranslation();
+  const navigation = useNavigation(); 
 
   return (
     <View style={styles.cont}>
@@ -56,7 +58,7 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
             textStyle={{ fontSize: 12 }}
             iconWidth={16}
             iconHeight={16}
-            onPress={() => {}}
+            onPress={() => { navigation.navigate('ARNavigationScreen') }}
           />
         </View>
       </View>
