@@ -19,7 +19,13 @@ export const FaqScreen: React.FC = () => {
   // Chargement des données des restaurants au démarrage
   useEffect(() => {
     const fetchData = async () => {
+      console.log("On va chercher les faq")
       const Faq = await getFaq();
+      if(!Faq){
+        navigation.navigate(ROUTE.HOME);
+        return;
+      }
+      console.log("Faq: ",Faq)
 
       setFaqData(Faq);
     };
