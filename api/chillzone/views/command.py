@@ -86,29 +86,3 @@ class UserCommandView(APIView):
                 "today_orders": today_orders_data,
                 "past_orders": past_orders_data
             }, status=status.HTTP_200_OK)
-        
-    def delete(self, request, *args, **kwargs):
-        command_id = request.data.get("id")
-
-        if not command_id:
-            return Response({"error": "Missing command ID"}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Récupération de la commande
-        command = get_object_or_404(Command, id=command_id)
-
-        # Suppression des CommandComposition liées
-        command_compositions = CommandComposition.objects.filter(command=command)
-        command_lines_ids = list(command_compositions.values_list("line_id", flat=True))  # Récupération des IDs des CommandLine avant suppression
-        
-        command_compositions.delete()  # Suppression de toutes les CommandComposition
-
-        # Suppression des LineContent liés aux CommandLine
-        LineContent.objects.filter(command_line_id__in=command_lines_ids).delete()
-
-        # Suppression des CommandLine
-        CommandLine.objects.filter(id__in=command_lines_ids).delete()
-
-        # Suppression de la Command
-        command.delete()
-
-        return Response({"message": "Command deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
