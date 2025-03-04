@@ -6,15 +6,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * @returns {string|null} Le token CSRF ou null si non disponible.
  */
 export const getAccessToken = async (): Promise<string | null> => {
-    try {
-        const access = await AsyncStorage.getItem('access');
-        if (!access) {
-            console.warn('Aucun token access trouvé dans AsyncStorage');
-            return null;
-        }
-        return access;
-    } catch (error) {
-        console.error('Erreur lors de la récupération du token access depuis AsyncStorage:', error);
-        return null;
+    const access = await AsyncStorage.getItem('access');
+    
+    if (access) {
+        return access; // Si le token est présent, on retourne le string
+    } else {
+        return null;  // Retourne une chaîne vide car le token est manquant
     }
+
 };

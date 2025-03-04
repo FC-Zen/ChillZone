@@ -15,5 +15,4 @@ export {
   useReservation,
 } from './AppContrext';
 
-export { SessionContext } from './SessionContext';
 export { UserContext } from './UserContext';

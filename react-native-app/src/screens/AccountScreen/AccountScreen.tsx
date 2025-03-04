@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { AccountTemplate } from '@components/templates';
 import { styles } from './style';
-import { sendPasswordRecoveryEmail, translationService } from '@services';
+import { logoutUser, sendPasswordRecoveryEmail, translationService } from '@services';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import * as ImagePicker from 'expo-image-picker';
@@ -172,6 +172,16 @@ export const AccountScreen: React.FC = () => {
     }
   };
 
+  //Force la déconnexion surtout si on a un rememberMe d'actif
+  const handleLogout = async () => {
+    const logout = await logoutUser(true);
+    console.log("Logout: ",logout);
+
+    if(logout.success === true){
+      console.log("Logout bon on retourne à la connexion ");
+      navigation.navigate(ROUTE.LOGIN_SCREEN)
+    }
+  }
 
   return (
     <SafeAreaView
@@ -220,6 +230,7 @@ export const AccountScreen: React.FC = () => {
         onOpenModal={() => setModalOpen(true)}
         onCloseModal={() => setModalOpen(false)}
         onBackPress={() => navigation.navigate(ROUTE.HOME)}
+        handleLogout={handleLogout}
       />
     </SafeAreaView>
   );

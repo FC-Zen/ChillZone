@@ -1,78 +1,41 @@
 import axios from 'axios';
 import { z } from 'zod';
-import { SessionContext } from '@contexts';
 import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { refreshToken, verifyToken } from '@services';
 
 /**
- * Teste si un utilisateur est déjà connecté.
+ * Test si on a déjà les informations de l'utilisateur en AsyncStorage.
  *
- * @throws {Error} Si les informations de connexion (email ou mot de passe) sont incorrectes.
  *
  * @returns {Promise<Object>} résultat de l'authentification.
  */
-export const testAuthenticateUser = async () => {
-  try {
-      const response = await axios.get(
-          `${API_URL}login/`,
-          { withCredentials: true } // important pour les cookies
-      );
+export const testAuthentificate = async () => {
+  const [access, refresh, userString] = await Promise.all([
+      AsyncStorage.getItem('access'),
+      AsyncStorage.getItem('refresh'),
+      AsyncStorage.getItem('user')
+  ]);
 
-      if (response.status === 202) {
-          if (response.data.type !== "user") {
-              return { success: false, message: "Connexion non autorisée", data: null };
-          } else {
-              /// 🔹 Récupérer les cookies `sessionid` et `csrftoken`
-              const setCookieHeader = response.headers["set-cookie"]?.[0].split(/[,;]\s*/);
-              console.log("Set-Cookie Header:", setCookieHeader);
+  if (access && refresh && userString) {
+      const user = JSON.parse(userString);
 
-              console.log("Headers : ", response.headers);
-              console.log("User data:", response.data); 
-
-              let sessionId: string | null = null;
-
-              if (setCookieHeader && Array.isArray(setCookieHeader)) {
-                setCookieHeader.forEach((cookie) => {
-                  // Vérification du cookie "sessionid"
-                  if (cookie.startsWith("sessionid=")) {
-                    sessionId = cookie.split(";")[0].split("=")[1];
-                  }
-                });
-              }
-
-              console.log("Session ID:", sessionId);
-
-              // 🔹 Stocker les valeurs dans le `SessionContext`
-              if (sessionId) {
-                const sessionContext = SessionContext.getInstance();
-                const crsfToken = await AsyncStorage.getItem('csrfToken')
-
-                if(crsfToken){
-                  sessionContext.setSession(sessionId,crsfToken)
-                }else{
-                  throw new Error("Erreur lors de la récupération du dernier token")
-                }
-                await AsyncStorage.setItem('sessionId', sessionId);
-              }
-
-              console.log("Email :", response.data.email);
-              return { success: true, message: "Reconnexion réussie !", data: response.data };
+      const isValid = await verifyToken(access);
+      if (!isValid) {
+          // Si le token est expiré, tente de le rafraîchir
+          const refreshResult = await refreshToken(refresh);
+          if (!refreshResult.success) {
+              await AsyncStorage.clear(); // On wipe tout si le refresh échoue
+              return { success: false, message: 'Session expirée, veuillez vous reconnecter', data: null };
           }
       }
 
-      // Cas inattendu (juste par sécurité)
-      return { success: false, message: "Statut inattendu", data: null };
-  } catch (error: any) {
-      if (error.response?.status === 405) {
-          // 🔥 Utilisateur non connecté = pas d'erreur bloquante
-          return { success: false, message: "Pas encore identifié", data: null };
-      } else {
-          console.error("Erreur lors de la vérification de session:", error.message);
-          throw error; // autre type d'erreur réseau ou serveur
-      }
+      // Retourne le user avec un message de succès
+      return { success: true, message: 'Bon retour à vous', data: user };
   }
-};
 
+  return { success: false, message: 'Pas d\'utilisateur enregistré', data: null };
+};
 
 /**
  * Authentifie un utilisateur en vérifiant ses informations de connexion.
@@ -82,75 +45,39 @@ export const testAuthenticateUser = async () => {
  *
  * @returns {Promise<Object>} résultat de l'authentification.
  */
-export const authenticateUser = async (formData: { login: string; password: string; }) => {
-  console.log("User authentification");
-  const test = await testAuthenticateUser();
-  
-  if(test.success === true){
-    return test
-  }else{
-
-  try {
+export const authenticateUser = async (rememberMe:boolean, formData: { login: string; password: string }) => {
+    try {
     const response = await axios.post( `${API_URL}login/` , {
       username: formData.login,
       password: formData.password,
     });
-    if (response.status === 200) {
-      if (response.data.type !== "superadmin") {
-        return { success: false, message: "Connexion non autorisée", data: null };
+    if (response.status == 200) {
+      if (response.data.type !== "user") {
+        return { success: false, message: 'Connexion non autorisée', data: null};
       } else {
-        // 🔹 Récupérer les cookies `sessionid` et `csrftoken`
-        const setCookieHeader = response.headers["set-cookie"]?.[0].split(/[,;]\s*/);
-        console.log("Set-Cookie Header:", setCookieHeader);
 
         await AsyncStorage.setItem('access', response.data.access);
         await AsyncStorage.setItem('refresh', response.data.refresh);
+        await AsyncStorage.setItem('user', JSON.stringify(response.data));
+        await AsyncStorage.setItem('remember', String(rememberMe));
 
-        let sessionId: string | null = null;
-        let csrfToken: string | null = null;
-
-        if (setCookieHeader && Array.isArray(setCookieHeader)) {
-          setCookieHeader.forEach((cookie) => {
-            // Vérification du cookie "sessionid"
-            if (cookie.startsWith("sessionid=")) {
-              sessionId = cookie.split(";")[0].split("=")[1];
-            }
-
-            // Vérification du cookie "csrftoken"
-            if (cookie.startsWith("csrftoken=")) {
-              csrfToken = cookie.split(";")[0].split("=")[1];
-            }
-          });
-        }
-
-        console.log("Session ID:", sessionId);
-        console.log("CSRF Token:", csrfToken);
-
-        // 🔹 Stocker les valeurs dans le `SessionContext`
-        if (sessionId && csrfToken) {
-          const sessionContext = SessionContext.getInstance();
-          sessionContext.setSession(sessionId, csrfToken);
-
-          await AsyncStorage.setItem('sessionId', csrfToken);
-          await AsyncStorage.setItem('csrfToken', csrfToken);
-        }
-
-        console.log("Email :", response.data.email);
-        return { success: true, message: "Connexion réussie !", data: response.data };
+        return { success: true, message: 'Connexion réussie !', data: response.data};
       }
-      } else if (response.status === 403) {
-        return { success: false, message: "Vous êtes déjà connectés", data: null };
-      } else if (response.status === 404) {
-        return { success: false, message: "Identifiants incorrects", data: null };
-      } else {
-        throw new Error("Erreur de connexion");
-      }
-    } catch (error: any) {
-      console.error("Erreur lors de l'authentification:", error.message);
-      throw new Error(error.message);
+    } 
+    return { success: false, message: "Erreur lors de la connexion", data: null };
+  } catch (error: any) {
+    console.error('Erreur lors de l\'authentification:', error.message);
+    if (error.status == 401) {
+      return { success: false, message: "Identifiants incorrects", data: null };
+    } else if (error.status == 403) {
+      return { success: false, message: 'Vous êtes déjà connectés', data: null };
+    } else if (error.status == 404) {
+      return { success: false, message: 'Vous n\'êtes plus autorisé à vous connecter. Contactez un administrateur', data: null };
     }
+    return { success: false, message: "Erreur lors de la connexion", data: null };
   }
 };
+
 
 /**
  * Déconecte un utilisateur.
@@ -159,41 +86,72 @@ export const authenticateUser = async (formData: { login: string; password: stri
  *
  * @returns {Promise<Object>} résultat de la déconnexion.
  */
-export const logoutUser = async () => {
+export const logoutUser = async (disconnect: boolean) => {
+  const remember = await AsyncStorage.getItem('remember');
+
+  // Si on veut se souvenir de l'utilisateur et qu'il n'est pas explicitement déconnecté
+  if (!disconnect && remember && remember === "true") {
+    return { success: true, message: "On se souvient de l'utilisateur" };
+  }
+
+  // Récupérer les tokens d'accès et de rafraîchissement
+  const [access, refresh] = await Promise.all([
+    AsyncStorage.getItem("access"),
+    AsyncStorage.getItem("refresh"),
+  ]);
+
+  if (!access || !refresh) {
+    // Si on n'a pas de token, l'utilisateur est déjà déconnecté
+    await AsyncStorage.removeItem("access");
+    await AsyncStorage.removeItem("refresh");
+    await AsyncStorage.removeItem("user");
+
+    return { success: true, message: "Déconnexion réussie." };
+  }
+
   try {
-    // 🔹 Récupération du CSRF Token depuis le SessionContext
-    const sessionContext = SessionContext.getInstance();
-    const csrfToken = sessionContext.getCsrfToken();
-    // Pour récupérer le Token de la session précédente
-    // const crsfToken = await AsyncStorage.getItem('csrfToken');
-
-    console.log("CSRF Token:", csrfToken); 
-
-    if (!csrfToken) {
-      return { success: false, message: "CSRF Manquant." };
-    }
-
-    // 🔹 Requête DELETE pour la déconnexion
-    const response = await axios.delete(`${API_URL}login/`, {
-      withCredentials: true,
-      headers: {
-        "X-CSRFToken": csrfToken,
+    const response = await axios.post(
+      `${API_URL}logout/`,
+      {
+        refresh: `${refresh}`,
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
 
-    if (response.status === 204) {
-      console.log("Utilisateur déconnecté avec succès.");
-
-      // 🔹 Suppression des valeurs stockées dans SessionContext
-      sessionContext.clearSession();
+    if (response.status === 205) {
+      // Supprime les tokens dans AsyncStorage
+      await AsyncStorage.removeItem("access");
+      await AsyncStorage.removeItem("refresh");
+      await AsyncStorage.removeItem("user");
 
       return { success: true, message: "Déconnexion réussie." };
     } else {
-      throw new Error("Échec de la déconnexion.");
+      console.error("Erreur de déconnexion :", response.data);
+      return { success: false, message: "Erreur lors de la déconnexion." };
     }
   } catch (error: any) {
-    console.error("Erreur lors de la déconnexion :", error.message);
-    throw new Error(error.message);
+    if (error.response && error.response.status === 400) {
+      // Supprime les tokens dans AsyncStorage même si la déconnexion a échoué
+      await AsyncStorage.removeItem("access");
+      await AsyncStorage.removeItem("refresh");
+      await AsyncStorage.removeItem("user");
+
+      return { success: true, message: "Déconnexion réussie." };
+    } else if (error.message === "Network Error") {
+      // Supprime les tokens dans AsyncStorage
+      await AsyncStorage.removeItem("access");
+      await AsyncStorage.removeItem("refresh");
+      await AsyncStorage.removeItem("user");
+
+      return { success: true, message: "Déconnexion réussie." };
+    } else {
+      console.error("Erreur lors de la déconnexion :", error.message);
+      return { success: false, message: "Problème lors de la déconnexion." };
+    }
   }
 };
 
@@ -209,16 +167,14 @@ export const logoutUser = async () => {
 export const sendPasswordRecoveryEmail = async (formData: {
   email: string;
 }) => {
-  console.log("Envoi de l'email de vérification à ", formData.email);
   // Exemple d'une liste d'emails valides pour la simulation
   try {
     const response = await axios.post(
       `${API_URL}forget-password/`,
       { email: formData.email }
     );
-    console.log(response);
+    
     if (response.status === 200) {
-      console.log(`Email de récupération envoyé à : ${formData.email}`);
       return {
         success: true,
         message: 'Email de récupération envoyé avec succès !',
@@ -283,8 +239,6 @@ export const changePassword = async (formData: {
       newPassword: formData.inputPassword,
     });
     */
-
-    console.log('Mot de passe changé avec succès pour l’utilisateur.');
 
     // Simule une réponse réussie
     return { success: true, message: 'Mot de passe changé avec succès !' };

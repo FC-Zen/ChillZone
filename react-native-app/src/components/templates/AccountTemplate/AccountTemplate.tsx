@@ -53,6 +53,7 @@ export type AccountTemplateProps = {
   userData: any;
   handleInputChange: (field: string, value: string) => void;
   handleConfirmEditInfo: () => void;
+  handleLogout: () => void;
 };
 
 export const AccountTemplate: React.FC<AccountTemplateProps> = ({
@@ -91,6 +92,7 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
   userData,
   handleInputChange,
   handleConfirmEditInfo,
+  handleLogout
 }) => {
   const { t } = useTranslation();
 
@@ -132,6 +134,7 @@ export const AccountTemplate: React.FC<AccountTemplateProps> = ({
         onOpenEditInfoModal={onOpenEditInfoModal}
         onNavigateToReservations={onNavigateToReservations}
         onNavigateToCommand={onNavigateToCommand}
+        handleLogout={handleLogout}
       />
 
       {/* Modales */}

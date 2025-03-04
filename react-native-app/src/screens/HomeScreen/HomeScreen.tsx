@@ -11,6 +11,7 @@ import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen: React.FC = () => {
   const userContext = UserContext.getInstance();
@@ -19,9 +20,6 @@ export const HomeScreen: React.FC = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { nextBooking, updateNextBooking } = useNextBooking();
-
-  console.log("User data Home screen: ",userContext);
-  console.log("Notification setting Home screen: ",userContext.getNotificationSetting());
 
   if (nextBooking) {
     items = nextBooking;
@@ -53,7 +51,6 @@ export const HomeScreen: React.FC = () => {
 
   // Annuler une reservation
   const handleCancelReservation = () => {
-    console.log('Annuler la réservation');
     updateNextBooking([]);
     setSnackbar({
       open: true,
@@ -68,11 +65,10 @@ export const HomeScreen: React.FC = () => {
       const restaurants = await transformRestaurantData();
 
       const transformedRestaurants = restaurants.map((restaurant) => {
-        const image = ImagesMap[restaurant.photo_link];
         return {
           id: restaurant.id,
           name: restaurant.name,
-          photo_link: image,
+          photo_link: restaurant.photo_link,
           status: restaurant.status,
         };
       });
@@ -89,7 +85,7 @@ export const HomeScreen: React.FC = () => {
     photo_link: any;
     status: 'Ouvert' | 'Fermé';
   }) => {
-    console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
+    
     if (selectedRestaurant.status == 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER);
     } else {
