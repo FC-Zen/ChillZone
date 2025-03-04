@@ -5,7 +5,11 @@ import { BottomNavbar, SnackBar } from '@components/molecules';
 import { useNextBooking, UserContext } from '@contexts';
 import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
 import { styles } from './style';
-import { transformBookings, transformRestaurantData } from '@services';
+import {
+  RestaurantData,
+  transformBookings,
+  transformRestaurantData,
+} from '@services';
 import { useTranslation } from 'react-i18next';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
@@ -69,6 +73,8 @@ export const HomeScreen: React.FC = () => {
           id: restaurant.id,
           name: restaurant.name,
           photo_link: ImagesMap[restaurant.photo_link] || restaurant.photo_link,
+          opening_time: restaurant.opening_time,
+          closing_time: restaurant.closing_time,
           status: restaurant.status,
         }));
 
@@ -86,16 +92,12 @@ export const HomeScreen: React.FC = () => {
     fetchData();
   }, []);
 
-  const handleRestaurantPress = (selectedRestaurant: {
-    id: number;
-    name: string;
-    photo_link: any;
-    status: 'Ouvert' | 'Fermé';
-  }) => {
+  const handleRestaurantPress = (selectedRestaurant: RestaurantData) => {
+    console.log('🚀 ~ name:', selectedRestaurant.name);
+    console.log('🚀 ~  selectedRestaurant.id:', selectedRestaurant.id);
     if (selectedRestaurant.status === 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER, {
-        restaurantId: selectedRestaurant.id,
-        restaurantName: selectedRestaurant.name,
+        restaurant: selectedRestaurant,
       });
     } else {
       setSnackbar({
@@ -104,8 +106,7 @@ export const HomeScreen: React.FC = () => {
         message: 'Le restaurant est fermé en ce moment',
       });
       navigation.navigate(ROUTE.DISPENSER, {
-        restaurantId: selectedRestaurant.id,
-        restaurantName: selectedRestaurant.name,
+        restaurant: selectedRestaurant,
       });
     }
   };

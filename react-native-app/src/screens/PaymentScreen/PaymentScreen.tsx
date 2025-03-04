@@ -29,12 +29,14 @@ export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
       const response = await getAllOrders();
       if (response) {
         let last_order = getLastOrder(response);
+        console.log('last_order : ', last_order);
         setTotalAmount(last_order.total_price);
       }
     };
     fetchTotalAmount();
   }, []);
 
+  console.log('totalAmount : ', totalAmount);
   return (
     <PaymentTemplate
       headerTitle={t('headers.pay')}

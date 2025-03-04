@@ -13,14 +13,9 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
+import { RestaurantData as Restaurant } from '@services';
 
 export const RestaurationScreen = () => {
-  type Restaurant = {
-    id: number;
-    name: string;
-    photo_link: any;
-    status: 'Ouvert' | 'Fermé';
-  };
 
   const [restaurantsData1, setRestaurantsData1] = useState<Restaurant[]>([]);
   const [restaurantsData2, setRestaurantsData2] = useState<Restaurant[]>([]);
@@ -50,6 +45,8 @@ export const RestaurationScreen = () => {
         id: restaurant.id,
         name: restaurant.name,
         photo_link: image,
+        opening_time: restaurant.opening_time,
+        closing_time: restaurant.closing_time,
         status: restaurant.status,
       };
     });
@@ -70,6 +67,8 @@ export const RestaurationScreen = () => {
         id: restaurant.id,
         name: restaurant.name,
         photo_link: image,
+        opening_time: restaurant.opening_time,
+        closing_time: restaurant.closing_time,
         status: restaurant.status,
       };
     });
@@ -86,13 +85,14 @@ export const RestaurationScreen = () => {
     id: number;
     name: string;
     photo_link: any;
+    opening_time: string;
+    closing_time: string;
     status: 'Ouvert' | 'Fermé';
   }) => {
     console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
     if (selectedRestaurant.status == 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER, {
-        restaurantId: selectedRestaurant.id,
-        restaurantName: selectedRestaurant.name,
+        restaurant: selectedRestaurant
       });
     } else {
       setSnackbar({

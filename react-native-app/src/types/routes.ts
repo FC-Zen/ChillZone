@@ -41,8 +41,7 @@ export type RouteParamList = {
   FaqScreen: undefined;
   PaymentScreen: { qrcode: string };
   DispenserScreen: {
-    restaurantId?: RestaurantData['id'];
-    restaurantName?: RestaurantData['name'];
+    restaurant: RestaurantData;
   };
   DispenserModal: { meal: MealProps };
   MenuModal: { menu: MenuProps };
@@ -51,7 +50,7 @@ export type RouteParamList = {
   AccountScreen: undefined;
   LinksScreen: undefined;
   ReservationSummaryScreen: undefined;
-  CartScreen: { restaurantId?: RestaurantData['id'] };
+  CartScreen: { restaurant: RestaurantData };
   AlertScreen: undefined;
   CommandSummaryScreen: undefined;
   CalendarScreen: undefined;

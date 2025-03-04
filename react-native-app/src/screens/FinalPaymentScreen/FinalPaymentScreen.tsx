@@ -11,6 +11,8 @@ import { useCommand } from '@contexts';
 import { API_URL } from '@env';
 import { getLastOrder } from '@utils/functions';
 import { getAllOrders } from '@services';
+import { testQrCode } from '@services/PaymentServices';
+import { ImagesMap } from '@utils';
 
 export type FinalPaymentScreenProps = {
   route: {
@@ -31,8 +33,14 @@ export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
   const { scheduleNotification } = useNotifications();
   const { commandId } = useCommand();
   const [id, setId] = useState(commandId || 0);
+  const [imageUri, setImageUri] = useState<any>(null);
 
   useEffect(() => {
+    if (qrcodeLink?.includes('qrcode')) {
+      setImageUri(`${API_URL}media/` + qrcodeLink);
+    } else {
+      setImageUri(`${API_URL}media/qrcode/` + qrcodeLink);
+    }
     const fetchPaymentId = async () => {
       const response = await getAllOrders();
       if (response) {
@@ -40,15 +48,18 @@ export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
         setId(last_order.id);
       }
     };
+
+    const testQRCode = async () => {
+      const response = await testQrCode(imageUri);
+      console.log('response', response);
+      if (response.success === false) {
+        setImageUri(ImagesMap['qrcode.png']);
+      }
+    }
     fetchPaymentId();
+    testQRCode();
   }, []);
 
-  let imageUri = '';
-  if (qrcodeLink?.includes('qrcode')) {
-    imageUri = `${API_URL}media/` + qrcodeLink;
-  } else {
-    imageUri = `${API_URL}media/qrcode/` + qrcodeLink;
-  }
 
   const saveFile = async (uri: string, filename: string, mimetype: string) => {
     if (Platform.OS === 'android') {

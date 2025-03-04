@@ -23,8 +23,8 @@ export type RestaurantData = {
   id: number;
   name: string;
   photo_link: string;
-  opening_time?: string;
-  closing_time?: string;
+  opening_time: string;
+  closing_time: string;
   status: 'Ouvert' | 'Fermé';
 };
 

@@ -15,6 +15,7 @@ import { useCommand } from '@contexts';
 import { createCommand } from '@services/CommandServices';
 import { RestaurantData } from '@services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { formatTime } from '../../utils/functions/Reservation/Reservation';
 
 export type SlotTime = {
   startTime: number;
@@ -24,15 +25,22 @@ export type SlotTime = {
 type CardScreenProps = {
   route: {
     params: {
-      restaurantId: RestaurantData['id'];
-      restaurantName: RestaurantData['name'];
+      restaurant: RestaurantData;
     };
   };
 };
 
 export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
-  const { restaurantId, restaurantName } = route.params;
+  const { restaurant } = route.params;
+  const restaurantId = restaurant.id;
+  const restaurantName = restaurant.name;
   const { t } = useTranslation();
+
+  // 8:30 to 8.5
+  const formatTime = (time: string) => {
+    const [hour, minute] = time.split(':').map(Number);
+    return hour + minute / 60;
+  }
 
   const [cartItems, updateCartItems] = useState<ItemProps[]>([]);
   const [pickupSlot, setPickupSlot] = useState<SlotTime>({
@@ -41,8 +49,8 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
   });
   const [fixedPickupSlot] = useState<SlotTime>({ startTime: 10, endTime: 11 });
   const [selectedSlot, setSelectedSlot] = useState(false);
-  const [openTime, setOpenTime] = useState(10);
-  const [closedTime, setClosedTime] = useState(20);
+  const [openTime, setOpenTime] = useState(formatTime(restaurant.opening_time));
+  const [closedTime, setClosedTime] = useState(formatTime(restaurant.closing_time));
   const restaurantImage = ImagesMap['restaurant_image.png'];
   const { listItems, updateListItems, totalAmount, setTotalAmount } =
     useCommand();

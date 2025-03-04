@@ -2,13 +2,7 @@ import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { RestaurantSlider } from '@components';
 import { PageHeader } from '@components/molecules/PageHeader';
-
-type Restaurant = {
-  id: number;
-  name: string;
-  photo_link: any;
-  status: 'Ouvert' | 'Fermé';
-};
+import { RestaurantData as Restaurant } from '@services';
 
 type RestaurationTemplateProps = {
   pageHeaderTitle: string;
@@ -16,12 +10,7 @@ type RestaurationTemplateProps = {
   restaurantsData2: Restaurant[];
   restaurantWords1: string[];
   restaurantWords2: string[];
-  onPressRestaurant: ( restaurant : {
-    id: number;
-    name: string;
-    photo_link: any;
-    status: 'Ouvert' | 'Fermé';
-  }) => void;
+  onPressRestaurant: ( restaurant : Restaurant) => void;
 };
 
 export const RestaurationTemplate: React.FC<RestaurationTemplateProps> = ({

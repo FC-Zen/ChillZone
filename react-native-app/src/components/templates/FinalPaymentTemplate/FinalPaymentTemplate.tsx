@@ -1,5 +1,6 @@
 import { Text, View } from 'react-native';
 import { Image } from 'expo-image';
+import { Image as ImageNative } from 'react-native';
 import { styles } from './style';
 import { PageHeader } from '@components/molecules';
 import { colors } from '@theme';
@@ -8,7 +9,7 @@ import { Button } from '@components/molecules';
 type FinalPaymentTemplateProps = {
   headerTitle: string;
   navigateToHome: () => void;
-  qrImagelink: string;
+  qrImagelink: any;
   commandConfirmation: string;
   commandId: number;
   downloadButtonTitle: string;
@@ -51,16 +52,15 @@ export const FinalPaymentTemplate: React.FC<FinalPaymentTemplateProps> = ({
         {commandSplit[1]}
       </Text>
 
-      {qrImagelink ? (
-        <Image
-          source={{ uri: qrImagelink }}
-          style={styles.qrcodeImage}
+      { typeof parseInt(qrImagelink) === 'number' ? 
+        <ImageNative source={qrImagelink} style={styles.qrcodeImage} /> 
+        : 
+        <Image 
+          source={{ uri: qrImagelink }} 
+          style={styles.qrcodeImage} 
           contentFit="contain"
-          placeholder="blur"
-        />
-      ) : (
-        <Text>Chargement du QR Code...</Text>
-      )}
+          placeholder="blur" 
+        /> }
 
       <Button
         title={downloadButtonTitle}

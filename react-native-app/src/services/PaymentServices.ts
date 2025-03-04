@@ -28,7 +28,7 @@ export const getAllOrders = async (): Promise<AllOrders> => {
     });
 
     if (response.status === 200) {
-      console.log('Dernière commande : ', response.data);
+/*       console.log('Dernière commande : ', response.data); */
       return response.data;
     } else {
       console.log(
@@ -42,3 +42,17 @@ export const getAllOrders = async (): Promise<AllOrders> => {
     throw new Error('Erreur lors de la récupération des commandes');
   }
 };
+
+export const testQrCode = async (qrcodeLink: string) => {
+  try {
+    const response = await axios.get(qrcodeLink);
+
+    if (response.status === 200) {
+      console.log('QR Code testé : ', response.data);
+      return { success: true };
+    } 
+    return { success: false };
+  } catch (error: any) {
+    return { success: false };
+  }
+}

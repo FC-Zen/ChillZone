@@ -13,14 +13,15 @@ import { RestaurantData } from '@services';
 type DispenserScreenProps = {
   route: {
     params: {
-      restaurantId: RestaurantData['id'];
-      restaurantName: RestaurantData['name'];
+      restaurant: RestaurantData;
     };
   };
 };
 
 export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
-  const { restaurantId, restaurantName } = route.params;
+  const { restaurant } = route.params;
+  const restaurantId = restaurant.id;
+  const restaurantName = restaurant.name
 
   const [mealsByCategory, setMealsByCategory] = useState<
     Record<string, MealProps[]>
@@ -121,7 +122,7 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
           }}
           buttonProps={{
             title: t('buttons.actions.cart'),
-            onPress: () => navigation.navigate(ROUTE.CART, { restaurantId }),
+            onPress: () => navigation.navigate(ROUTE.CART, { restaurant: restaurant }),
           }}
           pageHeaderProps={{
             title: restaurantName,
@@ -181,7 +182,7 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
           }}
           buttonProps={{
             title: t('buttons.actions.cart'),
-            onPress: () => navigation.navigate(ROUTE.CART, { restaurantId }),
+            onPress: () => navigation.navigate(ROUTE.CART, { restaurant: restaurant }),
           }}
           pageHeaderProps={{
             title: restaurantName,
