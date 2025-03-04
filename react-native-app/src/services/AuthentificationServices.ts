@@ -141,6 +141,13 @@ export const logoutUser = async (disconnect: boolean) => {
       await AsyncStorage.removeItem("user");
 
       return { success: true, message: "Déconnexion réussie." };
+    } else if (error.message === "Network Error") {
+      // Supprime les tokens dans AsyncStorage
+      await AsyncStorage.removeItem("access");
+      await AsyncStorage.removeItem("refresh");
+      await AsyncStorage.removeItem("user");
+
+      return { success: true, message: "Déconnexion réussie." };
     } else {
       console.error("Erreur lors de la déconnexion :", error.message);
       return { success: false, message: "Problème lors de la déconnexion." };
