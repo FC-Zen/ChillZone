@@ -25,7 +25,7 @@ export const Map: React.FC<MapProps> = ({ selectedFloor, onClick }) => {
     
     useEffect(() => {
         if (selectedFloor) {
-            setPhotoLink(selectedFloor.photo_link ? `https://chillzone.fabiengilles.tf/${selectedFloor.photo_link}` : "");
+            setPhotoLink(selectedFloor.photo_link ? `${import.meta.env.VITE_REACT_APP_API_URL.slice(0, -1)}${selectedFloor.photo_link}` : "");
             setLocations(selectedFloor.locations);
         }
     }, [selectedFloor]);

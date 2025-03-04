@@ -51,7 +51,7 @@ export const MapInput: React.FC<MapInputProps> = ({ selectedFloor, selectedCoord
             setPin(newPin); // Définit le pin initial basé sur selectedCoords
         }
         if (selectedFloor) {
-            setPhotoLink(selectedFloor.photo_link ? `https://chillzone.fabiengilles.tf/${selectedFloor.photo_link}` : "");
+            setPhotoLink(selectedFloor.photo_link ? `${import.meta.env.VITE_REACT_APP_API_URL.slice(0, -1)}${selectedFloor.photo_link}` : "");
         }
     }, []);
 

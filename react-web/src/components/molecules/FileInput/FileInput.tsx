@@ -21,7 +21,7 @@ export const FileInput: React.FC<FileInputProps> = ({
   useEffect(() => {
     if (value) {
       setFileName(value);
-      setFilePreview('https://chillzone.fabiengilles.tf/' + value);
+      setFilePreview(`${import.meta.env.VITE_REACT_APP_API_URL.slice(0, -1)}${value}`);
     }
   }, [value]);
 

@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.views import APIView
 from django.utils.timezone import timedelta, now
+from django.http import QueryDict
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, F, Sum
 from collections import defaultdict
@@ -227,7 +228,7 @@ class OwnerMenuView(APIView):
 
         Associate.objects.filter(menu=menu).delete()
 
-        mutable_data = request.data.copy() 
+        mutable_data = request.data.dict() if isinstance(request.data, QueryDict) else request.data.copy()
 
         category_fields = ["starter", "main", "drink", "dessert", "side", "other"]
         categories_data = {field: mutable_data.pop(field, []) for field in category_fields}
