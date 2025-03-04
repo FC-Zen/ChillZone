@@ -20,15 +20,12 @@ export type FaqCategory = {
  * @returns {Promise<Object>} résultat de l'authentification.
  */
 export const getFaq = async () => {
-  console.log("récupération de Faq")
   const access = await getAccessToken();
 
-  console.log("Access FAQ : ", access);
   if(!access){
     console.error("Pas de token access")
     return [];
   }
-  console.log("Access FAQ : ", access);
 
   try {
     const response = await axios.get(`${API_URL}faq/`, {
@@ -39,8 +36,6 @@ export const getFaq = async () => {
 
       // Vérifie si la réponse indique une réussite - SIMULATION
     if (response) {
-      console.log('Faq données récupérer: ',response.data);
-
       return response.data as FaqCategory[];
     } 
   } catch (error: any) {

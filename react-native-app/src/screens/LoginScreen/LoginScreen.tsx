@@ -17,11 +17,9 @@ export const LoginScreen: React.FC = () => {
         console.dir("Test authentification login screen: ", result )
 
         if(result.success && result.data) {
-          console.log("User data: ",result.data);
           const userContext = UserContext.getInstance();
           userContext.setUser(result.data);
           userContext.setNotificationSetting(result.data.notifications[0]);
-          console.log("User: ", userContext.getUser())
           navigation.navigate(ROUTE.HOME);
         }
     };
@@ -52,7 +50,6 @@ export const LoginScreen: React.FC = () => {
   });
 
   const handleLogin = async () => {
-    console.log("LOGIN");
     try {
       const result = await authenticateUser(
         isChecked,
@@ -63,11 +60,9 @@ export const LoginScreen: React.FC = () => {
       setAuthResult({ severity: 'success', message: result.message });
 
       if(result.data) {
-        console.log("User data: ",result.data);
         const userContext = UserContext.getInstance();
         userContext.setUser(result.data);
         userContext.setNotificationSetting(result.data.notifications[0]);
-        console.log("User: ", userContext.getUser())
         navigation.navigate(ROUTE.HOME);
       }
       

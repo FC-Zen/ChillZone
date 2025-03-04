@@ -18,8 +18,6 @@ export const testAuthentificate = async () => {
   ]);
 
   if (access && refresh && userString) {
-      console.log("Access testAuthentificate: ", access)
-      console.log("Refresh testAuthentificate: ", refresh)
       const user = JSON.parse(userString);
 
       const isValid = await verifyToken(access);
@@ -102,20 +100,14 @@ export const logoutUser = async (disconnect: boolean) => {
     AsyncStorage.getItem("refresh"),
   ]);
 
-  console.log("Access LogoutUser :", access);
-  console.log("Refresh LogoutUser :", refresh);
-
   if (!access || !refresh) {
     // Si on n'a pas de token, l'utilisateur est déjà déconnecté
-    console.log("Pas de token, utilisateur déjà déconnecté");
     await AsyncStorage.removeItem("access");
     await AsyncStorage.removeItem("refresh");
     await AsyncStorage.removeItem("user");
 
     return { success: true, message: "Déconnexion réussie." };
   }
-
-  console.log("API url :", `${API_URL}logout/`);
 
   try {
     const response = await axios.post(
@@ -131,8 +123,6 @@ export const logoutUser = async (disconnect: boolean) => {
     );
 
     if (response.status === 205) {
-      console.log("Déconnexion réussie");
-
       // Supprime les tokens dans AsyncStorage
       await AsyncStorage.removeItem("access");
       await AsyncStorage.removeItem("refresh");
@@ -145,7 +135,6 @@ export const logoutUser = async (disconnect: boolean) => {
     }
   } catch (error: any) {
     if (error.response && error.response.status === 400) {
-      console.log("Déjà déconnecté");
       // Supprime les tokens dans AsyncStorage même si la déconnexion a échoué
       await AsyncStorage.removeItem("access");
       await AsyncStorage.removeItem("refresh");
@@ -171,16 +160,14 @@ export const logoutUser = async (disconnect: boolean) => {
 export const sendPasswordRecoveryEmail = async (formData: {
   email: string;
 }) => {
-  console.log("Envoi de l'email de vérification à ", formData.email);
   // Exemple d'une liste d'emails valides pour la simulation
   try {
     const response = await axios.post(
       `${API_URL}forget-password/`,
       { email: formData.email }
     );
-    console.log(response);
+    
     if (response.status === 200) {
-      console.log(`Email de récupération envoyé à : ${formData.email}`);
       return {
         success: true,
         message: 'Email de récupération envoyé avec succès !',
@@ -245,8 +232,6 @@ export const changePassword = async (formData: {
       newPassword: formData.inputPassword,
     });
     */
-
-    console.log('Mot de passe changé avec succès pour l’utilisateur.');
 
     // Simule une réponse réussie
     return { success: true, message: 'Mot de passe changé avec succès !' };

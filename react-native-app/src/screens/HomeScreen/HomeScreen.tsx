@@ -21,12 +21,6 @@ export const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const { nextBooking, updateNextBooking } = useNextBooking();
 
-  console.log("User data Home screen: ",userContext);
-  console.log("Notification setting Home screen: ",userContext.getNotificationSetting());
-  AsyncStorage.getItem('access').then((access) => console.log("Access Home screen :", access))
-  AsyncStorage.getItem('refresh').then((refresh) => console.log("Refresh Home screen :", refresh))
-  AsyncStorage.getItem('user').then((user) => console.dir("User Home screen :", user))
-
   if (nextBooking) {
     items = nextBooking;
   }
@@ -57,7 +51,6 @@ export const HomeScreen: React.FC = () => {
 
   // Annuler une reservation
   const handleCancelReservation = () => {
-    console.log('Annuler la réservation');
     updateNextBooking([]);
     setSnackbar({
       open: true,
@@ -92,7 +85,7 @@ export const HomeScreen: React.FC = () => {
     photo_link: any;
     status: 'Ouvert' | 'Fermé';
   }) => {
-    console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
+    
     if (selectedRestaurant.status == 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER);
     } else {
