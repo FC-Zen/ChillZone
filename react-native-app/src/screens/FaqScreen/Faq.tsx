@@ -8,7 +8,7 @@ import { FaqTemplate } from '@components/templates/FaqTemplate';
 import { FaqCategory } from '@services/FaqServices';
 import { ROUTE } from '@enums';
 import { useTranslation } from 'react-i18next';
-import { colors } from '@theme';
+import { colors, typography } from '@theme';
 
 export const FaqScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -21,10 +21,6 @@ export const FaqScreen: React.FC = () => {
     const fetchData = async () => {
       console.log("On va chercher les faq")
       const Faq = await getFaq();
-      if(!Faq){
-        navigation.navigate(ROUTE.HOME);
-        return;
-      }
       console.log("Faq: ",Faq)
 
       setFaqData(Faq);
@@ -46,7 +42,14 @@ export const FaqScreen: React.FC = () => {
           height: 16,
         }}
       />
-      {FaqData && <FaqTemplate categories={FaqData} />}
+      {FaqData ? <FaqTemplate categories={FaqData} />: <Text style={
+        {
+          textAlign: 'center',
+          marginTop: 20,
+          fontSize: typography.h1.fontSize,
+          color: colors.warn,
+        }
+      }>Cet établissement n'a pas de FAQ</Text>}
     </View>
   );
 };
