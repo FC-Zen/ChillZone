@@ -1,5 +1,6 @@
 import { restauration_places } from '@assets/data/restauration_places.json';
 import { API_URL } from '@env';
+import { getAccessToken } from '@utils/functions';
 import axios from 'axios';
 // import axios from 'axios';
 
@@ -76,9 +77,22 @@ export const transformRestaurantsApiResponse = (response: RestaurantsApiResponse
 export const transformRestaurantData = async (): Promise<RestaurantData[]> => {
 
   try {
+
+    const access = await getAccessToken();
+    
+    console.log("Access FAQ : ", access);
+    if(!access){
+      console.error("Pas de token access")
+      return [];
+    }
+
     const response = await axios.get(
         `${API_URL}restaurants/`,
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${access}`,
+          },
+        }
     );
 
     const allRestaurants: RestaurantData[] = transformRestaurantsApiResponse(response.data);
