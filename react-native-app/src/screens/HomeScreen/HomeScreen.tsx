@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen: React.FC = () => {
   const userContext = UserContext.getInstance();
@@ -104,9 +103,6 @@ export const HomeScreen: React.FC = () => {
         open: true,
         severity: 'error',
         message: 'Le restaurant est fermé en ce moment',
-      });
-      navigation.navigate(ROUTE.DISPENSER, {
-        restaurant: selectedRestaurant,
       });
     }
   };

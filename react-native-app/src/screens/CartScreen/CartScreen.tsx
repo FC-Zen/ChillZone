@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
 import { CartTemplate } from '@components';
-import { ImagesMap } from '@utils';
+import { API_URL } from '@env';
 import { ItemProps } from '@components/organisms';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
@@ -94,7 +94,8 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
     endTime: closedTime,
   });
 
-  const restaurantImage = ImagesMap['restaurant_image.png']; // modifier ça
+  const restaurantImage = `${API_URL}${restaurant.photo_link}`;
+  console.log('🚀 ~ restaurantImage:', restaurantImage);
   const { listItems, updateListItems, totalAmount, setTotalAmount } =
     useCommand();
 
