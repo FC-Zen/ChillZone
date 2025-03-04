@@ -56,6 +56,7 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
     onSubmitLink,
 }) => {
     const customHeader = () => {
+        console.log('startOfWeek :', startOfWeek);
         return (
             <CalendarHeader
                 daysOfWeek={daysOfWeek}

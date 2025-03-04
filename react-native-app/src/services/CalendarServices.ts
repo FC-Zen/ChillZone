@@ -1,4 +1,5 @@
 import { API_URL } from "@env";
+import { getAccessToken } from "@utils/functions/Auth";
 import axios from "axios";
 import ICAL from "ical.js";
 
@@ -124,35 +125,43 @@ export const getCalendarEvents = async () => {
         events: []
      };
 
-    let description = {
-        group: '',
-        professor: '',
-    };
+    const access = await getAccessToken();
+
+    console.log("API URL :", API_URL);
+    console.log("🔑 Access token :", access);
 
     try {
-        const response = await axios.get(
-            `${API_URL}/calendar`,
-            { withCredentials: true }
+        let response = await axios.get(
+            `${API_URL}calendar/`,
+            {
+                headers: {
+                    Authorization: `Bearer ${access}`
+                }
+            }
         );
 
-        formatedCalendar = {
-            id: response.data.id,
-            title: response.data.title,
-            url: response.data.url,
-            events: [],
-        };
-
-        for (const event of response.data.events) {
-            description = formatDescription(event.description);
-            formatedCalendar.events.push({
-                id: event.id,
-                title: event.title,
-                start_time: new Date(event.start_time),
-                end_time: new Date(event.end_time),
-                location: event.location,
-                group: description.group,
-                professor: description.professor,
-            });
+        if (response.status === 200) {
+            formatedCalendar = {
+                id: response.data.id,
+                title: response.data.title,
+                url: response.data.url,
+                events: [],
+            };
+    
+            for (const event of response.data.events) {
+                let description = event.description.split(";");
+                let group = description[0];
+                let professor = description.splice(1).join('\n');
+                formatedCalendar.events.push({
+                    id: event.id,
+                    title: event.title,
+                    start_time: new Date(event.start_time),
+                    end_time: new Date(event.end_time),
+                    location: event.location,
+                    group: group,
+                    professor: professor,
+                });
+            }
         }
 
     } catch (error: any) {

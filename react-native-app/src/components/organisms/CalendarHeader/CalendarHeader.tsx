@@ -19,13 +19,13 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
     // startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()) : Définir le début de la semaine
     // Exemple : Si on est le mardi 15 juin 2021, startOfWeek.getDay() = 2
     // startOfWeek.setDate(startOfWeek.getDate() - 1) : startOfWeek = dimanche 13
-    startOfWeek = new Date(startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()));
+    startOfWeek = new Date(startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1));
 
     return (
         <View style={styles.headerContainer}>
           {daysOfWeek.map((day, index) => {
             const currentDate = new Date(startOfWeek);
-            currentDate.setDate(startOfWeek.getDate() + (index + 1)); // Calculer chaque jour de la semaine
+            currentDate.setDate(startOfWeek.getDate() + (index)); // Calculer chaque jour de la semaine
 
             // console.log("currentDate", currentDate);
   
