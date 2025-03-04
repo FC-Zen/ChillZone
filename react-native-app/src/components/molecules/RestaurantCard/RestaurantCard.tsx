@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from './style';
 import { colors } from '@theme';
+import { API_URL } from '@env';
 
 type RestaurantCardProps = {
   status: 'Ouvert' | 'Fermé';
@@ -21,7 +22,7 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
   return (
     <TouchableOpacity onPress={onPress} style={styles.card}>
       {' '}
-      <Image source={photo_link} style={styles.image} />
+      <Image source={{ uri: `${API_URL}${photo_link}` }} style={styles.image} />
       <View style={styles.statusContainer}>
         <View
           style={[

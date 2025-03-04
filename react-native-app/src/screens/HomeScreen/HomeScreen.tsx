@@ -72,11 +72,10 @@ export const HomeScreen: React.FC = () => {
       const restaurants = await transformRestaurantData();
 
       const transformedRestaurants = restaurants.map((restaurant) => {
-        const image = ImagesMap[restaurant.photo_link];
         return {
           id: restaurant.id,
           name: restaurant.name,
-          photo_link: image,
+          photo_link: restaurant.photo_link,
           status: restaurant.status,
         };
       });
