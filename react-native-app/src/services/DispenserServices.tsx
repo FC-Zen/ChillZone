@@ -1,6 +1,5 @@
 import { IconProps } from '@components/atoms';
 import { API_URL } from '@env';
-import { SessionContext } from '@contexts';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -49,7 +48,7 @@ export const fetchAllMeals = async (
           id: meal.id,
           name: meal.name,
           description: meal.description,
-          photo_link: meal.photo_link,
+          photo_link: `${API_URL}${meal.photo_link}`,
           price: meal.price,
           stock: meal.stock,
           category: category,

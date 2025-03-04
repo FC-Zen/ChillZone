@@ -59,7 +59,7 @@ export const getAllMenus = async (
               category: meal.category,
               type: meal.type,
               tags: meal.tags || [],
-              photo_link: meal.photo_link,
+              photo_link: `${API_URL}${meal.photo_link}`,
             }))
           : [];
       }
@@ -71,7 +71,7 @@ export const getAllMenus = async (
         price: menu.price,
         photoUrl: ImagesMap[menu.photo_link] || null,
         meals_by_type,
-        photo_link: menu.photo_link,
+        photo_link: `${API_URL}${menu.photo_link}`,
       };
     });
 
