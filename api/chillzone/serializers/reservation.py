@@ -21,6 +21,8 @@ class ReservationSerializer(serializers.ModelSerializer):
 
     reservation_id = serializers.IntegerField(source='reservation.id')
 
+    reservation_status = serializers.CharField(source='reservation.status')
+
     location_name = serializers.CharField(source='location.name')
 
     position_x = serializers.IntegerField(source='location.position_x')
@@ -36,7 +38,7 @@ class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = LocationReservation
         fields = [
-            'reservation_id', 'reservation__status', 'start_time', 'end_time', 'day_reservation',
+            'reservation_id', 'reservation_status', 'start_time', 'end_time', 'day_reservation',
             'location_name', 'position_x', 'position_y', 'floor_name', 'photo_link', 'establishment_name'
         ]
 

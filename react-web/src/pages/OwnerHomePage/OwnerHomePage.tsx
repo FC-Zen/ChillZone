@@ -31,12 +31,12 @@ export const OwnerHomePage: React.FC = () => {
         {
           icon: 'Cube',
           title: t('dashboard.info.commandsNow'),
-          value: data.commands_completed_today ?? 0,
+          value: data.commands_in_progress ?? 0,
         },
         {
           icon: 'Package',
           title: t('dashboard.info.commandsToday'),
-          value: data.commands_in_progress ?? 0,
+          value: data.commands_completed_today ?? 0,
           trend: { value: data.percentage_commands_completed_yesterday ?? 0, isPositive: false, duration: t('dashboard.info.yesterday') },
         },
       ]); 
