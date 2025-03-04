@@ -228,29 +228,30 @@ class OwnerMenuView(APIView):
 
         Associate.objects.filter(menu=menu).delete()
 
-        mutable_data = request.data.dict() if isinstance(request.data, QueryDict) else request.data.copy()
-
         category_fields = ["starter", "main", "drink", "dessert", "side", "other"]
-        categories_data = {field: mutable_data.pop(field, []) for field in category_fields}
 
         menu.save()
 
         for field in category_fields:
-            try:
-                type_obj = Type.objects.get(label=field)
-            except Type.DoesNotExist:
-                continue
+            raw_value = request.data.getlist(field)
+            categories = [int(value) for value in raw_value if value.isdigit()]
 
-            for category_id in categories_data[field]:
+            if categories :
                 try:
-                    category_obj = Category.objects.get(id=category_id)
-                    Associate.objects.create(
-                        menu=menu,
-                        type=type_obj,
-                        category=category_obj
-                    )
-                except Category.DoesNotExist:
-                    pass 
+                    type_obj = Type.objects.get(label=field)
+                except Type.DoesNotExist:
+                    continue
+
+                for category_id in categories :
+                    try:
+                        category_obj = Category.objects.get(id=category_id)
+                        Associate.objects.create(
+                            menu=menu,
+                            type=type_obj,
+                            category=category_obj
+                        )
+                    except Category.DoesNotExist:
+                        pass 
 
         return self.get(request)
 
