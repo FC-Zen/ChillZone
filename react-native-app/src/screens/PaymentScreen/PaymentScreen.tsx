@@ -6,6 +6,7 @@ import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import { getAllOrders } from '@services';
 import { getLastOrder } from '@utils/functions';
+import { useCommand } from '@contexts';
 
 type PaymentProps = {
   route: {
@@ -17,12 +18,12 @@ type PaymentProps = {
 
 export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
   const { t } = useTranslation();
-  const [totalAmount, setTotalAmount] = useState(0);
   const [credit, setCredit] = useState('');
   const [cardName, setCardName] = useState('');
   const [cardExpiration, setCardExpiration] = useState('');
   const [cardCVC, setCardCVC] = useState('');
   const navigation = useNavigation();
+  const { totalAmount } = useCommand();
 
   useEffect(() => {
     const fetchTotalAmount = async () => {
@@ -30,7 +31,6 @@ export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
       if (response) {
         let last_order = getLastOrder(response);
         console.log('last_order : ', last_order);
-        setTotalAmount(last_order.total_price);
       }
     };
     fetchTotalAmount();

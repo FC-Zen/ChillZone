@@ -39,7 +39,10 @@ export type RouteParamList = {
   NotificationScreen: undefined;
   RestaurationScreen: undefined;
   FaqScreen: undefined;
-  PaymentScreen: { qrcode: string };
+  PaymentScreen: {
+    restaurantId: number;
+    pickupTime: string;
+  };
   DispenserScreen: {
     restaurant: RestaurantData;
   };

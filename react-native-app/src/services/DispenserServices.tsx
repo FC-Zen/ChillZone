@@ -44,7 +44,8 @@ export const fetchAllMeals = async (
 
     for (const [category, meals] of Object.entries(aLaCarte)) {
       if (Array.isArray(meals)) {
-        groupedMeals[category] = meals.map((meal) => ({
+        let filteredMeals = meals.filter((meal) => meal.stock > 0);
+        groupedMeals[category] = filteredMeals.map((meal) => ({
           id: meal.id,
           name: meal.name,
           description: meal.description,
