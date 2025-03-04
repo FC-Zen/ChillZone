@@ -1,4 +1,3 @@
-import { getCsrfToken } from "@utils/functions";
 import { API_URL } from '@env';
 import axios from "axios";
 import { z } from "zod";
