@@ -20,10 +20,9 @@ export { fetchAllMeals } from './DispenserServices';
 export { getAllOrders, Order, AllOrders } from './PaymentServices';
 export {
   getReservations,
-  getReservationById,
-  Establishment,
-  FormattedReservation,
-  Location,
+  DurationOptions,
+  RoomTypes,
+  ReservationResponse,
 } from './Reservation';
 
 export {

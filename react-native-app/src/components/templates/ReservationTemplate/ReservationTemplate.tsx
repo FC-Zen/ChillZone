@@ -10,6 +10,7 @@ import {
 import { styles } from './style';
 import { RoomAvailable, RoomSelectorProps } from '@components/organisms';
 import { colors } from '@theme';
+import { Room } from '@services/RoomServices';
 
 export type ReservationTemplateProps = {
   buttonProps: ButtonProps;
@@ -18,6 +19,7 @@ export type ReservationTemplateProps = {
   subTitle: string;
   subTitle2?: string;
   roomSelectorProps: RoomSelectorProps;
+  selectedRoom?: Room | null;
 };
 
 export const ReservationTemplate: FC<ReservationTemplateProps> = ({
@@ -27,7 +29,23 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
   subTitle,
   subTitle2,
   roomSelectorProps,
+  selectedRoom,
 }) => {
+  const areAllInputsFilled = () => {
+    return inputs.every((inputGroup) =>
+      inputGroup.every((input) => {
+        if (input.variant === 'select') {
+          return input.value && input.value !== '';
+        }
+        if (input.variant === 'modal-select') {
+          return input.value && input.value !== '';
+        }
+        return false;
+      })
+    );
+  };
+  const isFormComplete = areAllInputsFilled() && selectedRoom;
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -51,14 +69,21 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
           <View style={styles.separator} />
         </View>
 
-        <View style={styles.padd2}>
-          <RoomAvailable {...roomSelectorProps} />
-        </View>
+        {areAllInputsFilled() && (
+          <View style={styles.padd2}>
+            <RoomAvailable {...roomSelectorProps} />
+          </View>
+        )}
+
         <View style={styles.buttonContainer}>
           <Button
             {...buttonProps}
+            disabled={!isFormComplete}
             color={colors.white}
-            style={{ backgroundColor: colors.darkCyan }}
+            style={{
+              backgroundColor: isFormComplete ? colors.darkCyan : colors.silver,
+              opacity: isFormComplete ? 1 : 0.5,
+            }}
           />
         </View>
       </ScrollView>

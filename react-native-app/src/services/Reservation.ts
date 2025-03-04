@@ -1,61 +1,36 @@
-import reservationsData from '@assets/data/reservations.json';
-import { formatReservation } from '@utils/functions';
+import axios from 'axios';
+import { API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type Location = {
-  location_id: number;
-  location_name: string;
-  position_x: number;
-  position_y: number;
-  floor_name: string;
+export type DurationOptions = {
+  Extended: string;
+  Short: string;
+  Standard: string;
 };
 
-export type Establishment = {
-  establishment_id: number;
-  establishment_name: string;
+export type RoomTypes = string[];
+
+export type ReservationResponse = {
+  duration_options: DurationOptions;
+  room_types: RoomTypes;
 };
 
-export type Reservation = {
-  reservation_id: number;
-  reservation_status: string;
-  start_time: string;
-  end_time: string;
-  day_reservation: string;
-  location: Location;
-  establishment: Establishment;
-};
+export const getReservations = async (): Promise<ReservationResponse> => {
+  try {
+    const [access] = await Promise.all([AsyncStorage.getItem('access')]);
+    const response = await axios.get(`${API_URL}reservation/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    console.log('response: ', response.data);
 
-export type FormattedReservation = Omit<
-  Reservation,
-  'start_time' | 'end_time' | 'day_reservation'
-> & {
-  start_time: string; // on formate
-  end_time: string; // on formate
-  day_reservation: string; // on formate
-};
-
-// Fonction pour récupérer toutes les réservations avec formatage
-export const getReservations = async (): Promise<FormattedReservation[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const formattedReservations = reservationsData.reservations.map(
-        (reservation: Reservation) => formatReservation(reservation)
-      );
-      resolve(formattedReservations);
-      console.log("formattedReservations: ",formattedReservations)
-    }, 1000);
-  });
-};
-
-// Fonction pour récupérer une réservation spécifique avec formatage
-export const getReservationById = async (
-  id: number
-): Promise<FormattedReservation | undefined> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const reservation = reservationsData.reservations.find(
-        (r: Reservation) => r.reservation_id === id
-      );
-      resolve(reservation ? formatReservation(reservation) : undefined);
-    }, 1000);
-  });
+    if (response.status === 200) {
+      return response.data as ReservationResponse;
+    }
+    throw new Error('Données de réservation incorrectes');
+  } catch (error) {
+    console.error(error);
+    throw new Error('Erreur lors de la récupération des réservations');
+  }
 };
