@@ -177,7 +177,7 @@ export const refreshCalendar = async () => {
     const access = await getAccessToken();
     try {
         let response = await axios.put(
-            `${API_URL}//calendar/`,
+            `${API_URL}calendar/`,
             {
                 headers: {
                     Authorization: `Bearer ${access}`
