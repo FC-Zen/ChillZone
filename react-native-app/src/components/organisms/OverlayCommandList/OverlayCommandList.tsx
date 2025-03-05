@@ -4,11 +4,11 @@ import { IconWithText, CommandOverlay } from '@components';
 import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
-import { FormattedCommand } from '@services';
+import { CommandItemSummary } from '@screens/CommandSummaryScreen/CommandSummaryScreen';
 
 export type OverlayCommandListProps = {
-  todaysReservations: FormattedCommand[];
-  pastReservations: FormattedCommand[];
+  todaysReservations: CommandItemSummary[];
+  pastReservations: CommandItemSummary[];
   onCancelReservation?: (index: number) => void;
 };
 
@@ -35,7 +35,7 @@ export const OverlayCommandList: React.FC<OverlayCommandListProps> = ({
 
           {/* Liste des réservations d'aujourd'hui */}
           {todaysReservations.map((reservation, index) => (
-            <View key={reservation.command_id} style={styles.reservationContainer}>
+            <View key={reservation.id} style={styles.reservationContainer}>
               <CommandOverlay
                 title={t('recap.previous.commands')}
                 data={reservation}
