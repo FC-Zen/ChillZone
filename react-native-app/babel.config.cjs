@@ -1,8 +1,12 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo',  '@babel/preset-react', '@babel/preset-typescript'], 
-    
+    presets: [
+      'babel-preset-expo',
+      '@babel/preset-env', // Ajouté pour Jest
+      '@babel/preset-react', // Gère JSX
+      '@babel/preset-typescript' // Gère TypeScript
+    ],
     plugins: [
       [
         'module-resolver',
@@ -24,13 +28,12 @@ module.exports = function (api) {
             '@translations': './src/translations',
             '@types': './src/types',
             '@utils': './src/utils',
-
             '@mocks': './jest/',
           },
         },
       ],
       ['module:react-native-dotenv'],
-      '@babel/plugin-transform-modules-commonjs', // ✅ Ajout pour Jest
+      '@babel/plugin-transform-modules-commonjs', // Nécessaire pour Jest
     ],
   };
 };
