@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ReservationTemplateProps } from '@components/templates/ReservationTemplate/ReservationTemplate';
 import { BottomNavbar, TopBar } from '@components';
 import { styles } from './style';
-import { getReservations } from '@services';
-import { getRooms, Room } from '@services/RoomServices';
+import { getReservations, putReservations, RoomAvailability } from '@services';
 import { ReservationModal } from './Modal';
 import { CalendarModal } from './CalendarModal';
 
@@ -14,29 +13,69 @@ export const ReservationScreen = () => {
   const { t } = useTranslation();
   const [durations, setDurations] = useState<string[]>([]);
   const [roomTypes, setRoomTypes] = useState<string[]>([]);
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [room, setRoom] = useState<Room | null>(null);
+  const [availableRooms, setAvailableRooms] = useState<RoomAvailability[]>([]);
 
-  const [selectedRoom, setSelectedRoom] = useState<string>('');
+  const [selectedRoomId, setSelectedRoomId] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedDuration, setSelectedDuration] = useState<string>('');
+  const [selectedRoomType, setSelectedRoomType] = useState<string>('');
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const reservations = await getReservations();
-      console.log('reservations: ', reservations);
+      console.log('Room Types disponibles:', reservations.room_types);
 
       setDurations(Object.values(reservations.duration_options));
       setRoomTypes(reservations.room_types);
-
-      const roomsData = await getRooms();
-      setRooms(roomsData);
     };
     fetchData();
   }, []);
+
+  // Fonction pour convertir la durée en minutes
+  const convertDurationToMinutes = (duration: string): number => {
+    if (duration.includes('h')) {
+      const hours = parseInt(duration.split('h')[0], 10);
+      return hours * 60;
+    }
+    return 0;
+  };
+
+  const selectedDurationInMinutes = convertDurationToMinutes(selectedDuration);
+
+  useEffect(() => {
+    const checkAvailability = async () => {
+      if (selectedRoomId && selectedDate && selectedDuration) {
+        try {
+          const available = await putReservations(
+            selectedDate,
+            selectedDurationInMinutes,
+            [selectedRoomId]
+          );
+
+          const availableRoomsMapped = available.map(
+            (roomAvailability: RoomAvailability) => ({
+              id: roomAvailability.id,
+              name: roomAvailability.name,
+              floor: roomAvailability.floor.toString(),
+              capacity: roomAvailability.capacity,
+              available_slots: roomAvailability.available_slots,
+              establishment: roomAvailability.establishment,
+              photo: roomAvailability.photo,
+            })
+          );
+
+          setAvailableRooms(availableRoomsMapped);
+        } catch (error) {
+          console.error('Erreur lors de la mise à jour des salles:', error);
+        }
+      }
+    };
+
+    checkAvailability();
+  }, [selectedRoomId, selectedDate, selectedDuration]);
 
   const inputs: ReservationTemplateProps['inputs'] = [
     [
@@ -46,8 +85,8 @@ export const ReservationScreen = () => {
         subIcon: 'School',
         variant: 'select',
         data: roomTypes,
-        value: selectedRoom,
-        onSelect: (selected: string) => setSelectedRoom(selected),
+        value: selectedRoomId,
+        onSelect: (selected: string) => setSelectedRoomId(selected),
       },
       {
         placeholder: t('fields.common.date'),
@@ -80,26 +119,27 @@ export const ReservationScreen = () => {
         buttonProps={{
           title: t('headers.reservation'),
           onPress: () => {
-            if (room) {
-              setIsModalVisible(true);
-            }
+            setIsModalVisible(true);
           },
-          disabled: !room,
+          disabled: !selectedRoomId,
         }}
         roomSelectorProps={{
-          rooms,
-          handlePress: (selectedRoom) => {
-            setRoom(selectedRoom);
+          rooms: availableRooms,
+          selectedRoom:
+            availableRooms.find(
+              (room) => room.id.toString() === selectedRoomId
+            ) || null,
+          handlePress: (selectedRoom: RoomAvailability) => {
+            setSelectedRoomId(selectedRoom.id.toString());
           },
           title: t('headers.roomAvailable'),
         }}
-        selectedRoom={room}
       />
       <BottomNavbar activeIcon="Reserve" />
       <ReservationModal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        data={{}}
+        data={{}} // ici on va mettre les données de la réservation avec post AHHHHHHHHHHH
       />
       <CalendarModal
         visible={isCalendarVisible}

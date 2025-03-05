@@ -23,6 +23,9 @@ export {
   DurationOptions,
   RoomTypes,
   ReservationResponse,
+  putReservations,
+  createReservation,
+  RoomAvailability,
 } from './Reservation';
 
 export {
