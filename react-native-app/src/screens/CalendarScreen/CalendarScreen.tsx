@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { styles } from './style';
-import { BottomNavbar, CalendarTemplate } from '@components';
+import { BottomNavbar, CalendarTemplate, SnackBar } from '@components';
 import { Calendar, getCalendarEvents, refreshCalendar } from '@services';
 import { useTranslation } from 'react-i18next';
-import { set } from 'zod';
-import { SnackBar } from '@components';
 
 export const CalendarScreen = () => {
   const { t } = useTranslation();
