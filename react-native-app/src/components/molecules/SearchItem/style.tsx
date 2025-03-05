@@ -28,8 +28,9 @@ export const styles = StyleSheet.create({
   },
   dropdownList: {
     position: 'absolute',
-    top: 50,
+    top: 55,
     width: '100%',
+    height: 200,
     backgroundColor: colors.white,
     borderRadius: 8,
     borderWidth: 1,

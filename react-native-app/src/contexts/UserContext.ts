@@ -19,15 +19,15 @@ export class UserContext {
   private static instance: UserContext;
 
   private user: User = {
-    email: "",
-    establishment: "",
-    first_name: "",
-    last_name: "",
-    phone: "",
-    photo_link: "",
-    type: "",
+    email: '',
+    establishment: '',
+    first_name: '',
+    last_name: '',
+    phone: '',
+    photo_link: '',
+    type: '',
     notifications: {
-      command:false,
+      command: false,
       reservation: false,
       event: false,
     },
@@ -58,25 +58,24 @@ export class UserContext {
     return this.user.notifications;
   }
 
-  public setNotificationSetting(notificationSetting : NotificationSettings) {
+  public setNotificationSetting(notificationSetting: NotificationSettings) {
     this.user.notifications = notificationSetting;
   }
 
   public clearUser(): void {
     this.user = {
-      email: "",
-      establishment: "",
-      first_name: "",
-      last_name: "",
-      phone: "",
-      photo_link: "",
-      type: "",
+      email: '',
+      establishment: '',
+      first_name: '',
+      last_name: '',
+      phone: '',
+      photo_link: '',
+      type: '',
       notifications: {
-        command:false,
+        command: false,
         reservation: false,
         event: false,
       },
     };
   }
 }
-  

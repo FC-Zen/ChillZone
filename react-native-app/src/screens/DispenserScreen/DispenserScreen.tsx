@@ -6,12 +6,26 @@ import { styles } from './style';
 import { useTranslation } from 'react-i18next';
 import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
-import { getAllMeals, MealProps } from '@services/DispenserServices';
+import { fetchAllMeals, MealProps } from '@services/DispenserServices';
 import { getAllMenus, MenuProps } from '@services/MenusServices';
-import { FoodItemProps } from '@components/organisms/FoodCardList';
+import { RestaurantData } from '@services';
 
-export const DispenserScreen: React.FC = () => {
-  const [meals, setMeals] = useState<MealProps[]>([]);
+type DispenserScreenProps = {
+  route: {
+    params: {
+      restaurant: RestaurantData;
+    };
+  };
+};
+
+export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
+  const { restaurant } = route.params;
+  const restaurantId = restaurant.id;
+  const restaurantName = restaurant.name;
+
+  const [mealsByCategory, setMealsByCategory] = useState<
+    Record<string, MealProps[]>
+  >({});
   const [menus, setMenus] = useState<MenuProps[]>([]);
   const [isProductSelected, setIsProductSelected] = useState(true);
   const [selectedFilter, setSelectedFilter] = useState<string>('');
@@ -20,83 +34,43 @@ export const DispenserScreen: React.FC = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const fetchMeals = async () => {
-    const mealData = await getAllMeals();
-    setMeals(mealData);
-  };
-
-  const fetchMenus = async () => {
-    const menuData = await getAllMenus();
-    setMenus(menuData);
-  };
-
   useEffect(() => {
+    const fetchMeals = async () => {
+      const mealData = await fetchAllMeals(restaurantId);
+      setMealsByCategory(mealData);
+    };
+
+    const fetchMenus = async () => {
+      const menuData = await getAllMenus(restaurantId);
+      setMenus(menuData);
+    };
+
     fetchMeals();
     fetchMenus();
-  }, []);
-
-  const sortMeals = (meals: MealProps[]) => {
-    const order = [
-      t('categories.Starter'),
-      t('categories.Main'),
-      t('categories.Drink'),
-      t('categories.Dessert'),
-      t('categories.Side'),
-      t('categories.Other'),
-    ];
-
-    return meals.sort((a, b) => {
-      const aIndex = order.indexOf(a.meal_type);
-      const bIndex = order.indexOf(b.meal_type);
-      return aIndex - bIndex;
-    });
-  };
+  }, [restaurantId]);
 
   const handleFilterSelect = (option: string) => {
     setSelectedFilter(option);
-    if (option === t('categories.Starter')) {
-      setMealTypeFilter('Starter');
-    } else if (option === t('categories.Main')) {
-      setMealTypeFilter('Main');
-    } else if (option === t('categories.Drink')) {
-      setMealTypeFilter('Drink');
-    } else if (option === t('categories.Dessert')) {
-      setMealTypeFilter('Dessert');
-    } else if (option === t('categories.Side')) {
-      setMealTypeFilter('Side');
-    } else if (option === t('categories.Other')) {
-      setMealTypeFilter('Other');
-    } else if (option === t('buttons.actions.filter')) {
-      setMealTypeFilter('');
-    }
+    setMealTypeFilter(option === t('buttons.actions.filter') ? '' : option);
   };
 
   const handlePress = (isProductButton: boolean) => {
     setIsProductSelected(isProductButton);
   };
 
-  const filteredMeals = sortMeals(
-    meals
-      .filter((meal) =>
-        meal.title.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      .filter((meal) =>
-        mealTypeFilter ? meal.meal_type === mealTypeFilter : true
-      )
-  );
-
-  const handleItemSelect = (item: FoodItemProps) => {
-    const selectedMeal = meals.find((meal) => meal.id === item.id);
+  const handleItemSelect = (item: MealProps) => {
+    const selectedMeal = Object.values(mealsByCategory)
+      .flat()
+      .find((meal) => meal.id === item.id);
     if (selectedMeal) {
-      console.log('Item sélectionné:', selectedMeal);
       navigation.navigate(ROUTE.DISPENSER_MODAL, { meal: selectedMeal });
     }
   };
 
-  const handleItemSelectMenu = (item: FoodItemProps) => {
+  const handleItemSelectMenu = (item: MenuProps) => {
     const selectedMenu = menus.find((menu) => menu.id === item.id);
+
     if (selectedMenu) {
-      console.log('Item sélectionné:', selectedMenu);
       navigation.navigate(ROUTE.MENU_MODAL, { menu: selectedMenu });
     }
   };
@@ -104,6 +78,15 @@ export const DispenserScreen: React.FC = () => {
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
   };
+
+  // recherche des plats
+  const filteredMeals = Object.entries(mealsByCategory)
+    .filter(([category]) => !mealTypeFilter || category === mealTypeFilter)
+    .flatMap(([_, meals]) =>
+      meals.filter((meal) =>
+        meal.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
 
   return (
     <View style={styles.container}>
@@ -126,21 +109,24 @@ export const DispenserScreen: React.FC = () => {
           foodCardListProps={{
             foodItems: filteredMeals.map((meal) => ({
               id: meal.id,
-              title: meal.title,
-              meal_type: meal.meal_type,
-              price: `${meal.price} €`,
-              subTitle: meal.subTitle,
-              imageUrl: meal.imageUrl,
-              iconName: meal.iconName,
+              category: meal.category,
+              type: meal.type,
+              description: meal.description,
+              name: meal.name,
+              price: meal.price,
+              photo_link: meal.photo_link,
+              stock: meal.stock,
+              icon: meal.icon,
             })),
             onItemSelect: handleItemSelect,
           }}
           buttonProps={{
             title: t('buttons.actions.cart'),
-            onPress: () => navigation.navigate(ROUTE.CART),
+            onPress: () =>
+              navigation.navigate(ROUTE.CART, { restaurant: restaurant }),
           }}
           pageHeaderProps={{
-            title: t('categories.restaurants'),
+            title: restaurantName,
             variant: 'back',
             icon: {
               name: 'Cross',
@@ -153,19 +139,14 @@ export const DispenserScreen: React.FC = () => {
           searchItemProps={{
             options: [
               t('buttons.actions.filter'),
-              t('categories.Starter'),
-              t('categories.Main'),
-              t('categories.Drink'),
-              t('categories.Dessert'),
-              t('categories.Side'),
-              t('categories.Other'),
+              ...Object.keys(mealsByCategory),
             ],
             onSelect: handleFilterSelect,
             initialOption: selectedFilter && t('buttons.actions.filter'),
             iconName: 'CarretUp',
           }}
           inputProps={{
-            data: meals.map((meal) => meal.title),
+            data: filteredMeals.map((meal) => meal.name),
             onFilter: handleSearchChange,
             onChangeText: handleSearchChange,
             value: searchQuery,
@@ -192,23 +173,21 @@ export const DispenserScreen: React.FC = () => {
           foodCardListProps={{
             foodItems: menus.map((menu) => ({
               id: menu.id,
-              title: menu.name,
+              name: menu.name,
+              description: menu.description,
               price: menu.price,
-              meal_type: menu.categories
-                .map((category) => category.label)
-                .join(', '),
-              subTitle: menu.description,
-              imageUrl: menu.photoUrl,
-              iconName: menu.iconName,
+              photo_link: menu.photo_link,
+              meals_by_type: menu.meals_by_type,
             })),
-            onItemSelect: handleItemSelectMenu,
+            onItemSelectMenu: handleItemSelectMenu,
           }}
           buttonProps={{
             title: t('buttons.actions.cart'),
-            onPress: () => navigation.navigate(ROUTE.CART),
+            onPress: () =>
+              navigation.navigate(ROUTE.CART, { restaurant: restaurant }),
           }}
           pageHeaderProps={{
-            title: t('categories.restaurants'),
+            title: restaurantName,
             variant: 'back',
             icon: {
               name: 'Cross',

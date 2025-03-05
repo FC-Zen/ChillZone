@@ -12,29 +12,37 @@ import { refreshToken, verifyToken } from '@services';
  */
 export const testAuthentificate = async () => {
   const [access, refresh, userString] = await Promise.all([
-      AsyncStorage.getItem('access'),
-      AsyncStorage.getItem('refresh'),
-      AsyncStorage.getItem('user')
+    AsyncStorage.getItem('access'),
+    AsyncStorage.getItem('refresh'),
+    AsyncStorage.getItem('user'),
   ]);
 
   if (access && refresh && userString) {
-      const user = JSON.parse(userString);
+    const user = JSON.parse(userString);
 
-      const isValid = await verifyToken(access);
-      if (!isValid) {
-          // Si le token est expiré, tente de le rafraîchir
-          const refreshResult = await refreshToken(refresh);
-          if (!refreshResult.success) {
-              await AsyncStorage.clear(); // On wipe tout si le refresh échoue
-              return { success: false, message: 'Session expirée, veuillez vous reconnecter', data: null };
-          }
+    const isValid = await verifyToken(access);
+    if (!isValid) {
+      // Si le token est expiré, tente de le rafraîchir
+      const refreshResult = await refreshToken(refresh);
+      if (!refreshResult.success) {
+        await AsyncStorage.clear(); // On wipe tout si le refresh échoue
+        return {
+          success: false,
+          message: 'Session expirée, veuillez vous reconnecter',
+          data: null,
+        };
       }
+    }
 
-      // Retourne le user avec un message de succès
-      return { success: true, message: 'Bon retour à vous', data: user };
+    // Retourne le user avec un message de succès
+    return { success: true, message: 'Bon retour à vous', data: user };
   }
 
-  return { success: false, message: 'Pas d\'utilisateur enregistré', data: null };
+  return {
+    success: false,
+    message: "Pas d'utilisateur enregistré",
+    data: null,
+  };
 };
 
 /**
@@ -45,39 +53,65 @@ export const testAuthentificate = async () => {
  *
  * @returns {Promise<Object>} résultat de l'authentification.
  */
-export const authenticateUser = async (rememberMe:boolean, formData: { login: string; password: string }) => {
-    try {
-    const response = await axios.post( `${API_URL}login/` , {
+export const authenticateUser = async (
+  rememberMe: boolean,
+  formData: { login: string; password: string }
+) => {
+  try {
+    const response = await axios.post(`${API_URL}login/`, {
       username: formData.login,
       password: formData.password,
     });
     if (response.status == 200) {
-      if (response.data.type !== "user") {
-        return { success: false, message: 'Connexion non autorisée', data: null};
+      if (response.data.type !== 'user') {
+        return {
+          success: false,
+          message: 'Connexion non autorisée',
+          data: null,
+        };
       } else {
-
         await AsyncStorage.setItem('access', response.data.access);
         await AsyncStorage.setItem('refresh', response.data.refresh);
         await AsyncStorage.setItem('user', JSON.stringify(response.data));
         await AsyncStorage.setItem('remember', String(rememberMe));
 
-        return { success: true, message: 'Connexion réussie !', data: response.data};
+        return {
+          success: true,
+          message: 'Connexion réussie !',
+          data: response.data,
+        };
       }
-    } 
-    return { success: false, message: "Erreur lors de la connexion", data: null };
-  } catch (error: any) {
-    console.error('Erreur lors de l\'authentification:', error.message);
-    if (error.status == 401) {
-      return { success: false, message: "Identifiants incorrects", data: null };
-    } else if (error.status == 403) {
-      return { success: false, message: 'Vous êtes déjà connectés', data: null };
-    } else if (error.status == 404) {
-      return { success: false, message: 'Vous n\'êtes plus autorisé à vous connecter. Contactez un administrateur', data: null };
     }
-    return { success: false, message: "Erreur lors de la connexion", data: null };
+    return {
+      success: false,
+      message: 'Erreur lors de la connexion',
+      data: null,
+    };
+  } catch (error: any) {
+    console.error("Erreur lors de l'authentification:", error.message);
+    if (error.status == 401) {
+      return { success: false, message: 'Identifiants incorrects', data: null };
+    } else if (error.status == 403) {
+      return {
+        success: false,
+        message: 'Vous êtes déjà connectés',
+        data: null,
+      };
+    } else if (error.status == 404) {
+      return {
+        success: false,
+        message:
+          "Vous n'êtes plus autorisé à vous connecter. Contactez un administrateur",
+        data: null,
+      };
+    }
+    return {
+      success: false,
+      message: 'Erreur lors de la connexion',
+      data: null,
+    };
   }
 };
-
 
 /**
  * Déconecte un utilisateur.
@@ -90,23 +124,23 @@ export const logoutUser = async (disconnect: boolean) => {
   const remember = await AsyncStorage.getItem('remember');
 
   // Si on veut se souvenir de l'utilisateur et qu'il n'est pas explicitement déconnecté
-  if (!disconnect && remember && remember === "true") {
+  if (!disconnect && remember && remember === 'true') {
     return { success: true, message: "On se souvient de l'utilisateur" };
   }
 
   // Récupérer les tokens d'accès et de rafraîchissement
   const [access, refresh] = await Promise.all([
-    AsyncStorage.getItem("access"),
-    AsyncStorage.getItem("refresh"),
+    AsyncStorage.getItem('access'),
+    AsyncStorage.getItem('refresh'),
   ]);
 
   if (!access || !refresh) {
     // Si on n'a pas de token, l'utilisateur est déjà déconnecté
-    await AsyncStorage.removeItem("access");
-    await AsyncStorage.removeItem("refresh");
-    await AsyncStorage.removeItem("user");
+    await AsyncStorage.removeItem('access');
+    await AsyncStorage.removeItem('refresh');
+    await AsyncStorage.removeItem('user');
 
-    return { success: true, message: "Déconnexion réussie." };
+    return { success: true, message: 'Déconnexion réussie.' };
   }
 
   try {
@@ -124,37 +158,36 @@ export const logoutUser = async (disconnect: boolean) => {
 
     if (response.status === 205) {
       // Supprime les tokens dans AsyncStorage
-      await AsyncStorage.removeItem("access");
-      await AsyncStorage.removeItem("refresh");
-      await AsyncStorage.removeItem("user");
+      await AsyncStorage.removeItem('access');
+      await AsyncStorage.removeItem('refresh');
+      await AsyncStorage.removeItem('user');
 
-      return { success: true, message: "Déconnexion réussie." };
+      return { success: true, message: 'Déconnexion réussie.' };
     } else {
-      console.error("Erreur de déconnexion :", response.data);
-      return { success: false, message: "Erreur lors de la déconnexion." };
+      console.error('Erreur de déconnexion :', response.data);
+      return { success: false, message: 'Erreur lors de la déconnexion.' };
     }
   } catch (error: any) {
     if (error.response && error.response.status === 400) {
       // Supprime les tokens dans AsyncStorage même si la déconnexion a échoué
-      await AsyncStorage.removeItem("access");
-      await AsyncStorage.removeItem("refresh");
-      await AsyncStorage.removeItem("user");
+      await AsyncStorage.removeItem('access');
+      await AsyncStorage.removeItem('refresh');
+      await AsyncStorage.removeItem('user');
 
-      return { success: true, message: "Déconnexion réussie." };
-    } else if (error.message === "Network Error") {
+      return { success: true, message: 'Déconnexion réussie.' };
+    } else if (error.message === 'Network Error') {
       // Supprime les tokens dans AsyncStorage
-      await AsyncStorage.removeItem("access");
-      await AsyncStorage.removeItem("refresh");
-      await AsyncStorage.removeItem("user");
+      await AsyncStorage.removeItem('access');
+      await AsyncStorage.removeItem('refresh');
+      await AsyncStorage.removeItem('user');
 
-      return { success: true, message: "Déconnexion réussie." };
+      return { success: true, message: 'Déconnexion réussie.' };
     } else {
-      console.error("Erreur lors de la déconnexion :", error.message);
-      return { success: false, message: "Problème lors de la déconnexion." };
+      console.error('Erreur lors de la déconnexion :', error.message);
+      return { success: false, message: 'Problème lors de la déconnexion.' };
     }
   }
 };
-
 
 /**
  * Envoie un email pour la récupération du mot de passe.
@@ -169,11 +202,10 @@ export const sendPasswordRecoveryEmail = async (formData: {
 }) => {
   // Exemple d'une liste d'emails valides pour la simulation
   try {
-    const response = await axios.post(
-      `${API_URL}forget-password/`,
-      { email: formData.email }
-    );
-    
+    const response = await axios.post(`${API_URL}forget-password/`, {
+      email: formData.email,
+    });
+
     if (response.status === 200) {
       return {
         success: true,

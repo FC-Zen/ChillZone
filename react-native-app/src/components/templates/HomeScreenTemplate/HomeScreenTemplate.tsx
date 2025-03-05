@@ -6,6 +6,7 @@ import { NavItem } from '@components/molecules/BookingInfo';
 import { IconProps } from '@components/atoms';
 import { useTranslation } from 'react-i18next';
 import { typography } from '@theme';
+import { RestaurantData } from '@services';
 
 type ReservationButtonProps = {
   title: string;
@@ -18,18 +19,8 @@ export type HomeScreenTemplateProps = {
   username: string | null;
   items: NavItem[];
   reservationButtonProps: ReservationButtonProps;
-  restaurantsData: {
-    id: number;
-    name: string;
-    photo_link: any;
-    status: 'Ouvert' | 'Fermé';
-  }[];
-  onPress: ( restaurant : {
-    id: number;
-    name: string;
-    photo_link: any;
-    status: 'Ouvert' | 'Fermé';
-  }) => void;
+  restaurantsData: RestaurantData[];
+  onPress: (restaurant: RestaurantData) => void;
 };
 
 export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({

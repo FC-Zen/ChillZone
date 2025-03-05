@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    paddingHorizontal: 16,
     justifyContent: 'space-between',
     paddingTop: 30,
   },
@@ -45,6 +44,7 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 19,
+    paddingHorizontal: 16,
     flex: 1,
   },
   btnContainer: {

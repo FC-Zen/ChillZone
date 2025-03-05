@@ -1,101 +1,83 @@
-import menusData from '@assets/data/menus.json';
-import { IconProps } from '@components/atoms';
+import { API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MealProps } from '@services/DispenserServices';
 import { ImagesMap } from '@utils';
-// import axios from 'axios';
-
-export type CategoryProps = {
-  id: number;
-  label: string;
-};
-
-export type MealProps = {
-  id: number;
-  title: string;
-  description: string;
-  price: string;
-  photoUrl: any;
-  category: CategoryProps;
-};
+import axios from 'axios';
 
 export type MenuProps = {
   id: number;
   name: string;
   description: string;
   price: string;
-  photoUrl: any;
-  creationDate: string;
-  modificationDate: string;
-  categories: CategoryProps[];
-  meals: MealProps[];
-  iconName: IconProps['name'];
+  photo_link: string;
+  meals_by_type: Record<string, MealProps[]>;
 };
 
 export type ModalScreenProps = {
   route: {
     params: {
-      menu: {
-        id: number;
-        name: string;
-        description: string;
-        price: string;
-        photoUrl: any;
-        meals: {
-          id: number;
-          title: string;
-          description: string;
-          price: string;
-          photoUrl: any;
-          category: {
-            id: number;
-            label: string;
-          };
-        }[];
-      };
+      menu: MenuProps;
     };
   };
 };
 
-// export const getAllMenus = async (): Promise<MenuProps[]> => {
-//   try {
-//     const response = await axios.get('');
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//     return [];
-//   }
-// };
-export const getAllMenus = (): MenuProps[] => {
-  return menusData.map((menu) => {
-    const image = ImagesMap[menu.menu_photo];
+export const getAllMenus = async (
+  RestaurantID: number
+): Promise<MenuProps[]> => {
+  try {
+    const [access] = await Promise.all([AsyncStorage.getItem('access')]);
 
-    const categories = menu.categories.map((category) => ({
-      id: category.category_id,
-      label: category.category_label,
-    }));
-
-    const meals = menu.meals.map((meal) => ({
-      id: meal.meal_id,
-      title: meal.meal_name,
-      description: meal.meal_description,
-      price: `${meal.meal_price} €`,
-      photoUrl: image,
-      category: {
-        id: meal.category.category_id,
-        label: meal.category.category_label,
+    // Requête pour récupérer les menus
+    const response = await axios.get(`${API_URL}restaurant/${RestaurantID}/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
       },
-    }));
+    });
 
-    return {
-      id: menu.menu_id,
-      name: menu.menu_name,
-      description: menu.menu_description,
-      price: `${menu.menu_price} €`,
-      photoUrl: image,
-      creationDate: menu.menu_creation_date,
-      modificationDate: menu.menu_modification_date,
-      categories,
-      meals,
-      iconName: 'Add',
-    };
-  });
+    const menusData = response.data.menus;
+
+    if (!menusData || !Array.isArray(menusData)) {
+      throw new Error(
+        `Les données reçues du restaurant ${RestaurantID} ne sont pas valides.`
+      );
+    }
+
+    const menus = menusData.map((menu: MenuProps) => {
+      const meals_by_type: Record<string, MealProps[]> = {};
+      for (const [type, subCategories] of Object.entries(menu.meals_by_type)) {
+        const allMeals = Object.values(subCategories)
+          .flat()
+          .filter((meal) => meal !== undefined);
+
+        meals_by_type[type] = Array.isArray(allMeals)
+          ? allMeals.map((meal: MealProps) => ({
+              id: meal.id,
+              name: meal.name,
+              description: meal.description,
+              price: meal.price,
+              stock: meal.stock,
+              category: meal.category,
+              type: meal.type,
+              tags: meal.tags || [],
+              photo_link: `${API_URL}${meal.photo_link}`,
+            }))
+          : [];
+      }
+
+      return {
+        id: menu.id,
+        name: menu.name,
+        description: menu.description,
+        price: menu.price,
+        photoUrl: ImagesMap[menu.photo_link] || null,
+        meals_by_type,
+        photo_link: `${API_URL}${menu.photo_link}`,
+      };
+    });
+
+    return menus;
+  } catch (error: any) {
+    console.error('Erreur lors de la récupération des menus:', error.message);
+    throw new Error(error.message);
+  }
 };

@@ -1,16 +1,16 @@
-import { API_URL } from "@env";
-import { getAccessToken } from "@utils/functions";
-import axios from "axios";
+import { API_URL } from '@env';
+import { getAccessToken } from '@utils/functions';
+import axios from 'axios';
 
 export type FaqDetail = {
-    question: string;
-    answer: string;
+  question: string;
+  answer: string;
 };
-  
+
 export type FaqCategory = {
-    category: string;
-    questions: FaqDetail[];
-}
+  category: string;
+  questions: FaqDetail[];
+};
 
 /**
  * Récupère les données de la Faq
@@ -22,8 +22,8 @@ export type FaqCategory = {
 export const getFaq = async () => {
   const access = await getAccessToken();
 
-  if(!access){
-    console.error("Pas de token access")
+  if (!access) {
+    console.error('Pas de token access');
     return [];
   }
 
@@ -34,10 +34,10 @@ export const getFaq = async () => {
       },
     });
 
-      // Vérifie si la réponse indique une réussite - SIMULATION
+    // Vérifie si la réponse indique une réussite - SIMULATION
     if (response) {
       return response.data as FaqCategory[];
-    } 
+    }
   } catch (error: any) {
     console.error('Erreur lors de la récupération des FAQ:', error.message);
   }

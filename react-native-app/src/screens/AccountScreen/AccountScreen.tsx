@@ -2,12 +2,21 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { AccountTemplate } from '@components/templates';
 import { styles } from './style';
-import { logoutUser, sendPasswordRecoveryEmail, translationService } from '@services';
+import {
+  logoutUser,
+  sendPasswordRecoveryEmail,
+  translationService,
+} from '@services';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import * as ImagePicker from 'expo-image-picker';
 import { UserContext } from '@contexts';
-import { changeProfilePicture, deleteProfilePicture, updateInfoUser, updatePassword } from '@services/AccountServices';
+import {
+  changeProfilePicture,
+  deleteProfilePicture,
+  updateInfoUser,
+  updatePassword,
+} from '@services/AccountServices';
 import { useTranslation } from 'react-i18next';
 import { SnackBar } from '@components';
 
@@ -42,7 +51,7 @@ export const AccountScreen: React.FC = () => {
     last_name: userContext.last_name,
     phone: userContext.phone,
     email: userContext.email,
-    photo_link : userContext.photo_link
+    photo_link: userContext.photo_link,
   });
 
   // État pour le mot de passe et email
@@ -64,7 +73,7 @@ export const AccountScreen: React.FC = () => {
   const handleInputChange = (field: string, value: string) => {
     setUserData((prev) => ({ ...prev, [field]: value }));
   };
-  
+
   // Actions pour les modales
   const handleConfirmEditInfo = async () => {
     try {
@@ -81,7 +90,11 @@ export const AccountScreen: React.FC = () => {
       }
       setEditInfoModalOpen(false);
     } catch {
-      setSnackbar({ open: true, severity: 'error', message: 'Une erreur est survenue lors de la mise à jour.' });
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'Une erreur est survenue lors de la mise à jour.',
+      });
     }
   };
 
@@ -90,12 +103,20 @@ export const AccountScreen: React.FC = () => {
       if (email) {
         const res = await sendPasswordRecoveryEmail({ email: email });
         if (res?.success) {
-          setSnackbar({ open: true, severity: 'success', message: res.message });
+          setSnackbar({
+            open: true,
+            severity: 'success',
+            message: res.message,
+          });
         }
       }
       setResetModalOpen(false);
     } catch {
-      setSnackbar({ open: true, severity: 'error', message: 'Une erreur est survenue.' });
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'Une erreur est survenue.',
+      });
     }
   };
 
@@ -114,14 +135,18 @@ export const AccountScreen: React.FC = () => {
       }
       setPasswordModalOpen(false);
     } catch {
-      setSnackbar({ open: true, severity: 'error', message: 'La mise à jour du mot de passe a échoué.' });
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'La mise à jour du mot de passe a échoué.',
+      });
     }
   };
 
-
   const handleChangePicture = async () => {
     try {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
         alert("Permission d'accès aux images refusée !");
         return;
@@ -133,23 +158,26 @@ export const AccountScreen: React.FC = () => {
         aspect: [1, 1],
         quality: 1,
       });
-  
+
       if (result.canceled) {
         console.log('Sélection annulée');
         return;
       }
-  
+
       const selectedImage = result.assets[0];
-  
+
       const formData = new FormData();
       formData.append('photo_link', {
         uri: selectedImage.uri,
         name: selectedImage.fileName || 'profile.jpg',
-        type: 'image/jpeg'
+        type: 'image/jpeg',
       } as any);
       const res = await changeProfilePicture(formData);
       if (res?.success) {
-        UserContext.getInstance().setUser({ ...userContext, photo_link: res.data.photo_link });
+        UserContext.getInstance().setUser({
+          ...userContext,
+          photo_link: res.data.photo_link,
+        });
         setUserData((prev) => ({ ...prev, photo_link: res.data.photo_link }));
         setSnackbar({ open: true, severity: 'success', message: res.message });
       }
@@ -157,31 +185,37 @@ export const AccountScreen: React.FC = () => {
       console.error('Erreur lors de l’envoi de l’image:', error);
     }
   };
-  
-  
+
   const handleDeletePicture = async () => {
     try {
       const res = await deleteProfilePicture();
       if (res?.success) {
-        UserContext.getInstance().setUser({ ...userContext, photo_link: res.data.photo_link });
-        setUserData((prev) => ({ ...prev, photo_link: res.data.photo_link }));      
+        UserContext.getInstance().setUser({
+          ...userContext,
+          photo_link: res.data.photo_link,
+        });
+        setUserData((prev) => ({ ...prev, photo_link: res.data.photo_link }));
         setSnackbar({ open: true, severity: 'success', message: res.message });
       }
     } catch (error) {
-      setSnackbar({ open: true, severity: 'error', message: (error as any).message || 'Une erreur est survenue.' });
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: (error as any).message || 'Une erreur est survenue.',
+      });
     }
   };
 
   //Force la déconnexion surtout si on a un rememberMe d'actif
   const handleLogout = async () => {
     const logout = await logoutUser(true);
-    console.log("Logout: ",logout);
+    console.log('Logout: ', logout);
 
-    if(logout.success === true){
-      console.log("Logout bon on retourne à la connexion ");
-      navigation.navigate(ROUTE.LOGIN_SCREEN)
+    if (logout.success === true) {
+      console.log('Logout bon on retourne à la connexion ');
+      navigation.navigate(ROUTE.LOGIN_SCREEN);
     }
-  }
+  };
 
   return (
     <SafeAreaView
@@ -205,7 +239,9 @@ export const AccountScreen: React.FC = () => {
         onCloseResetModal={() => setResetModalOpen(false)}
         onOpenEditInfoModal={() => setEditInfoModalOpen(true)}
         onCloseEditInfoModal={() => setEditInfoModalOpen(false)}
-        onNavigateToReservations={() => navigation.navigate(ROUTE.RESERVATION_SUMMARY)}
+        onNavigateToReservations={() =>
+          navigation.navigate(ROUTE.RESERVATION_SUMMARY)
+        }
         onNavigateToCommand={() => navigation.navigate(ROUTE.COMMAND_SUMMARY)}
         onChangePicture={handleChangePicture}
         onDeletePicture={handleDeletePicture}

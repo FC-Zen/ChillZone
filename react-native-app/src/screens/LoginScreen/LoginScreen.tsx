@@ -10,23 +10,21 @@ import { styles } from './style';
 import { logoIUT } from '@assets/Images';
 
 export const LoginScreen: React.FC = () => {
-
   useEffect(() => {
     const checkAuth = async () => {
-        const result = await testAuthentificate();
-        console.dir("Test authentification login screen: ", result )
+      const result = await testAuthentificate();
+      console.dir('Test authentification login screen: ', result);
 
-        if(result.success && result.data) {
-          const userContext = UserContext.getInstance();
-          userContext.setUser(result.data);
-          userContext.setNotificationSetting(result.data.notifications[0]);
-          navigation.navigate(ROUTE.HOME);
-        }
+      if (result.success && result.data) {
+        const userContext = UserContext.getInstance();
+        userContext.setUser(result.data);
+        userContext.setNotificationSetting(result.data.notifications[0]);
+        navigation.navigate(ROUTE.HOME);
+      }
     };
 
     checkAuth();
   }, []);
-
 
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -51,21 +49,18 @@ export const LoginScreen: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      const result = await authenticateUser(
-        isChecked,
-        {
+      const result = await authenticateUser(isChecked, {
         login: inputEmail,
         password: inputPassword,
       });
       setAuthResult({ severity: 'success', message: result.message });
 
-      if(result.data) {
+      if (result.data) {
         const userContext = UserContext.getInstance();
         userContext.setUser(result.data);
         userContext.setNotificationSetting(result.data.notifications[0]);
         navigation.navigate(ROUTE.HOME);
       }
-      
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Une erreur est survenue.';

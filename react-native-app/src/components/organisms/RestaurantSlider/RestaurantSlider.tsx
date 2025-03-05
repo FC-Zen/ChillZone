@@ -2,20 +2,11 @@ import React from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { RestaurantCard } from '@components/molecules';
 import { styles } from './style';
+import { RestaurantData } from '@services';
 
 type RestaurantSliderProps = {
-  restaurantsData: {
-    id: number;
-    name: string;
-    photo_link: any;
-    status: 'Ouvert' | 'Fermé';
-  }[];
-  onPress: ( restaurant : {
-    id: number;
-    name: string;
-    photo_link: any;
-    status: 'Ouvert' | 'Fermé';
-  }) => void;
+  restaurantsData: RestaurantData[];
+  onPress: ( restaurant: RestaurantData) => void;
   restaurantWords: string[];
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { colors } from '@theme';
@@ -21,6 +22,7 @@ export const FoodCard: React.FC<ProductCardProps> = ({
   iconName,
   onPress,
 }) => {
+  console.log('imageUrl : ', imageUrl);
   return (
     <View>
       <TouchableOpacity
@@ -34,7 +36,7 @@ export const FoodCard: React.FC<ProductCardProps> = ({
           <Text style={styles.subTitle}>{subTitle}</Text>
         </View>
         <View style={styles.imageContainer}>
-          <Image source={imageUrl} style={styles.image} />
+          <Image source={{ uri: imageUrl }} style={styles.image} />
           <View style={styles.iconContainer}>
             <Icon
               name={iconName}

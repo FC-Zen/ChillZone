@@ -4,19 +4,18 @@ import { styles } from './style';
 
 import { transformRestaurantData } from '@services';
 import { ImagesMap } from '@utils';
-import { BottomNavbar, RestaurationTemplate, SnackBar, TopBar } from '@components';
+import {
+  BottomNavbar,
+  RestaurationTemplate,
+  SnackBar,
+  TopBar,
+} from '@components';
 import { useTranslation } from 'react-i18next';
 import { ROUTE } from '@enums';
 import { useNavigation } from '@hooks';
+import { RestaurantData as Restaurant } from '@services';
 
 export const RestaurationScreen = () => {
-  type Restaurant = {
-    id: number;
-    name: string;
-    photo_link: any;
-    status: 'Ouvert' | 'Fermé';
-  };
-
   const [restaurantsData1, setRestaurantsData1] = useState<Restaurant[]>([]);
   const [restaurantsData2, setRestaurantsData2] = useState<Restaurant[]>([]);
   const { t } = useTranslation();
@@ -40,11 +39,12 @@ export const RestaurationScreen = () => {
     );
 
     const transformedFirstSet = firstSet.map((restaurant) => {
-      const image = ImagesMap[restaurant.photo_link];
       return {
         id: restaurant.id,
         name: restaurant.name,
-        photo_link: image,
+        photo_link: restaurant.photo_link,
+        opening_time: restaurant.opening_time,
+        closing_time: restaurant.closing_time,
         status: restaurant.status,
       };
     });
@@ -65,6 +65,8 @@ export const RestaurationScreen = () => {
         id: restaurant.id,
         name: restaurant.name,
         photo_link: image,
+        opening_time: restaurant.opening_time,
+        closing_time: restaurant.closing_time,
         status: restaurant.status,
       };
     });
@@ -81,22 +83,25 @@ export const RestaurationScreen = () => {
     id: number;
     name: string;
     photo_link: any;
+    opening_time: string;
+    closing_time: string;
     status: 'Ouvert' | 'Fermé';
   }) => {
-    console.log(`Le restaurant a été cliqué.`,selectedRestaurant.name);
+    console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
     if (selectedRestaurant.status == 'Ouvert') {
-      navigation.navigate(ROUTE.DISPENSER);
+      navigation.navigate(ROUTE.DISPENSER, {
+        restaurant: selectedRestaurant,
+      });
     } else {
       setSnackbar({
         open: true,
-        severity: "error",
-        message: "Le restaurant est fermé en ce moment",
+        severity: 'error',
+        message: 'Le restaurant est fermé en ce moment',
       });
     }
   };
 
   return (
-    
     <View style={styles.container}>
       <SnackBar
         visible={snackbar.open}
@@ -104,7 +109,7 @@ export const RestaurationScreen = () => {
         onDismiss={() => setSnackbar({ ...snackbar, open: false })}
         severity={snackbar.severity}
       />
-            
+
       <TopBar />
       <RestaurationTemplate
         onPressRestaurant={handleRestaurantPress}

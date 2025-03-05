@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
-import { Button, PageHeader, FoodCardList } from '@components';
+import { Button, PageHeader, FoodCardList, SnackBar } from '@components';
 import { useNavigation } from '@hooks';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
-import { FoodItemProps } from '@components/organisms/FoodCardList';
 import { ModalScreenProps } from '@services';
 import { useCommand } from '@contexts';
+import { MealProps } from '@services/DispenserServices';
+
+type SelectedMealsType = {
+  [key: string]: number | null;
+};
 
 export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
   const { menu } = route.params;
   const [quantity, setQuantity] = useState(0);
-  const [selectedMeals, setSelectedMeals] = useState<
-    Record<string, number | null>
-  >({});
+  const [selectedMeals, setSelectedMeals] = useState<SelectedMealsType>({});
+
   const { listItems, updateListItems } = useCommand();
+  const [snackbar, setSnackbar] = useState<{
+    isAvailable: boolean;
+    severity: 'success' | 'error';
+    message: string;
+  }>({
+    isAvailable: false,
+    severity: 'success',
+    message: '',
+  });
 
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -31,30 +43,43 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
 
   const handleAddToCart = () => {
     const selectedMealsList = transformedMeals.filter(
-      (meal) => selectedMeals[meal.meal_type] === meal.id
+      (meal) => meal.type && selectedMeals[meal.type] === meal.id
     );
+
+    const outOfStockMeal = selectedMealsList.find((meal) => meal.stock === 0);
+
+    if (outOfStockMeal) {
+      console.log(`Le plat ${outOfStockMeal.name} n'est plus disponible !`);
+      setSnackbar({
+        isAvailable: true,
+        severity: 'error',
+        message: `Le plat ${outOfStockMeal.name} n'est plus en stock. Désolé !`,
+      });
+      return;
+    }
+
     console.log(
       `Ajouté au panier: ${menu.name}, Quantité: ${quantity}, Total : ${menu.price}`,
       'Repas sélectionnés:',
       selectedMealsList
     );
+
     if (listItems.find((item) => item.name === menu.name)) {
       listItems.map((item) => {
         if (item.name === menu.name) {
           item.quantity += 1;
         }
       });
-    }
-    else {
+    } else {
       updateListItems([
         ...listItems,
         {
           id: menu.id,
           name: menu.name,
-          price: parseFloat(menu.price.replace('€', '')),
+          price: parseFloat(menu.price),
           type: 'meal',
           quantity: 1,
-          meals: selectedMealsList.map((meal) => (meal.title)),
+          meals: selectedMealsList,
           onDecrement: handleDecrement,
           onIncrement: handleIncrement,
           onDelete: () => {
@@ -66,18 +91,19 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     navigation.goBack();
   };
 
-  const handleMealSelect = (item: FoodItemProps) => {
+  const handleMealSelect = (item: MealProps) => {
+    if (!item.type) return;
+
     setSelectedMeals((prev) => {
-      const category = item.meal_type;
-      const isSelected = prev[category] === item.id;
+      const isSelected = item.type ? prev[item.type] === item.id : false;
 
       return {
         ...prev,
-        [category]: isSelected ? null : item.id,
+        [item.type as string]: isSelected ? null : item.id,
       };
     });
 
-    if (selectedMeals[item.meal_type] === item.id) {
+    if (item.type && selectedMeals[item.type] === item.id) {
       console.log('Decrement');
       handleDecrement();
     } else {
@@ -86,15 +112,20 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     }
   };
 
-  const transformedMeals: FoodItemProps[] = menu.meals.map((meal) => ({
-    id: meal.id,
-    title: meal.title,
-    subTitle: meal.description,
-    imageUrl: meal.photoUrl,
-    meal_type: meal.category.label,
-    iconName: selectedMeals[meal.category.label] === meal.id ? 'Check' : 'Add',
-    isSelected: selectedMeals[meal.id],
-  }));
+  const transformedMeals: MealProps[] = Object.entries(
+    menu.meals_by_type || {}
+  ).flatMap(([type, meals]) =>
+    meals.map((meal) => ({
+      ...meal,
+      title: meal.name,
+      subTitle: meal.description,
+      imageUrl: meal.photo_link,
+      type: type,
+      category: meal.category,
+      icon: selectedMeals[type] === meal.id ? 'Check' : 'Add',
+      isSelected: selectedMeals[type] === meal.id,
+    }))
+  );
 
   return (
     <View style={styles.container2}>
@@ -106,10 +137,17 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
         />
       </View>
 
+      <SnackBar
+        visible={snackbar.isAvailable}
+        message={snackbar.message}
+        onDismiss={() => setSnackbar({ ...snackbar, isAvailable: false })}
+        severity={snackbar.severity}
+      />
+
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.cont3}>
-          <Image source={menu.photoUrl} style={styles.image} />
-          <Text style={styles.price}>{menu.price}</Text>
+          <Image source={{ uri: menu.photo_link }} style={styles.image} />
+          <Text style={styles.price}>{menu.price}€</Text>
           <Text style={styles.subtitle}>{menu.description}</Text>
         </View>
 

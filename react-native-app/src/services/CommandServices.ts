@@ -1,5 +1,10 @@
 import commandsData from '@assets/data/commands.json';
 import { formatCommand } from '@utils/functions';
+import { MealProps } from './DispenserServices';
+import { MenuProps } from './MenusServices';
+import axios from 'axios';
+import { API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type Command = {
   command_id: number;
@@ -41,10 +46,66 @@ export const getCommandById = async (
 ): Promise<FormattedCommand | undefined> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const command = commandsData.find(
-        (c: Command) => c.command_id === id
-      );
+      const command = commandsData.find((c: Command) => c.command_id === id);
       resolve(command ? formatCommand(command) : undefined);
     }, 1000);
   });
+};
+
+export type Order = {
+  payment_method: string;
+  pickup_time: string;
+  lines: {
+    [key: string]: {
+      quantity: number;
+      menu?: {
+        id: MenuProps['id'];
+        meals: MealProps['id'][];
+      };
+      meal?: MealProps['id'];
+    };
+  }[];
+};
+
+export const createCommand = async (
+  restaurantId: number,
+  command: Order
+): Promise<any> => {
+  console.log('Commande à envoyer : ', command);
+  console.log('Commande lines : ', command.lines);
+
+  console.log('restaurantId : ', restaurantId);
+
+  console.log('API actuelle : ', API_URL);
+
+  try {
+    const [access] = await Promise.all([AsyncStorage.getItem('access')]);
+    const response = await axios.post(
+      `${API_URL}restaurant/${restaurantId}/`,
+      command,
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+
+    console.log('response data createCommand : ', response.data);
+
+    await AsyncStorage.setItem('qrcode_link', response.data.qrcode);
+
+    console.log('Méthodes autorisées : ', response.headers['allow']);
+
+    if (response.status === 201) {
+      console.log('Commande créée avec succès');
+      return response.data;
+    }
+
+    return response.data;
+  } catch (error: any) {
+    console.error(error);
+    throw new Error(
+      'Une erreur est survenue lors de la création de la commande'
+    );
+  }
 };
