@@ -23,9 +23,6 @@ export const CourseDetailsModal: React.FC<CourseDetailsModalProps> = ({
 }) => {
   const { title, date, time, room, instructor } = courseDetails;
 
-  console.log('Nom du cours : ', title);
-  console.log('time : ', time);
-
   return (
     <Modal
       visible={isOpen}

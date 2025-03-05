@@ -87,9 +87,6 @@ export const getCalendarEvents = async () => {
         let startTime = new Date(event.start_time);
         let endTime = new Date(event.end_time);
 
-        startTime.setHours(startTime.getHours() + 1);
-        endTime.setHours(endTime.getHours() + 1);
-
         formatedCalendar.events.push({
           id: event.id,
           title: event.title,
