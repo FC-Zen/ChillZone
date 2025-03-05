@@ -11,6 +11,7 @@ import { styles } from './style';
 import { RoomAvailable, RoomSelectorProps } from '@components/organisms';
 import { colors } from '@theme';
 import { Room } from '@services/RoomServices';
+import { useTranslation } from 'react-i18next';
 
 export type ReservationTemplateProps = {
   buttonProps: ButtonProps;
@@ -31,13 +32,14 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
   roomSelectorProps,
   selectedRoom,
 }) => {
+  const { t } = useTranslation();
   const areAllInputsFilled = () => {
     return inputs.every((inputGroup) =>
       inputGroup.every((input) => {
-        if (input.variant === 'select') {
-          return input.value && input.value !== '';
+        if (input.placeholder === t('fields.room.schedules')) {
+          return true;
         }
-        if (input.variant === 'modal-select') {
+        if (input.variant === 'select' || input.variant === 'modal-select') {
           return input.value && input.value !== '';
         }
         return false;

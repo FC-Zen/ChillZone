@@ -50,7 +50,6 @@ export const getReservations = async (): Promise<ReservationResponse> => {
         Authorization: `Bearer ${access}`,
       },
     });
-    console.log('response: ', response.data);
 
     if (response.status === 200) {
       return response.data as ReservationResponse;
@@ -68,14 +67,22 @@ export const putReservations = async (
   type: string[]
 ): Promise<RoomAvailability[]> => {
   try {
-    const [access] = await Promise.all([AsyncStorage.getItem('access')]);
+    // Conversion vers le format hh:mm:ss
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    const formattedDuration = `00 ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
+
+    const access = await AsyncStorage.getItem('access');
     const response = await axios.put<RoomAvailability[]>(
       `${API_URL}reservation/`,
-      { date, duration, type },
+      {
+        date,
+        duration: formattedDuration, // durée formatée
+        type,
+      },
       { headers: { Authorization: `Bearer ${access}` } }
     );
 
-    console.log('Salles disponibles:', response.data);
     return response.data;
   } catch (error: any) {
     console.error(

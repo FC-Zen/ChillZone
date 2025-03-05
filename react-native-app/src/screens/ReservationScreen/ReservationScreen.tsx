@@ -14,11 +14,12 @@ export const ReservationScreen = () => {
   const [durations, setDurations] = useState<string[]>([]);
   const [roomTypes, setRoomTypes] = useState<string[]>([]);
   const [availableRooms, setAvailableRooms] = useState<RoomAvailability[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
 
   const [selectedRoomId, setSelectedRoomId] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedDuration, setSelectedDuration] = useState<string>('');
-  const [selectedRoomType, setSelectedRoomType] = useState<string>('');
+  const [selectedSlot, setSelectedSlot] = useState<string>('');
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
@@ -34,42 +35,75 @@ export const ReservationScreen = () => {
     fetchData();
   }, []);
 
-  // Fonction pour convertir la durée en minutes
-  const convertDurationToMinutes = (duration: string): number => {
+  const convertDurationToAPIFormat = (duration: string): number => {
     if (duration.includes('h')) {
-      const hours = parseInt(duration.split('h')[0], 10);
-      return hours * 60;
+      return parseInt(duration.split('h')[0], 10) * 60; // Convertit les heures en minutes
+    } else if (duration.includes('m')) {
+      return parseInt(duration.split('m')[0], 10);
     }
     return 0;
   };
 
-  const selectedDurationInMinutes = convertDurationToMinutes(selectedDuration);
+  // Fonction pour formater les créneaux horaires en HHhMM - HHhMM
+  const formatTimeForDisplay = (start: string, end: string): string => {
+    if (!start || !end || !start.includes(':') || !end.includes(':')) {
+      return 'Invalid Time Format';
+    }
+
+    const [startHours, startMinutes] = start.split(':');
+    const [endHours, endMinutes] = end.split(':');
+
+    if (!startHours || !startMinutes || !endHours || !endMinutes) {
+      return 'Invalid Time Format';
+    }
+
+    return `${startHours}h${startMinutes} - ${endHours}h${endMinutes}`;
+  };
 
   useEffect(() => {
     const checkAvailability = async () => {
       if (selectedRoomId && selectedDate && selectedDuration) {
+        const durationInMinutes = convertDurationToAPIFormat(selectedDuration);
+
+        console.log("Données envoyées à l'API:", {
+          date: selectedDate,
+          duration: durationInMinutes,
+          type: [selectedRoomId],
+        });
+
         try {
           const available = await putReservations(
             selectedDate,
-            selectedDurationInMinutes,
+            durationInMinutes,
             [selectedRoomId]
           );
 
-          const availableRoomsMapped = available.map(
-            (roomAvailability: RoomAvailability) => ({
-              id: roomAvailability.id,
-              name: roomAvailability.name,
-              floor: roomAvailability.floor.toString(),
-              capacity: roomAvailability.capacity,
-              available_slots: roomAvailability.available_slots,
-              establishment: roomAvailability.establishment,
-              photo: roomAvailability.photo,
-            })
-          );
+          const availableRoomsMapped = available.map((room) => ({
+            id: room.id,
+            name: room.name,
+            floor: room.floor.toString(),
+            capacity: room.capacity,
+            available_slots: room.available_slots,
+            establishment: room.establishment,
+            photo: room.photo,
+          }));
 
           setAvailableRooms(availableRoomsMapped);
-        } catch (error) {
-          console.error('Erreur lors de la mise à jour des salles:', error);
+
+          if (available.length > 0) {
+            const formattedSlots = available[0].available_slots.map((slot) =>
+              formatTimeForDisplay(slot[0], slot[1])
+            );
+            setAvailableSlots(formattedSlots);
+          } else {
+            setAvailableSlots([]);
+          }
+        } catch (error: any) {
+          console.error('Erreur détaillée:', {
+            status: error.response?.status,
+            data: error.response?.data,
+            message: error.message,
+          });
         }
       }
     };
@@ -108,6 +142,17 @@ export const ReservationScreen = () => {
     ],
   ];
 
+  if (selectedRoomId && availableSlots.length > 0) {
+    inputs[0].push({
+      placeholder: t('fields.room.schedules'),
+      icon: 'Clock',
+      variant: 'select',
+      data: availableSlots,
+      value: selectedSlot,
+      onSelect: (selected: string) => setSelectedSlot(selected),
+    });
+  }
+
   return (
     <View style={styles.container}>
       <TopBar />
@@ -126,13 +171,11 @@ export const ReservationScreen = () => {
         roomSelectorProps={{
           rooms: availableRooms,
           selectedRoom:
-            availableRooms.find(
-              (room) => room.id.toString() === selectedRoomId
-            ) || null,
+            availableRooms.find((room) => room.name === selectedRoomId) || null,
           handlePress: (selectedRoom: RoomAvailability) => {
-            setSelectedRoomId(selectedRoom.id.toString());
+            setSelectedRoomId(selectedRoom.name);
           },
-          title: t('headers.roomAvailable'),
+          title: t('filters.roomsOpen'),
         }}
       />
       <BottomNavbar activeIcon="Reserve" />
