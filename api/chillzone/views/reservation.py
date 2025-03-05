@@ -133,10 +133,8 @@ class ReservationView(APIView):
                 day_reservation=day_reservation
             )
 
-
-
             Event.objects.create(
-                id=f"RES{request.user.id}{location.id}{start_time.strftime('%H%M')}{end_datetime.strftime('%H%M')}",
+                id=f"RES{request.user.id}{location.id}{day_reservation.strftime('%d%m%Y')}{start_time.strftime('%H%M')}{end_datetime.strftime('%H%M')}",
                 title='Réservation de ' + location.name,
                 start_time=start_datetime,
                 end_time=end_datetime,
@@ -194,7 +192,7 @@ class ClientReservationView(APIView):
                 "upcoming_reservations": upcoming_data
             }, status=status.HTTP_200_OK)
         
-    def put(self, request):
+    def post(self, request):
         reservation_id = request.data.get('id')
 
         if not reservation_id:

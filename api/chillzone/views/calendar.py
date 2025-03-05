@@ -41,7 +41,7 @@ class CalendarView(APIView):
                 return self.get(request)
 
 
-            Event.objects.filter(calendar=calendar).delete()
+            Event.objects.filter(calendar=calendar).exclude(id__startswith="RES").delete()
 
             events = CalendarService.get_events_from_ical(url)
             for event in events:
@@ -67,7 +67,7 @@ class CalendarView(APIView):
         if calendar.reload and calendar.reload > now():
             return Response({'error': f'Calendar will be reloadable at {calendar.reload}'}, status=status.HTTP_400_BAD_REQUEST)
 
-        Event.objects.filter(calendar=calendar).delete()
+        Event.objects.filter(calendar=calendar).exclude(id__startswith="RES").delete()
 
         events = CalendarService.get_events_from_ical(calendar.url)
         for event in events:
