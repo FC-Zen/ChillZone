@@ -104,10 +104,10 @@ export const CalendarScreen = () => {
       });
       fetchData();
     } else if (response.already) {
-      message = `${t('already_refreshed')} ${response.refreshTime}`
+      message = `${t('calendar.already_refreshed')} ${response.refreshTime}`
       setSnackbar({
         open: true,
-        severity: 'success',
+        severity: 'error',
         message: message,
       });
     } else {

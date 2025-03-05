@@ -1,4 +1,5 @@
 import { API_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAccessToken } from "@utils/functions/Auth";
 import axios from "axios";
 import ICAL from "ical.js";
@@ -175,9 +176,13 @@ export const getCalendarEvents = async () => {
 */
 export const refreshCalendar = async () => {
     const access = await getAccessToken();
+    const user = await AsyncStorage.getItem('user') || '{}';
     try {
-        let response = await axios.put(
+        const response = await axios.put(
             `${API_URL}calendar/`,
+            {
+                user: JSON.parse(user)
+            },
             {
                 headers: {
                     Authorization: `Bearer ${access}`
@@ -185,16 +190,21 @@ export const refreshCalendar = async () => {
             }
         );
         if (response.status === 200) {
-            console.log("Calendrier rafraichi avec succès.");
             return { success: true, refreshTime: -1, already: false };
         }
+
         return { success: false, refreshTime: -1, already: false };
     } catch (error: any) {
         if (error.response.status === 400) {
-            console.error(error.response.data.error);
-            return { success: false, refreshTime: error.response.data.error.split(' ')[-1], already: true };
-        } else {
-            return { success: false, refreshTime: -1, already: false };
+            let message = error.response.data.error as string;
+            message = message.split(' at ')[1];
+            let date = new Date(message);
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            message = `${hours}h${minutes}`;
+            return { success: false, refreshTime: message, already: true };
         }
+        return { success: false, refreshTime: -1, already: false };
+        
     }
 }
