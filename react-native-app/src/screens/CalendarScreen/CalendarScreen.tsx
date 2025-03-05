@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { styles } from './style';
 import { BottomNavbar, CalendarTemplate } from '@components';
-import { Calendar, getCalendarEvents } from '@services/CalendarServices';
+import { Calendar, getCalendarEvents, refreshCalendar } from '@services';
 import { useTranslation } from 'react-i18next';
 import { set } from 'zod';
+import { SnackBar } from '@components';
 
 export const CalendarScreen = () => {
   const { t } = useTranslation();
@@ -49,6 +50,16 @@ export const CalendarScreen = () => {
   const [adeLink, setAdeLink] = useState('');
   const [helpModal, setHelpModal] = useState(false);
   const [courseModal, setCourseModal] = useState(false);
+
+  const [snackbar, setSnackbar] = useState<{
+      open: boolean;
+      severity: 'success' | 'error';
+      message: string;
+    }>({
+      open: false,
+      severity: 'success',
+      message: '',
+    });
   
   const determineYear = (month: string) => {
       const currentYear = new Date().getFullYear();
@@ -81,8 +92,42 @@ export const CalendarScreen = () => {
     setStartOfWeek(determineDate(item));
   }, [selectedMonth, selectState]);
 
+  const refresh = async () => {
+    const response = await refreshCalendar();
+    let message = '';
+    if (response.success) {
+      message = t('calendar.refreshed')
+      setSnackbar({
+        open: true,
+        severity: 'success',
+        message: message,
+      });
+      fetchData();
+    } else if (response.already) {
+      message = `${t('already_refreshed')} ${response.refreshTime}`
+      setSnackbar({
+        open: true,
+        severity: 'success',
+        message: message,
+      });
+    } else {
+      message = t('calendar.error_refresh')
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: message,
+      });
+    }
+  }
+
   return (
     <View style={styles.container}>
+      <SnackBar
+        visible={snackbar.open}
+        message={snackbar.message}
+        onDismiss={() => setSnackbar({ ...snackbar, open: false })}
+        severity={snackbar.severity}
+      />
       <CalendarTemplate
         events={events.events}
         daysOfWeek={daysName}
@@ -111,6 +156,7 @@ export const CalendarScreen = () => {
           setAdeModal(false);
           setAdeLink('');
         }}
+        onRefresh={refresh}
       />
       <BottomNavbar activeIcon="Calendar" />
     </View>

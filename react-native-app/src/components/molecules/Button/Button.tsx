@@ -7,7 +7,7 @@ import { colors, typography } from '@theme';
 export type ButtonProps = {
   title: string;
   onPress?: () => void | false;
-  variant?: 'primary' | 'secondary' | 'icon' | 'news'; // Ajout du variant icon et news
+  variant?: 'primary' | 'secondary' | 'icon' | 'news' | 'iconOnly'; // Ajout du variant icon et news
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>; // Nouvelle propriété
   icon?: IconProps;
@@ -31,7 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <ButtonWrapper
-      title={title}
+      title={variant === 'iconOnly' ? '' : title}
       onPress={onPress}
       variant={variant}
       style={style}

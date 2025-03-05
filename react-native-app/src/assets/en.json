@@ -273,5 +273,11 @@
     "intro": "Please refer to the IUT de Meaux virtual tour application project",
     "videoTitle": "Demonstration videos",
     "redirect": "Find the project on GitHub"
+  },
+  "calendar": {
+    "already_refreshed": "Already refreshed, try again at",
+    "refreshed": "Calendar updated",
+    "error_refresh": "Error while updating calendar"
   }
+
 }

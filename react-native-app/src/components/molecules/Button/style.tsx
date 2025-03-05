@@ -29,17 +29,19 @@ export const ButtonWrapper: FC<ButtonProps> = ({
         style,
       ]}
     >
-      {variant === 'icon' && icon && <Icon {...icon} />}
-      <Text
-        style={[
-          styles.text,
-          { color: textColor, fontFamily: textFont, fontSize: textSize },
-          variant === 'icon' && styles.iconText, // Style spécifique pour le texte avec icône
-          textStyle,
-        ]}
-      >
-        {title}
-      </Text>
+      {(variant === 'icon' || variant === 'iconOnly') && icon && <Icon {...icon} />}
+      {variant !== 'iconOnly' && 
+        <Text
+          style={[
+            styles.text,
+            { color: textColor, fontFamily: textFont, fontSize: textSize },
+            variant === 'icon' && styles.iconText, // Style spécifique pour le texte avec icône
+            textStyle,
+          ]}
+        >
+          {title}
+        </Text>
+      }
     </TouchableOpacity>
   );
 };

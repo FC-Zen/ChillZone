@@ -31,6 +31,7 @@ export type CalendarTemplateProps = {
     setHelpModal: (value: boolean) => void;
     onSelect: (item: string) => void;
     onSubmitLink: () => void;
+    onRefresh: () => void;
 };
 
 export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({ 
@@ -54,9 +55,9 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
     setHelpModal,
     onSelect,
     onSubmitLink,
+    onRefresh,
 }) => {
     const customHeader = () => {
-        console.log('startOfWeek :', startOfWeek);
         return (
             <CalendarHeader
                 daysOfWeek={daysOfWeek}
@@ -79,15 +80,27 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                     setState={setSelectState}
                     onSelect={onSelect}
                 />
-                <Button
-                    title="ADE"
-                    onPress={() => setAdeModal(true)}
-                    variant='icon'
-                    icon={{ name: 'Chain', color: colors.white, width: 16, height: 16 }}
-                    style={styles.calendarLinkButton}
-                    textFont={typography.h2.fontFamily}
-                    textSize={typography.h3.fontSize}
-                />
+
+                <View style={styles.buttonGroup} >
+                    <Button
+                        title="ADE"
+                        onPress={() => setAdeModal(true)}
+                        variant='icon'
+                        icon={{ name: 'Chain', color: colors.white, width: 16, height: 16 }}
+                        style={styles.calendarLinkButton}
+                        textFont={typography.h2.fontFamily}
+                        textSize={typography.h3.fontSize}
+                    />
+                    <Button
+                        title=""
+                        onPress={onRefresh}
+                        variant='iconOnly'
+                        icon={{ name: 'Refresh', color: colors.white, width: 16, height: 16 }}
+                        color={colors.resolutionBlue}
+                        style={styles.refreshButton}
+                    />
+                </View>
+
             </View>
             <View style={styles.container}>
                 <View style={styles.calendar}>
@@ -114,7 +127,7 @@ export const CalendarTemplate: React.FC<CalendarTemplateProps> = ({
                         renderEvent={(event, TouchableOpacityProps) => <CalendarCell event={event} touchableOpacityProps={TouchableOpacityProps} brutEvents={events} />}
                         onSwipeEnd={(date) => {setStartOfWeek(date); setSelectedMonth(monthNames[date.getMonth()]);}}
                         weekStartsOn={1}
-                        activeDate={selectedDate}
+                        activeDate={startOfWeek}
                     />
                 </View>
             </View>

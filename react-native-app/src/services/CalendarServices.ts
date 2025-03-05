@@ -127,9 +127,6 @@ export const getCalendarEvents = async () => {
 
     const access = await getAccessToken();
 
-    console.log("API URL :", API_URL);
-    console.log("🔑 Access token :", access);
-
     try {
         let response = await axios.get(
             `${API_URL}calendar/`,
@@ -170,4 +167,34 @@ export const getCalendarEvents = async () => {
     }
 
     return formatedCalendar;
+}
+
+/**
+ * Envoie une requête de rafraichissement du calendrier
+ * @returns {Promise<{ success: boolean, refreshTime: number, already: boolean }>} Résultat de la requête 
+*/
+export const refreshCalendar = async () => {
+    const access = await getAccessToken();
+    try {
+        let response = await axios.put(
+            `${API_URL}//calendar/`,
+            {
+                headers: {
+                    Authorization: `Bearer ${access}`
+                }
+            }
+        );
+        if (response.status === 200) {
+            console.log("Calendrier rafraichi avec succès.");
+            return { success: true, refreshTime: -1, already: false };
+        }
+        return { success: false, refreshTime: -1, already: false };
+    } catch (error: any) {
+        if (error.response.status === 400) {
+            console.error(error.response.data.error);
+            return { success: false, refreshTime: error.response.data.error.split(' ')[-1], already: true };
+        } else {
+            return { success: false, refreshTime: -1, already: false };
+        }
+    }
 }

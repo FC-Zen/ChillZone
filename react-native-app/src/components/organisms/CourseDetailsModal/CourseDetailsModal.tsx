@@ -57,10 +57,12 @@ export const CourseDetailsModal: React.FC<CourseDetailsModalProps> = ({
             <Icon name="Cube" color={colors.white} width={24} height={24} />
             <Text style={styles.text}>{room}</Text>
           </View>
+          { instructor.length > 0 &&
           <View style={styles.infoRow}>
             <Icon name="Graduation" color={colors.white} width={24} height={24} />
             <Text style={styles.text}>{instructor}</Text>
           </View>
+          }
         </View>
       </View>
     </Modal>

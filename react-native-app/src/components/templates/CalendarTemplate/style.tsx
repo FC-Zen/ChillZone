@@ -37,6 +37,7 @@ export const styles = StyleSheet.create({
     },
     calendarLinkButton: {
         width: 'auto',
+        height: 40,
         borderRadius: 8,
         backgroundColor: colors.resolutionBlue,
         paddingVertical: 0,
@@ -50,4 +51,15 @@ export const styles = StyleSheet.create({
         height: 'auto',
         width: '100%',
     },
+    refreshButton: {
+        borderRadius: 8,
+        paddingHorizontal: 12,
+    },
+    buttonGroup: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 10,
+    }
 });
