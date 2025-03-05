@@ -3,12 +3,12 @@ import { ScrollView, View } from 'react-native';
 import { OverlayCommandList } from '@components/organisms';
 import { PageHeader } from '@components/molecules/PageHeader';
 import { styles } from './style';
-import { FormattedCommand } from '@services';
+import { CommandItemSummary } from '@screens/CommandSummaryScreen/CommandSummaryScreen';
 
 export type CommandSummaryTemplateProps = {
   headerTitle: string;
-  todaysReservations: FormattedCommand[];
-  pastReservations: FormattedCommand[];
+  todaysReservations: CommandItemSummary[];
+  pastReservations: CommandItemSummary[];
   onCancelReservation?: (index: number) => void;
   onBackPress?: () => void;
 };

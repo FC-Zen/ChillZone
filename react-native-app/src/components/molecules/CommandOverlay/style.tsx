@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     fontSize: typography.h3.fontSize,
     fontFamily: typography.h3.fontFamily,
     marginVertical: 5,
-    width: '70%',
+    width: 'auto',
     paddingHorizontal: 2,
   },
   expandedContent: {

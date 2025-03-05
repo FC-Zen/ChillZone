@@ -2,14 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { CommandSummaryTemplate, SnackBar } from '@components';
 import { useTranslation } from 'react-i18next';
-import { FormattedCommand, getCommands } from '@services';
+import { Command, getAllOrders } from '@services';
 import { useNavigation } from '@hooks';
 import { styles } from './style';
+import { addOneHour, formatDate, formatTime } from '@utils/functions/Command';
+
+export type CommandItemSummary = {
+  id: number;
+  payment_method: string;
+  status: string;
+  qrcode_link?: string;
+  pickup_time: string;
+  final_pickup_time: string;
+  creation_date: string;
+  restauration_place: string;
+  total_price: number;
+}
 
 export const CommandSummaryScreen: React.FC = () => {
-  const [reservations, setReservations] = useState<FormattedCommand[] | null>([]);
-  const [todaysReservations, setTodaysReservations] = useState<FormattedCommand[]>([]);
-  const [pastReservations, setPastReservations] = useState<FormattedCommand[]>([]);
+  const [reservations, setReservations] = useState<Command[] | null>([]);
+  const [todaysReservations, setTodaysReservations] = useState<CommandItemSummary[]>([]);
+  const [pastReservations, setPastReservations] = useState<CommandItemSummary[]>([]);
 
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -23,68 +36,29 @@ export const CommandSummaryScreen: React.FC = () => {
     severity: 'success',
     message: '',
   });
-
-  // Fetch initial reservations
+  
   useEffect(() => {
     const fetchReservations = async () => {
-      const transformedCommand = await getCommands();
-      setReservations(transformedCommand);
+      const transformedCommand = await getAllOrders();
+
+      setTodaysReservations(transformedCommand.today_orders.map((order: any) => ({
+        ...order,
+        pickup_time: formatTime(order.pickup_time),
+        final_pickup_time: formatTime(addOneHour(order.pickup_time)),
+        creation_date: formatDate(order.creation_date)
+      })) as CommandItemSummary[]);
+  
+      setPastReservations(transformedCommand.past_orders.map((order: any) => ({
+        ...order,
+        pickup_time: formatTime(order.pickup_time),
+        final_pickup_time: formatTime(addOneHour(order.pickup_time)),
+        creation_date: formatDate(order.creation_date)
+      })) as CommandItemSummary[]);
     };
   
     fetchReservations();
   }, []);
-  
 
-  useEffect(() => {
-    // Vérifie si une date est aujourd'hui
-    const isToday = (dateString: string) => {
-      const today = new Date();
-      const [day, month, year] = dateString.split('/').map(Number);
-      const targetDate = new Date(year, month - 1, day); // Mois commence à 0 dans JS
-  
-      return (
-        today.getFullYear() === targetDate.getFullYear() &&
-        today.getMonth() === targetDate.getMonth() &&
-        today.getDate() === targetDate.getDate()
-      );
-    };
-  
-    const groupReservations = (reservations: FormattedCommand[] | null): void => {
-      if (!reservations) {
-        setTodaysReservations([]);
-        setPastReservations([]);
-        return;
-      }
-  
-      const now = new Date();
-      const todaysReservations: FormattedCommand[] = [];
-      const pastReservations: FormattedCommand[] = [];
-  
-      reservations.forEach((reservation) => {
-        const [day, month, year] = reservation.creation_date.split('/').map(Number);
-        const reservationDate = new Date(year, month - 1, day); // Conversion en Date
-  
-        const finalPickupTime = new Date(
-          `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T${reservation.final_pickup_time}`
-        );
-  
-        if (isToday(reservation.creation_date)) {
-          if (finalPickupTime < now) {
-            pastReservations.push(reservation);
-          } else {
-            todaysReservations.push(reservation);
-          }
-        } else {
-          pastReservations.push(reservation);
-        }
-      });
-  
-      setTodaysReservations(todaysReservations);
-      setPastReservations(pastReservations);
-    };
-  
-    groupReservations(reservations);
-  }, [reservations]);
 
   // Fonction pour annuler la réservation
   const handleCancelReservation = (id: number) => {
