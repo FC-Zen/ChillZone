@@ -66,7 +66,7 @@ class RestaurantView(APIView):
         except RestaurationPlace.DoesNotExist:
             return Response({"error": "Restaurant not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        meals = Meal.objects.filter(restaurant=restaurant)
+        meals = Meal.objects.filter(restaurant=restaurant, stock__gt=0)
         meals_by_category = {}
         for meal in meals:
             category_label = meal.category.label if meal.category else "Uncategorized"
@@ -86,7 +86,8 @@ class RestaurantView(APIView):
                 category_label = associate.category.label if associate.category else "Uncategorized"
                 if category_label not in meals_by_type[type_label]:
                     meals_by_type[type_label][category_label] = []
-                for meal in Meal.objects.filter(category=associate.category):
+                for meal in Meal.objects.filter(category=associate.category, stock__gt=0):
+                    print(meal)
                     meals_by_type[type_label][category_label].append(MealWithTagSerializer(meal).data)
             
             menu_data["meals_by_type"] = meals_by_type
@@ -150,7 +151,7 @@ class RestaurantView(APIView):
                                     LineContent.objects.create(meal=meal, command_line=command_line)
 
                         # Génération du QR Code si tout est validé
-                        qrcode_filename = f"{user.id}{id}{now().strftime('%Y%m%d_%H%M')}.png"
+                        qrcode_filename = f"{user.id}{id}{now().strftime('%Y%m%d_%H%M%S')}.png"
                         qrcode_path = QRCodeService.generate_qr_code_command(command_id=command.id, filename=qrcode_filename)
                         command.qrcode_link = "qrcode/" + qrcode_path
                         command.save()

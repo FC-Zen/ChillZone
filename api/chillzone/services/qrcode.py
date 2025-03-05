@@ -17,10 +17,10 @@ class QRCodeService:
         :return: Le nom du fichier QR Code généré.
         """
 
-        print(base_url)
-        
-        os.makedirs(dirpath, exist_ok=True)
-        output_path = os.path.join(dirpath, filename)
+        if os.path.exists(dirpath):
+            output_path = os.path.join(os.getcwd(), dirpath, filename)
+        else :
+            output_path = os.path.join(os.getcwd(), 'chillzone', dirpath, filename)
         
         qr = qrcode.QRCode(
             version=1,
