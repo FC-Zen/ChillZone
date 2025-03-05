@@ -159,7 +159,12 @@ class RestaurantView(APIView):
                         transaction.savepoint_rollback(savepoint)
                         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
                     
-                    return Response({"qrcode": qrcode_path}, status=status.HTTP_201_CREATED)
+                    return Response({
+                        "qrcode": qrcode_path,
+                        "command_id": command.id
+                    }, status=status.HTTP_201_CREATED)
+                    
+                    #return Response({"qrcode": qrcode_path}, status=status.HTTP_201_CREATED)
                     
             except DatabaseError:
                 return Response({"error": "Une erreur est survenue lors de la création de la commande. Veuillez réessayer."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
