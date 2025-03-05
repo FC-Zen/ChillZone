@@ -13,8 +13,6 @@ class Location(models.Model) :
     capacity = models.IntegerField()
 
     status = models.BooleanField(default=False)
-    
-    qrcode_link = models.ImageField(upload_to='qrcodes/', null=True, blank=True)
 
     position_x = models.IntegerField()
 

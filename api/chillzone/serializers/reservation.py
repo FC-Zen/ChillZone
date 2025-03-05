@@ -31,7 +31,7 @@ class ReservationSerializer(serializers.ModelSerializer):
 
     floor_name = serializers.CharField(source='location.id_floor.name')
 
-    photo_link = serializers.CharField(source='location.id_floor.photo_link')
+    photo_link = serializers.CharField(source='location.photo_link')
 
     establishment_name = serializers.CharField(source='location.id_floor.map.establishment.name')
 
