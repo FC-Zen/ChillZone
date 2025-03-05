@@ -2,7 +2,12 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { styles } from './style';
 import { BottomNavbar, CalendarTemplate, SnackBar } from '@components';
-import { Calendar, getCalendarEvents, refreshCalendar } from '@services';
+import {
+  Calendar,
+  getCalendarEvents,
+  refreshCalendar,
+  setCalendarLink,
+} from '@services';
 import { useTranslation } from 'react-i18next';
 
 export const CalendarScreen = () => {
@@ -33,10 +38,10 @@ export const CalendarScreen = () => {
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startOfWeek, setStartOfWeek] = useState(new Date());
-  const [selectState, setSelectState] = useState<'open' | 'closed'>(
-    'closed'
+  const [selectState, setSelectState] = useState<'open' | 'closed'>('closed');
+  const [selectedMonth, setSelectedMonth] = useState(
+    monthsName[new Date().getMonth()]
   );
-  const [selectedMonth, setSelectedMonth] = useState(monthsName[new Date().getMonth()]);
 
   const [events, setEvents] = useState<Calendar>({
     id: 0,
@@ -50,27 +55,34 @@ export const CalendarScreen = () => {
   const [courseModal, setCourseModal] = useState(false);
 
   const [snackbar, setSnackbar] = useState<{
-      open: boolean;
-      severity: 'success' | 'error';
-      message: string;
-    }>({
-      open: false,
-      severity: 'success',
-      message: '',
-    });
-  
+    open: boolean;
+    severity: 'success' | 'error';
+    message: string;
+  }>({
+    open: false,
+    severity: 'success',
+    message: '',
+  });
+
+  const onSubmitLink = async () => {
+    await setCalendarLink(adeLink);
+    fetchData();
+    setAdeModal(false);
+    setAdeLink('');
+  };
+
   const determineYear = (month: string) => {
-      const currentYear = new Date().getFullYear();
-      const currentMonth = new Date().getMonth();
-      const selected = monthsName.indexOf(month);
-      return currentMonth >= selected ? currentYear : currentYear - 1;
-  }
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    const selected = monthsName.indexOf(month);
+    return currentMonth >= selected ? currentYear : currentYear - 1;
+  };
 
   const determineDate = (month: string) => {
-      const year = determineYear(month);
-      const monthIndex = monthsName.indexOf(month);
-      return new Date(year, monthIndex, 1);
-  }
+    const year = determineYear(month);
+    const monthIndex = monthsName.indexOf(month);
+    return new Date(year, monthIndex, 1);
+  };
 
   const eventsMemo = useMemo(() => events, [events]);
 
@@ -84,17 +96,20 @@ export const CalendarScreen = () => {
     eventsMemo;
   }, []);
 
-  const handleSelect = useCallback((item: string) => {
-    setSelectedMonth(item);
-    setSelectState(selectState === 'open' ? 'closed' : 'open');
-    setStartOfWeek(determineDate(item));
-  }, [selectedMonth, selectState]);
+  const handleSelect = useCallback(
+    (item: string) => {
+      setSelectedMonth(item);
+      setSelectState(selectState === 'open' ? 'closed' : 'open');
+      setStartOfWeek(determineDate(item));
+    },
+    [selectedMonth, selectState]
+  );
 
   const refresh = async () => {
     const response = await refreshCalendar();
     let message = '';
     if (response.success) {
-      message = t('calendar.refreshed')
+      message = t('calendar.refreshed');
       setSnackbar({
         open: true,
         severity: 'success',
@@ -102,21 +117,21 @@ export const CalendarScreen = () => {
       });
       fetchData();
     } else if (response.already) {
-      message = `${t('calendar.already_refreshed')} ${response.refreshTime}`
+      message = `${t('calendar.already_refreshed')} ${response.refreshTime}`;
       setSnackbar({
         open: true,
         severity: 'error',
         message: message,
       });
     } else {
-      message = t('calendar.error_refresh')
+      message = t('calendar.error_refresh');
       setSnackbar({
         open: true,
         severity: 'error',
         message: message,
       });
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -150,9 +165,7 @@ export const CalendarScreen = () => {
         setHelpModal={setHelpModal}
         onSelect={handleSelect}
         onSubmitLink={() => {
-          fetchData();
-          setAdeModal(false);
-          setAdeLink('');
+          onSubmitLink();
         }}
         onRefresh={refresh}
       />
