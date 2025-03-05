@@ -102,9 +102,6 @@ export const HomeScreen: React.FC = () => {
         severity: 'error',
         message: 'Le restaurant est fermé en ce moment',
       });
-      navigation.navigate(ROUTE.DISPENSER, {
-        restaurant: selectedRestaurant,
-      });
     }
   };
 
