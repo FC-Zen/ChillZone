@@ -9,7 +9,7 @@ from django.db import transaction
 
 from datetime import datetime, timedelta
 
-from chillzone.models import Reservation, LocationReservation, Location, Tag, Event, Calendar
+from chillzone.models import Reservation, LocationReservation, Location, Tag, Event, Calendar, Conflict
 from chillzone.serializers import ReservationSerializer, FilterReservationSerializer, CreateReservationSerializer
 
 class IsNotBlock(BasePermission):
@@ -248,3 +248,24 @@ class ClientReservationView(APIView):
         reservation.save()
 
         return Response({"message": "Reservation has been successfully cancelled."}, status=status.HTTP_200_OK)
+    
+class ClientConflictView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        reservation_id = request.data.get('id')
+        comment = request.data.get('comment', None)
+        
+        if not reservation_id:
+            return Response({"error": "The reservation ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            reservation = Reservation.objects.get(id=reservation_id)
+        except Reservation.DoesNotExist:
+            return Response({"error": "Reservation not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        conflict = Conflict.objects.create(user=user, reservation=reservation, comment=comment)
+        
+        return Response({"message": "Conflict created successfully."}, status=status.HTTP_201_CREATED)

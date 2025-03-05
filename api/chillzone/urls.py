@@ -40,6 +40,7 @@ urlpatterns = [
     path('notification/', notification.NotificationView.as_view(), name='Client Notification'),
     path('calendar/', calendar.CalendarView.as_view(), name='Client Calendar'),
     path('reservation/', reservation.ReservationView.as_view(), name='Client Reservation'),
+    path('conflict/', reservation.ClientConflictView.as_view(), name='Client create Conflict'),
     path('mapfloor/', map.MapView.as_view(), name='Client Map'),
     path('my-reservation/', reservation.ClientReservationView.as_view(), name='Client Reservations'),
     path('my-commands/', command.UserCommandView.as_view(), name='Client Commands'),
