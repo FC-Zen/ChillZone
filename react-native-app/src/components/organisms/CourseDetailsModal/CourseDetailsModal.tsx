@@ -23,23 +23,21 @@ export const CourseDetailsModal: React.FC<CourseDetailsModalProps> = ({
 }) => {
   const { title, date, time, room, instructor } = courseDetails;
 
+  console.log('Nom du cours : ', title);
+  console.log('time : ', time);
+
   return (
-    <Modal 
-      visible={isOpen} 
+    <Modal
+      visible={isOpen}
       animationType="slide"
       statusBarTranslucent={true}
       transparent={true}
-      presentationStyle='overFullScreen'
+      presentationStyle="overFullScreen"
     >
       <View style={styles.overlay}>
         <View style={styles.modal}>
           <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
-            <Icon
-              name="Cross"
-              color={colors.white}
-              width={15}
-              height={15}
-            />
+            <Icon name="Cross" color={colors.white} width={15} height={15} />
           </TouchableOpacity>
           <View style={styles.infoRow}>
             <Icon name="Book" color={colors.white} width={24} height={24} />
@@ -57,12 +55,17 @@ export const CourseDetailsModal: React.FC<CourseDetailsModalProps> = ({
             <Icon name="Cube" color={colors.white} width={24} height={24} />
             <Text style={styles.text}>{room}</Text>
           </View>
-          { instructor.length > 0 &&
-          <View style={styles.infoRow}>
-            <Icon name="Graduation" color={colors.white} width={24} height={24} />
-            <Text style={styles.text}>{instructor}</Text>
-          </View>
-          }
+          {instructor.length > 0 && (
+            <View style={styles.infoRow}>
+              <Icon
+                name="Graduation"
+                color={colors.white}
+                width={24}
+                height={24}
+              />
+              <Text style={styles.text}>{instructor}</Text>
+            </View>
+          )}
         </View>
       </View>
     </Modal>
