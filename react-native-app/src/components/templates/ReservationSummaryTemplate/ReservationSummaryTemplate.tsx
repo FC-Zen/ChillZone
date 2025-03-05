@@ -3,12 +3,12 @@ import { ScrollView, View } from 'react-native';
 import { OverlayList } from '@components/organisms/OverlayList';
 import { PageHeader } from '@components/molecules/PageHeader';
 import { styles } from './style';
-import { BookingOverlay } from '@services';
+import { ReservationSummary } from '@services/BookingInfoServices';
 
 export type ReservationSummaryTemplateProps = {
   headerTitle: string;
-  todaysReservations: BookingOverlay[];
-  upcomingReservations: BookingOverlay[];
+  todaysReservations: ReservationSummary[];
+  upcomingReservations: ReservationSummary[];
   onCancelReservation?: (index: number) => void;
   onBackPress?: () => void;
 };

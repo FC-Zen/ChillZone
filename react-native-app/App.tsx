@@ -8,22 +8,32 @@ export default function App() {
   LogBox.ignoreLogs(['Warning']);
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
+  
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-      if (nextAppState === 'background' || nextAppState === 'inactive') {
-        console.log('🔴 Application en arrière-plan ou fermée. Déconnexion...');
-        await logoutUser(false);
+      if (nextAppState === 'background') {
+        timeout = setTimeout(async () => {
+          console.log('🔴 Application en arrière-plan. Déconnexion...');
+          await logoutUser(false);
+        }, 5000);
+      } else if (nextAppState === 'inactive') {
+        timeout = setTimeout(async () => {
+          console.log('⚪ Application inactive. Déconnexion après un délai...');
+          await logoutUser(false);
+        }, 5000);
+      } else {
+        clearTimeout(timeout);
       }
     };
-
-    const subscription = AppState.addEventListener(
-      'change',
-      handleAppStateChange
-    );
-
+  
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+  
     return () => {
+      clearTimeout(timeout);
       subscription.remove();
     };
   }, []);
+  
 
   return <RootNavigator />;
 }
