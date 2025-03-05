@@ -274,5 +274,10 @@
     "intro": "Veuillez vous référer au projet d’application de visite virtuelle de l’IUT de Meaux",
     "videoTitle": "Vidéos de démonstration",
     "redirect": "Retrouvez le projet sur GitHub"
+  },
+  "calendar": {
+    "already_refreshed": "Déjà rafrachit, réessayez à",
+    "refreshed": "Calendrier mis à jour",
+    "error_refresh": "Erreur lors de la mise à jour du calendrier"
   }
 }

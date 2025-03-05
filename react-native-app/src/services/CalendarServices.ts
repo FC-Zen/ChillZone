@@ -1,101 +1,145 @@
-import ICAL from "ical.js";
-
-const loadICSFromURL = async (url: string) => {
-    try {
-        const response = await fetch(url);
-        const text = await response.text();
-        const jcalData = ICAL.parse(text);
-        console.log("✅ ICS parsé");
-        return jcalData;  // 🟢 On renvoie les données parsées !
-    } catch (error) {
-        console.error("❌ Erreur lors du chargement du fichier ICS :", error);
-        return null;  // 🔴 Renvoie null en cas d'erreur
-    }
-};
-
-const extractEvents = (jcalData: any) => {
-    try {
-        // Vérifier que c'est bien un VCALENDAR
-        if (!Array.isArray(jcalData) || jcalData.length < 3 || jcalData[0] !== "vcalendar") {
-            console.error("Format jCal invalide ou absence de vcalendar :", jcalData);
-            return [];
-        }
-
-        // Créer un composant ICAL.Component à partir du jCal déjà parsé
-        const comp = new ICAL.Component(jcalData);
-
-        // Récupérer tous les événements (vevent)
-        const vevents = comp.getAllSubcomponents("vevent") || [];
-        if (vevents.length === 0) {
-            console.warn("Aucun événement trouvé dans le fichier .ics.");
-            return [];
-        }
-
-        return vevents.map(event => {
-            try {
-                const vevent = new ICAL.Event(event);
-                return {
-                    summary: vevent.summary || "Sans titre",
-                    start: vevent.startDate ? vevent.startDate.toString() : "Inconnu",
-                    end: vevent.endDate ? vevent.endDate.toString() : "Inconnu",
-                    location: vevent.location || "Non précisé",
-                    description: vevent.description || "Pas de description",
-                    uid: vevent.uid || "Sans UID"
-                };
-            } catch (err) {
-                console.error("Erreur lors du parsing d'un événement :", err);
-                return null;
-            }
-        }).filter(event => event !== null);
-    } catch (error) {
-        console.error("Erreur lors du traitement du fichier .ics :", error);
-        return [];
-    }
-};
+import { API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAccessToken } from '@utils/functions/Auth';
+import axios from 'axios';
 
 export type CalendarEvent = {
-    id: number;
-    title: string;
-    start: Date;
-    end: Date;
-    location: string;
-    group: string;
-    professor: string | string[];
+  id: number;
+  title: string;
+  start_time: Date;
+  end_time: Date;
+  location: string;
+  group: string;
+  professor: string | string[];
 };
 
 export type Calendar = {
-    events: CalendarEvent[];
-}
+  id: number;
+  title: string;
+  url: string;
+  events: CalendarEvent[];
+};
 
-export const getCalendarEvents = async (url: string) => {
-    if (url === '') {
-        console.log("❌ URL du calendrier non fournie !");
-        return null;
-    }
-    let formatedCalendar: Calendar = { events: [] };
-    let events = await loadICSFromURL(url);
-    events = extractEvents(events);
-    events.forEach((calEvent: any) => {
-        let desc = calEvent.description.split('\n').filter((line: string) => line !== '');
-        desc = desc.splice(0, desc.length - 1);
-        for (let i = 0; i < desc.length; i++) {
-            if ((desc[i].includes('TP') || desc[i].includes('TD')) && i != 0) {
-                let temp = desc[i];
-                desc[i] = desc[0];
-                desc[0] = temp;
-                break;
-            }
-        }
+/**
+ * Enregistre le lien du calendrier dans la base de données de l'utilisateur
+ * @param {string} url Le lien du calendrier
+ * @throws {Error} Si le lien est vide
+ */
+export const setCalendarLink = async (url: string) => {
+  const access = await getAccessToken();
+
+  if (!url) {
+    console.error('❌ Lien du calendrier vide.');
+    throw new Error('Le lien du calendrier ne peut pas être vide.');
+  }
+  try {
+    await axios.post(
+      `${API_URL}calendar/`,
+      { url },
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+  } catch (error: any) {
+    console.error(
+      '❌ Erreur lors de la sauvegarde du lien du calendrier :',
+      error
+    );
+  }
+};
+
+/**
+ * Récupère les événements du calendrier
+ * @returns {Promise<Calendar>} Le calendrier
+ */
+export const getCalendarEvents = async () => {
+  let formatedCalendar: Calendar = {
+    id: 0,
+    title: 'Calendrier',
+    url: '',
+    events: [],
+  };
+
+  const access = await getAccessToken();
+
+  try {
+    let response = await axios.get(`${API_URL}calendar/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+
+    if (response.status === 200) {
+      formatedCalendar = {
+        id: response.data.id,
+        title: response.data.title,
+        url: response.data.url,
+        events: [],
+      };
+
+      for (const event of response.data.events) {
+        let description = event.description.split(';');
+        let group = description[0];
+        let professor = description.splice(1).join('\n');
+
+        let startTime = new Date(event.start_time);
+        let endTime = new Date(event.end_time);
 
         formatedCalendar.events.push({
-            id: calEvent.uid,
-            title: calEvent.summary,
-            start: new Date(calEvent.start),
-            end: new Date(calEvent.end),
-            location: calEvent.location,
-            group: desc[0],
-            professor: desc.splice(1)
+          id: event.id,
+          title: event.title,
+          start_time: startTime,
+          end_time: endTime,
+          location: event.location,
+          group: group,
+          professor: professor,
         });
-    });
+      }
+    }
+  } catch (error: any) {
+    console.error('❌ Erreur lors de la récupération du calendrier :', error);
     return formatedCalendar;
-}
+  }
+
+  return formatedCalendar;
+};
+
+/**
+ * Envoie une requête de rafraichissement du calendrier
+ * @returns {Promise<{ success: boolean, refreshTime: number, already: boolean }>} Résultat de la requête
+ */
+export const refreshCalendar = async () => {
+  const access = await getAccessToken();
+  const user = (await AsyncStorage.getItem('user')) || '{}';
+  try {
+    const response = await axios.put(
+      `${API_URL}calendar/`,
+      {
+        user: JSON.parse(user),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return { success: true, refreshTime: -1, already: false };
+    }
+
+    return { success: false, refreshTime: -1, already: false };
+  } catch (error: any) {
+    if (error.response.status === 400) {
+      let message = error.response.data.error as string;
+      message = message.split(' at ')[1];
+      let date = new Date(message);
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      message = `${hours}h${minutes}`;
+      return { success: false, refreshTime: message, already: true };
+    }
+    return { success: false, refreshTime: -1, already: false };
+  }
+};

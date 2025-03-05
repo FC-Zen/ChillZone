@@ -31,8 +31,10 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   image: {
-    width: '90%',
-    maxHeight: 200,
+    width: '85%',
+    minHeight: 200,
+    maxHeight: 250,
+    height: 'auto',
     resizeMode: 'contain',
     alignSelf: 'center',
     paddingVertical: 10,

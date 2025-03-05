@@ -40,6 +40,11 @@ export {
   getCommands,
   getCommandById,
 } from './CommandServices';
-export { getCalendarEvents, Calendar, CalendarEvent } from './CalendarServices';
-
 export { verifyToken, refreshToken } from './TokenService';
+export { 
+  getCalendarEvents, 
+  Calendar, 
+  CalendarEvent,
+  setCalendarLink,
+  refreshCalendar,
+} from './CalendarServices';

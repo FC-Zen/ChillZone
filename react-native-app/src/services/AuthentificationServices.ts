@@ -205,7 +205,6 @@ export const sendPasswordRecoveryEmail = async (formData: {
     const response = await axios.post(`${API_URL}forget-password/`, {
       email: formData.email,
     });
-
     if (response.status === 200) {
       return {
         success: true,
