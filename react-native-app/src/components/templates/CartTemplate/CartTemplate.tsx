@@ -13,7 +13,7 @@ import { Separation } from '@components/atoms';
 export type CartTemplateProps = {
   headerTitle: string;
   restaurantText: string;
-  restaurantImage: any;
+  restaurantImage: string;
   commands: ItemProps[];
   commandTitle: string;
   collectTitle: string;

@@ -9,7 +9,7 @@ import { Button } from '@components/molecules';
 type FinalPaymentTemplateProps = {
   headerTitle: string;
   navigateToHome: () => void;
-  qrImagelink: any;
+  qrImagelink: string;
   commandConfirmation: string;
   commandId: number;
   downloadButtonTitle: string;
@@ -52,15 +52,12 @@ export const FinalPaymentTemplate: React.FC<FinalPaymentTemplateProps> = ({
         {commandSplit[1]}
       </Text>
 
-      { typeof parseInt(qrImagelink) === 'number' ? 
-        <ImageNative source={qrImagelink} style={styles.qrcodeImage} /> 
-        : 
-        <Image 
-          source={{ uri: qrImagelink }} 
-          style={styles.qrcodeImage} 
-          contentFit="contain"
-          placeholder="blur" 
-        /> }
+      <Image
+        source={{ uri: qrImagelink }}
+        style={styles.qrcodeImage}
+        contentFit="contain"
+        placeholder="blur"
+      />
 
       <Button
         title={downloadButtonTitle}

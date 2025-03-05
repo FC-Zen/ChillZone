@@ -36,9 +36,6 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
     const actualHour = actualDate.getHours();
     const actualMinute = actualDate.getMinutes();
 
-    console.log('Dans CartScreen : ');
-    console.log('actualHour : ', actualHour);
-    console.log('actualMinute : ', actualMinute);
     if (actualHour > closeHour || actualHour < openHour) {
       return openHour;
     }

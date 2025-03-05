@@ -92,8 +92,6 @@ export const HomeScreen: React.FC = () => {
   }, []);
 
   const handleRestaurantPress = (selectedRestaurant: RestaurantData) => {
-    console.log('🚀 ~ name:', selectedRestaurant.name);
-    console.log('🚀 ~  selectedRestaurant.id:', selectedRestaurant.id);
     if (selectedRestaurant.status === 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER, {
         restaurant: selectedRestaurant,
@@ -103,6 +101,9 @@ export const HomeScreen: React.FC = () => {
         open: true,
         severity: 'error',
         message: 'Le restaurant est fermé en ce moment',
+      });
+      navigation.navigate(ROUTE.DISPENSER, {
+        restaurant: selectedRestaurant,
       });
     }
   };

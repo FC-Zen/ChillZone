@@ -43,8 +43,6 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
     }
   };
 
-  console.log('Meal:', meal.stock);
-
   const handleAddToCart = () => {
     if (meal.stock === 0) {
       console.log("Ce plat n'est plus disponible !");

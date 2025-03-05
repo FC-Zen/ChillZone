@@ -7,10 +7,7 @@ import { styles } from './style';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { useEffect, useState } from 'react';
-import { useCommand } from '@contexts';
 import { API_URL } from '@env';
-import { getLastOrder } from '@utils/functions';
-import { getAllOrders } from '@services';
 import { testQrCode } from '@services/PaymentServices';
 import { ImagesMap } from '@utils';
 
@@ -18,6 +15,7 @@ export type FinalPaymentScreenProps = {
   route: {
     params: {
       qrcode: string;
+      commandId: number;
     };
   };
 };
@@ -25,41 +23,21 @@ export type FinalPaymentScreenProps = {
 export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
   route,
 }) => {
-  const [qrcodeLink, setQrcodeLink] = useState<string | null>(
-    route.params.qrcode
-  );
+  const qrcodeLink = route.params.qrcode;
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { scheduleNotification } = useNotifications();
-  const { commandId } = useCommand();
-  const [id, setId] = useState(commandId || 0);
-  const [imageUri, setImageUri] = useState<any>(null);
+  const id = route.params.commandId;
+  const [imageUri, setImageUri] = useState<string>('');
 
   useEffect(() => {
+    console.log('QRcode: ', route.params.qrcode);
     if (qrcodeLink?.includes('qrcode')) {
       setImageUri(`${API_URL}media/` + qrcodeLink);
     } else {
       setImageUri(`${API_URL}media/qrcode/` + qrcodeLink);
     }
-    const fetchPaymentId = async () => {
-      const response = await getAllOrders();
-      if (response) {
-        let last_order = getLastOrder(response);
-        setId(last_order.id);
-      }
-    };
-
-    const testQRCode = async () => {
-      const response = await testQrCode(imageUri);
-      console.log('response', response);
-      if (response.success === false) {
-        setImageUri(ImagesMap['qrcode.png']);
-      }
-    }
-    fetchPaymentId();
-    testQRCode();
   }, []);
-
 
   const saveFile = async (uri: string, filename: string, mimetype: string) => {
     if (Platform.OS === 'android') {
@@ -112,8 +90,11 @@ export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
   };
 
   const onDownloadPress = async () => {
+    console.log('URI', imageUri);
     if (!imageUri) {
       Alert.alert('Erreur', 'Le QR code n’est pas encore disponible.');
+      console.error('url invalide', imageUri);
+
       return;
     }
 

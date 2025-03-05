@@ -7,11 +7,13 @@ import { ROUTE } from '@enums';
 import { getAllOrders } from '@services';
 import { getLastOrder } from '@utils/functions';
 import { useCommand } from '@contexts';
+import { createCommand } from '@services/CommandServices';
 
 type PaymentProps = {
   route: {
     params: {
-      qrcode: string;
+      restaurantId: number;
+      pickupTime: string;
     };
   };
 };
@@ -23,18 +25,51 @@ export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
   const [cardExpiration, setCardExpiration] = useState('');
   const [cardCVC, setCardCVC] = useState('');
   const navigation = useNavigation();
-  const { totalAmount } = useCommand();
+  const { listItems, totalAmount } = useCommand();
+  const { pickupTime, restaurantId } = route.params;
 
-  useEffect(() => {
-    const fetchTotalAmount = async () => {
-      const response = await getAllOrders();
-      if (response) {
-        let last_order = getLastOrder(response);
-        console.log('last_order : ', last_order);
-      }
-    };
-    fetchTotalAmount();
-  }, []);
+  const fetchLastOrder = async () => {
+    const response = await getAllOrders();
+    if (response) {
+      let last_order = getLastOrder(response);
+      let command_id = last_order.id;
+      console.log('last_order : ', command_id);
+      return command_id;
+    }
+    return 1;
+  };
+
+  const onPay = async () => {
+    try {
+      const command = {
+        payment_method: 'Card',
+        pickup_time: pickupTime,
+        lines: listItems.map((item) => ({
+          [item.id]: item.meals
+            ? {
+                quantity: item.quantity,
+                menu: {
+                  id: item.id,
+                  meals: item.meals.map((meal) => meal.id),
+                },
+              }
+            : {
+                quantity: item.quantity,
+                meal: item.id,
+              },
+        })),
+      };
+
+      const response = await createCommand(restaurantId, command);
+      const command_id = await fetchLastOrder();
+      navigation.navigate(ROUTE.FINAL_PAYMENT, {
+        qrcode: response?.qrcode,
+        commandId: command_id,
+      });
+    } catch (error) {
+      console.error('createCommand error:', error);
+    }
+  };
 
   console.log('totalAmount : ', totalAmount);
   return (
@@ -66,11 +101,7 @@ export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
       placeholderCardName={t('fields.card.name')}
       placeholderCardExpiration={t('fields.card.date')}
       placeholderCardCVC={t('fields.card.code')}
-      onPay={() =>
-        navigation.navigate(ROUTE.FINAL_PAYMENT, {
-          qrcode: route.params.qrcode,
-        })
-      }
+      onPay={() => onPay()}
       paymentInfosText={t('cart.infoPay')}
     />
   );

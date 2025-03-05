@@ -20,7 +20,7 @@ export type HomeScreenTemplateProps = {
   items: NavItem[];
   reservationButtonProps: ReservationButtonProps;
   restaurantsData: RestaurantData[];
-  onPress: ( restaurant : RestaurantData) => void;
+  onPress: (restaurant: RestaurantData) => void;
 };
 
 export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({

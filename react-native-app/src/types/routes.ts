@@ -48,7 +48,7 @@ export type RouteParamList = {
   };
   DispenserModal: { meal: MealProps };
   MenuModal: { menu: MenuProps };
-  FinalPaymentScreen: { qrcode: string };
+  FinalPaymentScreen: { qrcode: any; commandId: number };
   ReservationScreen: undefined;
   AccountScreen: undefined;
   LinksScreen: undefined;

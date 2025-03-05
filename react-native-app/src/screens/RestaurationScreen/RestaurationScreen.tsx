@@ -16,7 +16,6 @@ import { useNavigation } from '@hooks';
 import { RestaurantData as Restaurant } from '@services';
 
 export const RestaurationScreen = () => {
-
   const [restaurantsData1, setRestaurantsData1] = useState<Restaurant[]>([]);
   const [restaurantsData2, setRestaurantsData2] = useState<Restaurant[]>([]);
   const { t } = useTranslation();
@@ -40,11 +39,10 @@ export const RestaurationScreen = () => {
     );
 
     const transformedFirstSet = firstSet.map((restaurant) => {
-      const image = ImagesMap[restaurant.photo_link];
       return {
         id: restaurant.id,
         name: restaurant.name,
-        photo_link: image,
+        photo_link: restaurant.photo_link,
         opening_time: restaurant.opening_time,
         closing_time: restaurant.closing_time,
         status: restaurant.status,
@@ -92,7 +90,7 @@ export const RestaurationScreen = () => {
     console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
     if (selectedRestaurant.status == 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER, {
-        restaurant: selectedRestaurant
+        restaurant: selectedRestaurant,
       });
     } else {
       setSnackbar({
