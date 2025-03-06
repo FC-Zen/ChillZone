@@ -3,6 +3,7 @@ import { ScrollView, Text, View } from 'react-native';
 import {
   Button,
   ButtonProps,
+  IconWithText,
   Input,
   InputProps,
   PageHeader,
@@ -57,9 +58,33 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
           <Text style={styles.title}>{subTitle}</Text>
           {inputs.map((inputGroup, groupIndex) => (
             <View key={groupIndex}>
-              {inputGroup.map((inputProps, index) => (
-                <Input key={index} {...inputProps} style={{ marginTop: 15 }} />
-              ))}
+              {inputGroup.map((inputProps, index) => {
+                const isScheduleInput =
+                  inputProps.placeholder === t('fields.room.schedules');
+                const isEmpty = !inputProps.value || inputProps.value === '';
+
+                return (
+                  <View key={index}>
+                    <Input {...inputProps} style={{ marginTop: 15 }} />
+
+                    {isScheduleInput && isEmpty && (
+                      <IconWithText
+                        text={t('reservationConflicts.selectHour')}
+                        icon="CrossCircle"
+                        iconHeight={20}
+                        iconWidth={20}
+                        variant="horizontal"
+                        textColor={colors.warn}
+                        iconColor={colors.warn}
+                        style={{
+                          marginTop: 10,
+                          alignSelf: 'flex-start',
+                        }}
+                      />
+                    )}
+                  </View>
+                );
+              })}
               {groupIndex < inputs.length - 1 && (
                 <View>
                   <View style={styles.separator} />
@@ -68,6 +93,7 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
               )}
             </View>
           ))}
+
           <View style={styles.separator} />
         </View>
 
