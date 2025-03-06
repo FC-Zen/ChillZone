@@ -38,6 +38,18 @@ export const HomeScreen: React.FC = () => {
       const nextReservation = getLastReservation(reservations);
       setActualReservation(nextReservation);
       const formattedStartTime = nextReservation?.start_time.split(':');
+      const formattedEndTime = nextReservation?.end_time.split(':');
+      let formattedTimeSlot = '';
+      if (formattedStartTime && formattedEndTime) {
+        formattedTimeSlot =
+          formattedStartTime[0] +
+          'h' +
+          formattedStartTime[1] +
+          ' - ' +
+          formattedEndTime[0] +
+          'h' +
+          formattedEndTime[1];
+      }
       setNextBooking([
         {
           label: nextReservation?.location_name || '',
@@ -55,9 +67,7 @@ export const HomeScreen: React.FC = () => {
           typeLabel: 'Étage',
         },
         {
-          label: formattedStartTime
-            ? formattedStartTime[0] + 'h' + formattedStartTime[1]
-            : '',
+          label: formattedTimeSlot.length > 0 ? formattedTimeSlot : '',
           icon: 'Clock',
           typeLabel: 'Heure',
         },
@@ -104,6 +114,18 @@ export const HomeScreen: React.FC = () => {
         // Mettre à jour l'état global
         setActualReservation(nextReservation);
         const formattedStartTime = nextReservation?.start_time.split(':');
+        const formattedEndTime = nextReservation?.end_time.split(':');
+        let formattedTimeSlot = '';
+        if (formattedStartTime && formattedEndTime) {
+          formattedTimeSlot =
+            formattedStartTime[0] +
+            'h' +
+            formattedStartTime[1] +
+            ' - ' +
+            formattedEndTime[0] +
+            'h' +
+            formattedEndTime[1];
+        }
         setNextBooking(
           nextReservation
             ? [
@@ -123,9 +145,7 @@ export const HomeScreen: React.FC = () => {
                   typeLabel: 'Étage',
                 },
                 {
-                  label: formattedStartTime
-                    ? formattedStartTime[0] + 'h' + formattedStartTime[1]
-                    : '',
+                  label: formattedTimeSlot.length > 0 ? formattedTimeSlot : '',
                   icon: 'Clock',
                   typeLabel: 'Heure',
                 },
