@@ -3,8 +3,8 @@ import { View, Text, Image } from 'react-native';
 import { Icon, IconProps } from '@components/atoms';
 import { styles } from './style';
 import { colors } from '@theme';
-import { map } from '@assets/Images';
 import { useTranslation } from 'react-i18next';
+import { API_URL } from '@env';
 
 export type NavItem = {
   icon: IconProps['name'];
@@ -14,9 +14,13 @@ export type NavItem = {
 
 type BookingInfoProps = {
   items: NavItem[];
+  roomPhotoLink: string;
 };
 
-export const BookingInfo: React.FC<BookingInfoProps> = ({ items }) => {
+export const BookingInfo: React.FC<BookingInfoProps> = ({
+  items,
+  roomPhotoLink,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -38,7 +42,10 @@ export const BookingInfo: React.FC<BookingInfoProps> = ({ items }) => {
       ) : (
         // Affichage des informations si la liste n'est pas vide
         <>
-          <Image source={map} style={styles.image} />
+          <Image
+            source={{ uri: `${API_URL}media/${roomPhotoLink}` }}
+            style={styles.image}
+          />
           <View style={styles.content}>
             <View style={styles.iconRow}>
               {items.map((item, index) => (

@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import { NavItem } from '@components/molecules/BookingInfo';
-import { useNextBooking } from '@contexts';
 import { useNotifications } from '@hooks/useNotifications';
 import { RoomAvailability } from '@services';
 import { ReservationRequest } from '@services/Reservation';
@@ -38,12 +37,11 @@ export const ReservationModal: FC<ReservationModalProps> = ({
     data;
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const { nextBooking, updateNextBooking } = useNextBooking();
   const { scheduleNotification } = useNotifications();
 
   const formatedDuration = duration > 2 ? duration + 'min' : duration + 'h';
 
-  const transformDataToNavItems = (): NavItem[] => {
+  /* const transformDataToNavItems = (): NavItem[] => {
     const navItems: NavItem[] = [];
 
     if (roomName || room?.name) {
@@ -95,13 +93,12 @@ export const ReservationModal: FC<ReservationModalProps> = ({
     }
 
     return navItems;
-  };
+  }; */
 
   const handleCloseAndNavigate = async () => {
     // Mise à jour de la réservation
     try {
       onClose();
-      updateNextBooking([...nextBooking, transformDataToNavItems()]);
       navigation.navigate(ROUTE.HOME);
 
       if (roomName || room?.name) {

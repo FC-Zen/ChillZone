@@ -2,6 +2,9 @@
 import { reservations } from '@assets/data/reservations.json';
 import { NavItem } from '@components/molecules/BookingInfo';
 import { IconProps } from '@components/atoms';
+import { getAccessToken } from '@utils/functions';
+import axios from 'axios';
+import { API_URL } from '@env';
 
 // Type de réservation
 export type Booking = {
@@ -84,7 +87,9 @@ export const transformBookings = (): NavItem[] => {
 
   // récupère la reservation à venir depuis le JSON en fonction de la date
   const booking = reservations.find(
-    (reservation) => reservation.day_reservation === '2025-01-01'
+    (reservation) =>
+      // reservation.day_reservation === '2025-01-01' // pour la simulation
+      reservation.day_reservation === new Date().toISOString().split('T')[0]
   );
 
   const navItems: NavItem[] = [];
@@ -200,5 +205,93 @@ export const fetchEnums = async (): Promise<any> => {
     };
   } catch (error: any) {
     throw new Error('Impossible de récupérer les enums.');
+  }
+};
+
+export type ReservationSummary = {
+  reservation_id: number;
+  reservation_status: string;
+  start_time: string;
+  end_time: string;
+  day_reservation: string;
+  location_name: string;
+  position_x: number;
+  position_y: number;
+  floor_name: string;
+  photo_link: string;
+  establishment_name: string;
+};
+
+export type MyReservations = {
+  past_orders: ReservationSummary[];
+  today_reservations: ReservationSummary[];
+  upcoming_reservations: ReservationSummary[];
+};
+
+export const getMyReservations = async (): Promise<MyReservations> => {
+  const access = await getAccessToken();
+  try {
+    const response = await axios.get(`${API_URL}my-reservation/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+
+    if (response.status === 200) {
+      console.log(
+        'upcoming reservations :',
+        response.data.upcoming_reservations
+      );
+      return response.data;
+    } else {
+      console.log(
+        "réponse reçue mais avec un status d'erreur : ",
+        response.status
+      );
+      return {
+        past_orders: [],
+        today_reservations: [],
+        upcoming_reservations: [],
+      };
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error('Erreur lors de la récupération des commandes');
+  }
+};
+
+/**
+ * Annule la réservation
+ */
+export const cancelReservation = async (id: number) => {
+  try {
+    const token = await getAccessToken();
+
+    const response = await axios.delete(`${API_URL}my-reservation/`, {
+      data: { id },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      return {
+        success: true,
+        message: 'Réservation annulée avec succès.',
+        data: response.data,
+      };
+    } else if (response.status === 404) {
+      return {
+        success: false,
+        message: 'Utilisateur non trouvé ou token invalide.',
+      };
+    }
+  } catch (error: any) {
+    console.error(
+      'Erreur lors de la suppression de la photo de profil:',
+      error.message
+    );
+    throw new Error(error.message);
   }
 };

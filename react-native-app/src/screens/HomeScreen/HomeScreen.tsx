@@ -6,6 +6,8 @@ import { useNextBooking, UserContext } from '@contexts';
 import { HomeScreenTemplate, HomeScreenTemplateProps } from '@components';
 import { styles } from './style';
 import {
+  cancelReservation,
+  ReservationSummary,
   RestaurantData,
   transformBookings,
   transformRestaurantData,
@@ -14,14 +16,18 @@ import { useTranslation } from 'react-i18next';
 import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
+import { getMyReservations } from '@services';
+import { getLastReservation } from '@utils/functions';
 
 export const HomeScreen: React.FC = () => {
   const userContext = UserContext.getInstance();
   const userName = userContext.getUsername();
-  let items = [transformBookings()];
+  let items = transformBookings();
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const { nextBooking, updateNextBooking } = useNextBooking();
+  const { nextBooking, setNextBooking } = useNextBooking();
+  const [actualReservation, setActualReservation] =
+    useState<ReservationSummary | null>(null);
 
   console.log('utilisateur : ', userName);
 
@@ -29,10 +35,37 @@ export const HomeScreen: React.FC = () => {
     items = nextBooking;
   }
 
-  // Récupère la réservation à venir, la plus proche de la date actuelle
-  const getNextBooking = () => {
-    return items[0];
-  };
+  useEffect(() => {
+    const fetchReservations = async () => {
+      const reservations = await getMyReservations();
+      const nextReservation = getLastReservation(reservations);
+      setActualReservation(nextReservation);
+      setNextBooking([
+        {
+          label: nextReservation?.location_name || '',
+          icon: 'Cube',
+          typeLabel: 'Salle',
+        },
+        {
+          label: nextReservation?.day_reservation || '',
+          icon: 'Calendar',
+          typeLabel: 'Date',
+        },
+        {
+          label: nextReservation?.floor_name || '',
+          icon: 'Marker',
+          typeLabel: 'Étage',
+        },
+        {
+          label: nextReservation?.start_time || '',
+          icon: 'Clock',
+          typeLabel: 'Heure',
+        },
+      ]);
+    };
+
+    fetchReservations();
+  }, []);
 
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
@@ -52,14 +85,35 @@ export const HomeScreen: React.FC = () => {
     HomeScreenTemplateProps['restaurantsData']
   >([]);
 
-  // Annuler une réservation
-  const handleCancelReservation = () => {
-    updateNextBooking([]);
-    setSnackbar({
-      open: true,
-      severity: 'success',
-      message: 'La réservation a été annulée avec succès',
-    });
+  const handleCancelReservation = async (
+    reservationId: ReservationSummary['reservation_id']
+  ) => {
+    try {
+      const response = await cancelReservation(reservationId);
+      if (response?.success) {
+        setSnackbar({
+          open: true,
+          severity: 'success',
+          message: response.message || 'Réservation annulée avec succès.',
+        });
+        setNextBooking([]);
+      } else {
+        setSnackbar({
+          open: true,
+          severity: 'error',
+          message:
+            response?.message || "Échec de l'annulation de la réservation.",
+        });
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'annulation de la réservation:", error);
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message:
+          "Une erreur est survenue lors de l'annulation de la réservation.",
+      });
+    }
   };
 
   // Chargement des données des restaurants au démarrage
@@ -71,7 +125,7 @@ export const HomeScreen: React.FC = () => {
         const transformedRestaurants = restaurants.map((restaurant) => ({
           id: restaurant.id,
           name: restaurant.name,
-          photo_link: ImagesMap[restaurant.photo_link] || restaurant.photo_link,
+          photo_link: restaurant.photo_link,
           opening_time: restaurant.opening_time,
           closing_time: restaurant.closing_time,
           status: restaurant.status,
@@ -118,10 +172,12 @@ export const HomeScreen: React.FC = () => {
       <HomeScreenTemplate
         welcomeMessage={restaurantWords}
         username={userName}
-        items={getNextBooking()}
+        items={nextBooking || []}
+        roomPhotoLink={actualReservation?.photo_link || ''}
         reservationButtonProps={{
           title: t('buttons.actions.cancelReservation'),
-          onPress: handleCancelReservation,
+          onPress: () =>
+            handleCancelReservation(actualReservation?.reservation_id || 0),
           iconName: 'Cross',
         }}
         restaurantsData={restaurantsData}

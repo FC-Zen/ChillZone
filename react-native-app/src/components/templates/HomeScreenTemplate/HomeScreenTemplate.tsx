@@ -18,6 +18,7 @@ export type HomeScreenTemplateProps = {
   welcomeMessage: string[];
   username: string | null;
   items: NavItem[];
+  roomPhotoLink: string;
   reservationButtonProps: ReservationButtonProps;
   restaurantsData: RestaurantData[];
   onPress: (restaurant: RestaurantData) => void;
@@ -27,6 +28,7 @@ export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
   welcomeMessage,
   username,
   items,
+  roomPhotoLink,
   reservationButtonProps,
   restaurantsData,
   onPress,
@@ -55,7 +57,11 @@ export const HomeScreenTemplate: React.FC<HomeScreenTemplateProps> = ({
             ''
           )}
         </Text>
-        <Map items={items} reservationButtonProps={reservationButtonProps} />
+        <Map
+          items={items}
+          reservationButtonProps={reservationButtonProps}
+          roomPhotoLink={roomPhotoLink}
+        />
         <RestaurantSlider
           restaurantWords={welcomeMessage}
           restaurantsData={restaurantsData}

@@ -74,7 +74,7 @@ export const putReservations = async (
 
     const formattedDuration = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
 
-    console.log('Durée formatée:', formattedDuration);
+    //console.log('Durée formatée:', formattedDuration);
 
     const access = await getAccessToken();
     const response = await axios.put<RoomAvailability[]>(
@@ -133,5 +133,32 @@ export const createReservation = async (
   } catch (error) {
     console.error('Erreur lors de la réservation:', error);
     throw error;
+  }
+};
+
+export const deleteReservation = async (
+  reservationId: number
+): Promise<{ message: string }> => {
+  try {
+    const access = await getAccessToken();
+    const response = await axios.delete(`${API_URL}reservation/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+      data: {
+        id: reservationId,
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    }
+
+    throw new Error("Erreur lors de l'annulation de la réservation");
+  } catch (error) {
+    console.error("Erreur lors de l'annulation de la réservation:", error);
+    throw new Error(
+      "Une erreur est survenue lors de l'annulation de la réservation."
+    );
   }
 };

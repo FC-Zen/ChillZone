@@ -1,1 +1,6 @@
-export { formatDate, formatTime, formatCommand } from './Reservation';
+export {
+  formatDate,
+  formatTime,
+  formatCommand,
+  getLastReservation,
+} from './Reservation';

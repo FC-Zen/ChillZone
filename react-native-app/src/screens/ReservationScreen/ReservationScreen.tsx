@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { View } from 'react-native';
 import { ReservationTemplate } from '@components/templates';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +22,7 @@ export const ReservationScreen = () => {
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
 
   const [selectedRoomId, setSelectedRoomId] = useState<string>('');
+  const [selectedRoomType, setSelectedRoomType] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedDuration, setSelectedDuration] = useState<string>('');
   const [selectedSlot, setSelectedSlot] = useState<string>('');
@@ -31,6 +32,26 @@ export const ReservationScreen = () => {
 
   const [findedRoom, setFindedRoom] = useState<RoomAvailability | null>(null);
   const [findedRoomSlots, setFindedRoomSlots] = useState<string[]>([]);
+
+  const findRoom = useCallback(
+    (roomName: string | number) => {
+      let room: RoomAvailability | undefined;
+      if (typeof roomName === 'string') {
+        room = availableRooms.find((room) => room.name === roomName);
+      } else if (typeof roomName === 'number') {
+        room = availableRooms.find((room) => room.id === roomName);
+      }
+      if (room) {
+        setFindedRoom(room);
+        setFindedRoomSlots(
+          room.available_slots
+            .map((slot) => formatTimeForDisplay(slot[0], slot[1]))
+            .sort()
+        );
+      }
+    },
+    [availableRooms]
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,21 +92,20 @@ export const ReservationScreen = () => {
 
   useEffect(() => {
     const checkAvailability = async () => {
-      //console.log('Vérification de la disponibilité...');
-      if (selectedRoomId && selectedDate && selectedDuration) {
+      if (selectedRoomType && selectedDate && selectedDuration) {
         const durationInMinutes = convertDurationToAPIFormat(selectedDuration);
 
         console.log("Données envoyées à l'API:", {
           date: selectedDate,
           duration: durationInMinutes,
-          type: [selectedRoomId],
+          type: [selectedRoomType],
         });
 
         try {
           const available = await putReservations(
             selectedDate,
             durationInMinutes,
-            [selectedRoomId]
+            [selectedRoomType]
           );
 
           const availableRoomsMapped = available.map((room) => ({
@@ -99,6 +119,8 @@ export const ReservationScreen = () => {
           }));
 
           setAvailableRooms(availableRoomsMapped);
+
+          if (selectedRoomId) findRoom(selectedRoomId);
 
           if (available.length > 0) {
             const formattedSlots = available[0].available_slots.map((slot) =>
@@ -121,6 +143,13 @@ export const ReservationScreen = () => {
     checkAvailability();
   }, [selectedDate, selectedDuration]);
 
+  useEffect(() => {
+    if (selectedRoomId && availableRooms.length > 0) {
+      setSelectedSlot('');
+      findRoom(selectedRoomId);
+    }
+  }, [selectedRoomId, availableRooms, findRoom]);
+
   const onSendReservation = async () => {
     const response = await createReservation(
       availableRooms.find((room) => room.name === selectedRoomId)?.id || 0,
@@ -131,18 +160,6 @@ export const ReservationScreen = () => {
     console.log('Réponse de la réservation:', response);
   };
 
-  const findRoom = (roomName: string) => {
-    let room = availableRooms.find((room) => room.name === roomName);
-    if (room) {
-      setFindedRoom(room);
-      setFindedRoomSlots(
-        room.available_slots
-          .map((slot) => formatTimeForDisplay(slot[0], slot[1]))
-          .sort()
-      );
-    }
-  };
-
   const inputs: ReservationTemplateProps['inputs'] = [
     [
       {
@@ -151,8 +168,8 @@ export const ReservationScreen = () => {
         subIcon: 'School',
         variant: 'select',
         data: roomTypes,
-        value: selectedRoomId,
-        onSelect: (selected: string) => setSelectedRoomId(selected),
+        value: selectedRoomType,
+        onSelect: (selected: string) => setSelectedRoomType(selected),
       },
       {
         placeholder: t('fields.common.date'),

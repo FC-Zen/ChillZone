@@ -1,4 +1,9 @@
-import { Command, FormattedCommand } from '@services';
+import {
+  Command,
+  FormattedCommand,
+  MyReservations,
+  ReservationSummary,
+} from '@services';
 
 /**
  * Formate une heure au format "hh:mm" en "hhhmm"
@@ -42,4 +47,16 @@ export const formatCommand = (command: Command): FormattedCommand => {
     final_pickup_time: formatTime(command.final_pickup_time),
     creation_date: formatDateToNumeric(extractDate(command.creation_date)), // Format changé ici
   };
+};
+
+export const getLastReservation = (
+  reservations: MyReservations
+): ReservationSummary | null => {
+  const upcoming = reservations.upcoming_reservations;
+
+  if (upcoming.length === 0) {
+    return null;
+  }
+
+  return upcoming[0];
 };

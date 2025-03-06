@@ -10,9 +10,14 @@ type ReservationButtonProps = React.ComponentProps<typeof ReservationButton>;
 type MapProps = {
   items: NavItem[];
   reservationButtonProps: ReservationButtonProps;
+  roomPhotoLink: string;
 };
 
-export const Map: React.FC<MapProps> = ({ items, reservationButtonProps }) => {
+export const Map: React.FC<MapProps> = ({
+  items,
+  reservationButtonProps,
+  roomPhotoLink,
+}) => {
   const { t } = useTranslation();
   const reservationText = t('info.reservation');
   const reservationWords = reservationText.split(' ');
@@ -27,7 +32,7 @@ export const Map: React.FC<MapProps> = ({ items, reservationButtonProps }) => {
         {reservationWords.slice(1).join(' ')}
       </Text>
       <View>
-        <BookingInfo items={items} />
+        <BookingInfo items={items} roomPhotoLink={roomPhotoLink} />
       </View>
       {items.length !== 0 && <ReservationButton {...reservationButtonProps} />}
     </View>
