@@ -243,6 +243,14 @@ class ClientReservationView(APIView):
 
         if reservation.status == 'Cancelled':
             return Response({"message": "Reservation is already cancelled."}, status=status.HTTP_200_OK)
+        
+        try:
+            location_reservation = LocationReservation.objects.get(reservation=reservation)
+        except LocationReservation.DoesNotExist:
+            return Response({"error": "Associated location reservation not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        event_id = f"RES{request.user.id}{location_reservation.location.id}{location_reservation.day_reservation.strftime('%d%m%Y')}{location_reservation.start_time.strftime('%H%M')}{location_reservation.end_time.strftime('%H%M')}"
+        Event.objects.filter(id=event_id).delete()
 
         reservation.status = 'Cancelled'
         reservation.save()
