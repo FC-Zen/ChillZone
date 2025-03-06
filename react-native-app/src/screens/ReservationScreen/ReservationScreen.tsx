@@ -21,7 +21,7 @@ export const ReservationScreen = () => {
   const [roomTypes, setRoomTypes] = useState<string[]>([]);
   const [availableRooms, setAvailableRooms] = useState<RoomAvailability[]>([]);
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
-  const [reservedSlots, setReservedSlots] = useState<string[]>([]); // Liste des créneaux réservés
+  const [reservedSlots, setReservedSlots] = useState<string[]>([]);
 
   const [selectedRoomId, setSelectedRoomId] = useState<string>('');
   const [selectedRoomType, setSelectedRoomType] = useState<string>('');
@@ -49,7 +49,7 @@ export const ReservationScreen = () => {
         setFindedRoomSlots(
           room.available_slots
             .map((slot) => formatTimeForDisplay(slot[0], slot[1]))
-            .filter((slot) => !reservedSlots.includes(slot)) // on filtre les créneaux déjà réservés
+            .filter((slot) => !reservedSlots.includes(slot))
             .sort()
         );
       }
@@ -59,9 +59,7 @@ export const ReservationScreen = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('Récupération des données de réservation...');
       const reservations = await getReservations();
-      console.log('Room Types disponibles:', reservations.room_types);
 
       setDurations(Object.values(reservations.duration_options));
       setRoomTypes(reservations.room_types);
@@ -69,7 +67,6 @@ export const ReservationScreen = () => {
     fetchData();
   }, []);
 
-  // Fonction pour récupérer les réservations existantes et en extraire les créneaux horaires
   const fetchReservedSlots = useCallback(async () => {
     try {
       const reservationData = await getMyReservations();
@@ -118,13 +115,6 @@ export const ReservationScreen = () => {
     const checkAvailability = async () => {
       if (selectedRoomType && selectedDate && selectedDuration) {
         const durationInMinutes = convertDurationToAPIFormat(selectedDuration);
-
-        console.log("Données envoyées à l'API:", {
-          date: selectedDate,
-          duration: durationInMinutes,
-          type: [selectedRoomType],
-        });
-
         try {
           const available = await putReservations(
             selectedDate,
@@ -165,7 +155,7 @@ export const ReservationScreen = () => {
     };
 
     checkAvailability();
-  }, [selectedDate, selectedDuration]);
+  }, [selectedDate, selectedDuration, selectedRoomType]);
 
   useEffect(() => {
     if (selectedRoomId && availableRooms.length > 0) {
@@ -184,7 +174,6 @@ export const ReservationScreen = () => {
       convertDurationToAPIFormat(selectedDuration),
       selectedDate
     );
-    console.log('Réponse de la réservation:', response);
   };
 
   const inputs: ReservationTemplateProps['inputs'] = [

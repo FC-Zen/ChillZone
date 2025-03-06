@@ -13,7 +13,6 @@ import {
   transformRestaurantData,
 } from '@services';
 import { useTranslation } from 'react-i18next';
-import { ImagesMap } from '@utils';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
 import { getMyReservations } from '@services';
@@ -29,8 +28,6 @@ export const HomeScreen: React.FC = () => {
   const [actualReservation, setActualReservation] =
     useState<ReservationSummary | null>(null);
 
-  console.log('utilisateur : ', userName);
-
   if (nextBooking) {
     items = nextBooking;
   }
@@ -40,6 +37,7 @@ export const HomeScreen: React.FC = () => {
       const reservations = await getMyReservations();
       const nextReservation = getLastReservation(reservations);
       setActualReservation(nextReservation);
+      const formattedStartTime = nextReservation?.start_time.split(':');
       setNextBooking([
         {
           label: nextReservation?.location_name || '',
@@ -57,7 +55,9 @@ export const HomeScreen: React.FC = () => {
           typeLabel: 'Étage',
         },
         {
-          label: nextReservation?.start_time || '',
+          label: formattedStartTime
+            ? formattedStartTime[0] + 'h' + formattedStartTime[1]
+            : '',
           icon: 'Clock',
           typeLabel: 'Heure',
         },
@@ -90,14 +90,50 @@ export const HomeScreen: React.FC = () => {
   ) => {
     try {
       const response = await cancelReservation(reservationId);
+
       if (response?.success) {
         setSnackbar({
           open: true,
           severity: 'success',
           message: response.message || 'Réservation annulée avec succès.',
         });
-        setNextBooking([]);
+
+        const reservations = await getMyReservations();
+        const nextReservation = getLastReservation(reservations);
+
+        // Mettre à jour l'état global
+        setActualReservation(nextReservation);
+        const formattedStartTime = nextReservation?.start_time.split(':');
+        setNextBooking(
+          nextReservation
+            ? [
+                {
+                  label: nextReservation.location_name || '',
+                  icon: 'Cube',
+                  typeLabel: 'Salle',
+                },
+                {
+                  label: nextReservation.day_reservation || '',
+                  icon: 'Calendar',
+                  typeLabel: 'Date',
+                },
+                {
+                  label: nextReservation.floor_name || '',
+                  icon: 'Marker',
+                  typeLabel: 'Étage',
+                },
+                {
+                  label: formattedStartTime
+                    ? formattedStartTime[0] + 'h' + formattedStartTime[1]
+                    : '',
+                  icon: 'Clock',
+                  typeLabel: 'Heure',
+                },
+              ]
+            : []
+        );
       } else {
+        console.error("Erreur d'annulation API:", response);
         setSnackbar({
           open: true,
           severity: 'error',

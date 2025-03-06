@@ -52,7 +52,9 @@ export const formatCommand = (command: Command): FormattedCommand => {
 export const getLastReservation = (
   reservations: MyReservations
 ): ReservationSummary | null => {
-  const upcoming = reservations.upcoming_reservations;
+  const upcoming = reservations.upcoming_reservations.filter(
+    (reservation) => reservation.reservation_status !== 'Cancelled'
+  );
 
   if (upcoming.length === 0) {
     return null;

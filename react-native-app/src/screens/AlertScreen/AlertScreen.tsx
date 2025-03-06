@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import {
   AlertCancelReservationTemplate,
@@ -6,7 +6,7 @@ import {
   ReportingFinalFormTemplate,
   AlertHourReservationTemplate,
 } from '@components/templates';
-import { useNextBooking, useUser } from '@contexts';
+import { useNextBooking } from '@contexts';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
@@ -25,8 +25,7 @@ export const AlertScreen = () => {
   const [showReportingForm, setShowReportingForm] = useState(false);
   const [showFinalAlert, setShowFinalAlert] = useState(false);
   const [comment, setComment] = useState('');
-  const { nextBooking, updateNextBooking } = useNextBooking();
-  const [isBooked, setIsBooked] = useState(false);
+  const { nextBooking, setNextBooking } = useNextBooking();
 
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -47,40 +46,39 @@ export const AlertScreen = () => {
   };
 
   // Transforme les tableaux de tableaux de NavItem en tableau de BookingInfo
-  const transformBooking = (booking: NavItem[][]): BookingInfo[] => {
+  const transformBooking = (booking: NavItem[]): BookingInfo[] => {
     const bookingInfo: BookingInfo[] = [];
+    let timeSlot;
+    let roomName;
+    let duration;
+    let floor;
     booking.forEach((item) => {
-      let timeSlot;
-      let roomName;
-      let duration;
-      let floor;
-      item.forEach((navItem) => {
-        switch (navItem.typeLabel) {
-          case 'timeSlot':
-            timeSlot = navItem;
-            break;
-          case 'roomName':
-            roomName = navItem;
-            break;
-          case 'duration':
-            duration = navItem;
-            break;
-          case 'floor':
-            floor = navItem;
-            break;
-        }
-      });
-      bookingInfo.push({
-        timeSlot: timeSlot,
-        location: roomName,
-        duration: duration,
-        floor: floor,
-      });
+      switch (item.typeLabel) {
+        case 'timeSlot':
+          timeSlot = item;
+          break;
+        case 'roomName':
+          roomName = item;
+          break;
+        case 'duration':
+          duration = item;
+          break;
+        case 'floor':
+          floor = item;
+          break;
+      }
     });
+    bookingInfo.push({
+      timeSlot: timeSlot,
+      location: roomName,
+      duration: duration,
+      floor: floor,
+    });
+
     return bookingInfo;
   };
 
-  const booking = transformBooking(nextBooking)[0];
+  const booking = nextBooking ? transformBooking(nextBooking)[0] : null;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -120,7 +118,7 @@ export const AlertScreen = () => {
           button1Props={{
             title: t('buttons.actions.yesCancel'),
             onPress: () => {
-              updateNextBooking([]);
+              setNextBooking([]);
               navigation.navigate(ROUTE.HOME);
             },
           }}

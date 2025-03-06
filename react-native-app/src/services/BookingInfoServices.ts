@@ -238,16 +238,8 @@ export const getMyReservations = async (): Promise<MyReservations> => {
     });
 
     if (response.status === 200) {
-      console.log(
-        'upcoming reservations :',
-        response.data.upcoming_reservations
-      );
       return response.data;
     } else {
-      console.log(
-        "réponse reçue mais avec un status d'erreur : ",
-        response.status
-      );
       return {
         past_orders: [],
         today_reservations: [],
