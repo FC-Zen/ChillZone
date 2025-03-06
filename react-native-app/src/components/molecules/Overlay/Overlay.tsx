@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Button } from '../Button';
 import { styles } from './style';
-import { map } from '@assets/Images';
 import { colors, typography } from '@theme';
-import { BookingOverlay } from '@services';
 import { IconWithText } from '../IconWithText';
+import { ReservationSummary } from '@services/BookingInfoServices';
+import { API_URL } from '@env';
 
-export const Overlay: React.FC<BookingOverlay> = ({
+type OverlayProps = {
+  data: ReservationSummary;
+  titleBtn?: string;
+  cancelReservation: () => void;
+};
+
+export const Overlay: React.FC<OverlayProps> = ({
   data,
-  title,
   titleBtn,
   cancelReservation,
 }) => {
@@ -27,7 +32,7 @@ export const Overlay: React.FC<BookingOverlay> = ({
             <IconWithText
               icon="Cube"
               variant="horizontal"
-              text={data.location.location_name}
+              text={data.location_name}
               iconColor={colors.resolutionBlue}
               iconWidth={16}
               iconHeight={16}
@@ -70,18 +75,21 @@ export const Overlay: React.FC<BookingOverlay> = ({
 
         {isExpanded && (
           <View style={styles.expandedContent}>
-            <Text style={styles.titleText}>{title}</Text>
+            <Text style={styles.titleText}>{data.establishment_name}</Text>
             <IconWithText
               icon="Cube"
               variant="horizontal"
-              text={data.location.location_name}
+              text={data.location_name}
               iconColor={colors.resolutionBlue}
               iconWidth={16}
               iconHeight={16}
               textColor={colors.resolutionBlue}
               style={styles.previewText}
             />
-            <Image source={map} style={styles.image} />
+            <Image
+              source={{ uri: `${API_URL}media/${data.photo_link}` }}
+              style={styles.image}
+            />
 
             <View style={styles.detailsContainer}>
               <IconWithText
@@ -107,7 +115,7 @@ export const Overlay: React.FC<BookingOverlay> = ({
               <IconWithText
                 icon="Marker"
                 variant="horizontal"
-                text={data.establishment.establishment_name}
+                text={data.establishment_name}
                 iconColor={colors.resolutionBlue}
                 iconWidth={16}
                 iconHeight={16}
@@ -118,7 +126,7 @@ export const Overlay: React.FC<BookingOverlay> = ({
               <IconWithText
                 icon="HomeLocation"
                 variant="horizontal"
-                text={data.location.floor_name}
+                text={data.floor_name}
                 iconColor={colors.resolutionBlue}
                 iconWidth={16}
                 iconHeight={16}

@@ -2,15 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ReservationSummaryTemplate, SnackBar } from '@components';
 import { useTranslation } from 'react-i18next';
-import { BookingOverlay, transformReservations } from '@services';
 import { useNavigation } from '@hooks';
 import { styles } from './style';
+import {
+  cancelReservation,
+  getMyReservations,
+  ReservationSummary,
+} from '@services/BookingInfoServices';
+import { formatTime } from '@utils/functions/Command';
 
 export const ReservationSummaryScreen: React.FC = () => {
-  const [reservations, setReservations] = useState<BookingOverlay[] | null>([]);
-
   const { t } = useTranslation();
   const navigation = useNavigation();
+
+  const [todayReservations, setTodayReservations] = useState<any[]>([]);
+  const [upcomingReservations, setUpcomingReservations] = useState<any[]>([]);
 
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
@@ -22,73 +28,71 @@ export const ReservationSummaryScreen: React.FC = () => {
     message: '',
   });
 
-  useEffect(() => {
-    const fetchReservations = async () => {
-      const transformedReservations = await transformReservations();
-      setReservations(transformedReservations);
-    };
+  const fetchReservations = async () => {
+    try {
+      const response = await getMyReservations();
+      const { today_reservations, upcoming_reservations } = response;
 
+      const filteredTodayReservations = today_reservations.filter(
+        (order: any) => order.reservation_status !== 'Cancelled'
+      );
+
+      const filteredUpcomingReservations = upcoming_reservations.filter(
+        (order: any) => order.reservation_status !== 'Cancelled'
+      );
+
+      setTodayReservations(
+        filteredTodayReservations.map((order: any) => ({
+          ...order,
+          start_time: formatTime(order.start_time),
+          end_time: formatTime(order.end_time),
+        })) as ReservationSummary[]
+      );
+
+      setUpcomingReservations(
+        filteredUpcomingReservations.map((order: any) => ({
+          ...order,
+          start_time: formatTime(order.start_time),
+          end_time: formatTime(order.end_time),
+        })) as ReservationSummary[]
+      );
+    } catch (error) {
+      console.error('Erreur de récupération des réservations', error);
+    }
+  };
+
+  useEffect(() => {
     fetchReservations();
   }, []);
 
-  // Fonction pour annuler la réservation
-  const handleCancelReservation = (id: number) => {
-    if (reservations) {
-      // supprime l'index de la réservation
-      setReservations(
-        reservations.filter((reservation) => reservation?.id !== id)
-      );
-
+  const handleCancelReservation = async (reservationId: number) => {
+    try {
+      const response = await cancelReservation(reservationId);
+      if (response?.success) {
+        setSnackbar({
+          open: true,
+          severity: 'success',
+          message: response.message || 'Réservation annulée avec succès.',
+        });
+        fetchReservations();
+      } else {
+        setSnackbar({
+          open: true,
+          severity: 'error',
+          message:
+            response?.message || "Échec de l'annulation de la réservation.",
+        });
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'annulation de la réservation:", error);
       setSnackbar({
         open: true,
-        severity: 'success',
-        message: 'La réservation a été annulée avec succès',
+        severity: 'error',
+        message:
+          "Une erreur est survenue lors de l'annulation de la réservation.",
       });
     }
   };
-
-  const getReservationsGrouped = (reservations: BookingOverlay[] | null) => {
-    if (!reservations) {
-      return { todaysReservations: [], upcomingReservations: [] };
-    }
-
-    const today = new Date();
-    const todaysReservations: BookingOverlay[] = [];
-    const upcomingReservations: BookingOverlay[] = [];
-
-    reservations.forEach((reservation) => {
-      const reservationDate = new Date(reservation.data.day_reservation);
-      if (reservationDate.toDateString() === today.toDateString()) {
-        todaysReservations.push({
-          ...reservation,
-          title: t('recap.reservationTitle'),
-          data: {
-            ...reservation.data,
-            day_reservation: new Date(
-              reservation.data.day_reservation
-            ).toLocaleDateString(),
-          },
-          titleBtn: t('buttons.actions.cancelReservation'),
-        });
-      } else if (reservationDate > today) {
-        upcomingReservations.push({
-          ...reservation,
-          title: t('recap.reservationTitle'),
-          data: {
-            ...reservation.data,
-            day_reservation: new Date(
-              reservation.data.day_reservation
-            ).toLocaleDateString(),
-          },
-          titleBtn: t('buttons.actions.cancelReservation'),
-        });
-      }
-    });
-    return { todaysReservations, upcomingReservations };
-  };
-
-  const { todaysReservations, upcomingReservations } =
-    getReservationsGrouped(reservations);
 
   return (
     <View style={styles.container}>
@@ -100,7 +104,7 @@ export const ReservationSummaryScreen: React.FC = () => {
       />
       <ReservationSummaryTemplate
         headerTitle={t('headers.recapReservation')}
-        todaysReservations={todaysReservations}
+        todaysReservations={todayReservations}
         upcomingReservations={upcomingReservations}
         onCancelReservation={(id) => handleCancelReservation(id)}
         onBackPress={() => navigation.goBack()}

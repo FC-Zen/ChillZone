@@ -5,11 +5,11 @@ import { IconWithText } from '@components';
 import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
-import { BookingOverlay } from '@services';
+import { ReservationSummary } from '@services/BookingInfoServices';
 
 export type OverlayListProps = {
-  todaysReservations: BookingOverlay[];
-  upcomingReservations: BookingOverlay[];
+  todaysReservations: ReservationSummary[];
+  upcomingReservations: ReservationSummary[];
   onCancelReservation?: (index: number) => void;
 };
 
@@ -35,13 +35,15 @@ export const OverlayList: React.FC<OverlayListProps> = ({
 
           {/* Liste des réservations d'aujourd'hui */}
           {todaysReservations.map((reservation, index) => (
-            <View key={reservation.id} style={styles.reservationContainer}>
+            <View
+              key={reservation.reservation_id}
+              style={styles.reservationContainer}
+            >
               <Overlay
-                title={reservation.title}
-                data={reservation.data}
-                titleBtn={reservation.titleBtn}
+                data={reservation}
+                titleBtn={t('buttons.actions.cancelReservation')}
                 cancelReservation={() =>
-                  onCancelReservation?.(reservation.id || index)
+                  onCancelReservation?.(reservation.reservation_id || index)
                 }
               />
             </View>
@@ -65,10 +67,11 @@ export const OverlayList: React.FC<OverlayListProps> = ({
           {upcomingReservations.map((reservation, index) => (
             <View key={index} style={styles.reservationContainer}>
               <Overlay
-                title={reservation.title}
-                data={reservation.data}
-                titleBtn={reservation.titleBtn}
-                cancelReservation={() => onCancelReservation?.(index)}
+                data={reservation}
+                titleBtn={t('buttons.actions.cancelReservation')}
+                cancelReservation={() =>
+                  onCancelReservation?.(reservation.reservation_id || index)
+                }
               />
             </View>
           ))}
