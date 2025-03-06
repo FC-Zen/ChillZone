@@ -7,7 +7,24 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest"
+    
+  },
+  "jest" : {
+    "preset": "react",
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.tsx?$": "babel-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

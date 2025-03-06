@@ -1,7 +1,12 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
+    presets: [
+      'babel-preset-expo',
+      '@babel/preset-env',
+      '@babel/preset-react', // Ajouté pour transformer le JSX
+      '@babel/preset-typescript',
+    ],
     plugins: [
       [
         'module-resolver',
@@ -23,7 +28,6 @@ module.exports = function (api) {
             '@translations': './src/translations',
             '@types': './src/types',
             '@utils': './src/utils',
-
             '@mocks': './jest/',
           },
         },
