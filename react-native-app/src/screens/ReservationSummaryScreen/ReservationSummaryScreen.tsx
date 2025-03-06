@@ -25,40 +25,41 @@ export const ReservationSummaryScreen: React.FC = () => {
     message: '',
   });
 
+
+  const fetchReservations = async () => {
+    try {
+      const response = await getMyReservations();
+      const { today_reservations, upcoming_reservations } = response;
+
+      const filteredTodayReservations = today_reservations.filter(
+        (order: any) => order.reservation_status !== 'Cancelled'
+      );
+
+      const filteredUpcomingReservations = upcoming_reservations.filter(
+        (order: any) => order.reservation_status !== 'Cancelled'
+      );
+
+      setTodayReservations(
+        filteredTodayReservations.map((order: any) => ({
+          ...order,
+          start_time: formatTime(order.start_time),
+          end_time: formatTime(order.end_time),
+        })) as ReservationSummary[]
+      );
+
+      setUpcomingReservations(
+        filteredUpcomingReservations.map((order: any) => ({
+          ...order,
+          start_time: formatTime(order.start_time),
+          end_time: formatTime(order.end_time),
+        })) as ReservationSummary[]
+      );
+    } catch (error) {
+      console.error('Erreur de récupération des réservations', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchReservations = async () => {
-      try {
-        const response = await getMyReservations();
-        const { today_reservations, upcoming_reservations } = response.data;
-  
-        const filteredTodayReservations = today_reservations.filter(
-          (order: any) => order.reservation_status !== 'Cancelled'
-        );
-  
-        const filteredUpcomingReservations = upcoming_reservations.filter(
-          (order: any) => order.reservation_status !== 'Cancelled'
-        );
-  
-        setTodayReservations(
-          filteredTodayReservations.map((order: any) => ({
-            ...order,
-            start_time: formatTime(order.start_time),
-            end_time: formatTime(order.end_time),
-          })) as ReservationSummary[]
-        );
-  
-        setUpcomingReservations(
-          filteredUpcomingReservations.map((order: any) => ({
-            ...order,
-            start_time: formatTime(order.start_time),
-            end_time: formatTime(order.end_time),
-          })) as ReservationSummary[]
-        );
-      } catch (error) {
-        console.error('Erreur de récupération des réservations', error);
-      }
-    };
-  
     fetchReservations();
   }, []);
   
@@ -73,6 +74,7 @@ export const ReservationSummaryScreen: React.FC = () => {
           severity: 'success',
           message: response.message || 'Réservation annulée avec succès.',
         });
+        fetchReservations();
       } else {
         setSnackbar({
           open: true,

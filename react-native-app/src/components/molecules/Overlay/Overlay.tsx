@@ -90,7 +90,7 @@ export const Overlay: React.FC<OverlayProps> = ({
               textColor={colors.resolutionBlue}
               style={styles.previewText}
             />
-            <Image source={{ uri : `${API_URL}${data.photo_link}`}} style={styles.image} />
+            <Image source={{ uri : `${API_URL}/media/${data.photo_link}`}} style={styles.image} />
 
             <View style={styles.detailsContainer}>
               <IconWithText
