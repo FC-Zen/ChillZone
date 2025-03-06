@@ -51,7 +51,7 @@ export const MapZoom: React.FC<MapZoomProps> = ({
           <TouchableWithoutFeedback onPress={handleImagePress}>
             <Image
               ref={imageRef}
-              source={imageSource}
+              source={{ uri: imageSource }}
               style={[
                 styles.image,
                 {

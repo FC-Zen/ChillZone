@@ -5,14 +5,15 @@ import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
+import { MapFloorProps } from '@services';
 
 type NavigationTemplateProps = {
   imageSource: any;
   selectedFloor: string;
-  onSelectFloor: (floor: string) => void;
+  onSelectFloor: (floor: number) => void;
   onImagePress?: (x: number, y: number) => void;
   imageRef?: React.RefObject<any>;
-  floors: string[];
+  floors: MapFloorProps[];
   zoomScale: number;
   offsetX: number;
   offsetY: number;
@@ -30,7 +31,7 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
   offsetY,
 }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
   return (
     <View style={styles.cont}>
@@ -58,7 +59,9 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
             textStyle={{ fontSize: 12 }}
             iconWidth={16}
             iconHeight={16}
-            onPress={() => { navigation.navigate('ARNavigationScreen') }}
+            onPress={() => {
+              navigation.navigate('ARNavigationScreen');
+            }}
           />
         </View>
       </View>

@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Image, View } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View } from 'react-native';
 import { styles } from './style';
 import {
   BottomNavbar,
@@ -7,24 +7,20 @@ import {
   PageHeader,
   TopBar,
 } from '@components';
-import { rdc, floor1, floor2, floor3 } from '@assets/Images';
 import { useTranslation } from 'react-i18next';
+import { getAllMapFloors, MapFloorProps } from '@services';
 
 export const NavigationScreen = () => {
   const [zoomScale, setZoomScale] = useState(1);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
-  const [selectedFloor, setSelectedFloor] = useState('RDC');
+  const [selectedFloor, setSelectedFloor] = useState<MapFloorProps>();
+  const [allFloors, setAllFloors] = useState<MapFloorProps[]>([]);
   const imageRef = useRef(null);
   const { t } = useTranslation();
 
-  const floors = ['RDC', 'Floor1', 'Floor2', 'Floor3'];
-
-  const floorImages: { [key: string]: any } = {
-    RDC: rdc,
-    Floor1: floor1,
-    Floor2: floor2,
-    Floor3: floor3,
+  const onSelectFloor = (floor: number) => {
+    setSelectedFloor(allFloors.find((f) => f.id === floor));
   };
 
   const handleImagePress = (x: number, y: number) => {
@@ -37,6 +33,20 @@ export const NavigationScreen = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchFloors = async () => {
+      try {
+        const response = await getAllMapFloors();
+        setAllFloors(response);
+        setSelectedFloor(response[0]);
+        console.log('RDC :', response[0].name);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des étages:', error);
+      }
+    };
+    fetchFloors();
+  }, []);
+
   return (
     <View style={styles.container}>
       <TopBar />
@@ -47,12 +57,12 @@ export const NavigationScreen = () => {
       />
 
       <NavigationTemplate
-        imageSource={floorImages[selectedFloor]}
-        selectedFloor={selectedFloor}
-        onSelectFloor={setSelectedFloor}
+        imageSource={selectedFloor?.photo_link || ''}
+        selectedFloor={selectedFloor?.name || ''}
+        onSelectFloor={onSelectFloor}
         onImagePress={handleImagePress}
         imageRef={imageRef}
-        floors={floors}
+        floors={allFloors}
         offsetX={offsetX}
         offsetY={offsetY}
         zoomScale={zoomScale}
