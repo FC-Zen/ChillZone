@@ -10,6 +10,7 @@ import {
   getReservations,
   putReservations,
   RoomAvailability,
+  getMyReservations,
 } from '@services';
 import { ReservationModal } from './Modal';
 import { CalendarModal } from './CalendarModal';
@@ -20,6 +21,7 @@ export const ReservationScreen = () => {
   const [roomTypes, setRoomTypes] = useState<string[]>([]);
   const [availableRooms, setAvailableRooms] = useState<RoomAvailability[]>([]);
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [reservedSlots, setReservedSlots] = useState<string[]>([]); // Liste des créneaux réservés
 
   const [selectedRoomId, setSelectedRoomId] = useState<string>('');
   const [selectedRoomType, setSelectedRoomType] = useState<string>('');
@@ -33,6 +35,7 @@ export const ReservationScreen = () => {
   const [findedRoom, setFindedRoom] = useState<RoomAvailability | null>(null);
   const [findedRoomSlots, setFindedRoomSlots] = useState<string[]>([]);
 
+  // Fonction pour trouver une salle par son nom
   const findRoom = useCallback(
     (roomName: string | number) => {
       let room: RoomAvailability | undefined;
@@ -46,11 +49,12 @@ export const ReservationScreen = () => {
         setFindedRoomSlots(
           room.available_slots
             .map((slot) => formatTimeForDisplay(slot[0], slot[1]))
+            .filter((slot) => !reservedSlots.includes(slot)) // on filtre les créneaux déjà réservés
             .sort()
         );
       }
     },
-    [availableRooms]
+    [availableRooms, reservedSlots]
   );
 
   useEffect(() => {
@@ -64,6 +68,26 @@ export const ReservationScreen = () => {
     };
     fetchData();
   }, []);
+
+  // Fonction pour récupérer les réservations existantes et en extraire les créneaux horaires
+  const fetchReservedSlots = useCallback(async () => {
+    try {
+      const reservationData = await getMyReservations();
+      const reserved = reservationData.upcoming_reservations;
+
+      const reservedSlotsFormatted = reserved.map((res) =>
+        formatTimeForDisplay(res.start_time, res.end_time)
+      );
+
+      setReservedSlots(reservedSlotsFormatted); // Stocke les créneaux réservés
+    } catch (error) {
+      console.error('Erreur lors de la récupération des réservations :', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchReservedSlots();
+  }, [selectedRoomId, selectedDate]);
 
   const convertDurationToAPIFormat = (duration: string): number => {
     if (duration.includes('h')) {
@@ -148,7 +172,10 @@ export const ReservationScreen = () => {
       setSelectedSlot('');
       findRoom(selectedRoomId);
     }
-  }, [selectedRoomId, availableRooms, findRoom]);
+    if (selectedRoomId && selectedDate) {
+      fetchReservedSlots();
+    }
+  }, [selectedRoomId, availableRooms, selectedDate, fetchReservedSlots]);
 
   const onSendReservation = async () => {
     const response = await createReservation(

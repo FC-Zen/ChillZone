@@ -149,21 +149,26 @@ export const ReservationProvider: React.FC<{ children: React.ReactNode }> = ({
     const nowMinutes = now.getMinutes();
 
     const bookingTimeString = nextBooking
-      ?.filter((item) => item.typeLabel === 'timeSlot')[0]
-      .label.split('-')[0]
-      .split('h');
+      ?.find((item) => item.typeLabel === 'timeSlot')
+      ?.label?.split('-')[0]
+      ?.split('h');
 
-    const [bookingHours, bookingMinutes] = bookingTimeString?.map(Number) || [];
-    if (
-      (nowHours === bookingHours &&
-        nowMinutes >= bookingMinutes &&
-        nowMinutes <= bookingMinutes + 20) ||
-      (nowHours === bookingHours + 1 &&
-        nowMinutes <= (bookingMinutes + 20) % 60)
-    ) {
-      console.log('Navigating to Alert Screen');
-      isAlertDisplayed.current = true;
-      navigation.navigate(ROUTE.ALERT);
+    if (bookingTimeString) {
+      const [bookingHours, bookingMinutes] =
+        bookingTimeString?.map(Number) || [];
+      if (
+        (nowHours === bookingHours &&
+          nowMinutes >= bookingMinutes &&
+          nowMinutes <= bookingMinutes + 20) ||
+        (nowHours === bookingHours + 1 &&
+          nowMinutes <= (bookingMinutes + 20) % 60)
+      ) {
+        console.log('Navigating to Alert Screen');
+        isAlertDisplayed.current = true;
+        navigation.navigate(ROUTE.ALERT);
+      }
+    } else {
+      console.log('Aucune réservation valide trouvée ou label indisponible');
     }
   };
 
