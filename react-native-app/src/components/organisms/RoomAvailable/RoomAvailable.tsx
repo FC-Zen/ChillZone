@@ -1,28 +1,16 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { Icon } from '@components/atoms';
 import { colors } from '@theme';
-import { map } from '@assets/Images';
 import { styles } from './style';
-
-export type Room = {
-  id?: number;
-  name?: string;
-  description?: string;
-  capacity?: number;
-  status?: boolean;
-  position_x?: number;
-  position_y?: number;
-  floor?: number;
-  photo_link?: any;
-  tag_label?: string;
-};
+import { RoomAvailability } from '@services';
+import { API_URL } from '@env';
 
 export type RoomSelectorProps = {
   title: string;
-  rooms: Room[];
-  handlePress: (room: Room) => void;
-  selectedRoom?: Room | null;
+  rooms: RoomAvailability[];
+  selectedRoom: RoomAvailability | null;
+  handlePress: (room: RoomAvailability) => void;
 };
 
 export const RoomAvailable: FC<RoomSelectorProps> = ({
@@ -45,25 +33,23 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({
             key={index}
             style={[
               styles.button,
-              selectedRoom?.name === room.name && styles.buttonActive,
+              selectedRoom?.id === room.id && styles.buttonActive,
             ]}
             onPress={() => handlePress(room)}
           >
             <Icon
               name="Cube"
               color={
-                selectedRoom?.name === room.name
-                  ? colors.white
-                  : colors.darkCyan
+                selectedRoom?.id === room.id ? colors.white : colors.darkCyan
               }
             />
             <Text
               style={[
                 styles.buttonText,
-                selectedRoom?.name === room.name && styles.buttonTextActive,
+                selectedRoom?.id === room.id && styles.buttonTextActive,
               ]}
             >
-              {room.name || ''}
+              {room.name}
             </Text>
           </TouchableOpacity>
         ))}
@@ -72,7 +58,10 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({
       <View style={styles.separator} />
 
       <View style={styles.contentContainer}>
-        <Image source={map} style={styles.roomImage} />
+        <Image
+          source={{ uri: `${API_URL}${selectedRoom?.photo}` }}
+          style={styles.roomImage}
+        />
         <View style={styles.infoContainer}>
           <View style={styles.infoRow}>
             <Icon name="School" width={16} height={16} color={colors.white} />
@@ -85,9 +74,7 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({
               height={16}
               color={colors.white}
             />
-            <Text style={styles.infoText}>
-              Étage {selectedRoom?.floor || '?'}
-            </Text>
+            <Text style={styles.infoText}>{selectedRoom?.floor || '?'}</Text>
           </View>
           <View style={styles.infoRow}>
             <Icon name="List" width={16} height={16} color={colors.white} />

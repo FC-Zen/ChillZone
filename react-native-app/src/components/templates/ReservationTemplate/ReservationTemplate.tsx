@@ -3,6 +3,7 @@ import { ScrollView, Text, View } from 'react-native';
 import {
   Button,
   ButtonProps,
+  IconWithText,
   Input,
   InputProps,
   PageHeader,
@@ -10,6 +11,8 @@ import {
 import { styles } from './style';
 import { RoomAvailable, RoomSelectorProps } from '@components/organisms';
 import { colors } from '@theme';
+import { useTranslation } from 'react-i18next';
+import { RoomAvailability } from '@services';
 
 export type ReservationTemplateProps = {
   buttonProps: ButtonProps;
@@ -18,6 +21,8 @@ export type ReservationTemplateProps = {
   subTitle: string;
   subTitle2?: string;
   roomSelectorProps: RoomSelectorProps;
+  selectedRoom?: RoomAvailability | null;
+  disabled: boolean;
 };
 
 export const ReservationTemplate: FC<ReservationTemplateProps> = ({
@@ -27,7 +32,23 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
   subTitle,
   subTitle2,
   roomSelectorProps,
+  disabled,
 }) => {
+  const { t } = useTranslation();
+  const areAllInputsFilled = () => {
+    return inputs.every((inputGroup) =>
+      inputGroup.every((input) => {
+        if (input.placeholder === t('fields.room.schedules')) {
+          return true;
+        }
+        if (input.variant === 'select' || input.variant === 'modal-select') {
+          return input.value && input.value !== '';
+        }
+        return false;
+      })
+    );
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -37,9 +58,33 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
           <Text style={styles.title}>{subTitle}</Text>
           {inputs.map((inputGroup, groupIndex) => (
             <View key={groupIndex}>
-              {inputGroup.map((inputProps, index) => (
-                <Input key={index} {...inputProps} style={{ marginTop: 15 }} />
-              ))}
+              {inputGroup.map((inputProps, index) => {
+                const isScheduleInput =
+                  inputProps.placeholder === t('fields.room.schedules');
+                const isEmpty = !inputProps.value || inputProps.value === '';
+
+                return (
+                  <View key={index}>
+                    <Input {...inputProps} style={{ marginTop: 15 }} />
+
+                    {isScheduleInput && isEmpty && (
+                      <IconWithText
+                        text={t('reservationConflicts.selectHour')}
+                        icon="CrossCircle"
+                        iconHeight={20}
+                        iconWidth={20}
+                        variant="horizontal"
+                        textColor={colors.warn}
+                        iconColor={colors.warn}
+                        style={{
+                          marginTop: 10,
+                          alignSelf: 'flex-start',
+                        }}
+                      />
+                    )}
+                  </View>
+                );
+              })}
               {groupIndex < inputs.length - 1 && (
                 <View>
                   <View style={styles.separator} />
@@ -48,17 +93,25 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
               )}
             </View>
           ))}
+
           <View style={styles.separator} />
         </View>
 
-        <View style={styles.padd2}>
-          <RoomAvailable {...roomSelectorProps} />
-        </View>
+        {areAllInputsFilled() && (
+          <View style={styles.padd2}>
+            <RoomAvailable {...roomSelectorProps} />
+          </View>
+        )}
+
         <View style={styles.buttonContainer}>
           <Button
             {...buttonProps}
+            disabled={disabled}
             color={colors.white}
-            style={{ backgroundColor: colors.darkCyan }}
+            style={{
+              backgroundColor: !disabled ? colors.darkCyan : colors.silver,
+              opacity: disabled ? 0.1 : 1,
+            }}
           />
         </View>
       </ScrollView>

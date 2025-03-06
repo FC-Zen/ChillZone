@@ -1,5 +1,9 @@
-import { Command, FormattedCommand } from '@services';
-import { FormattedReservation, Reservation } from '@services/Reservation';
+import {
+  Command,
+  FormattedCommand,
+  MyReservations,
+  ReservationSummary,
+} from '@services';
 
 /**
  * Formate une heure au format "hh:mm" en "hhhmm"
@@ -26,20 +30,6 @@ export const formatDate = (date: string): string => {
   }).format(dateObj);
 };
 
-/**
- * Reformate une réservation en adaptant les formats de date et heure
- * @param {Reservation} reservation - L'objet réservation de base
- * @returns {FormattedReservation} L'objet réservation formaté
- */
-export const formatReservation = (
-  reservation: Reservation
-): FormattedReservation => ({
-  ...reservation,
-  start_time: formatTime(reservation.start_time),
-  end_time: formatTime(reservation.end_time),
-  day_reservation: formatDate(reservation.day_reservation),
-});
-
 export const formatCommand = (command: Command): FormattedCommand => {
   const extractDate = (dateTime: string): string => dateTime.split('T')[0];
 
@@ -57,4 +47,18 @@ export const formatCommand = (command: Command): FormattedCommand => {
     final_pickup_time: formatTime(command.final_pickup_time),
     creation_date: formatDateToNumeric(extractDate(command.creation_date)), // Format changé ici
   };
+};
+
+export const getLastReservation = (
+  reservations: MyReservations
+): ReservationSummary | null => {
+  const upcoming = reservations.upcoming_reservations.filter(
+    (reservation) => reservation.reservation_status !== 'Cancelled'
+  );
+
+  if (upcoming.length === 0) {
+    return null;
+  }
+
+  return upcoming[0];
 };

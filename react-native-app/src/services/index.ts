@@ -9,6 +9,10 @@ export {
   transformBookings,
   BookingOverlay,
   transformReservations,
+  getMyReservations,
+  cancelReservation,
+  MyReservations,
+  ReservationSummary,
 } from './BookingInfoServices';
 export {
   transformRestaurantData,
@@ -20,10 +24,12 @@ export { fetchAllMeals } from './DispenserServices';
 export { getAllOrders, Order, AllOrders } from './PaymentServices';
 export {
   getReservations,
-  getReservationById,
-  Establishment,
-  FormattedReservation,
-  Location,
+  DurationOptions,
+  RoomTypes,
+  ReservationResponse,
+  putReservations,
+  createReservation,
+  RoomAvailability,
 } from './Reservation';
 
 export {
@@ -41,9 +47,9 @@ export {
   getCommandById,
 } from './CommandServices';
 export { verifyToken, refreshToken } from './TokenService';
-export { 
-  getCalendarEvents, 
-  Calendar, 
+export {
+  getCalendarEvents,
+  Calendar,
   CalendarEvent,
   setCalendarLink,
   refreshCalendar,

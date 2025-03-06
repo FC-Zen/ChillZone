@@ -86,24 +86,24 @@ export const useCommand = () => {
 };
 
 export type NextBookingContextType = {
-  nextBooking: NavItem[][];
-  updateNextBooking: (booking: NavItem[][]) => void;
+  nextBooking: NavItem[] | null;
+  setNextBooking: (booking: NavItem[] | null) => void;
 };
 
-export const NextBookingContext = createContext<NextBookingContextType | undefined>(
-  undefined
-);
+export const NextBookingContext = createContext<
+  NextBookingContextType | undefined
+>(undefined);
 
 export const NextBookingProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [nextBooking, updateNextBooking] = useState<NavItem[][]>([]);
+  const [nextBooking, setNextBooking] = useState<NavItem[] | null>(null);
 
   return (
     <NextBookingContext.Provider
       value={{
         nextBooking,
-        updateNextBooking,
+        setNextBooking,
       }}
     >
       {children}
@@ -137,7 +137,7 @@ export const ReservationProvider: React.FC<{ children: React.ReactNode }> = ({
   const checkReservationTime = () => {
     console.log('isAlertDisplayed : ', isAlertDisplayed);
     console.log('checkReservationTime');
-    if (nextBooking.length === 0) {
+    if (nextBooking?.length === 0) {
       console.log('no booking');
       return;
     }
@@ -148,22 +148,27 @@ export const ReservationProvider: React.FC<{ children: React.ReactNode }> = ({
     const nowHours = now.getHours();
     const nowMinutes = now.getMinutes();
 
-    const bookingTimeString = nextBooking[0]
-      .filter((item) => item.typeLabel === 'timeSlot')[0]
-      .label.split('-')[0]
-      .split('h');
+    const bookingTimeString = nextBooking
+      ?.find((item) => item.typeLabel === 'timeSlot')
+      ?.label?.split('-')[0]
+      ?.split('h');
 
-    const [bookingHours, bookingMinutes] = bookingTimeString.map(Number);
-    if (
-      (nowHours === bookingHours &&
-        nowMinutes >= bookingMinutes &&
-        nowMinutes <= bookingMinutes + 20) ||
-      (nowHours === bookingHours + 1 &&
-        nowMinutes <= (bookingMinutes + 20) % 60)
-    ) {
-      console.log('Navigating to Alert Screen');
-      isAlertDisplayed.current = true;
-      navigation.navigate(ROUTE.ALERT);
+    if (bookingTimeString) {
+      const [bookingHours, bookingMinutes] =
+        bookingTimeString?.map(Number) || [];
+      if (
+        (nowHours === bookingHours &&
+          nowMinutes >= bookingMinutes &&
+          nowMinutes <= bookingMinutes + 20) ||
+        (nowHours === bookingHours + 1 &&
+          nowMinutes <= (bookingMinutes + 20) % 60)
+      ) {
+        console.log('Navigating to Alert Screen');
+        isAlertDisplayed.current = true;
+        navigation.navigate(ROUTE.ALERT);
+      }
+    } else {
+      console.log('Aucune réservation valide trouvée ou label indisponible');
     }
   };
 

@@ -203,7 +203,8 @@
     "timeReservationConflict2": "Vous indiquez que la salle est actuellement occupée par une personne ou un groupe sans avoir de réservation légitime.",
     "timeReservationCancel": "Êtes-vous sûr de vouloir annuler votre réservation ? La salle sera considérée comme libre sur ce créneau",
     "timeReservationConflictDone": "Votre signalement a bien été envoyé à l’administrateur de votre établissement",
-    "confirm-resa": "Réservation effectuée !"
+    "confirm-resa": "Réservation effectuée !",
+    "selectHour": "Sélectionnez un créneau horaire."
   },
 
   "recap": {
@@ -252,7 +253,7 @@
     "day": "jour"
   },
 
-  "networks" : {
+  "networks": {
     "facebook": "Facebook",
     "x": "X",
     "instagram": "Instagram",
@@ -262,7 +263,7 @@
     "website": "Site web",
     "bluesky": "Bluesky"
   },
-  
+
   "notification": {
     "title": "Nouvelle Réservation !",
     "reservation": "Votre réservation pour {{roomName}} a été confirmée.",

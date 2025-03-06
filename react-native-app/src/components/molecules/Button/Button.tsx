@@ -15,6 +15,7 @@ export type ButtonProps = {
   textColor?: string;
   textSize?: number;
   textFont?: string;
+  disabled?: boolean;
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -28,19 +29,34 @@ export const Button: React.FC<ButtonProps> = ({
   textColor = colors.white,
   textSize = typography.h3.fontSize,
   textFont = typography.h1.fontFamily,
+  disabled = false,
 }) => {
+  const handlePress = () => {
+    if (!disabled && onPress) {
+      onPress();
+    } else {
+      return;
+    }
+  };
+
   return (
     <ButtonWrapper
       title={variant === 'iconOnly' ? '' : title}
-      onPress={onPress}
+      onPress={handlePress}
       variant={variant}
-      style={style}
+      style={[
+        style,
+        disabled && {
+          opacity: 0.5,
+        },
+      ]}
       textStyle={textStyle}
       icon={icon}
       color={color}
-      textColor={textColor}
+      textColor={disabled ? colors.black : textColor}
       textSize={textSize}
       textFont={textFont}
+      disabled={disabled}
     />
   );
 };

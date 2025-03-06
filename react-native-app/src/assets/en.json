@@ -202,7 +202,8 @@
     "timeReservationConflict2": "You indicate that the room is currently occupied by a person or group without a legitimate reservation.",
     "timeReservationCancel": "Are you sure you want to cancel your reservation? The room will be considered free for this time slot",
     "timeReservationConflictDone": "Your report has been sent to the administrator of your establishment",
-    "confirm-resa": "Reservation confirmed!"
+    "confirm-resa": "Reservation confirmed!",
+    "selectHour": "Select a time slot."
   },
 
   "recap": {
@@ -251,7 +252,7 @@
     "day": "day"
   },
 
-  "networks" : {
+  "networks": {
     "facebook": "Facebook",
     "x": "X",
     "instagram": "Instagram",
@@ -279,5 +280,4 @@
     "refreshed": "Calendar updated",
     "error_refresh": "Error while updating calendar"
   }
-
 }

@@ -1,96 +1,180 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { View } from 'react-native';
 import { ReservationTemplate } from '@components/templates';
 import { useTranslation } from 'react-i18next';
 import { ReservationTemplateProps } from '@components/templates/ReservationTemplate/ReservationTemplate';
 import { BottomNavbar, TopBar } from '@components';
 import { styles } from './style';
-import { getReservations } from '@services';
-import { getRooms, Room } from '@services/RoomServices';
+import {
+  createReservation,
+  getReservations,
+  putReservations,
+  RoomAvailability,
+  getMyReservations,
+} from '@services';
 import { ReservationModal } from './Modal';
+import { CalendarModal } from './CalendarModal';
 
 export const ReservationScreen = () => {
   const { t } = useTranslation();
-  const [dayReservations, setDayReservations] = useState<string[]>([]);
-  const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [durations, setDurations] = useState<string[]>([]);
   const [roomTypes, setRoomTypes] = useState<string[]>([]);
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [room, setRoom] = useState<Room | null>(null);
+  const [availableRooms, setAvailableRooms] = useState<RoomAvailability[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [reservedSlots, setReservedSlots] = useState<string[]>([]);
 
-  const [selectedRoom, setSelectedRoom] = useState<string>('');
+  const [selectedRoomId, setSelectedRoomId] = useState<string>('');
+  const [selectedRoomType, setSelectedRoomType] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('');
   const [selectedDuration, setSelectedDuration] = useState<string>('');
+  const [selectedSlot, setSelectedSlot] = useState<string>('');
 
-  // Calcul de la durée entre le début et la fin
-  const calculateDuration = (startTime: string, endTime: string): string => {
-    const [startHours, startMinutes] = startTime.split('h').map(Number);
-    const [endHours, endMinutes] = endTime.split('h').map(Number);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
-    const startTotalMinutes = startHours * 60 + (startMinutes || 0);
-    const endTotalMinutes = endHours * 60 + (endMinutes || 0);
+  const [findedRoom, setFindedRoom] = useState<RoomAvailability | null>(null);
+  const [findedRoomSlots, setFindedRoomSlots] = useState<string[]>([]);
 
-    const durationHours = Math.abs(endTotalMinutes - startTotalMinutes) / 60;
-
-    return durationHours === 1 ? 'Court : 1h' : 'Long : 2h';
-  };
-
-  const removeDuplicates = (array: string[]) => Array.from(new Set(array));
-
-  const getModalData = () => {
-    if (selectedRoom || selectedDate || selectedTimeSlot || selectedDuration) {
-      return {
-        roomName: selectedRoom || '',
-        date: selectedDate ? [selectedDate] : [],
-        duration: selectedDuration ? [selectedDuration] : [],
-        timeSlot: selectedTimeSlot ? [selectedTimeSlot] : [],
-        floor: room?.floor?.toString() || 'Étage inconnu',
-      };
-    } else {
-      return {
-        roomName: room?.name || 'Salle inconnue',
-        floor: room?.floor?.toString() || 'Étage inconnu',
-        capacity: room?.capacity?.toString() || 'Capacité inconnue',
-        tag_label: roomTypes[0] || 'Type inconnu',
-      };
-    }
-  };
-
-  const handleRoomSelect = (room: Room) => {
-    setSelectedRoom(room.name || '');
-    setRoom(room);
-  };
+  // Fonction pour trouver une salle par son nom
+  const findRoom = useCallback(
+    (roomName: string | number) => {
+      let room: RoomAvailability | undefined;
+      if (typeof roomName === 'string') {
+        room = availableRooms.find((room) => room.name === roomName);
+      } else if (typeof roomName === 'number') {
+        room = availableRooms.find((room) => room.id === roomName);
+      }
+      if (room) {
+        setFindedRoom(room);
+        setFindedRoomSlots(
+          room.available_slots
+            .map((slot) => formatTimeForDisplay(slot[0], slot[1]))
+            .filter((slot) => !reservedSlots.includes(slot))
+            .sort()
+        );
+      }
+    },
+    [availableRooms, reservedSlots]
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       const reservations = await getReservations();
-      const roomsData = await getRooms();
 
-      const dates = reservations.map(
-        (reservation) => reservation.day_reservation
-      );
-      setDayReservations(removeDuplicates(dates));
-
-      const times = reservations.map(
-        (reservation) => `${reservation.start_time} - ${reservation.end_time}`
-      );
-      setTimeSlots(removeDuplicates(times));
-
-      const calculatedDurations = reservations.map((reservation) =>
-        calculateDuration(reservation.start_time, reservation.end_time)
-      );
-      const uniqueDurations = removeDuplicates(calculatedDurations);
-
-      const roomTypes = roomsData.map((room) => room.tag_label || '') || [];
-
-      setRoomTypes(roomTypes);
-      setDurations(uniqueDurations);
-      setRooms(roomsData);
+      setDurations(Object.values(reservations.duration_options));
+      setRoomTypes(reservations.room_types);
     };
     fetchData();
   }, []);
+
+  const fetchReservedSlots = useCallback(async () => {
+    try {
+      const reservationData = await getMyReservations();
+      const reserved = reservationData.upcoming_reservations;
+
+      const reservedSlotsFormatted = reserved.map((res) =>
+        formatTimeForDisplay(res.start_time, res.end_time)
+      );
+
+      setReservedSlots(reservedSlotsFormatted); // Stocke les créneaux réservés
+    } catch (error) {
+      console.error('Erreur lors de la récupération des réservations :', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchReservedSlots();
+  }, [selectedRoomId, selectedDate]);
+
+  const convertDurationToAPIFormat = (duration: string): number => {
+    if (duration.includes('h')) {
+      return parseInt(duration.split('h')[0], 10) * 60; // Convertit les heures en minutes
+    } else if (duration.includes('m')) {
+      return parseInt(duration.split('m')[0], 10);
+    }
+    return 0;
+  };
+
+  // Fonction pour formater les créneaux horaires en HHhMM - HHhMM
+  const formatTimeForDisplay = (start: string, end: string): string => {
+    if (!start || !end || !start.includes(':') || !end.includes(':')) {
+      return 'Invalid Time Format';
+    }
+
+    const [startHours, startMinutes] = start.split(':');
+    const [endHours, endMinutes] = end.split(':');
+
+    if (!startHours || !startMinutes || !endHours || !endMinutes) {
+      return 'Invalid Time Format';
+    }
+
+    return `${startHours}h${startMinutes} - ${endHours}h${endMinutes}`;
+  };
+
+  useEffect(() => {
+    const checkAvailability = async () => {
+      if (selectedRoomType && selectedDate && selectedDuration) {
+        const durationInMinutes = convertDurationToAPIFormat(selectedDuration);
+        try {
+          const available = await putReservations(
+            selectedDate,
+            durationInMinutes,
+            [selectedRoomType]
+          );
+
+          const availableRoomsMapped = available.map((room) => ({
+            id: room.id,
+            name: room.name,
+            floor: room.floor.toString(),
+            capacity: room.capacity,
+            available_slots: room.available_slots,
+            establishment: room.establishment,
+            photo: room.photo,
+          }));
+
+          setAvailableRooms(availableRoomsMapped);
+
+          if (selectedRoomId) findRoom(selectedRoomId);
+
+          if (available.length > 0) {
+            const formattedSlots = available[0].available_slots.map((slot) =>
+              formatTimeForDisplay(slot[0], slot[1])
+            );
+            setAvailableSlots(formattedSlots);
+          } else {
+            setAvailableSlots([]);
+          }
+        } catch (error: any) {
+          console.error('Erreur détaillée:', {
+            status: error.response?.status,
+            data: error.response?.data,
+            message: error.message,
+          });
+        }
+      }
+    };
+
+    checkAvailability();
+  }, [selectedDate, selectedDuration, selectedRoomType]);
+
+  useEffect(() => {
+    if (selectedRoomId && availableRooms.length > 0) {
+      setSelectedSlot('');
+      findRoom(selectedRoomId);
+    }
+    if (selectedRoomId && selectedDate) {
+      fetchReservedSlots();
+    }
+  }, [selectedRoomId, availableRooms, selectedDate, fetchReservedSlots]);
+
+  const onSendReservation = async () => {
+    const response = await createReservation(
+      availableRooms.find((room) => room.name === selectedRoomId)?.id || 0,
+      selectedSlot.split(' - ')[0],
+      convertDurationToAPIFormat(selectedDuration),
+      selectedDate
+    );
+  };
 
   const inputs: ReservationTemplateProps['inputs'] = [
     [
@@ -99,53 +183,41 @@ export const ReservationScreen = () => {
         icon: 'Expand',
         subIcon: 'School',
         variant: 'select',
-        data: [t('filters.acoustic'), t('filters.classroom')],
-        onSelect: (selected: string) => setSelectedRoom(selected),
+        data: roomTypes,
+        value: selectedRoomType,
+        onSelect: (selected: string) => setSelectedRoomType(selected),
       },
       {
         placeholder: t('fields.common.date'),
         icon: 'Calendar',
-        variant: 'select',
-        data: dayReservations,
-        onSelect: (selected: string) => setSelectedDate(selected),
+        variant: 'modal-select',
+        value: selectedDate,
+        onPress: () => {
+          setIsCalendarVisible(true);
+        },
       },
       {
         placeholder: t('fields.room.hours'),
         icon: 'Clock',
         variant: 'select',
         data: durations,
+        value: selectedDuration,
         onSelect: (selected: string) => setSelectedDuration(selected),
-      },
-    ],
-    [
-      {
-        placeholder: t('fields.room.schedules'),
-        icon: 'Calendar',
-        variant: 'select',
-        data: timeSlots,
-        onSelect: (selected: string) => setSelectedTimeSlot(selected),
-        disabled: selectedDuration === '',
       },
     ],
   ];
 
-  const roomSelectorProps = {
-    title: t('filters.roomsOpen'),
-    rooms:
-      selectedRoom && selectedDate && selectedDuration && selectedTimeSlot
-        ? rooms
-            ?.filter((room) => room)
-            .map((room) => ({
-              name: room?.name || '',
-              floor: room?.floor || 0,
-              capacity: room?.capacity || 0,
-              photo_link: room?.photo_link || '',
-            }))
-        : [],
-    onRoomSelect: handleRoomSelect,
-    handlePress: setRoom,
-    selectedRoom: room,
-  };
+  if (selectedRoomId && availableSlots.length > 0) {
+    inputs[0].push({
+      placeholder: t('fields.room.schedules'),
+      icon: 'Clock',
+      variant: 'select',
+      data: findedRoomSlots,
+      value: selectedSlot,
+      disabled: !selectedRoomId,
+      onSelect: (selected: string) => setSelectedSlot(selected),
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -155,17 +227,48 @@ export const ReservationScreen = () => {
         titleHeader={t('headers.reservation')}
         subTitle={t('filters.filterTitle')}
         subTitle2={t('filters.hoursOpen')}
-        roomSelectorProps={roomSelectorProps}
         buttonProps={{
           title: t('headers.reservation'),
-          onPress: () => setIsModalVisible(true),
+          onPress: () => {
+            onSendReservation();
+            setIsModalVisible(true);
+          },
+          disabled: !selectedRoomId,
         }}
+        roomSelectorProps={{
+          rooms: availableRooms,
+          selectedRoom:
+            availableRooms.find((room) => room.name === selectedRoomId) || null,
+          handlePress: (selectedRoom: RoomAvailability) => {
+            findRoom(selectedRoom.name);
+            setSelectedRoomId(selectedRoom.name);
+          },
+          title: t('filters.roomsOpen'),
+        }}
+        disabled={
+          !selectedSlot || !selectedDuration || !selectedDate || !selectedRoomId
+        }
       />
       <BottomNavbar activeIcon="Reserve" />
       <ReservationModal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        data={getModalData()}
+        data={{
+          roomName: selectedRoomId,
+          date: selectedDate,
+          timeSlot: selectedSlot.split(' - ') as [string, string],
+          duration: parseInt(selectedDuration.split('h')[0]),
+          floor: findedRoom?.floor || null,
+          capacity: findedRoom?.capacity || null,
+          room: findedRoom,
+          photo: findedRoom?.photo || '',
+        }}
+      />
+      <CalendarModal
+        visible={isCalendarVisible}
+        onClose={() => setIsCalendarVisible(false)}
+        onSelectDate={(date) => setSelectedDate(date)}
+        selectedDate={selectedDate}
       />
     </View>
   );
