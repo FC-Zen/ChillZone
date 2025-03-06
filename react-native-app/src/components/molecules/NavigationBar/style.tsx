@@ -14,8 +14,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     borderTopRightRadius: 8,
-    gap: 14,
-    paddingHorizontal: 10,
+    gap: 20,
+    paddingHorizontal: 15,
   },
   navItem: {
     color: colors.white,

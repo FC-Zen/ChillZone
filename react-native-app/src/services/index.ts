@@ -54,3 +54,4 @@ export {
   setCalendarLink,
   refreshCalendar,
 } from './CalendarServices';
+export { getAllMapFloors, MapFloorProps } from './NavigationService';
