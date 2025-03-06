@@ -1,5 +1,4 @@
 import { Command, FormattedCommand } from '@services';
-import { FormattedReservation, Reservation } from '@services/Reservation';
 
 /**
  * Formate une heure au format "hh:mm" en "hhhmm"
@@ -25,20 +24,6 @@ export const formatDate = (date: string): string => {
     year: 'numeric',
   }).format(dateObj);
 };
-
-/**
- * Reformate une réservation en adaptant les formats de date et heure
- * @param {Reservation} reservation - L'objet réservation de base
- * @returns {FormattedReservation} L'objet réservation formaté
- */
-export const formatReservation = (
-  reservation: Reservation
-): FormattedReservation => ({
-  ...reservation,
-  start_time: formatTime(reservation.start_time),
-  end_time: formatTime(reservation.end_time),
-  day_reservation: formatDate(reservation.day_reservation),
-});
 
 export const formatCommand = (command: Command): FormattedCommand => {
   const extractDate = (dateTime: string): string => dateTime.split('T')[0];

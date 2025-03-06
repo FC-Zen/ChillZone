@@ -5,7 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { ReservationTemplateProps } from '@components/templates/ReservationTemplate/ReservationTemplate';
 import { BottomNavbar, TopBar } from '@components';
 import { styles } from './style';
-import { getReservations, putReservations, RoomAvailability } from '@services';
+import {
+  createReservation,
+  getReservations,
+  putReservations,
+  RoomAvailability,
+} from '@services';
 import { ReservationModal } from './Modal';
 import { CalendarModal } from './CalendarModal';
 
@@ -24,8 +29,12 @@ export const ReservationScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
+  const [findedRoom, setFindedRoom] = useState<RoomAvailability | null>(null);
+  const [findedRoomSlots, setFindedRoomSlots] = useState<string[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
+      console.log('Récupération des données de réservation...');
       const reservations = await getReservations();
       console.log('Room Types disponibles:', reservations.room_types);
 
@@ -62,6 +71,7 @@ export const ReservationScreen = () => {
 
   useEffect(() => {
     const checkAvailability = async () => {
+      //console.log('Vérification de la disponibilité...');
       if (selectedRoomId && selectedDate && selectedDuration) {
         const durationInMinutes = convertDurationToAPIFormat(selectedDuration);
 
@@ -109,7 +119,29 @@ export const ReservationScreen = () => {
     };
 
     checkAvailability();
-  }, [selectedRoomId, selectedDate, selectedDuration]);
+  }, [selectedDate, selectedDuration]);
+
+  const onSendReservation = async () => {
+    const response = await createReservation(
+      availableRooms.find((room) => room.name === selectedRoomId)?.id || 0,
+      selectedSlot.split(' - ')[0],
+      convertDurationToAPIFormat(selectedDuration),
+      selectedDate
+    );
+    console.log('Réponse de la réservation:', response);
+  };
+
+  const findRoom = (roomName: string) => {
+    let room = availableRooms.find((room) => room.name === roomName);
+    if (room) {
+      setFindedRoom(room);
+      setFindedRoomSlots(
+        room.available_slots
+          .map((slot) => formatTimeForDisplay(slot[0], slot[1]))
+          .sort()
+      );
+    }
+  };
 
   const inputs: ReservationTemplateProps['inputs'] = [
     [
@@ -147,8 +179,9 @@ export const ReservationScreen = () => {
       placeholder: t('fields.room.schedules'),
       icon: 'Clock',
       variant: 'select',
-      data: availableSlots,
+      data: findedRoomSlots,
       value: selectedSlot,
+      disabled: !selectedRoomId,
       onSelect: (selected: string) => setSelectedSlot(selected),
     });
   }
@@ -164,6 +197,7 @@ export const ReservationScreen = () => {
         buttonProps={{
           title: t('headers.reservation'),
           onPress: () => {
+            onSendReservation();
             setIsModalVisible(true);
           },
           disabled: !selectedRoomId,
@@ -173,16 +207,29 @@ export const ReservationScreen = () => {
           selectedRoom:
             availableRooms.find((room) => room.name === selectedRoomId) || null,
           handlePress: (selectedRoom: RoomAvailability) => {
+            findRoom(selectedRoom.name);
             setSelectedRoomId(selectedRoom.name);
           },
           title: t('filters.roomsOpen'),
         }}
+        disabled={
+          !selectedSlot || !selectedDuration || !selectedDate || !selectedRoomId
+        }
       />
       <BottomNavbar activeIcon="Reserve" />
       <ReservationModal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        data={{}} // ici on va mettre les données de la réservation avec post AHHHHHHHHHHH
+        data={{
+          roomName: selectedRoomId,
+          date: selectedDate,
+          timeSlot: selectedSlot.split(' - ') as [string, string],
+          duration: parseInt(selectedDuration.split('h')[0]),
+          floor: findedRoom?.floor || null,
+          capacity: findedRoom?.capacity || null,
+          room: findedRoom,
+          photo: findedRoom?.photo || '',
+        }}
       />
       <CalendarModal
         visible={isCalendarVisible}

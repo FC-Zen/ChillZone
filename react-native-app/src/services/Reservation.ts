@@ -1,5 +1,6 @@
 import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAccessToken } from '@utils/functions';
 import axios from 'axios';
 
 export type DurationOptions = {
@@ -44,7 +45,7 @@ export type CreateReservationResponse = {
 
 export const getReservations = async (): Promise<ReservationResponse> => {
   try {
-    const [access] = await Promise.all([AsyncStorage.getItem('access')]);
+    const access = await getAccessToken();
     const response = await axios.get(`${API_URL}reservation/`, {
       headers: {
         Authorization: `Bearer ${access}`,
@@ -67,18 +68,21 @@ export const putReservations = async (
   type: string[]
 ): Promise<RoomAvailability[]> => {
   try {
-    // Conversion vers le format hh:mm:ss
+    // Conversion vers le format
     const hours = Math.floor(duration / 60);
     const minutes = duration % 60;
-    const formattedDuration = `00 ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
 
-    const access = await AsyncStorage.getItem('access');
+    const formattedDuration = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
+
+    console.log('Durée formatée:', formattedDuration);
+
+    const access = await getAccessToken();
     const response = await axios.put<RoomAvailability[]>(
       `${API_URL}reservation/`,
       {
-        date,
+        date: date,
         duration: formattedDuration, // durée formatée
-        type,
+        type: type,
       },
       { headers: { Authorization: `Bearer ${access}` } }
     );
@@ -99,21 +103,33 @@ export const createReservation = async (
   duration: number,
   dayReservation: string
 ): Promise<CreateReservationResponse> => {
+  startTime = startTime.split('h').join(':') + ':00';
+  console.log(
+    'Création de la réservation:',
+    locationId,
+    startTime,
+    duration,
+    dayReservation
+  );
   try {
-    const [access] = await Promise.all([AsyncStorage.getItem('access')]);
+    const access = await getAccessToken();
     const response = await axios.post<CreateReservationResponse>(
       `${API_URL}reservation/`,
       {
         location_id: locationId,
         start_time: startTime,
-        duration,
+        duration: duration,
         day_reservation: dayReservation,
       },
       { headers: { Authorization: `Bearer ${access}` } }
     );
 
-    console.log('Réservation confirmée:', response.data);
-    return response.data;
+    if (response.status === 201) {
+      console.log('Réservation confirmée:', response.data);
+      return response.data;
+    }
+
+    throw new Error('Erreur lors de la réservation');
   } catch (error) {
     console.error('Erreur lors de la réservation:', error);
     throw error;

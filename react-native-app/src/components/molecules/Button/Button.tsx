@@ -34,13 +34,15 @@ export const Button: React.FC<ButtonProps> = ({
   const handlePress = () => {
     if (!disabled && onPress) {
       onPress();
+    } else {
+      return;
     }
   };
 
   return (
     <ButtonWrapper
       title={variant === 'iconOnly' ? '' : title}
-      onPress={onPress}
+      onPress={handlePress}
       variant={variant}
       style={[
         style,

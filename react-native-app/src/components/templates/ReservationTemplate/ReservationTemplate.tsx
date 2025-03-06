@@ -10,8 +10,8 @@ import {
 import { styles } from './style';
 import { RoomAvailable, RoomSelectorProps } from '@components/organisms';
 import { colors } from '@theme';
-import { Room } from '@services/RoomServices';
 import { useTranslation } from 'react-i18next';
+import { RoomAvailability } from '@services';
 
 export type ReservationTemplateProps = {
   buttonProps: ButtonProps;
@@ -20,7 +20,8 @@ export type ReservationTemplateProps = {
   subTitle: string;
   subTitle2?: string;
   roomSelectorProps: RoomSelectorProps;
-  selectedRoom?: Room | null;
+  selectedRoom?: RoomAvailability | null;
+  disabled: boolean;
 };
 
 export const ReservationTemplate: FC<ReservationTemplateProps> = ({
@@ -30,7 +31,7 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
   subTitle,
   subTitle2,
   roomSelectorProps,
-  selectedRoom,
+  disabled,
 }) => {
   const { t } = useTranslation();
   const areAllInputsFilled = () => {
@@ -46,7 +47,6 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
       })
     );
   };
-  const isFormComplete = areAllInputsFilled() && selectedRoom;
 
   return (
     <View style={styles.container}>
@@ -80,11 +80,11 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
         <View style={styles.buttonContainer}>
           <Button
             {...buttonProps}
-            disabled={!isFormComplete}
+            disabled={disabled}
             color={colors.white}
             style={{
-              backgroundColor: isFormComplete ? colors.darkCyan : colors.silver,
-              opacity: isFormComplete ? 1 : 0.5,
+              backgroundColor: !disabled ? colors.darkCyan : colors.silver,
+              opacity: disabled ? 0.1 : 1,
             }}
           />
         </View>
