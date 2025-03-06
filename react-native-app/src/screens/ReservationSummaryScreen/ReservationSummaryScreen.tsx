@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ReservationSummaryTemplate, SnackBar } from '@components';
 import { useTranslation } from 'react-i18next';
-import { BookingOverlay, transformReservations } from '@services';
 import { useNavigation } from '@hooks';
 import { styles } from './style';
-import { cancelReservation, getMyReservations, ReservationSummary } from '@services/BookingInfoServices';
+import {
+  cancelReservation,
+  getMyReservations,
+  ReservationSummary,
+} from '@services/BookingInfoServices';
 import { formatTime } from '@utils/functions/Command';
 
 export const ReservationSummaryScreen: React.FC = () => {
@@ -24,7 +27,6 @@ export const ReservationSummaryScreen: React.FC = () => {
     severity: 'success',
     message: '',
   });
-
 
   const fetchReservations = async () => {
     try {
@@ -62,8 +64,6 @@ export const ReservationSummaryScreen: React.FC = () => {
   useEffect(() => {
     fetchReservations();
   }, []);
-  
-  
 
   const handleCancelReservation = async (reservationId: number) => {
     try {
@@ -79,19 +79,20 @@ export const ReservationSummaryScreen: React.FC = () => {
         setSnackbar({
           open: true,
           severity: 'error',
-          message: response?.message || 'Échec de l\'annulation de la réservation.',
+          message:
+            response?.message || "Échec de l'annulation de la réservation.",
         });
       }
     } catch (error) {
-      console.error('Erreur lors de l\'annulation de la réservation:', error);
+      console.error("Erreur lors de l'annulation de la réservation:", error);
       setSnackbar({
         open: true,
         severity: 'error',
-        message: 'Une erreur est survenue lors de l\'annulation de la réservation.',
+        message:
+          "Une erreur est survenue lors de l'annulation de la réservation.",
       });
     }
   };
-  
 
   return (
     <View style={styles.container}>

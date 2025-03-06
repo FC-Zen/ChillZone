@@ -21,20 +21,6 @@ export type Booking = {
   };
 };
 
-export type ReservationSummary = {
-  reservation_id: number;
-  reservation_status: string;
-  start_time: string;
-  end_time: string;
-  day_reservation: string;
-  location_name: string;
-  position_x: number;
-  position_y: number;
-  floor_name: string;
-  photo_link: string;
-  establishment_name: string;
-};
-
 export type BookingOverlay = {
   id?: number;
   data: Booking;
@@ -220,6 +206,20 @@ export const fetchEnums = async (): Promise<any> => {
   } catch (error: any) {
     throw new Error('Impossible de récupérer les enums.');
   }
+};
+
+export type ReservationSummary = {
+  reservation_id: number;
+  reservation_status: string;
+  start_time: string;
+  end_time: string;
+  day_reservation: string;
+  location_name: string;
+  position_x: number;
+  position_y: number;
+  floor_name: string;
+  photo_link: string;
+  establishment_name: string;
 };
 
 export type MyReservations = {

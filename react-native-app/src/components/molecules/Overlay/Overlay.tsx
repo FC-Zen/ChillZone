@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Button } from '../Button';
 import { styles } from './style';
-import { map } from '@assets/Images';
 import { colors, typography } from '@theme';
 import { IconWithText } from '../IconWithText';
 import { ReservationSummary } from '@services/BookingInfoServices';
@@ -14,7 +13,6 @@ type OverlayProps = {
   cancelReservation: () => void;
 };
 
-
 export const Overlay: React.FC<OverlayProps> = ({
   data,
   titleBtn,
@@ -25,8 +23,6 @@ export const Overlay: React.FC<OverlayProps> = ({
   const toggleOverlay = () => {
     setIsExpanded(!isExpanded);
   };
-
-  console.log(data.photo_link);
 
   return (
     <TouchableOpacity onPress={toggleOverlay} style={styles.container}>
@@ -90,7 +86,10 @@ export const Overlay: React.FC<OverlayProps> = ({
               textColor={colors.resolutionBlue}
               style={styles.previewText}
             />
-            <Image source={{ uri : `${API_URL}/media/${data.photo_link}`}} style={styles.image} />
+            <Image
+              source={{ uri: `${API_URL}media/${data.photo_link}` }}
+              style={styles.image}
+            />
 
             <View style={styles.detailsContainer}>
               <IconWithText
