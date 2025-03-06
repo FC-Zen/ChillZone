@@ -14,7 +14,9 @@ class EmailService:
         to_email = [user_email]
 
         logo_path = os.path.join(os.getcwd(), "chillzone", "services", "img", "logo-zen-fill.png")
-
+        if not os.path.exists(logo_path):
+            logo_path = os.path.join(os.getcwd(), "services", "img", "logo-zen-fill.png")
+        
         html_message = f'''
         <html>
         <body style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; background-color: #F8F9FA; color: #000000;">
@@ -59,6 +61,8 @@ class EmailService:
         to_email = [user_mail]
 
         logo_path = os.path.join(os.getcwd(), "chillzone", "services", "img", "logo-zen-fill.png")
+        if not os.path.exists(logo_path):
+            logo_path = os.path.join(os.getcwd(), "services", "img", "logo-zen-fill.png")
 
         html_message = f'''
         <html>
@@ -111,6 +115,8 @@ class EmailService:
         to_email = [user_email]
 
         logo_path = os.path.join(os.getcwd(), "chillzone", "services", "img", "logo-zen-fill.png")
+        if not os.path.exists(logo_path):
+            logo_path = os.path.join(os.getcwd(), "services", "img", "logo-zen-fill.png")
 
         html_message = f'''
         <html>
@@ -157,6 +163,8 @@ class EmailService:
         to_email = [user_email]
 
         logo_path = os.path.join(os.getcwd(), "chillzone", "services", "img", "logo-zen-fill.png")
+        if not os.path.exists(logo_path):
+            logo_path = os.path.join(os.getcwd(), "services", "img", "logo-zen-fill.png")
 
         html_message = f'''
         <html>
