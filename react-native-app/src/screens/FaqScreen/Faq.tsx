@@ -19,9 +19,9 @@ export const FaqScreen: React.FC = () => {
   // Chargement des données des restaurants au démarrage
   useEffect(() => {
     const fetchData = async () => {
-      console.log("On va chercher les faq")
+      //console.log("On va chercher les faq")
       const Faq = await getFaq();
-      console.log("Faq: ",Faq)
+      //console.log("Faq: ",Faq)
 
       setFaqData(Faq);
     };

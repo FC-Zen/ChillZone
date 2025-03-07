@@ -31,7 +31,7 @@ export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
   const [imageUri, setImageUri] = useState<string>('');
 
   useEffect(() => {
-    console.log('QRcode: ', route.params.qrcode);
+    //console.log('QRcode: ', route.params.qrcode);
     if (qrcodeLink?.includes('qrcode')) {
       setImageUri(`${API_URL}media/` + qrcodeLink);
     } else {
@@ -91,7 +91,7 @@ export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
   };
 
   const onDownloadPress = async () => {
-    console.log('URI', imageUri);
+    //console.log('URI', imageUri);
     if (!imageUri) {
       Alert.alert('Erreur', 'Le QR code n’est pas encore disponible.');
       console.error('url invalide', imageUri);

@@ -29,7 +29,7 @@ export const FinalPaymentTemplate: React.FC<FinalPaymentTemplateProps> = ({
 }) => {
   const commandSplit = commandConfirmation.split('{{id}}');
 
-  console.log('QR Code Image URL:', qrImagelink);
+  //console.log('QR Code Image URL:', qrImagelink);
 
   return (
     <View style={styles.container}>

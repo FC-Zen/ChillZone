@@ -16,7 +16,7 @@ import { RoomAvailability } from '@services';
 
 export type ReservationTemplateProps = {
   buttonProps: ButtonProps;
-  inputs: InputProps[][];
+  inputs: InputProps[];
   titleHeader: string;
   subTitle: string;
   subTitle2?: string;
@@ -36,8 +36,7 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
 }) => {
   const { t } = useTranslation();
   const areAllInputsFilled = () => {
-    return inputs.every((inputGroup) =>
-      inputGroup.every((input) => {
+    return inputs.every((input) => {
         if (input.placeholder === t('fields.room.schedules')) {
           return true;
         }
@@ -45,9 +44,14 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
           return input.value && input.value !== '';
         }
         return false;
-      })
-    );
+      });
   };
+
+  let lastInput: InputProps | undefined;
+  // Enlever le dernier input s'il s'appelle 'schedules'
+  if (inputs[inputs.length-1].placeholder === t('fields.room.schedules')) {
+    lastInput = inputs.pop() as InputProps;
+  }
 
   return (
     <View style={styles.container}>
@@ -56,9 +60,7 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
 
         <View style={styles.padd}>
           <Text style={styles.title}>{subTitle}</Text>
-          {inputs.map((inputGroup, groupIndex) => (
-            <View key={groupIndex}>
-              {inputGroup.map((inputProps, index) => {
+          {inputs.map((inputProps, index) => {
                 const isScheduleInput =
                   inputProps.placeholder === t('fields.room.schedules');
                 const isEmpty = !inputProps.value || inputProps.value === '';
@@ -85,14 +87,6 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
                   </View>
                 );
               })}
-              {groupIndex < inputs.length - 1 && (
-                <View>
-                  <View style={styles.separator} />
-                  <Text style={styles.titleSep}>{subTitle2}</Text>
-                </View>
-              )}
-            </View>
-          ))}
 
           <View style={styles.separator} />
         </View>
@@ -102,6 +96,35 @@ export const ReservationTemplate: FC<ReservationTemplateProps> = ({
             <RoomAvailable {...roomSelectorProps} />
           </View>
         )}
+
+        {lastInput && 
+          <View style={styles.padd}>
+            <View>
+              <View style={styles.separator} />
+              <Text style={styles.titleSep}>{subTitle2}</Text>
+            </View>
+            
+            <View key={inputs.length}>
+            <Input {...lastInput} style={{ marginTop: 15 }} />
+            { 
+              lastInput.value === '' && 
+              <IconWithText
+                text={t('reservationConflicts.selectHour')}
+                icon="CrossCircle"
+                iconHeight={20}
+                iconWidth={20}
+                variant="horizontal"
+                textColor={colors.warn}
+                iconColor={colors.warn}
+                style={{
+                  marginTop: 10,
+                  alignSelf: 'flex-start',
+                }}
+              />
+            }
+            </View>
+          </View>
+        }
 
         <View style={styles.buttonContainer}>
           <Button

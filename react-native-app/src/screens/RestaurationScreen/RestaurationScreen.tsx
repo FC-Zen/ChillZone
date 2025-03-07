@@ -87,7 +87,7 @@ export const RestaurationScreen = () => {
     closing_time: string;
     status: 'Ouvert' | 'Fermé';
   }) => {
-    console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
+    //console.log(`Le restaurant a été cliqué.`, selectedRestaurant.name);
     if (selectedRestaurant.status == 'Ouvert') {
       navigation.navigate(ROUTE.DISPENSER, {
         restaurant: selectedRestaurant,

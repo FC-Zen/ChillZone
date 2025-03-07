@@ -5,6 +5,7 @@ import { styles } from './style';
 import { colors } from '@theme';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { ROUTE } from '@enums';
+import { useTranslation } from 'react-i18next';
 
 type RootStackParamList = {
   HomeScreen: undefined;
@@ -30,12 +31,14 @@ export const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeIcon }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [selectedItem, setSelectedItem] = useState<string | null>(activeIcon);
 
+  const { t } = useTranslation();
+
   const items: NavItem[] = [
-    { name: 'Home', icon: 'Home', label: 'Accueil' },
-    { name: 'Reserve', icon: 'Cube', label: 'Réserver' },
-    { name: 'Lunch', icon: 'Bag', label: 'Déjeuner' },
-    { name: 'Calendar', icon: 'Calendar', label: 'Calendrier' },
-    { name: 'Navigation', icon: 'Map', label: 'Navigation' },
+    { name: 'Home', icon: 'Home', label: t('navbar.home') },
+    { name: 'Reserve', icon: 'Cube', label: t('navbar.reservation') },
+    { name: 'Lunch', icon: 'Bag', label: t('navbar.food') },
+    { name: 'Calendar', icon: 'Calendar', label: t('navbar.calendar') },
+    { name: 'Navigation', icon: 'Map', label: t('navbar.navigation') },
   ];
 
   const handlePress = (name: string) => {
@@ -43,23 +46,23 @@ export const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeIcon }) => {
 
     switch (name) {
       case 'Home':
-        console.log('Home');
+        //console.log('Home');
         navigation.navigate(ROUTE.HOME);
         break;
       case 'Reserve':
-        console.log('Reserve');
+        //console.log('Reserve');
         navigation.navigate(ROUTE.RESERVATION);
         break;
       case 'Lunch':
-        console.log('Lunch');
+        //console.log('Lunch');
         navigation.navigate(ROUTE.RESTAURATION);
         break;
       case 'Calendar':
-        console.log('Calendar');
+        //console.log('Calendar');
         navigation.navigate(ROUTE.CALENDAR);
         break;
       case 'Navigation':
-        console.log('Navigation');
+        //console.log('Navigation');
         navigation.navigate(ROUTE.NAVIGATION);
         break;
       default:

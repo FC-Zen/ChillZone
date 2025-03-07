@@ -31,10 +31,10 @@ export const getAllOrders = async (): Promise<AllOrders> => {
       /*       console.log('Dernière commande : ', response.data); */
       return response.data;
     } else {
-      console.log(
+      /* console.log(
         "réponse reçue mais avec un status d'erreur : ",
         response.status
-      );
+      ); */
       return { today_orders: [], past_orders: [] };
     }
   } catch (error) {
@@ -47,7 +47,7 @@ export const testQrCode = async (qrcodeLink: string) => {
   try {
     const response = await axios.get(qrcodeLink);
     if (response.status === 200) {
-      console.log('QR Code testé : ', response.data);
+      //console.log('QR Code testé : ', response.data);
       return { success: true };
     }
     return { success: false };

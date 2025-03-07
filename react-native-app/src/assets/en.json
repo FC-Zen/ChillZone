@@ -286,5 +286,11 @@
     "command": "Orders",
     "event": "Events",
     "reservation": "Reservations"
+  },
+
+  "errors": {
+    "payment": {
+      "cartFieldInvalid": "These fields are invalid : "
+    }
   }
 }

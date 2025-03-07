@@ -277,6 +277,7 @@
     "videoTitle": "Vidéos de démonstration",
     "redirect": "Retrouvez le projet sur GitHub"
   },
+
   "calendar": {
     "already_refreshed": "Déjà rafrachit, réessayez à",
     "refreshed": "Calendrier mis à jour",
@@ -287,5 +288,11 @@
     "command": "Commandes",
     "event": "Evénements",
     "reservation": "Reservations"
+  },
+
+  "errors": {
+    "payment": {
+      "cartFieldInvalid": "Ces champs sont invalides :"
+    }
   }
 }

@@ -49,7 +49,7 @@ export function useNotifications() {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log('Notification response:', response);
+        //console.log('Notification response:', response);
       });
 
     return () => {

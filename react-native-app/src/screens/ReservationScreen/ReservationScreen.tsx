@@ -14,6 +14,7 @@ import {
 } from '@services';
 import { ReservationModal } from './Modal';
 import { CalendarModal } from './CalendarModal';
+import { InputProps } from '@components/molecules';
 
 export const ReservationScreen = () => {
   const { t } = useTranslation();
@@ -182,39 +183,37 @@ export const ReservationScreen = () => {
     );
   };
 
-  const inputs: ReservationTemplateProps['inputs'] = [
-    [
-      {
-        placeholder: t('fields.room.type'),
-        icon: 'Expand',
-        subIcon: 'School',
-        variant: 'select',
-        data: roomTypes,
-        value: selectedRoomType,
-        onSelect: (selected: string) => setSelectedRoomType(selected),
+  const inputs: InputProps[] = [
+    {
+      placeholder: t('fields.room.type'),
+      icon: 'Expand',
+      subIcon: 'School',
+      variant: 'select',
+      data: roomTypes,
+      value: selectedRoomType,
+      onSelect: (selected: string) => setSelectedRoomType(selected),
+    },
+    {
+      placeholder: t('fields.common.date'),
+      icon: 'Calendar',
+      variant: 'modal-select',
+      value: selectedDate,
+      onPress: () => {
+        setIsCalendarVisible(true);
       },
-      {
-        placeholder: t('fields.common.date'),
-        icon: 'Calendar',
-        variant: 'modal-select',
-        value: selectedDate,
-        onPress: () => {
-          setIsCalendarVisible(true);
-        },
-      },
-      {
-        placeholder: t('fields.room.hours'),
-        icon: 'Clock',
-        variant: 'select',
-        data: durations,
-        value: selectedDuration,
-        onSelect: (selected: string) => setSelectedDuration(selected),
-      },
-    ],
+    },
+    {
+      placeholder: t('fields.room.hours'),
+      icon: 'Clock',
+      variant: 'select',
+      data: durations,
+      value: selectedDuration,
+      onSelect: (selected: string) => setSelectedDuration(selected),
+    },
   ];
 
   if (selectedRoomId && availableSlots.length > 0) {
-    inputs[0].push({
+    inputs.push({
       placeholder: t('fields.room.schedules'),
       icon: 'Clock',
       variant: 'select',

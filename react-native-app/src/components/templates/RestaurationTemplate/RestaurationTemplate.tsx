@@ -28,18 +28,24 @@ export const RestaurationTemplate: React.FC<RestaurationTemplateProps> = ({
         <PageHeader title={pageHeaderTitle} variant="default" />
 
         {/* First RestaurantSlider */}
-        <RestaurantSlider
-          onPress={onPressRestaurant}
-          restaurantsData={restaurantsData1}
-          restaurantWords={restaurantWords1}
-        />
+        {
+          restaurantsData1.length > 0 &&
+          <RestaurantSlider
+            onPress={onPressRestaurant}
+            restaurantsData={restaurantsData1}
+            restaurantWords={restaurantWords1}
+          />
+        }
 
         {/* Second RestaurantSlider */}
-        <RestaurantSlider
-          onPress={onPressRestaurant}
-          restaurantsData={restaurantsData2}
-          restaurantWords={restaurantWords2}
-        />
+        {
+          restaurantsData2.length > 0 &&
+          <RestaurantSlider
+            onPress={onPressRestaurant}
+            restaurantsData={restaurantsData2}
+            restaurantWords={restaurantWords2}
+          />
+        }
       </View>
     </ScrollView>
   );

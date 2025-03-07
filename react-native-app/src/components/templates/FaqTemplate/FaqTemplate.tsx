@@ -9,7 +9,7 @@ export type FaqTemplateProps = {
 };
 
 export const FaqTemplate: React.FC<FaqTemplateProps> = ({categories}) => {
-  console.log("Data Faq Template: ", categories)
+  //console.log("Data Faq Template: ", categories)
 
   return(
     <ScrollView style={styles.scrollView}>

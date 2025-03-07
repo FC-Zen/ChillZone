@@ -45,7 +45,7 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
 
   const handleAddToCart = () => {
     if (meal.stock === 0) {
-      console.log("Ce plat n'est plus disponible !");
+      //console.log("Ce plat n'est plus disponible !");
       setSnackbar({
         isAvailable: true,
         severity: 'error',
@@ -55,9 +55,9 @@ export const DispenserModal: React.FC<ModalScreenProps> = ({ route }) => {
     }
 
     const price = meal.price;
-    console.log(
+    /* console.log(
       `Ajouté au panier: ${meal.name}, Quantité: ${quantity}, Total : ${(price * quantity).toFixed(2)} €`
-    );
+    ); */
 
     if (listItems.find((item) => item.name === meal.name)) {
       listItems.map((item) => {
