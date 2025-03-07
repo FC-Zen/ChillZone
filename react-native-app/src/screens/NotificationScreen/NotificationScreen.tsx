@@ -11,50 +11,58 @@ export const NotificationScreen: React.FC = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
+  const [notificationsState, setNotificationsState] = useState<Notification>(
+    {} as Notification
+  );
+
   const [notificationData, setNotificationData] = useState<{
     notifications: NotificationProps[];
   }>({ notifications: [] });
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const data: Notification[] = await getNotifications();
-        if (data.length > 0) {
-          const notificationsState = data[0];
-
-          const formattedNotifications: NotificationProps[] = [
-            {
-              title: t('notifications.command'),
-              icon: 'Setting',
-              handleSwitch: (value) => handleToggle('command', value),
-              isEnabled: notificationsState.command,
-            },
-            {
-              title: t('notifications.event'),
-              icon: 'Setting',
-              handleSwitch: (value) => handleToggle('event', value),
-              isEnabled: notificationsState.event,
-            },
-            {
-              title: t('notifications.reservation'),
-              icon: 'Setting',
-              handleSwitch: (value) => handleToggle('reservation', value),
-              isEnabled: notificationsState.reservation,
-            },
-          ];
-
-          setNotificationData({ notifications: formattedNotifications });
-        }
-      } catch (error) {
-        console.error('Erreur lors du chargement des notifications:', error);
-      }
-    };
-
     fetchNotifications();
   }, [t]);
 
+  const fetchNotifications = async () => {
+    try {
+      const data: Notification[] = await getNotifications();
+      if (data.length > 0) {
+        const notifications = data[0];
+        setNotificationsState(notifications);
+
+        const formattedNotifications: NotificationProps[] = [
+          {
+            title: t('notifications.command'),
+            icon: 'Bag',
+            handleSwitch: (value) => handleToggle('command', value),
+            isEnabled: notifications.command,
+          },
+          {
+            title: t('notifications.event'),
+            icon: 'Calendar',
+            handleSwitch: (value) => handleToggle('event', value),
+            isEnabled: notifications.event,
+          },
+          {
+            title: t('notifications.reservation'),
+            icon: 'Cube',
+            handleSwitch: (value) => handleToggle('reservation', value),
+            isEnabled: notifications.reservation,
+          },
+        ];
+
+        setNotificationData({ notifications: formattedNotifications });
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des notifications:', error);
+    }
+  };
+
   const handleToggle = async (key: keyof Notification, value: boolean) => {
     try {
+      const updatedNotifications = { ...notificationsState, [key]: value };
+      setNotificationsState(updatedNotifications);
+
       setNotificationData((prevData) => ({
         notifications: prevData.notifications.map((notif) =>
           notif.title === t(`notifications.${key}`)
@@ -63,9 +71,11 @@ export const NotificationScreen: React.FC = () => {
         ),
       }));
 
-      await updateNotification({ is_read: value });
+      await updateNotification(updatedNotifications);
 
-      console.log(`Notification ${key} mise à jour :`, value);
+      console.log(`Notification ${key} mise à jour :`, updatedNotifications);
+
+      fetchNotifications();
     } catch (error) {
       console.error(`Erreur lors de la mise à jour de ${key}:`, error);
     }
@@ -80,6 +90,7 @@ export const NotificationScreen: React.FC = () => {
           variant: 'back',
           onBackPress: () => navigation.goBack(),
         }}
+        text={t('notifications.explanation')}
       />
     </View>
   );

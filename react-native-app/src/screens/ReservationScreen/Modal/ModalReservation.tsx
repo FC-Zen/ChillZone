@@ -26,12 +26,18 @@ type ReservationModalProps = {
     room: RoomAvailability | null;
     photo: RoomAvailability['photo'];
   };
+  notificationSettings: {
+    command: boolean;
+    event: boolean;
+    reservation: boolean;
+  };
 };
 
 export const ReservationModal: FC<ReservationModalProps> = ({
   isVisible,
   onClose,
   data,
+  notificationSettings,
 }) => {
   const { roomName, date, duration, timeSlot, floor, capacity, room, photo } =
     data;
@@ -41,76 +47,24 @@ export const ReservationModal: FC<ReservationModalProps> = ({
 
   const formatedDuration = duration > 2 ? duration + 'min' : duration + 'h';
 
-  /* const transformDataToNavItems = (): NavItem[] => {
-    const navItems: NavItem[] = [];
-
-    if (roomName || room?.name) {
-      navItems.push({
-        icon: 'School',
-        label: roomName || room?.name || '',
-        typeLabel: 'roomName',
-      });
-    }
-
-    if (date) {
-      navItems.push({
-        icon: 'Calendar',
-        label: date,
-        typeLabel: 'date',
-      });
-    }
-
-    if (timeSlot) {
-      navItems.push({
-        icon: 'Clock',
-        label: timeSlot.join(' - '),
-        typeLabel: 'timeSlot',
-      });
-    }
-
-    if (duration) {
-      navItems.push({
-        icon: 'Clock',
-        label: formatedDuration,
-        typeLabel: 'duration',
-      });
-    }
-
-    if (floor || room?.floor) {
-      navItems.push({
-        icon: 'HomeLocation',
-        label: `${floor || room?.floor}`,
-        typeLabel: 'floor',
-      });
-    }
-
-    if (capacity || room?.capacity) {
-      navItems.push({
-        icon: 'List',
-        label: `${capacity || room?.capacity} places`,
-        typeLabel: 'capacity',
-      });
-    }
-
-    return navItems;
-  }; */
-
   const handleCloseAndNavigate = async () => {
-    // Mise à jour de la réservation
     try {
       onClose();
       navigation.navigate(ROUTE.HOME);
 
-      if (roomName || room?.name) {
+      if (notificationSettings?.reservation) {
         await scheduleNotification(
           t('notification.title'),
           t('notification.reservation', { roomName: roomName || room?.name }),
+          'reservation', // Type de notification
           {
             roomName: roomName || room?.name,
             date: date,
             timeSlot: timeSlot?.join(' - '),
           }
         );
+      } else {
+        console.log('La notification "reservation" est désactivée.');
       }
     } catch (error) {
       console.error('Error handling reservation:', error);

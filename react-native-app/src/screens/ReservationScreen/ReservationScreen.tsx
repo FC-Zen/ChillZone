@@ -35,6 +35,12 @@ export const ReservationScreen = () => {
   const [findedRoom, setFindedRoom] = useState<RoomAvailability | null>(null);
   const [findedRoomSlots, setFindedRoomSlots] = useState<string[]>([]);
 
+  const [notificationSettings, setNotificationSettings] = useState({
+    command: true,
+    event: true,
+    reservation: true,
+  });
+
   // Fonction pour trouver une salle par son nom
   const findRoom = useCallback(
     (roomName: string | number) => {
@@ -263,6 +269,7 @@ export const ReservationScreen = () => {
           room: findedRoom,
           photo: findedRoom?.photo || '',
         }}
+        notificationSettings={notificationSettings}
       />
       <CalendarModal
         visible={isCalendarVisible}

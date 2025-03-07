@@ -281,6 +281,7 @@
     "error_refresh": "Error while updating calendar"
   },
   "notifications": {
+    "explanation": "You can enable or disable notifications for each event type according to your preferences.",
     "command": "Orders",
     "event": "Events",
     "reservation": "Reservations"
