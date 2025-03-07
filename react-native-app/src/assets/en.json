@@ -174,7 +174,8 @@
     "infoPay": "By proceeding with the payment of your meal, you agree to waive your right of withdrawal in accordance with applicable legal provisions for goods or services that are immediately consumable or personalized.",
     "total": "Total",
     "confirmText": "Your order no. {{id}} has been confirmed",
-    "readyText": "It's ready! Go to the collection point and scan this QR Code to enjoy your dish!"
+    "readyText": "It's ready! Go to the collection point and scan this QR Code to enjoy your dish!",
+    "empty": "Your cart is empty !"
   },
 
   "questions": {

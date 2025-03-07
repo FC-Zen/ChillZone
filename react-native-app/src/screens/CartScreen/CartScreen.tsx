@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { styles } from './style';
 import { useTranslation } from 'react-i18next';
-import { CartTemplate } from '@components';
+import { CartTemplate, SnackBar } from '@components';
 import { API_URL } from '@env';
 import { ItemProps } from '@components/organisms';
 import { useNavigation } from '@hooks';
@@ -28,71 +28,68 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
   const restaurantId = restaurant.id;
   const restaurantName = restaurant.name;
   const { t } = useTranslation();
+  
+  const [openTime, setOpenTime] = useState(restaurant.opening_time);
+  const [closedTime, setClosedTime] = useState(restaurant.closing_time);
 
-  const adjustOpening = (openingTime: string, closingTime: string) => {
-    const [openHour, openMinute] = openingTime.split(':').map(Number);
-    const [closeHour, closeMinute] = closingTime.split(':').map(Number);
-    const actualDate = new Date();
-    const actualHour = actualDate.getHours();
-    const actualMinute = actualDate.getMinutes();
+  const [snackbar, setSnackbar] = useState<{
+      open: boolean;
+      severity: 'success' | 'error';
+      message: string;
+  }>({
+      open: false,
+      severity: 'success',
+      message: '',
+  });
 
-    if (actualHour > closeHour || actualHour < openHour) {
-      return openHour;
-    }
-    if (
-      (actualHour > openHour && actualHour < closeHour) ||
-      (actualHour === openHour && actualMinute > openMinute) ||
-      (actualHour === closeHour && actualMinute < closeMinute)
-    ) {
-      return actualHour;
-    } else if (actualHour < openHour) {
-      return openHour;
-    }
-    return openHour;
-  };
-
-  const adjustClosing = (closingTime: string) => {
-    const [closeHour, closeMinute] = closingTime.split(':').map(Number);
-    const actualDate = new Date();
-    const actualHour = actualDate.getHours();
-    const actualMinute = actualDate.getMinutes();
-
-    if (actualHour > closeHour) {
-      return closeHour;
-    }
-    if (actualHour === closeHour && actualMinute > closeMinute) {
-      return closeHour;
-    }
-    return closeHour;
-  };
-
+  
   // 8:30 to 8.5
   const formatTime = (time: string) => {
     const [hour, minute] = time.split(':').map(Number);
     return hour + minute / 60;
   };
-
+  
   const [cartItems, updateCartItems] = useState<ItemProps[]>([]);
   const [selectedSlot, setSelectedSlot] = useState(false);
-  const [closedTime, setClosedTime] = useState(
-    adjustClosing(restaurant.closing_time)
-  );
-  const [openTime, setOpenTime] = useState(
-    adjustOpening(restaurant.opening_time, restaurant.closing_time)
-  );
-
+  
   const [pickupSlot, setPickupSlot] = useState<SlotTime>({
-    startTime: openTime,
-    endTime: closedTime,
+    startTime: 0, 
+    endTime: 0,
   });
+  
+  const [fixedPickupSlot, setFixedPickupSlot] = useState<SlotTime>({
+    startTime: 0,
+    endTime: 0,
+  });
+  
+  const adjustSlotsTime = (openingTime: string, closingTime: string) => {
+    const [openHour] = openingTime.split(':').map(Number);
+    const [closeHour] = closingTime.split(':').map(Number);
+    const actualDate = new Date();
+    const actualHour = actualDate.getHours();
 
-  const [fixedPickupSlot] = useState<SlotTime>({
-    startTime: openTime,
-    endTime: closedTime,
-  });
+    if (actualHour >= openHour && actualHour < closeHour) {
+      setPickupSlot({
+        startTime: actualHour,
+        endTime: actualHour + 1,
+      });
+      setFixedPickupSlot({
+        startTime: actualHour,
+        endTime: actualHour + 1,
+      });
+    } else {
+      setPickupSlot({
+        startTime: openHour,
+        endTime: openHour + 1,
+      });
+      setFixedPickupSlot({
+        startTime: openHour,
+        endTime: openHour + 1,
+      });
+    }
+  };
 
   const restaurantImage = `${API_URL}${restaurant.photo_link}`;
-  console.log('🚀 ~ restaurantImage:', restaurantImage);
   const { listItems, updateListItems, totalAmount, setTotalAmount } =
     useCommand();
 
@@ -175,10 +172,18 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
   };
 
   const onPay = () => {
-    navigation.navigate(ROUTE.PAYMENT, {
-      restaurantId,
-      pickupTime: avgPickupTime(),
-    });
+    if (cartItems.length !== 0) {
+      navigation.navigate(ROUTE.PAYMENT, {
+        restaurantId,
+        pickupTime: avgPickupTime(),
+      });
+    } else {
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: t('cart.empty'),
+      });
+    }
   };
 
   useEffect(() => {
@@ -186,10 +191,17 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
       await fetchCartItems();
     };
     fetchData();
+    adjustSlotsTime(openTime, closedTime);
   }, []);
 
   return (
     <View style={styles.container}>
+      <SnackBar
+        visible={snackbar.open}
+        message={snackbar.message}
+        onDismiss={() => setSnackbar({ ...snackbar, open: false })}
+        severity={snackbar.severity}
+      />
       <CartTemplate
         headerTitle={t('headers.cart')}
         restaurantText={t('cart.restaurants', { res: 'Restaurant' })}
@@ -218,14 +230,14 @@ export const CartScreen: React.FC<CardScreenProps> = ({ route }) => {
             selectedSlot && setSelectedSlot(!selectedSlot);
           },
           onAdd: () => {
-            pickupSlot.endTime < closedTime &&
+            pickupSlot.endTime < formatTime(closedTime) &&
               setPickupSlot({
                 startTime: pickupSlot.startTime + 1,
                 endTime: pickupSlot.endTime + 1,
               });
           },
           onLess: () => {
-            pickupSlot.startTime > openTime &&
+            pickupSlot.startTime > formatTime(openTime) && pickupSlot.startTime >= fixedPickupSlot.endTime &&
               setPickupSlot({
                 startTime: pickupSlot.startTime - 1,
                 endTime: pickupSlot.endTime - 1,

@@ -5,6 +5,7 @@ import { MenuProps } from './MenusServices';
 import axios from 'axios';
 import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { qrcode } from '../assets/data/Images_test/index';
 
 export type Command = {
   command_id: number;
@@ -28,30 +29,6 @@ export type FormattedCommand = Omit<
   creation_date: string; // formatted
 };
 
-export const getCommands = async (): Promise<FormattedCommand[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const formattedCommands = commandsData.map((command: Command) =>
-        formatCommand(command)
-      );
-      resolve(formattedCommands);
-      console.log('formattedCommands: ', formattedCommands);
-    }, 1000);
-  });
-};
-
-// Fonction pour récupérer une commande spécifique avec formatage
-export const getCommandById = async (
-  id: number
-): Promise<FormattedCommand | undefined> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const command = commandsData.find((c: Command) => c.command_id === id);
-      resolve(command ? formatCommand(command) : undefined);
-    }, 1000);
-  });
-};
-
 export type Order = {
   payment_method: string;
   pickup_time: string;
@@ -67,16 +44,16 @@ export type Order = {
   }[];
 };
 
+/**
+ * Create the command into the database through the API endpoint
+ * @param restaurantId
+ * @param command
+ * @returns the created command
+ */
 export const createCommand = async (
   restaurantId: number,
   command: Order
-): Promise<any> => {
-  console.log('Commande à envoyer : ', command);
-  console.log('Commande lines : ', command.lines);
-
-  console.log('restaurantId : ', restaurantId);
-
-  console.log('API actuelle : ', API_URL);
+): Promise<{qrcode: string, command_id: number}> => {
 
   try {
     const [access] = await Promise.all([AsyncStorage.getItem('access')]);
@@ -90,11 +67,7 @@ export const createCommand = async (
       }
     );
 
-    console.log('response data createCommand : ', response.data);
-
     await AsyncStorage.setItem('qrcode_link', response.data.qrcode);
-
-    console.log('Méthodes autorisées : ', response.headers['allow']);
 
     if (response.status === 201) {
       console.log('Commande créée avec succès');
