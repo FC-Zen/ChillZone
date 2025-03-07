@@ -17,9 +17,9 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       <Switch
         trackColor={{
           false: colors.silver,
-          true: colors.darkCyan,
+          true: colors.resolutionBlue,
         }}
-        thumbColor={value ? colors.white : colors.darkCyan} // Bouton rond
+        thumbColor={value ? colors.white : colors.resolutionBlue} // Bouton rond
         ios_backgroundColor="transparent" // Pas de fond visible sur iOS
         onValueChange={onToggle}
         value={value}

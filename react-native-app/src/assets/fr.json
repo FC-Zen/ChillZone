@@ -282,8 +282,9 @@
     "error_refresh": "Erreur lors de la mise à jour du calendrier"
   },
   "notifications": {
+    "explanation": "Vous pouvez activer ou désactiver les notifications pour chaque type d'événement selon vos préférences.",
     "command": "Commandes",
-    "event": "Events",
+    "event": "Evénements",
     "reservation": "Reservations"
   }
 }
