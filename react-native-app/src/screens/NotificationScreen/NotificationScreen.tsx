@@ -11,11 +11,9 @@ export const NotificationScreen: React.FC = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  const [notificationsState, setNotificationsState] = useState<Notification>({
-    command: true,
-    event: true,
-    reservation: true,
-  });
+  const [notificationsState, setNotificationsState] = useState<Notification>(
+    {} as Notification
+  );
 
   const [notificationData, setNotificationData] = useState<{
     notifications: NotificationProps[];
