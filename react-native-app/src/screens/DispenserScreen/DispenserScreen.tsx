@@ -34,75 +34,82 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
   const [mealTypeFilter, setMealTypeFilter] = useState<string>('');
   const navigation = useNavigation();
   const { t } = useTranslation();
+  
+  const mealCategory: SelectedButtonMealProps = {
+    title: t('categories.Main'),
+    isSelected: isProductSelected,
+    onPress: () => setIsProductSelected(true),
+    color: isProductSelected ? colors.aquaDeep : colors.darkCyan,
+  };
+  
+  const menuCategory: SelectedButtonMealProps = {
+    title: t('categories.menus'),
+    isSelected: !isProductSelected,
+    onPress: () => setIsProductSelected(false),
+    color: !isProductSelected ? colors.aquaDeep : colors.darkCyan,
+  };
 
   const [selectedButtonMealProps, setSelectedButtonMealProps] = useState<SelectedButtonMealProps[]>([]);
 
+  const setCategories = () => {
+    console.log('menus :', menus);
+    if (menus.length > 0) {
+      setSelectedButtonMealProps([mealCategory, menuCategory]);
+    } else {
+      setSelectedButtonMealProps([mealCategory]);
+    }
+  }
+  
   useEffect(() => {
     const fetchMeals = async () => {
       const mealData = await fetchAllMeals(restaurantId);
-      if (mealData)
-      setSelectedButtonMealProps([
-        ...selectedButtonMealProps,
-        {
-          title: t('categories.Main'),
-          isSelected: isProductSelected,
-          onPress: () => handlePress(true),
-          color: isProductSelected ? colors.aquaDeep : colors.darkCyan,
-        },
-      ])
       setMealsByCategory(mealData);
     };
-
+    
     const fetchMenus = async () => {
       let menuData = await getAllMenus(restaurantId);
-      menuData = []
-      if (menuData.length > 0)
-      setSelectedButtonMealProps([
-        ...selectedButtonMealProps,
-        {
-          title: t('categories.menus'),
-          isSelected: !isProductSelected,
-          onPress: () => handlePress(false),
-          color: !isProductSelected ? colors.aquaDeep : colors.darkCyan,
-        },
-      ])
       setMenus(menuData);
     };
-
+    
     fetchMeals();
     fetchMenus();
   }, [restaurantId]);
 
+  useEffect(() => {
+    setCategories();
+  }, [menus, mealsByCategory]);
+  
   const handleFilterSelect = (option: string) => {
     setSelectedFilter(option);
     setMealTypeFilter(option === t('buttons.actions.filter') ? '' : option);
   };
-
-  const handlePress = (isProductButton: boolean) => {
-    setIsProductSelected(isProductButton);
-  };
-
+  
   const handleItemSelect = (item: MealProps) => {
     const selectedMeal = Object.values(mealsByCategory)
-      .flat()
-      .find((meal) => meal.id === item.id);
+    .flat()
+    .find((meal) => meal.id === item.id);
     if (selectedMeal) {
       navigation.navigate(ROUTE.DISPENSER_MODAL, { meal: selectedMeal });
     }
   };
-
+  
   const handleItemSelectMenu = (item: MenuProps) => {
     const selectedMenu = menus.find((menu) => menu.id === item.id);
-
+    
     if (selectedMenu) {
       navigation.navigate(ROUTE.MENU_MODAL, { menu: selectedMenu });
     }
   };
-
+  
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
   };
-
+  
+/*   const [selectedButtonMealProps, setSelectedButtonMealProps] = useState<SelectedButtonMealProps[]>(
+    [mealsByCategory && mealCategory, menus.length > 0 ? menuCategory : null].filter(
+      (item): item is SelectedButtonMealProps => item !== null
+    )
+  ); */
   // recherche des plats
   const filteredMeals = Object.entries(mealsByCategory)
     .filter(([category]) => !mealTypeFilter || category === mealTypeFilter)
@@ -167,20 +174,7 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
         />
       ) : (
         <MenuTemplate
-          selectedButtonMealProps={[
-            {
-              title: t('categories.Main'),
-              isSelected: isProductSelected,
-              onPress: () => handlePress(true),
-              color: isProductSelected ? colors.aquaDeep : colors.darkCyan,
-            },
-            {
-              title: t('categories.menus'),
-              isSelected: !isProductSelected,
-              onPress: () => handlePress(false),
-              color: !isProductSelected ? colors.aquaDeep : colors.darkCyan,
-            },
-          ]}
+          selectedButtonMealProps={selectedButtonMealProps}
           foodCardListProps={{
             foodItems: menus.map((menu) => ({
               id: menu.id,
