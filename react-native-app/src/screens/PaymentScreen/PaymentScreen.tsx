@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { colors } from '@theme';
 import { useNavigation } from '@hooks';
 import { ROUTE } from '@enums';
-import { getAllOrders } from '@services';
-import { getLastOrder } from '@utils/functions';
 import { useCommand } from '@contexts';
 import { createCommand } from '@services/CommandServices';
 
@@ -27,17 +25,6 @@ export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
   const navigation = useNavigation();
   const { listItems, totalAmount } = useCommand();
   const { pickupTime, restaurantId } = route.params;
-
-  const fetchLastOrder = async () => {
-    const response = await getAllOrders();
-    if (response) {
-      let last_order = getLastOrder(response);
-      let command_id = last_order.id;
-      console.log('last_order : ', command_id);
-      return command_id;
-    }
-    return 1;
-  };
 
   const onPay = async () => {
     try {
@@ -61,10 +48,9 @@ export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
       };
 
       const response = await createCommand(restaurantId, command);
-      const command_id = await fetchLastOrder();
       navigation.navigate(ROUTE.FINAL_PAYMENT, {
         qrcode: response?.qrcode,
-        commandId: command_id,
+        commandId: response?.command_id,
       });
     } catch (error) {
       console.error('createCommand error:', error);

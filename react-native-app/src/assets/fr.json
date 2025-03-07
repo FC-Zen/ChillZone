@@ -175,7 +175,8 @@
     "infoPay": "En procédant au paiement de votre repas, vous acceptez de renoncer à votre droit de rétractation conformément aux dispositions légales applicables aux biens ou services immédiatement consommables ou personnalisés.",
     "total": "Total",
     "confirmText": "Votre commande n°{{id}} a été confirmée",
-    "readyText": "C’est prêt ! Rendez-vous au point de collecte choisi et scannez ce QR Code pour savourer votre plat !"
+    "readyText": "C’est prêt ! Rendez-vous au point de collecte choisi et scannez ce QR Code pour savourer votre plat !",
+    "empty": "Votre panier est vide !"
   },
 
   "questions": {
