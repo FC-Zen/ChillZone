@@ -1,51 +1,48 @@
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Icon, IconProps } from '@components/atoms';
+import { View } from 'react-native';
+import { IconProps } from '@components/atoms';
 import { styles } from './style';
-import { colors } from '@theme';
-import { diff_time } from '@utils/functions/Notification';
-import React from 'react';
+import React, { useState } from 'react';
+import { IconWithText } from '../IconWithText';
+import { ToggleSwitch } from '@components/atoms';
+import { colors, typography } from '@theme';
 
 export type NotificationProps = {
-  id: number;
   title: string;
-  description: string;
-  time: string;
-  icon: {
-    name: IconProps['name'];
-    color: string;
-  };
-  handlePress?: () => void;
+  icon: IconProps['name'];
+  handleSwitch: (newValue: boolean) => void;
+  isEnabled: boolean;
 };
 
 export const NotificationItem: React.FC<NotificationProps> = ({
   title,
-  description,
-  time,
   icon,
-  handlePress,
+  handleSwitch,
+  isEnabled,
 }) => {
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [switchValue, setSwitchValue] = useState(isEnabled);
+
+  const onToggle = (newValue: boolean) => {
+    setSwitchValue(newValue);
+    handleSwitch(newValue);
+  };
+
   return (
-    <View>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={handlePress}
-        activeOpacity={1}
-      >
-        <View style={styles.iconContainer}>
-          <Icon
-            name={icon?.name || 'Bell'}
-            color={icon?.color || colors.black}
-          />
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.message} numberOfLines={2}>
-            {description}
-          </Text>
-        </View>
-        <Text style={styles.time}>{diff_time(new Date(time), new Date())}</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.iconTextContainer}>
+        <IconWithText
+          icon={icon}
+          text={title}
+          iconColor={colors.resolutionBlue}
+          variant={'horizontal'}
+          textColor={colors.resolutionBlue}
+          textStyle={{
+            fontSize: 18,
+            fontFamily: typography.h3.fontFamily,
+          }}
+          style={styles.iconText}
+        />
+      </View>
+      <ToggleSwitch onToggle={onToggle} value={switchValue} />
     </View>
   );
 };

@@ -6,7 +6,7 @@ export { BottomNavbar } from './BottomNavbar';
 export { BookingInfo } from './BookingInfo';
 export { ReservationButton } from './ReservationButton';
 export { RestaurantCard } from './RestaurantCard';
-export { NotificationItem } from './Notification';
+export { NotificationItem, NotificationProps } from './Notification';
 export { IconWithText } from './IconWithText';
 export { Button, ButtonProps } from './Button';
 export { PageHeader, PageHeaderProps } from './PageHeader';

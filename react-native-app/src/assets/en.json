@@ -279,5 +279,10 @@
     "already_refreshed": "Already refreshed, try again at",
     "refreshed": "Calendar updated",
     "error_refresh": "Error while updating calendar"
+  },
+  "notifications": {
+    "command": "Orders",
+    "event": "Events",
+    "reservation": "Reservations"
   }
 }
