@@ -38,42 +38,48 @@ export const Connection: React.FC<ConnectionProps> = ({
   navigateToForgotPassword,
 }) => {
   return (
-    <View style={styles.container}>
-      <Image source={logo} style={styles.logo} />
+    <View style={styles.container} testID="connection-container">
+      <Image source={logo} style={styles.logo} testID="logo-image" />
 
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer} testID="email-input-container">
         <Input
           icon="User"
           onChangeText={setInputEmail}
           placeholder={placeholderEmail}
           value={inputEmail}
           variant="default"
+          testID="email-input"
         />
       </View>
 
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer} testID="password-input-container">
         <Input
           icon="Lock"
           onChangeText={setInputPassword}
           placeholder={placeholderPassword}
           value={inputPassword}
           variant="password"
+          testID="password-input"
         />
       </View>
 
-      <View style={styles.checkboxContainer}>
+      <View style={styles.checkboxContainer} testID="checkbox-container">
         <Checkbox
           checked={isChecked}
           onChange={() => setChecked(!isChecked)}
           label={rememberMeLabel}
+          testID="checkbox"
         />
       </View>
 
-      <TouchableOpacity onPress={navigateToForgotPassword}>
+      <TouchableOpacity
+        onPress={navigateToForgotPassword}
+        testID="forgot-password-link"
+      >
         <Text style={styles.underlineText}>{forgotPasswordText}</Text>
       </TouchableOpacity>
 
-      <Button title={buttonText} onPress={onLogin} />
+      <Button title={buttonText} onPress={onLogin} testID="login-button" />
     </View>
   );
 };

@@ -5,6 +5,8 @@ import { IconProps } from '@components/atoms';
 import { colors, typography } from '@theme';
 
 export type ButtonProps = {
+  id?: string;
+  testID?: string;
   title: string;
   onPress?: () => void | false;
   variant?: 'primary' | 'secondary' | 'icon' | 'news' | 'iconOnly'; // Ajout du variant icon et news
@@ -18,6 +20,8 @@ export type ButtonProps = {
 };
 
 export const Button: React.FC<ButtonProps> = ({
+  id,
+  testID,
   title,
   onPress,
   variant = 'primary',
@@ -31,6 +35,8 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <ButtonWrapper
+      id={id}
+      testID={testID}
       title={variant === 'iconOnly' ? '' : title}
       onPress={onPress}
       variant={variant}

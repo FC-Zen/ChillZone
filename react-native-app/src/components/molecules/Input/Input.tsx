@@ -12,6 +12,7 @@ import { Icon, IconProps } from '@components/atoms';
 import { colors } from '@theme';
 
 export type InputProps = {
+  testID?: string;
   placeholder: string;
   icon?: IconProps['name'];
   subIcon?: IconProps['name'];
@@ -29,6 +30,7 @@ export type InputProps = {
 };
 
 export const Input: FC<InputProps> = ({
+  testID,
   icon,
   subIcon,
   onChangeText,
@@ -49,7 +51,7 @@ export const Input: FC<InputProps> = ({
   );
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value || '');
-  const [isIconRotated, setIconRotated] = useState(false); // État pour la rotation de l'icône
+  const [isIconRotated, setIconRotated] = useState(false);
 
   const handleChange = (text: string) => {
     if (variant === 'select') return;
@@ -62,13 +64,13 @@ export const Input: FC<InputProps> = ({
   const handleSelect = (item: string) => {
     setSelectedValue(item);
     setDropdownVisible(false);
-    setIconRotated(false); // Remettre l'icône à la position initiale
+    setIconRotated(false);
     onSelect?.(item);
   };
 
   const toggleDropdown = () => {
     setDropdownVisible((prev) => !prev);
-    setIconRotated((prev) => !prev); // Changer l'état de rotation
+    setIconRotated((prev) => !prev);
   };
 
   return (
@@ -85,6 +87,7 @@ export const Input: FC<InputProps> = ({
         placeholder={placeholder}
         onChangeText={handleChange}
         value={value}
+        testID={testID}
       >
         {icon && (
           <InputIcon>
@@ -125,6 +128,7 @@ export const Input: FC<InputProps> = ({
             pointerEvents={disabled ? 'none' : 'auto'}
             editable={!disabled}
             focusable={!disabled}
+            testID={testID}
           />
         )}
       </InputWrapper>

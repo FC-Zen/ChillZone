@@ -7,6 +7,7 @@ export type CheckboxProps = {
   onChange: () => void;
   label?: string;
   style?: object;
+  testID?: string; // Ajout de testID
 };
 
 export const Checkbox: React.FC<CheckboxProps> = ({
@@ -14,9 +15,14 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   onChange,
   label,
   style,
+  testID, // Ajout de testID dans les props
 }) => {
   return (
-    <TouchableOpacity style={[styles.wrapper, style]} onPress={onChange}>
+    <TouchableOpacity
+      style={[styles.wrapper, style]}
+      onPress={onChange}
+      testID={testID} // Ajout de testID ici
+    >
       <View style={[styles.checkbox, checked && styles.checked]}>
         {checked && <Text style={styles.checkmark}>✔</Text>}
       </View>
