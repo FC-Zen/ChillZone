@@ -55,3 +55,9 @@ export {
   refreshCalendar,
 } from './CalendarServices';
 export { getAllMapFloors, MapFloorProps } from './NavigationService';
+export {
+  getNotifications,
+  Notification,
+  UpdateNotificationRequest,
+  updateNotification,
+} from './NotificationServices';

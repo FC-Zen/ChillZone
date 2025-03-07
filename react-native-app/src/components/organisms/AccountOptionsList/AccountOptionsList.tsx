@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
-import { ToggleSwitch } from '@components/atoms/ToggleSwitch';
 import { Button } from '@components/molecules';
 import { colors } from '@theme';
 import { SelectorPolygon } from '@components/atoms/Icons';
@@ -20,7 +19,7 @@ export type AccountOptionsListProps = {
   onOpenResetPasswordModal: () => void;
   onNavigateToReservations: () => void;
   onNavigateToCommand: () => void;
-  handleLogout:() => void;
+  handleLogout: () => void;
 };
 
 export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
@@ -31,7 +30,7 @@ export const AccountOptionsList: React.FC<AccountOptionsListProps> = ({
   onOpenResetPasswordModal,
   onNavigateToReservations,
   onNavigateToCommand,
-  handleLogout
+  handleLogout,
 }) => {
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();

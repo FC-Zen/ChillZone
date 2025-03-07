@@ -1,4 +1,4 @@
-export { Checkbox, Icon, IconProps, Separation } from './atoms';
+export { Checkbox, Icon, IconProps, Separation, ToggleSwitch } from './atoms';
 export {
   BookingInfo,
   BottomNavbar,

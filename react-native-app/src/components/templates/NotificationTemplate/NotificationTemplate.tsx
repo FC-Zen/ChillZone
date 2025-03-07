@@ -1,22 +1,16 @@
 import React from 'react';
 import { View } from 'react-native';
-import { NotificationList } from '@components/organisms/NotificationList';
-import { PageHeader } from '@components/molecules/PageHeader';
+import { NotificationList, NotificationListProps } from '@components/organisms';
+import { PageHeader, PageHeaderProps } from '@components/molecules';
 import { styles } from './style';
-import { PageHeaderProps } from '../../molecules/PageHeader';
-import { NotificationProps } from '@components/molecules/Notification';
-import { PopupProps } from '@components/molecules/NotificationPopup';
-import { NotificationPopupProps } from '@components/molecules/NotificationPopup';
 
 export type NotificationTemplateProps = {
-  notificationsData: NotificationProps[];
-  popupProps: PopupProps;
+  notificationsData: { notifications: NotificationListProps['notifications'] };
   pageHeaderProps: PageHeaderProps;
 };
 
 export const NotificationTemplate: React.FC<NotificationTemplateProps> = ({
   notificationsData,
-  popupProps,
   pageHeaderProps,
 }) => {
   return (
@@ -27,10 +21,7 @@ export const NotificationTemplate: React.FC<NotificationTemplateProps> = ({
         icon={pageHeaderProps.icon}
         onBackPress={pageHeaderProps.onBackPress}
       />
-      <NotificationList
-        notifications={notificationsData}
-        popupProps={popupProps}
-      />
+      <NotificationList notifications={notificationsData.notifications} />
     </View>
   );
 };

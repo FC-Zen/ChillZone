@@ -280,5 +280,10 @@
     "already_refreshed": "Déjà rafrachit, réessayez à",
     "refreshed": "Calendrier mis à jour",
     "error_refresh": "Erreur lors de la mise à jour du calendrier"
+  },
+  "notifications": {
+    "command": "Commandes",
+    "event": "Events",
+    "reservation": "Reservations"
   }
 }
