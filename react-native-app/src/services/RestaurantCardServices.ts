@@ -61,9 +61,10 @@ const transformApiRestaurantToRestaurantData = (
   const formattedOpeningTime = opening_time.slice(0, 5); // "08:00:00" -> "08:00"
   const formattedClosingTime = closing_time.slice(0, 5); // "19:00:00" -> "19:00"
 
-  const status = isRestaurantOpen(formattedOpeningTime, formattedClosingTime)
+  const status = 'Ouvert'; 
+  /* isRestaurantOpen(formattedOpeningTime, formattedClosingTime)
     ? 'Ouvert'
-    : 'Fermé';
+    : 'Fermé'; */
 
   return {
     id,
