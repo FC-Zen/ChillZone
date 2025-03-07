@@ -9,7 +9,7 @@ import { colors } from '@theme';
 
 export const FaqList: React.FC<FaqCategory> = ({category, questions}) => {
   const [expanded, setExpanded] = React.useState(false);
-  console.log("Faq :", questions);
+  //console.log("Faq :", questions);
   
   const handlePress = () => setExpanded(!expanded);
 

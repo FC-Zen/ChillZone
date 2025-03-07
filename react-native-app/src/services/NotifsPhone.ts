@@ -44,8 +44,12 @@ class NotifsPhone {
           throw new Error('Project ID not found');
         }
 
-        token = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
-        console.log('Push notification token:', token);
+        token = (
+          await Notifications.getExpoPushTokenAsync({
+            projectId,
+          })
+        ).data;
+        //console.log('Push notification token:', token);
       } catch (error) {
         console.error('Failed to get push token:', error);
         return null;

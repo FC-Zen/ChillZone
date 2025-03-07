@@ -9,6 +9,7 @@ import { useNavigation } from '@hooks';
 import { fetchAllMeals, MealProps } from '@services/DispenserServices';
 import { getAllMenus, MenuProps } from '@services/MenusServices';
 import { RestaurantData } from '@services';
+import { SelectedButtonMealProps } from '@components/molecules';
 
 type DispenserScreenProps = {
   route: {
@@ -34,14 +35,37 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
+  const [selectedButtonMealProps, setSelectedButtonMealProps] = useState<SelectedButtonMealProps[]>([]);
+
   useEffect(() => {
     const fetchMeals = async () => {
       const mealData = await fetchAllMeals(restaurantId);
+      if (mealData)
+      setSelectedButtonMealProps([
+        ...selectedButtonMealProps,
+        {
+          title: t('categories.Main'),
+          isSelected: isProductSelected,
+          onPress: () => handlePress(true),
+          color: isProductSelected ? colors.aquaDeep : colors.darkCyan,
+        },
+      ])
       setMealsByCategory(mealData);
     };
 
     const fetchMenus = async () => {
-      const menuData = await getAllMenus(restaurantId);
+      let menuData = await getAllMenus(restaurantId);
+      menuData = []
+      if (menuData.length > 0)
+      setSelectedButtonMealProps([
+        ...selectedButtonMealProps,
+        {
+          title: t('categories.menus'),
+          isSelected: !isProductSelected,
+          onPress: () => handlePress(false),
+          color: !isProductSelected ? colors.aquaDeep : colors.darkCyan,
+        },
+      ])
       setMenus(menuData);
     };
 
@@ -92,20 +116,7 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
     <View style={styles.container}>
       {isProductSelected ? (
         <DispenserTemplate
-          selectedButtonMealProps={[
-            {
-              title: t('categories.Main'),
-              isSelected: isProductSelected,
-              onPress: () => handlePress(true),
-              color: isProductSelected ? colors.aquaDeep : colors.darkCyan,
-            },
-            {
-              title: t('categories.menus'),
-              isSelected: !isProductSelected,
-              onPress: () => handlePress(false),
-              color: !isProductSelected ? colors.aquaDeep : colors.darkCyan,
-            },
-          ]}
+          selectedButtonMealProps={selectedButtonMealProps}
           foodCardListProps={{
             foodItems: filteredMeals.map((meal) => ({
               id: meal.id,

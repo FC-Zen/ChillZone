@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from './style';
 import { colors } from '@theme';
 import { API_URL } from '@env';
+import { useTranslation } from 'react-i18next';
 
 type RestaurantCardProps = {
   status: 'Ouvert' | 'Fermé';
@@ -18,6 +19,7 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
   onPress,
 }) => {
   const isOpen = status === 'Ouvert';
+  const { t } = useTranslation();
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.card}>
@@ -38,7 +40,7 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
             },
           ]}
         >
-          {status}
+          {status === 'Ouvert' ? t('status.open') : t('status.close')}
         </Text>
       </View>
       <Text style={styles.restaurantName}>{name}</Text>

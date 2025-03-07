@@ -55,8 +55,11 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({
         ))}
       </ScrollView>
 
-      <View style={styles.separator} />
+      { selectedRoom &&
+          <View style={styles.separator} />
+      }
 
+      { selectedRoom &&
       <View style={styles.contentContainer}>
         <Image
           source={{ uri: `${API_URL}${selectedRoom?.photo}` }}
@@ -84,6 +87,7 @@ export const RoomAvailable: FC<RoomSelectorProps> = ({
           </View>
         </View>
       </View>
+      }
     </View>
   );
 };

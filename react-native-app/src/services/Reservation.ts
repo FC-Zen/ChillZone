@@ -104,13 +104,13 @@ export const createReservation = async (
   dayReservation: string
 ): Promise<CreateReservationResponse> => {
   startTime = startTime.split('h').join(':') + ':00';
-  console.log(
+  /* console.log(
     'Création de la réservation:',
     locationId,
     startTime,
     duration,
     dayReservation
-  );
+  ); */
   try {
     const access = await getAccessToken();
     const response = await axios.post<CreateReservationResponse>(
@@ -125,7 +125,7 @@ export const createReservation = async (
     );
 
     if (response.status === 201) {
-      console.log('Réservation confirmée:', response.data);
+      //console.log('Réservation confirmée:', response.data);
       return response.data;
     }
 

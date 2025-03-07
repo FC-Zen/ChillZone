@@ -63,7 +63,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
           <Calendar
             onDayPress={(day: any) => {
               if (!disabledDates[day.dateString]) {
-                console.log('Date sélectionnée :', day.dateString);
+                //console.log('Date sélectionnée :', day.dateString);
                 onSelectDate(day.dateString);
                 onClose();
               }

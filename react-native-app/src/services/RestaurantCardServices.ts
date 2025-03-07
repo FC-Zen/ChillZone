@@ -91,7 +91,6 @@ export const transformRestaurantData = async (): Promise<RestaurantData[]> => {
   try {
     const access = await getAccessToken();
 
-    console.log('Access FAQ : ', access);
     if (!access) {
       console.error('Pas de token access');
       return [];
@@ -103,10 +102,10 @@ export const transformRestaurantData = async (): Promise<RestaurantData[]> => {
       },
     });
 
+
     const allRestaurants: RestaurantData[] = transformRestaurantsApiResponse(
       response.data
     );
-    console.log('Restaurants transformés:', allRestaurants);
 
     return allRestaurants;
   } catch (error: any) {

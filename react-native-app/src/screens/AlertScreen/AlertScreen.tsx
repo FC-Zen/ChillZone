@@ -132,7 +132,7 @@ export const AlertScreen = () => {
           button1Props={{
             title: t('buttons.actions.conflictReservation'),
             onPress: () => {
-              console.log(comment);
+              //console.log(comment);
               handleFinalPress();
             },
           }}
