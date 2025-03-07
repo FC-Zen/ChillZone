@@ -73,6 +73,7 @@ export const FinalPaymentScreen: React.FC<FinalPaymentScreenProps> = ({
       await scheduleNotification(
         t('notification.paymentSuccessTitle'),
         t('notification.paymentSuccessBody', { commandId: id }),
+        'command',
         { commandId: id }
       );
     } catch (error) {
