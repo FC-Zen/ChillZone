@@ -248,7 +248,7 @@ class OwnerCreateView(APIView):
                 phone=validated_data.get('phone', None),
             )
 
-            Calendar.object.create(
+            Calendar.objects.create(
                 title="Calendrier de " + user.first_name + " " + user.last_name,
                 user=user
             )

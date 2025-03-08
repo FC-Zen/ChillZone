@@ -162,7 +162,7 @@ class AdminUserView(generics.ListAPIView):
                 establishment=request.user.usermeta.establishment
             )
 
-            Calendar.object.create(
+            Calendar.objects.create(
                 title="Calendrier de " + user.first_name + " " + user.last_name,
                 user=user
             )
