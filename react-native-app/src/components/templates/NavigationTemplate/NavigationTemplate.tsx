@@ -5,7 +5,8 @@ import { styles } from './style';
 import { colors } from '@theme';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@hooks';
-import { MapFloorProps } from '@services';
+import { LocationProps, MapFloorProps } from '@services';
+import { SharedValue } from 'react-native-reanimated';
 
 type NavigationTemplateProps = {
   imageSource: any;
@@ -14,9 +15,12 @@ type NavigationTemplateProps = {
   onImagePress?: (x: number, y: number) => void;
   imageRef?: React.RefObject<any>;
   floors: MapFloorProps[];
-  zoomScale: number;
+  zoomScale: SharedValue<number>;
   offsetX: number;
   offsetY: number;
+  pins: LocationProps[];
+  onLoad: (event: any) => void;
+  onPressPin?: (pin: LocationProps) => void;
 };
 
 export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
@@ -29,6 +33,9 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
   zoomScale,
   offsetX,
   offsetY,
+  pins,
+  onLoad,
+  onPressPin,
 }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -42,6 +49,9 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
         zoomScale={zoomScale}
         offsetX={offsetX}
         offsetY={offsetY}
+        onLoad={onLoad}
+        pins={pins}
+        onPressPin={onPressPin}
       />
 
       <View style={styles.bottomContainer}>

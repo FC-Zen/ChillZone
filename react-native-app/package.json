@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@likashefqet/react-native-image-zoom": "^4.3.0",
+    "@openspacelabs/react-native-zoomable-view": "^2.3.1",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/native": "^7.0.13",
     "@react-navigation/native-stack": "^6.9.22",
@@ -63,6 +64,7 @@
     "react-native-vector-icons": "^10.2.0",
     "react-native-webview": "^13.13.2",
     "react-native-youtube-iframe": "^2.3.0",
+    "react-native-zoomable-view": "^0.3.1",
     "rn-fetch-blob": "^0.12.0",
     "zod": "^3.24.0"
   },

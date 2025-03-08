@@ -37,7 +37,6 @@ export const getAllMapFloors = async (): Promise<MapFloorProps[]> => {
     });
 
     const mapFloorsData = response.data.floors;
-    console.log('🚀 ~ getAllMapFloors ~ mapFloorsData:', mapFloorsData);
 
     if (!mapFloorsData || !Array.isArray(mapFloorsData)) {
       throw new Error('Les données reçues des étages ne sont pas valides.');
