@@ -65,9 +65,7 @@ export const MapZoom: React.FC<MapZoomProps> = ({
       ]}
       onLayout={(event) => {
         const { width, height } = event.nativeEvent.layout;
-        console.log(
-          'GestureHandlerRootView : \n' + `Width: ${width}, Height: ${height}`
-        );
+
         containerSize = { width, height };
       }}
     >
@@ -93,20 +91,12 @@ export const MapZoom: React.FC<MapZoomProps> = ({
             style={[styles.image, { justifyContent: 'flex-end', height: 300 }]}
             onLayout={(event) => {
               const { width, height } = event.nativeEvent.layout;
-              console.log(
-                'TouchableWithoutFeedback : \n' +
-                  `Width: ${width}, Height: ${height}`
-              );
             }}
           >
             <View
               style={styles.image}
               onLayout={(event) => {
                 const { width, height } = event.nativeEvent.layout;
-                console.log(
-                  "View qui entoure l'Image : \n" +
-                    `Width: ${width}, Height: ${height}`
-                );
               }}
             >
               <Image
@@ -122,7 +112,6 @@ export const MapZoom: React.FC<MapZoomProps> = ({
               />
               {/* Affichage des pins */}
               {pins.map((pin, index) => {
-                console.log(`Rendering Pin ${index}`);
                 const pinX = pin.position_x;
                 const pinY = pin.position_y;
 

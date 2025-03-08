@@ -63,8 +63,6 @@ export const ReservationModal: FC<ReservationModalProps> = ({
             timeSlot: timeSlot?.join(' - '),
           }
         );
-      } else {
-        console.log('La notification "reservation" est désactivée.');
       }
     } catch (error) {
       console.error('Error handling reservation:', error);

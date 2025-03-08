@@ -134,7 +134,6 @@ export const updateInfoUser = async (
  */
 export const changeProfilePicture = async (formData: FormData) => {
   try {
-    //console.log(formData);
     const token = await getAccessToken();
     const response = await axios.post(
       `${API_URL}change-information-profil/`,

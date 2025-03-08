@@ -52,7 +52,6 @@ export const DispenserScreen: React.FC<DispenserScreenProps> = ({ route }) => {
   const [selectedButtonMealProps, setSelectedButtonMealProps] = useState<SelectedButtonMealProps[]>([]);
 
   const setCategories = () => {
-    console.log('menus :', menus);
     if (menus.length > 0) {
       setSelectedButtonMealProps([mealCategory, menuCategory]);
     } else {

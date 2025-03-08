@@ -19,14 +19,10 @@ export type MealProps = {
 export const fetchAllMeals = async (
   RestaurantID: number
 ): Promise<Record<string, MealProps[]>> => {
-  //console.log('Fetch meals du restau:', RestaurantID);
 
   const [access] = await Promise.all([AsyncStorage.getItem('access')]);
-  //console.log('🚀 ~ token:', access);
 
   try {
-    //console.log('URL: ', `${API_URL}restaurant/${RestaurantID}/`);
-
     const response = await axios.get(`${API_URL}restaurant/${RestaurantID}/`, {
       headers: {
         Authorization: `Bearer ${access}`,

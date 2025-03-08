@@ -46,23 +46,18 @@ export const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeIcon }) => {
 
     switch (name) {
       case 'Home':
-        //console.log('Home');
         navigation.navigate(ROUTE.HOME);
         break;
       case 'Reserve':
-        //console.log('Reserve');
         navigation.navigate(ROUTE.RESERVATION);
         break;
       case 'Lunch':
-        //console.log('Lunch');
         navigation.navigate(ROUTE.RESTAURATION);
         break;
       case 'Calendar':
-        //console.log('Calendar');
         navigation.navigate(ROUTE.CALENDAR);
         break;
       case 'Navigation':
-        //console.log('Navigation');
         navigation.navigate(ROUTE.NAVIGATION);
         break;
       default:

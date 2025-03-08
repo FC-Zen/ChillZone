@@ -9,17 +9,14 @@ export const TopBar = () => {
   const navigation = useNavigation();
 
   const handleUserPress = () => {
-    //console.log('on navigue');
     navigation.navigate(ROUTE.ACCOUNT);
   };
 
   const handleFaqPress = () => {
-    //console.log('on navigue');
     navigation.navigate(ROUTE.FAQ);
   };
 
   const handleNotificationPress = () => {
-    //console.log('on navigue');
     navigation.navigate(ROUTE.NOTIFICATION);
   };
   return (

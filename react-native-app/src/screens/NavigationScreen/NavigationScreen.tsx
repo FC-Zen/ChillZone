@@ -78,7 +78,6 @@ export const NavigationScreen = () => {
       const realX = (x - offsetX) / zoomScale.get();
       const realY = (y - offsetY) / zoomScale.get();
 
-      console.log('Coordonnées réelles :', { x: realX, y: realY });
     } else {
       console.error("Source d'image non trouvée");
     }
@@ -90,7 +89,6 @@ export const NavigationScreen = () => {
         const response = await getAllMapFloors();
         setAllFloors(response);
         setSelectedFloor(response[0]);
-        console.log('RDC :', response[0].name);
       } catch (error) {
         console.error('Erreur lors de la récupération des étages:', error);
       }
@@ -141,7 +139,6 @@ export const NavigationScreen = () => {
         zoomScale={zoomScale}
         onLoad={(event: LayoutChangeEvent) => {
           let { width, height } = event.nativeEvent.layout;
-          console.log("Taille de l'image :", { width, height });
           setDisplayedSize({ width, height });
           calculRatio();
         }}
