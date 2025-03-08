@@ -36,7 +36,6 @@ export const refreshToken = async (refresh: string) => {
         });
 
         if (response.status === 200) {
-            //console.log("Refresh response: " ,response.data)
             await AsyncStorage.setItem('access', response.data.access);
             return { success: true, newAccessToken: response.data.access };
         } else {

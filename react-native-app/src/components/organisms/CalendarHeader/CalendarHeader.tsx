@@ -26,8 +26,6 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           {daysOfWeek.map((day, index) => {
             const currentDate = new Date(startOfWeek);
             currentDate.setDate(startOfWeek.getDate() + (index)); // Calculer chaque jour de la semaine
-
-            // console.log("currentDate", currentDate);
   
             const isSelected = selectedDate.toDateString() === currentDate.toDateString();
   

@@ -82,7 +82,6 @@ export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
       const fieldErrors: string[] = [];
       result.error.errors.forEach((err) => {
         if (err.path.length > 0) {
-          //console.log('err.path[0].toString() : ', err.path[0].toString());
           fieldErrors.push(getInputName(err.path[0].toString()));
         }
       });
@@ -126,7 +125,6 @@ export const PaymentScreen: React.FC<PaymentProps> = ({ route }) => {
     }
   };
 
-  //console.log('totalAmount : ', totalAmount);
   return (
     <>
       <SnackBar

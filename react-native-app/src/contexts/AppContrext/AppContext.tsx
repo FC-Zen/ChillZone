@@ -135,10 +135,7 @@ export const ReservationProvider: React.FC<{ children: React.ReactNode }> = ({
   const isAlertDisplayed = useRef(false);
 
   const checkReservationTime = () => {
-    //console.log('isAlertDisplayed : ', isAlertDisplayed);
-    //console.log('checkReservationTime');
     if (nextBooking?.length === 0) {
-      //console.log('no booking');
       return;
     }
     if (isAlertDisplayed.current) {
@@ -163,12 +160,9 @@ export const ReservationProvider: React.FC<{ children: React.ReactNode }> = ({
         (nowHours === bookingHours + 1 &&
           nowMinutes <= (bookingMinutes + 20) % 60)
       ) {
-        //console.log('Navigating to Alert Screen');
         isAlertDisplayed.current = true;
         navigation.navigate(ROUTE.ALERT);
       }
-    } else {
-      //console.log('Aucune réservation valide trouvée ou label indisponible');
     }
   };
 

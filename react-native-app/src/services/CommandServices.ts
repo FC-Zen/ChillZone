@@ -70,7 +70,6 @@ export const createCommand = async (
     await AsyncStorage.setItem('qrcode_link', response.data.qrcode);
 
     if (response.status === 201) {
-      //console.log('Commande créée avec succès');
       return response.data;
     }
 

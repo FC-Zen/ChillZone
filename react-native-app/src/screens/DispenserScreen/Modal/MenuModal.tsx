@@ -49,7 +49,6 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     const outOfStockMeal = selectedMealsList.find((meal) => meal.stock === 0);
 
     if (outOfStockMeal) {
-      //console.log(`Le plat ${outOfStockMeal.name} n'est plus disponible !`);
       setSnackbar({
         isAvailable: true,
         severity: 'error',
@@ -57,12 +56,6 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
       });
       return;
     }
-
-    /* console.log(
-      `Ajouté au panier: ${menu.name}, Quantité: ${quantity}, Total : ${menu.price}`,
-      'Repas sélectionnés:',
-      selectedMealsList
-    ); */
 
     if (listItems.find((item) => item.name === menu.name)) {
       listItems.map((item) => {
@@ -104,10 +97,8 @@ export const MenuModal: React.FC<ModalScreenProps> = ({ route }) => {
     });
 
     if (item.type && selectedMeals[item.type] === item.id) {
-      //console.log('Decrement');
       handleDecrement();
     } else {
-      //console.log('Increment');
       handleIncrement();
     }
   };

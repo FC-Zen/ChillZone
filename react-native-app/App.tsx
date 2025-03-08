@@ -13,12 +13,10 @@ export default function App() {
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
       if (nextAppState === 'background') {
         timeout = setTimeout(async () => {
-          console.log('🔴 Application en arrière-plan. Déconnexion...');
           await logoutUser(false);
         }, 5000);
       } else if (nextAppState === 'inactive') {
         timeout = setTimeout(async () => {
-          console.log('⚪ Application inactive. Déconnexion après un délai...');
           await logoutUser(false);
         }, 5000);
       } else {

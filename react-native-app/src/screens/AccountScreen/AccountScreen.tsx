@@ -160,7 +160,6 @@ export const AccountScreen: React.FC = () => {
       });
 
       if (result.canceled) {
-        //console.log('Sélection annulée');
         return;
       }
 
@@ -209,10 +208,8 @@ export const AccountScreen: React.FC = () => {
   //Force la déconnexion surtout si on a un rememberMe d'actif
   const handleLogout = async () => {
     const logout = await logoutUser(true);
-    //console.log('Logout: ', logout);
 
     if (logout.success === true) {
-      //console.log('Logout bon on retourne à la connexion ');
       navigation.navigate(ROUTE.LOGIN_SCREEN);
     }
   };

@@ -9,8 +9,6 @@ export type FaqTemplateProps = {
 };
 
 export const FaqTemplate: React.FC<FaqTemplateProps> = ({categories}) => {
-  //console.log("Data Faq Template: ", categories)
-
   return(
     <ScrollView style={styles.scrollView}>
       {categories.map((data,index) => <FaqList key={`FaqList-${index}`} category={data.category} questions={data.questions} />)}

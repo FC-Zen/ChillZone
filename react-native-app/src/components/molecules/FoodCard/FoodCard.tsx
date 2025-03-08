@@ -22,7 +22,6 @@ export const FoodCard: React.FC<ProductCardProps> = ({
   iconName,
   onPress,
 }) => {
-  //console.log('imageUrl : ', imageUrl);
   return (
     <View>
       <TouchableOpacity

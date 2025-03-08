@@ -49,7 +49,6 @@ class NotifsPhone {
             projectId,
           })
         ).data;
-        //console.log('Push notification token:', token);
       } catch (error) {
         console.error('Failed to get push token:', error);
         return null;
@@ -83,7 +82,6 @@ class NotifsPhone {
         (type === 'event' && !event) ||
         (type === 'reservation' && !reservation)
       ) {
-        console.log(`🚫 Notification "${type}" désactivée, pas d'envoi.`);
         return;
       }
 
@@ -96,7 +94,6 @@ class NotifsPhone {
         trigger: null,
       });
 
-      console.log(`✅ Notification envoyée [${type}]:`, title, body);
     } catch (error) {
       console.error("Erreur lors de l'envoi de la notification:", error);
     }

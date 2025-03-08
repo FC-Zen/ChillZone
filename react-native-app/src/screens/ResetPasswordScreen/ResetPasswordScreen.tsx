@@ -16,7 +16,6 @@ export const ResetPasswordScreen: React.FC = () => {
 
   const handleModifyPress = () => {
     // Logique à exécuter lors de la réinitialisation du mot de passe
-    //console.log('Nouveau mot de passe:', inputPassword);
     navigation.navigate(ROUTE.LOGIN_SCREEN);
   };
 

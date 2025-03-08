@@ -73,8 +73,6 @@ export const NotificationScreen: React.FC = () => {
 
       await updateNotification(updatedNotifications);
 
-      console.log(`Notification ${key} mise à jour :`, updatedNotifications);
-
       fetchNotifications();
     } catch (error) {
       console.error(`Erreur lors de la mise à jour de ${key}:`, error);

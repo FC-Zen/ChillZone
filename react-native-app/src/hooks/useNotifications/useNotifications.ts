@@ -49,7 +49,6 @@ export function useNotifications() {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        //console.log('Notification response:', response);
       });
 
     return () => {
@@ -69,7 +68,6 @@ export function useNotifications() {
     data: object = {}
   ) => {
     if (!notificationSettings[type]) {
-      console.log(`🚫 Notification "${type}" désactivée, pas d'envoi.`);
       return;
     }
     await NotificationService.scheduleNotification(title, body, type, data);
