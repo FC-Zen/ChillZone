@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, Image, LayoutChangeEvent } from 'react-native';
 import { styles } from './style';
 import {
   BottomNavbar,
@@ -8,25 +8,118 @@ import {
   TopBar,
 } from '@components';
 import { useTranslation } from 'react-i18next';
-import { getAllMapFloors, MapFloorProps } from '@services';
+import { getAllMapFloors, LocationProps, MapFloorProps } from '@services';
+import { useSharedValue } from 'react-native-reanimated';
+import { NavigationModal } from './Modal';
+import { layout } from '@theme';
 
 export const NavigationScreen = () => {
-  const [zoomScale, setZoomScale] = useState(1);
+  const zoomScale = useSharedValue(1);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
   const [selectedFloor, setSelectedFloor] = useState<MapFloorProps>();
   const [allFloors, setAllFloors] = useState<MapFloorProps[]>([]);
+  const [pins, setPins] = useState<LocationProps[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedPin, setSelectedPin] = useState<LocationProps | null>(null);
   const imageRef = useRef(null);
   const { t } = useTranslation();
+
+  const [originalSize, setOriginalSize] = useState({
+    width: 3308,
+    height: 2339,
+  });
+  const [currentScale, setCurrentScale] = useState(0.3);
+
+  const [displayedSize, setDisplayedSize] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  const [containerSize, setContainerSize] = useState({
+    width: 0,
+    height: 0,
+  });
 
   const onSelectFloor = (floor: number) => {
     setSelectedFloor(allFloors.find((f) => f.id === floor));
   };
 
+  // Callback appelé lors du déplacement/zoom
+  const handleMove = (position: any) => {
+    setCurrentScale(position.scale);
+    setOffsetX(position.x); // Assurez-vous que 'x' et 'y' sont fournis par le composant Zoomable
+    setOffsetY(position.y);
+  };
+
+  const [ratioHeight, setRatioHeight] = useState(
+    displayedSize.height / originalSize.height
+  );
+  const [ratioWidth, setRatioWidth] = useState(350 / originalSize.width);
+
+  const calculRatio = () => {
+    setRatioHeight(displayedSize.height / originalSize.height);
+    setRatioWidth(displayedSize.width / originalSize.width);
+  };
+
+  const recalculatePins = () => {
+    if (
+      selectedFloor?.locations &&
+      displayedSize.width > 0 &&
+      displayedSize.height > 0
+    ) {
+      const newPins = selectedFloor.locations.map((location) => {
+        const scaledX = location.position_x * ratioWidth;
+        const scaledY = location.position_y * ratioHeight;
+        console.log('🚀 ~ newPins ~ scaledY:', scaledY);
+        console.log('🚀 ~ newPins ~ scaledX:', scaledX);
+        return {
+          ...location,
+          position_x: scaledX,
+          position_y: scaledY,
+        };
+      });
+      setPins(newPins);
+    }
+  };
+
+  const calculatelocation = (x: number, y: number) => {
+    let coordRéel = { x: 1, y: 1 };
+    const coordRed = { x: 350, y: 385 };
+
+    switch (selectedFloor?.number) {
+      case 0:
+        coordRéel = { x: 3308, y: 2339 * 2.1 };
+        break;
+      case 1:
+        coordRéel = { x: 3308, y: 2339 * 2.6 };
+        break;
+      default:
+        coordRéel = { x: 3308, y: 2339 * 2.1 };
+        break;
+    }
+
+    if (imageRef.current) {
+      const realX = (x - offsetX) / zoomScale.value;
+      const realY = (y - offsetY) / zoomScale.value;
+
+      const xRoomFinal = (realX * coordRed.x) / coordRéel.x;
+      const yRoomFinal = (realY * coordRed.y) / coordRéel.y;
+
+      console.log('Coordonnées Pins :', { x: xRoomFinal, y: yRoomFinal });
+
+      return { xRoomFinal, yRoomFinal };
+    } else {
+      console.error("Source d'image non trouvée");
+      return { xRoomFinal: x, yRoomFinal: y };
+    }
+  };
+
   const handleImagePress = (x: number, y: number) => {
     if (imageRef.current) {
-      const realX = (x - offsetX) / zoomScale;
-      const realY = (y - offsetY) / zoomScale;
+      const realX = (x - offsetX) / zoomScale.get();
+      const realY = (y - offsetY) / zoomScale.get();
+
       console.log('Coordonnées réelles :', { x: realX, y: realY });
     } else {
       console.error("Source d'image non trouvée");
@@ -45,7 +138,18 @@ export const NavigationScreen = () => {
       }
     };
     fetchFloors();
+    calculRatio();
   }, []);
+
+  //Recalcule les Pins à chaques fois que le zoomScale change
+  useEffect(() => {
+    recalculatePins();
+  }, [selectedFloor, originalSize, currentScale, offsetX, offsetY, zoomScale]);
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setSelectedPin(null);
+  };
 
   return (
     <View style={styles.container}>
@@ -65,7 +169,28 @@ export const NavigationScreen = () => {
         floors={allFloors}
         offsetX={offsetX}
         offsetY={offsetY}
+        pins={pins}
+        onPressPin={(pin) => {
+          setSelectedPin(pin);
+          setIsModalVisible(true);
+        }}
         zoomScale={zoomScale}
+        onLoad={(event: LayoutChangeEvent) => {
+          let { width, height } = event.nativeEvent.layout;
+          console.log("Taille de l'image :", { width, height });
+          setDisplayedSize({ width, height });
+          calculRatio();
+        }}
+        onLayoutZoomable={(event: LayoutChangeEvent) => {
+          let { width, height } = event.nativeEvent.layout;
+          setContainerSize({ width, height });
+        }}
+      />
+
+      <NavigationModal
+        isVisible={isModalVisible}
+        onClose={handleCloseModal}
+        pinData={selectedPin}
       />
 
       <BottomNavbar activeIcon="Navigation" />

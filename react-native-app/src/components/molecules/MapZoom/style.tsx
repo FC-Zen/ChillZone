@@ -13,15 +13,17 @@ export const styles = StyleSheet.create({
     maxWidth: '100%',
   },
   zoomableWrapper: {
-    flex: 1,
     position: 'relative',
+    height: layout.window.height * 0.6,
   },
   image: {
+    margin: 0,
+    padding: 0,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.black,
     overflow: 'hidden',
     width: 350,
-    height: layout.window.height * 0.6,
+    height: '100%',
   },
 });
