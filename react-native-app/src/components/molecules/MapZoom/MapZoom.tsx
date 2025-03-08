@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ReactNativeZoomableView } from '@openspacelabs/react-native-zoomable-view';
 import { styles } from './style';
 import { LocationProps } from '@services';
-import { colors, layout } from '@theme';
+import { colors } from '@theme';
 import { SharedValue } from 'react-native-reanimated';
 import { Icon } from '@components/atoms';
 
@@ -18,7 +18,6 @@ type MapZoomProps = {
   pins: LocationProps[];
   onPressPin?: (pinId: LocationProps) => void;
   onLoad: (event: any) => void;
-  onLayoutZoomable: (event: any) => void;
 };
 
 export const MapZoom: React.FC<MapZoomProps> = ({
@@ -28,7 +27,6 @@ export const MapZoom: React.FC<MapZoomProps> = ({
   pins,
   onPressPin,
   onLoad,
-  onLayoutZoomable,
 }) => {
   const getTooltipColor = (type: LocationProps['room_type']) => {
     switch (type) {
@@ -84,7 +82,6 @@ export const MapZoom: React.FC<MapZoomProps> = ({
         <ReactNativeZoomableView
           minZoom={1}
           maxZoom={3}
-          onLayout={onLayoutZoomable}
           style={[
             styles.image,
             { overflow: 'hidden', justifyContent: 'flex-end' },
@@ -139,9 +136,11 @@ export const MapZoom: React.FC<MapZoomProps> = ({
                         {
                           position: 'absolute',
                           left: pinX - 10,
-                          top: pinY - 30,
+                          top: pinY - 25,
                           width: 15,
                           height: 15,
+                          justifyContent: 'center',
+                          alignItems: 'center',
                           borderRadius: 10,
                         },
                       ]}

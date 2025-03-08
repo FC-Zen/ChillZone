@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { getAllMapFloors, LocationProps, MapFloorProps } from '@services';
 import { useSharedValue } from 'react-native-reanimated';
 import { NavigationModal } from './Modal';
-import { layout } from '@theme';
 
 export const NavigationScreen = () => {
   const zoomScale = useSharedValue(1);
@@ -45,13 +44,6 @@ export const NavigationScreen = () => {
     setSelectedFloor(allFloors.find((f) => f.id === floor));
   };
 
-  // Callback appelé lors du déplacement/zoom
-  const handleMove = (position: any) => {
-    setCurrentScale(position.scale);
-    setOffsetX(position.x); // Assurez-vous que 'x' et 'y' sont fournis par le composant Zoomable
-    setOffsetY(position.y);
-  };
-
   const [ratioHeight, setRatioHeight] = useState(
     displayedSize.height / originalSize.height
   );
@@ -71,8 +63,6 @@ export const NavigationScreen = () => {
       const newPins = selectedFloor.locations.map((location) => {
         const scaledX = location.position_x * ratioWidth;
         const scaledY = location.position_y * ratioHeight;
-        console.log('🚀 ~ newPins ~ scaledY:', scaledY);
-        console.log('🚀 ~ newPins ~ scaledX:', scaledX);
         return {
           ...location,
           position_x: scaledX,
@@ -80,38 +70,6 @@ export const NavigationScreen = () => {
         };
       });
       setPins(newPins);
-    }
-  };
-
-  const calculatelocation = (x: number, y: number) => {
-    let coordRéel = { x: 1, y: 1 };
-    const coordRed = { x: 350, y: 385 };
-
-    switch (selectedFloor?.number) {
-      case 0:
-        coordRéel = { x: 3308, y: 2339 * 2.1 };
-        break;
-      case 1:
-        coordRéel = { x: 3308, y: 2339 * 2.6 };
-        break;
-      default:
-        coordRéel = { x: 3308, y: 2339 * 2.1 };
-        break;
-    }
-
-    if (imageRef.current) {
-      const realX = (x - offsetX) / zoomScale.value;
-      const realY = (y - offsetY) / zoomScale.value;
-
-      const xRoomFinal = (realX * coordRed.x) / coordRéel.x;
-      const yRoomFinal = (realY * coordRed.y) / coordRéel.y;
-
-      console.log('Coordonnées Pins :', { x: xRoomFinal, y: yRoomFinal });
-
-      return { xRoomFinal, yRoomFinal };
-    } else {
-      console.error("Source d'image non trouvée");
-      return { xRoomFinal: x, yRoomFinal: y };
     }
   };
 
@@ -138,8 +96,14 @@ export const NavigationScreen = () => {
       }
     };
     fetchFloors();
-    calculRatio();
   }, []);
+
+  useEffect(() => {
+    if (displayedSize.width > 0 && displayedSize.height > 0) {
+      calculRatio();
+      recalculatePins();
+    }
+  }, [displayedSize]);
 
   //Recalcule les Pins à chaques fois que le zoomScale change
   useEffect(() => {
@@ -180,10 +144,6 @@ export const NavigationScreen = () => {
           console.log("Taille de l'image :", { width, height });
           setDisplayedSize({ width, height });
           calculRatio();
-        }}
-        onLayoutZoomable={(event: LayoutChangeEvent) => {
-          let { width, height } = event.nativeEvent.layout;
-          setContainerSize({ width, height });
         }}
       />
 

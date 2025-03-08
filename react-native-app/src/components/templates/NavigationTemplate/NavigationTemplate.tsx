@@ -21,7 +21,6 @@ type NavigationTemplateProps = {
   pins: LocationProps[];
   onLoad: (event: any) => void;
   onPressPin?: (pin: LocationProps) => void;
-  onLayoutZoomable: (event: any) => void;
 };
 
 export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
@@ -37,7 +36,6 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
   pins,
   onLoad,
   onPressPin,
-  onLayoutZoomable,
 }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -54,7 +52,6 @@ export const NavigationTemplate: React.FC<NavigationTemplateProps> = ({
         onLoad={onLoad}
         pins={pins}
         onPressPin={onPressPin}
-        onLayoutZoomable={onLayoutZoomable}
       />
 
       <View style={styles.bottomContainer}>
