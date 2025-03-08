@@ -23,7 +23,7 @@ class RestaurationPlace(models.Model):
 
     phone = models.CharField(max_length=10, blank=True, null=True)
 
-    photo_link = models.ImageField(upload_to='restauration_place/', null=True, blank=True) 
+    photo_link = models.ImageField(upload_to='restaurant/', null=True, blank=True) 
     
     is_valid = models.BooleanField(default=False)
 
