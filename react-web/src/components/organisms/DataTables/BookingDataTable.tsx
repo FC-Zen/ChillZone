@@ -57,7 +57,7 @@ export const BookingDataTable = ({
     { field: 'annule', headerName: t('tables.headers.reservation.isCanceled'), flex: 0.7,
       renderCell: (params: any) => (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          {params.row.status === "Annulée" ? (
+          {params.row.status === "Cancelled" ? (
             <Icon name="Exclamation" />
           ) : (
             <Icon name="Check" />
