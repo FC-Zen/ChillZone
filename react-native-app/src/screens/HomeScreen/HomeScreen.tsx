@@ -18,7 +18,7 @@ import { ROUTE } from '@enums';
 export const HomeScreen: React.FC = () => {
   const userContext = UserContext.getInstance();
   const userName = userContext.getUsername();
-  let items = [transformBookings()];
+  let items = [transformBookings()]; 
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { nextBooking, updateNextBooking } = useNextBooking();

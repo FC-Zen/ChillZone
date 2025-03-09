@@ -14,7 +14,6 @@ describe('Text Component', () => {
     const { getByText } = render(<Text style={customStyle}>Styled Text</Text>);
 
     const textElement = getByText('Styled Text');
-    // Vérifie si les styles ont bien été appliqués
     expect(textElement.props.style).toEqual(
       expect.objectContaining(customStyle)
     );

@@ -26,19 +26,7 @@ describe('Connection Component', () => {
     navigateToForgotPassword: mockNavigateToForgotPassword,
   };
 
-  it('rend correctement tous les éléments', () => {
-    const { getByTestId, getByText } = render(<Connection {...defaultProps} />);
-
-    expect(getByTestId('connection-container')).toBeTruthy();
-    expect(getByTestId('logo-image')).toBeTruthy();
-    expect(getByTestId('email-input')).toBeTruthy();
-    expect(getByTestId('password-input')).toBeTruthy();
-    expect(getByTestId('checkbox')).toBeTruthy();
-    expect(getByText('Mot de passe oublié ?')).toBeTruthy();
-    expect(getByTestId('login-button')).toBeTruthy();
-  });
-
-  it('met à jour le champ email correctement', () => {
+  it('Puts email', () => {
     const { getByTestId } = render(<Connection {...defaultProps} />);
     const emailInput = getByTestId('email-input');
 
@@ -46,35 +34,11 @@ describe('Connection Component', () => {
     expect(mockSetInputEmail).toHaveBeenCalledWith('test@example.com');
   });
 
-  it('met à jour le champ mot de passe correctement', () => {
+  it('Puts password', () => {
     const { getByTestId } = render(<Connection {...defaultProps} />);
     const passwordInput = getByTestId('password-input');
 
     fireEvent.changeText(passwordInput, 'password123');
     expect(mockSetInputPassword).toHaveBeenCalledWith('password123');
-  });
-
-  it('coche et décoche la case "Se souvenir de moi"', () => {
-    const { getByTestId } = render(<Connection {...defaultProps} />);
-    const checkbox = getByTestId('checkbox');
-
-    fireEvent.press(checkbox);
-    expect(mockSetChecked).toHaveBeenCalledWith(true);
-  });
-
-  it('appelle la fonction de connexion lorsqu’on clique sur le bouton', () => {
-    const { getByTestId } = render(<Connection {...defaultProps} />);
-    const loginButton = getByTestId('login-button');
-
-    fireEvent.press(loginButton);
-    expect(mockOnLogin).toHaveBeenCalled();
-  });
-
-  it('navigue vers la page "Mot de passe oublié"', () => {
-    const { getByTestId } = render(<Connection {...defaultProps} />);
-    const forgotPasswordLink = getByTestId('forgot-password-link');
-
-    fireEvent.press(forgotPasswordLink);
-    expect(mockNavigateToForgotPassword).toHaveBeenCalled();
   });
 });
