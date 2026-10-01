@@ -3,8 +3,6 @@
 **Projet SAE (Situation d’Apprentissage et d’Évaluation) en collaboration avec un Projet TIPI (Technologies de l’Information et Patrimoine Immobilier)**  
 *Optimisation des espaces universitaires et amélioration de l'expérience utilisateur à l'IUT de Marne-la-Vallée.*
 
----
-
 ## 1. Présentation du Projet
 
 Le projet **ChillZone** (déployé sous le nom **Mon IUT**) est une application conçue pour simplifier la vie quotidienne des étudiants et du personnel universitaire, tout en offrant aux équipes administratives et aux prestataires de restauration un outil de gestion performant. 
@@ -14,8 +12,6 @@ Développé en partenariat avec le **CIPEN** (Centre d’Innovation pour la Perf
 L'écosystème comprend deux volets complémentaires :
 * **Une application mobile multiplateforme** destinée aux étudiants et aux enseignants.
 * **Un back-office web** dédié aux administrateurs d'établissement, super-administrateurs et restaurateurs.
-
----
 
 ## 2. Périmètre Fonctionnel
 
@@ -30,8 +26,6 @@ L'écosystème comprend deux volets complémentaires :
 * **Tableaux de bord et statistiques** : Analyse de l'occupation des salles, du nombre de réservations mensuelles et du suivi de la fréquentation.
 * **Administration de l'établissement** : Gestion des comptes utilisateurs, modération, blocage préventif et mise à jour des cartes et points d'intérêt.
 * **Gestion de la restauration** : Gestion des catalogues de produits, paramétrage des menus, gestion des stocks en temps réel et suivi des commandes.
-
----
 
 ## 3. Cadre Académique et Suivi de Projet
 
@@ -55,9 +49,7 @@ Afin de garantir l'adéquation de la solution avec les besoins réels du campus 
 * **Tests Utilisateurs** : Réalisation de campagnes de tests d'ergonomie et d'usage auprès des étudiants de l'IUT pour évaluer l'intuitivité des parcours (réservation de box, commande de repas, etc.) et valider les fonctionnalités de l'interface mobile.
 * **Environnement de test** : Expérimentations mobiles réalisées en conditions réelles d'utilisation via **Expo Go** pour tester les interactions tactiles et les performances sur smartphone, couplées à un déploiement temporaire sous **Docker**.
 
----
-
-## 💻 4. Architecture Technique
+## 4. Architecture Technique
 
 Le projet repose sur une architecture découplée organisée selon la méthode **Atomic Design** pour le développement des interfaces.
 
@@ -75,8 +67,6 @@ ChillZone/
 | **Front-End Web** | React / TypeScript | Back-office responsive pour administrateurs et restaurateurs. |
 | **Front-End Mobile**| React Native / Expo | Application mobile native iOS et Android. |
 | **Conteneurisation**| Docker | Normalisation de l'environnement d'exécution. |
-
----
 
 ## 5. Installation et Déploiement Local
 
@@ -118,8 +108,6 @@ ChillZone/
    npx expo start
    ```
    *Scannez le QR Code affiché dans le terminal avec l'application Expo Go pour exécuter le projet sur votre mobile.*
-
----
 
 ## 6. Encadrement Académique
 
