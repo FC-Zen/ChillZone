@@ -3,7 +3,7 @@
 **Projet SAE (Situation d’Apprentissage et d’Évaluation) en collaboration avec un Projet TIPI (Technologies de l’Information et Patrimoine Immobilier)**  
 *Optimisation des espaces universitaires et amélioration de l'expérience utilisateur à l'IUT de Marne-la-Vallée.*
 
-## 1. Présentation du Projet
+## Présentation du Projet
 
 Le projet **ChillZone** (déployé sous le nom **Mon IUT**) est une application conçue pour simplifier la vie quotidienne des étudiants et du personnel universitaire, tout en offrant aux équipes administratives et aux prestataires de restauration un outil de gestion performant. 
 
@@ -13,7 +13,7 @@ L'écosystème comprend deux volets complémentaires :
 * **Une application mobile multiplateforme** destinée aux étudiants et aux enseignants.
 * **Un back-office web** dédié aux administrateurs d'établissement, super-administrateurs et restaurateurs.
 
-## 2. Périmètre Fonctionnel
+## Périmètre Fonctionnel
 
 ### Application Mobile (Étudiants et Enseignants)
 * **Emploi du temps et calendrier** : Synchronisation avec l'emploi du temps universitaire via l'intégration d'un lien ICAL / ADE.
@@ -27,7 +27,7 @@ L'écosystème comprend deux volets complémentaires :
 * **Administration de l'établissement** : Gestion des comptes utilisateurs, modération, blocage préventif et mise à jour des cartes et points d'intérêt.
 * **Gestion de la restauration** : Gestion des catalogues de produits, paramétrage des menus, gestion des stocks en temps réel et suivi des commandes.
 
-## 3. Cadre Académique et Suivi de Projet
+## Cadre Académique et Suivi de Projet
 
 Ce projet a été réalisé sur une année académique complète (d'octobre à mars) par une équipe de six étudiants en troisième année de BUT Informatique à l'IUT de Marne-la-Vallée.
 
@@ -49,7 +49,7 @@ Afin de garantir l'adéquation de la solution avec les besoins réels du campus 
 * **Tests Utilisateurs** : Réalisation de campagnes de tests d'ergonomie et d'usage auprès des étudiants de l'IUT pour évaluer l'intuitivité des parcours (réservation de box, commande de repas, etc.) et valider les fonctionnalités de l'interface mobile.
 * **Environnement de test** : Expérimentations mobiles réalisées en conditions réelles d'utilisation via **Expo Go** pour tester les interactions tactiles et les performances sur smartphone, couplées à un déploiement temporaire sous **Docker**.
 
-## 4. Architecture Technique
+## Architecture Technique
 
 Le projet repose sur une architecture découplée organisée selon la méthode **Atomic Design** pour le développement des interfaces.
 
@@ -68,7 +68,14 @@ ChillZone/
 | **Front-End Mobile**| React Native / Expo | Application mobile native iOS et Android. |
 | **Conteneurisation**| Docker | Normalisation de l'environnement d'exécution. |
 
-## 5. Installation et Déploiement Local
+## Mockup du projet
+Le design a été intégralement refait et réinventé sur Figma pour le rendre plus moderne, accessible et cohérent avec le message du projet (<a href="https://www.figma.com/design/9VvHixm0ELnijDbcBnDAep/ChillZone?node-id=0-1&t=R4UlcyUVkyBhCp5a-1">Maquette Figma</a>
+
+Il est possible de visualiser les 2 formats également :
+* <a href="https://www.figma.com/proto/9VvHixm0ELnijDbcBnDAep/ChillZone?node-id=47-39&p=f&viewport=403%2C121%2C0.08&t=xpohQjXASzvIaszb-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=47%3A39&show-proto-sidebar=1&page-id=0%3A1">Téléphone</a>
+* <a href="https://www.figma.com/proto/9VvHixm0ELnijDbcBnDAep/ChillZone?node-id=1000-5186&viewport=-42%2C1760%2C0.28&t=aBxAvvBIkOwFJ6BT-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=992%3A4054&show-proto-sidebar=1&page-id=396%3A981">Ordinateur</a>
+
+## Installation et Déploiement Local
 
 ### Prérequis
 * Node.js (v18+)
@@ -109,7 +116,7 @@ ChillZone/
    ```
    *Scannez le QR Code affiché dans le terminal avec l'application Expo Go pour exécuter le projet sur votre mobile.*
 
-## 6. Encadrement Académique
+## Encadrement Académique
 
 * **Établissement** : IUT de Marne-la-Vallée — Université Gustave Eiffel
 * **Département** : Informatique (BUT3)
