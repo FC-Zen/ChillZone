@@ -60,7 +60,7 @@ Afin de garantir l'adéquation de la solution avec les besoins réels du campus 
 - **Tests Utilisateurs** : Réalisation de campagnes de tests d'ergonomie et d'usage auprès des étudiants de l'IUT pour évaluer l'intuitivité des parcours (réservation de box, commande de repas, etc.) et valider les fonctionnalités de l'interface mobile.
 - **Environnement de test** : Expérimentations mobiles réalisées en conditions réelles d'utilisation via **Expo Go** pour tester les interactions tactiles et les performances sur smartphone, couplées à un déploiement temporaire sous **Docker**.
 
-## Mockup du projet
+## Maquette du projet
 
 Le design a été intégralement refait et réinventé pour le rendre plus moderne, accessible (contraste, icones, etc...) et cohérent avec le message du projet.
 
@@ -68,10 +68,7 @@ Le design a été intégralement refait et réinventé pour le rendre plus moder
 
 <br>
 
-Le mockup a été réalisé sur Figma et est disponible <a href="https://www.figma.com/design/9VvHixm0ELnijDbcBnDAep/ChillZone?node-id=0-1&t=8qqqns2O4uL0Gop5-1">en ligne</a> pour consultation et interaction. Vous pouvez visualiser le prototype interactif ci-dessous :
-
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/9VvHixm0ELnijDbcBnDAep/ChillZone?node-id=0-1&embed-host=share" allowfullscreen></iframe>
-
+Le mockup a été réalisé sur Figma et est disponible en ligne pour consultation et interaction. Vous pouvez visualiser le prototype interactif par ce lien : <a href="https://www.figma.com/design/9VvHixm0ELnijDbcBnDAep/ChillZone?node-id=0-1&t=8qqqns2O4uL0Gop5-1">Maquette</a>.
 Il est possible de visualiser les 2 formats également (<a href="https://www.figma.com/proto/9VvHixm0ELnijDbcBnDAep/ChillZone?node-id=47-39&p=f&viewport=403%2C121%2C0.08&t=xpohQjXASzvIaszb-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=47%3A39&show-proto-sidebar=1&page-id=0%3A1">Téléphone</a>, <a href="https://www.figma.com/proto/9VvHixm0ELnijDbcBnDAep/ChillZone?node-id=1000-5186&viewport=-42%2C1760%2C0.28&t=aBxAvvBIkOwFJ6BT-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=992%3A4054&show-proto-sidebar=1&page-id=396%3A981">Ordinateur</a>)
 
 ## Architecture Technique
